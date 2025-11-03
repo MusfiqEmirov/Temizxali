@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator, MaxLeng
 
 from services.utils import SluggedModel, LANGUAGES
 
+
 class Service(models.Model):
     price = models.DecimalField(
         max_digits=10,

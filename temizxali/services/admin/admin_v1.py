@@ -6,8 +6,8 @@ from services.utils import LANGUAGES
 
 class ServiceTranslationInline(admin.TabularInline):
     model = ServiceTranslation
-    extra = 1
-    min_num = 1
+    extra = len(LANGUAGES)
+    min_num = len(LANGUAGES)
     max_num = len(LANGUAGES)
     verbose_name = 'Servis Tərcüməsi'
     verbose_name_plural = 'Servis Tərcümələri'
@@ -26,7 +26,6 @@ class ServiceAdmin(admin.ModelAdmin):
         return qs.filter(is_active=True)
     
     def get_service_name(self, obj):
-        """Xidmət adını göstərir"""
         translation = obj.translations.first()
         if translation:
             return format_html('<strong style="font-size: 14px;">{}</strong>', translation.name)
