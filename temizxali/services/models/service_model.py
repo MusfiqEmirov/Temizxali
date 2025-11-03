@@ -22,6 +22,11 @@ class Service(models.Model):
         blank=True,
         verbose_name='Video'
     )
+    url = models.URLField(
+        null=True,
+        blank=True,
+        verbose_name='Url'
+    )
     is_vip = models.BooleanField(
         default=False,
         null=True,
@@ -83,11 +88,15 @@ class ServiceTranslation(SluggedModel):
     )
 
     class Meta:
-        verbose_name = 'Servis Tərcüməsi'
-        verbose_name_plural = 'Servis Tərcümələri'
+        verbose_name = 'Servis tərcüməsi'
+        verbose_name_plural = 'Servis tərcümələri'
     
     def get_slug_source(self) -> str:
         return self.name
 
     def __str__(self):
         return f'{self.name}'
+
+
+    
+
