@@ -26,14 +26,14 @@ class SpecialProjectTranslation(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Xüsusi layihə'
     )
-    language = models.CharField(
+    languages = models.CharField(
         max_length=12,
         choices=LANGUAGES,
         verbose_name='Dil'
     )
     description = models.CharField(
         max_length=350,
-        validators=[MaxLengthValidator(350)],
+        validators=[MaxLengthValidator(2000)],
         verbose_name='Xüsusi layihə haqqında məlumat'
     )
 
