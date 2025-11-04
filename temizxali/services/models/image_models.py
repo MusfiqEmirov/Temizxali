@@ -1,7 +1,7 @@
 from django.db import models
 
-from .service_model import Service
-from .special_project_model import SpecialProject
+from .service_models import Service
+from .special_project_models import SpecialProject
 
 
 class Image(models.Model):
@@ -23,8 +23,6 @@ class Image(models.Model):
     )
     image = models.ImageField(
         upload_to='images/',  
-        null=True,
-        blank=True,
         verbose_name='Şəkil'
     )
     image_name = models.CharField(

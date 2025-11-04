@@ -57,8 +57,8 @@ class Service(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Məhsul'
-        verbose_name_plural = 'Məhsullar'
+        verbose_name = 'Servis'
+        verbose_name_plural = 'Servislər'
     
     def __str__(self):
         translation = self.translations.first()
@@ -74,7 +74,7 @@ class ServiceTranslation(SluggedModel):
         on_delete=models.CASCADE,
         verbose_name='Servis'
     )
-    language = models.CharField(
+    languages = models.CharField(
         max_length=12,
         choices=LANGUAGES
     )
