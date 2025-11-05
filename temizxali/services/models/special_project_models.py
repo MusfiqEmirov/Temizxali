@@ -10,9 +10,22 @@ class SpecialProject(models.Model):
         blank=True,
         verbose_name='Url'
     )
+
+    is_active = models.BooleanField(
+        default=True,
+        null=True,
+        blank=True,
+        verbose_name='Servis aktivliyi'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Servis yaradılma tarixi'
+    )
+
     class Meta:
         verbose_name = 'Xüsusi Lahiyə'
         verbose_name_plural = 'Xüsusi Lahiyələr'
+        ordering = ('-created_at',)
 
     def __str__(self):
         translation = self.translations.first()
@@ -42,4 +55,4 @@ class SpecialProjectTranslation(models.Model):
         verbose_name_plural = 'Xüsusi layihə tərcümələri'
 
     def __str__(self):
-        return f'{self.description[:20]} ({self.language})'
+        return f'{self.description[:20]} ({self.languages})'

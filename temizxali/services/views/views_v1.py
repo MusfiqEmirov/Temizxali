@@ -1,17 +1,22 @@
+
 from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
+from django.utils import translation
+from django.db.models import Prefetch
 
-from services.models.order_models import Order
+from services.models import *
 from services.forms import OrderForm
 from services.forms import ReviewForm
 
 
 __all__ = [
+    'HomePageView'
     'OrderCreateView',
     'OrderSuccessView',
     'ReviewCreateView',
-    'ReviewSuccessView'
+    'ReviewSuccessView',
 ]
 
 class OrderCreateView(View):
@@ -41,7 +46,6 @@ class OrderSuccessView(View):
         """Sifarişin uğurla göndərildiyi səhifə"""
         return render(request, self.template_name)
     
-
 
 class ReviewCreateView(View):
     """Rəy əlavə etmək üçün səhifə"""
@@ -77,4 +81,41 @@ class ReviewSuccessView(View):
 
     def get(self, request):
         return render(request, self.template_name)
+
+
+
+
+
+class HomePageView(View):
+    def get(self, request):
+        languages = translation.get_language()
+
+        background_image = Image.objects.filter(
+            image_name='home_page_background', 
+            is_background_image=True
+        ).first()
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages = languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages)),
+            'images'
+        )
+        special_projects = SpecialProject.objects.filter(
+            is_active=True,
+            translations__languages = languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=SpecialProjectTranslation.objects.filter(languages=languages)),
+            'images'
+        )
+        statistics = Statistic.objects.all()
+        reviews = Review.objects.filter(is_verified=True)
+
+        return render(request, 'home_page.html', {
+            'background_image': background_image,
+            'services': services,
+            'special_projects': special_projects,
+            'statistics': statistics,
+            'reviews': reviews
+            })
 

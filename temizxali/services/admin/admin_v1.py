@@ -10,7 +10,7 @@ from services.models import (
     Image,
     About,
     AboutTranslation,
-    Statistics,
+    Statistic,
     Review,
     Order
 )
@@ -126,7 +126,7 @@ class AboutAdmin(admin.ModelAdmin):
 
 
 # Statistics Admin
-@admin.register(Statistics)
+@admin.register(Statistic)
 class StatisticsAdmin(admin.ModelAdmin):
     list_display = (
         'id',
