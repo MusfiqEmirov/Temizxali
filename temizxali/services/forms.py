@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from .models.review_models import Review
 from .models.order_models import Order
@@ -15,25 +16,25 @@ class OrderForm(forms.ModelForm):
             }),
             'fullname': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Ad və soyadınızı daxil edin',
+                'placeholder': _('Ad və soyadınızı daxil edin'),
             }),
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Nömrənizi daxil edin (məs: 501234567)',
+                'placeholder': _('Nömrənizi daxil edin (məs: 501234567)'),
                 'maxlength': '10',
             }),
             'text': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 4,
-                'placeholder': 'Sifariş və ya mesajınızı buraya yazın...',
+                'placeholder': _('Sifariş və ya mesajınızı buraya yazın...'),
             }),
         }
 
         labels = {
-            'services': 'Servislər',
-            'fullname': 'Ad Soyad',
-            'phone_number': 'Mobil nömrə',
-            'text': 'Mesaj',
+            'services': _('Servislər'),
+            'fullname': _('Ad Soyad'),
+            'phone_number': _('Mobil nömrə'),
+            'text': _('Mesaj'),
         }
 
 
@@ -48,15 +49,22 @@ class ReviewForm(forms.ModelForm):
             'services': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
             'fullname': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Ad və soyadınızı daxil edin'
+                'placeholder': _('Ad və soyadınızı daxil edin')
             }),
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Mobil nömrənizi daxil edin (məs: 501234567)'
+                'placeholder': _('Mobil nömrənizi daxil edin (məs: 501234567)')
             }),
             'text': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 4,
-                'placeholder': 'Rəyinizi yazın...'
+                'placeholder': _('Rəyinizi yazın...')
             }),
+        }
+        
+        labels = {
+            'services': _('Servislər'),
+            'fullname': _('Ad Soyad'),
+            'phone_number': _('Mobil nömrə'),
+            'text': _('Mesaj'),
         }
