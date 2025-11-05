@@ -101,24 +101,18 @@ class ReviewCreateView(View):
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
+        """Formu emal edir"""
         form = ReviewForm(request.POST)
 
         if form.is_valid():
-            phone = form.cleaned_data.get('phone_number')
-            if Order.objects.filter(phone_number=phone).exists():
-                form.save()
-                messages.success(request, "Rəyiniz uğurla göndərildi ✅")
-                return redirect('review-success')
-            else:
-                messages.error(
-                    request,
-                    "Bu nömrə ilə verilmiş sifariş tapılmadı. Rəy yazmaq üçün əvvəlcə sifariş verməlisiniz ❌"
-                )
+            form.save()
+            messages.success(request, _("Rəyiniz uğurla göndərildi ✅"))
+            return redirect('review-success')
         else:
-            messages.error(request, "Zəhmət olmasa formu düzgün doldurun ❌")
+            messages.error(request, _("Melumatlari duzgun daxil edin"))
 
         return render(request, self.template_name, {'form': form})
-
+    
 
 class ReviewSuccessView(View):
     template_name = 'review_success.html'
