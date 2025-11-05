@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Statistics(models.Model):
+class Statistic(models.Model):
     client_count = models.IntegerField(
         null=True,
         blank=True,
