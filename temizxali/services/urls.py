@@ -12,4 +12,14 @@ urlpatterns = [
         OrderSuccessView.as_view(),
         name='order-success'
     ),
+    path(
+        'review/',
+        ReviewCreateView.as_view(),
+        name='create-review'
+    ),
+    path(
+        'review/success/',
+        ReviewSuccessView.as_view(),
+        name='review-success'
+    ),
 ]

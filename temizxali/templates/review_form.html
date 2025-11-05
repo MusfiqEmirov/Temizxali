@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <title>Rəy əlavə et</title>
+</head>
+<body>
+    <h2>Rəy əlavə et</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: green;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div>
+            <label for="{{ form.services.id_for_label }}">Xidmətlər:</label><br>
+            {{ form.services }}
+        </div>
+
+        <div>
+            <label for="{{ form.fullname.id_for_label }}">Ad Soyad:</label><br>
+            {{ form.fullname }}
+        </div>
+
+        <div>
+            <label for="{{ form.phone_number.id_for_label }}">Mobil nömrə:</label><br>
+            {{ form.phone_number }}
+        </div>
+
+        <div>
+            <label for="{{ form.text.id_for_label }}">Rəyiniz:</label><br>
+            {{ form.text }}
+        </div>
+
+        <button type="submit">Göndər</button>
+    </form>
+</body>
+</html>
