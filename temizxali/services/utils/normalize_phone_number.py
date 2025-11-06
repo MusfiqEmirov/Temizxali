@@ -1,20 +1,26 @@
+import re
+
 def normalize_az_phone(phone: str) -> str:
     """
-    Azərbaycan mobil nömrəsini vahid formata salır.
-    Məsələn:
-      0512345678  →  994512345678
-      +994512345678 →  994512345678
-      512345678  →  994512345678
+    Azərbaycan mobil nömrəsini 9 rəqəmli formata salır: 501234567
     """
-    # Yalnız rəqəmləri saxla
-    phone = ''.join(filter(str.isdigit, phone))
+    if not phone:
+        return None
+    digits = re.sub(r'\D', '', phone.strip())
+    if digits.startswith('994'):
+        digits = digits[3:]
+        
+    if digits.startswith('0'):
+        digits = digits[1:]
 
-    # Əgər 0 ilə başlayırsa, onu sil
-    if phone.startswith('0'):
-        phone = phone[1:]
+    if len(digits) > 9:
+        digits = digits[-9:]
 
-    # Əgər 994 ilə başlamırsa, əlavə et
-    if not phone.startswith('994'):
-        phone = '994' + phone
+    if len(digits) != 9:
+        return None
 
-    return phone
+    prefix = digits[:2]
+    if prefix in {'50', '51', '55', '70', '77', '99'}:
+        return digits
+
+    return None

@@ -39,7 +39,29 @@ class OrderForm(forms.ModelForm):
             'text': _('Mesaj'),
         }
 
+    def clean_phone_number(self):
+        phone = self.cleaned_data.get('phone_number', '').strip()
 
+        if not phone:
+            raise ValidationError("Mobil nömrə daxil edin.")
+
+        normalized = normalize_az_phone(phone)
+
+        if not normalized:
+            raise ValidationError(
+                "Düzgün nömrə daxil edin!\n"
+                "Nümunələr: 50 123 45 67 | 0501234567 | +994501234567"
+            )
+
+        # Review formasındadırsa – sifariş olub-olmadığını yoxla
+        if self.__class__.__name__ == 'ReviewForm':
+            if not Order.objects.filter(phone_number=normalized).exists():
+                raise ValidationError(
+                    "Bu nömrə ilə heç bir sifariş tapılmadı. "
+                    "Rəy yazmaq üçün əvvəlcə sifariş verməlisiniz"
+                )
+
+        return normalized
 
 class ReviewForm(forms.ModelForm):
     """Rəy əlavə etmək üçün forma"""
@@ -73,19 +95,25 @@ class ReviewForm(forms.ModelForm):
         }
 
     def clean_phone_number(self):
-        """Nömrəni formatlayır və sifarişlə uyğunluğunu yoxlayır."""
-        phone = self.cleaned_data.get('phone_number')
+        phone = self.cleaned_data.get('phone_number', '').strip()
 
         if not phone:
-            return phone
+            raise ValidationError("Mobil nömrə daxil edin.")
 
-        normalized_phone = normalize_az_phone(phone)
+        normalized = normalize_az_phone(phone)
 
-        # Əgər belə nömrə ilə sifariş yoxdursa — xətanı qaytar
-        if not Order.objects.filter(phone_number=normalized_phone).exists():
+        if not normalized:
             raise ValidationError(
-                _("Bu nömrə ilə verilmiş sifariş tapılmadı. Rəy yazmaq üçün əvvəlcə sifariş verməlisiniz ❌")
+                "Düzgün nömrə daxil edin!\n"
+                "Nümunələr: 50 123 45 67 | 0501234567 | +994501234567"
             )
 
-        # Əks halda təmizlənmiş nömrəni qaytar
-        return normalized_phone
+        # Review formasındadırsa – sifariş olub-olmadığını yoxla
+        if self.__class__.__name__ == 'ReviewForm':
+            if not Order.objects.filter(phone_number=normalized).exists():
+                raise ValidationError(
+                    "Bu nömrə ilə heç bir sifariş tapılmadı. "
+                    "Rəy yazmaq üçün əvvəlcə sifariş verməlisiniz"
+                )
+
+        return normalized
