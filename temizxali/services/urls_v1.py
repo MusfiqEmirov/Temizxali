@@ -1,12 +1,17 @@
 from django.urls import path
+
+from .views.calculator_view import service_calculator
 from .views.views_v1 import *
 
+
 urlpatterns = [
+    # HomePage
     path(
         '', 
         HomePageView.as_view(), 
         name='home-page'
     ),
+    # Order
     path(
         'order/',
         OrderCreateView.as_view(),
@@ -17,6 +22,7 @@ urlpatterns = [
         OrderSuccessView.as_view(),
         name='order-success'
     ),
+    # Review
     path(
         'review/',
         ReviewCreateView.as_view(),
@@ -27,4 +33,12 @@ urlpatterns = [
         ReviewSuccessView.as_view(),
         name='review-success'
     ),
+
+    # Calculator
+    path(
+        'calculator/', 
+        service_calculator, 
+        name='service_calculator'
+    ),
 ]
+

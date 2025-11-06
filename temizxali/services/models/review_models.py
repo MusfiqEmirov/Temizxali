@@ -6,10 +6,6 @@ from services.utils.normalize_phone_number import normalize_az_phone
 
 
 class Review(models.Model):
-    services = models.ManyToManyField(
-        Service,
-        verbose_name='Rəy verilən servislər'
-    )
     fullname = models.CharField(
         max_length=32,
         verbose_name='Ad soyad'

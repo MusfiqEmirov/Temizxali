@@ -16,7 +16,7 @@ class Order(models.Model):
     # order_models.py və review_models.py
     phone_number = models.CharField(
         max_length=12,                    # indi 12 rəqəm saxlayırıq
-        unique=True,                      # istəyə görə unikallıq əlavə etdim
+        # unique=True,                      # istəyə görə unikallıq əlavə etdim
         verbose_name='Mobil nömrə'
     )
     text = models.TextField(

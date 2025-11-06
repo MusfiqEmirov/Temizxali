@@ -1,10 +1,13 @@
 from django.contrib import admin
+from nested_admin.nested import NestedModelAdmin, NestedTabularInline
 from django.utils.html import format_html
 
 from services.utils import LANGUAGES
 from services.models import (
-    Service, 
+    Service,
+    ServiceVariant, 
     ServiceTranslation, 
+    ServiceVariantTranslation,
     SpecialProject, 
     SpecialProjectTranslation,
     Image,
@@ -16,7 +19,7 @@ from services.models import (
 )
 
 # Image Admin
-class ImageInline(admin.TabularInline):
+class ImageInline(NestedTabularInline):
     model = Image
     extra = 1
     verbose_name = 'Şəkil'
@@ -56,7 +59,7 @@ class ImageAdmin(admin.ModelAdmin):
         return qs.filter(is_background_image=True)
 
 # Service Admin
-class ServiceTranslationInline(admin.TabularInline):
+class ServiceTranslationInline(NestedTabularInline):
     model = ServiceTranslation
     extra = len(LANGUAGES)
     min_num = len(LANGUAGES)
@@ -66,17 +69,42 @@ class ServiceTranslationInline(admin.TabularInline):
     exclude = ('slug',)
 
 
+class ServiceVariantTranslationInline(NestedTabularInline):
+    model = ServiceVariantTranslation
+    extra = len(LANGUAGES)
+    min_num = len(LANGUAGES)
+    max_num = len(LANGUAGES)
+    verbose_name = 'Növ Tərcüməsi'
+    verbose_name_plural = 'Növ Tərcümələri'
+
+
+class ServiceVariantInline(NestedTabularInline):
+    model = ServiceVariant
+    extra = 1
+    verbose_name = 'Servis Növü'
+    verbose_name_plural = 'Servis Növləri'
+    inlines = [ServiceVariantTranslationInline]
+
 @admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'get_service_name', 'price', 'sale', 'is_active', 'is_vip', 'is_premium', 'delivery', 'created_at')
+class ServiceAdmin(NestedModelAdmin):
+    list_display = (
+        'id', 'get_service_name', 'price', 'vip_price', 'is_kq', 'is_kv_metr', 'is_metr',
+        'premium_price', 'sale', 'is_active', 'delivery', 'created_at',
+        
+    )
     list_display_links = ('id', 'get_service_name')
-    list_filter = ('is_active', 'is_vip', 'is_premium', 'delivery', 'created_at')
-    inlines = [ServiceTranslationInline, ImageInline]
+    list_filter = ('is_active', 'delivery', 'created_at')
+
+    inlines = [
+        ServiceTranslationInline,
+        ServiceVariantInline,
+        ImageInline
+    ]
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.filter(is_active=True)
-    
+
     def get_service_name(self, obj):
         translation = obj.translations.first()
         if translation:
@@ -144,8 +172,7 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = ('id', 'fullname', 'phone_number', 'is_verified', 'created_at')
     list_display_links = ('id', 'fullname')
     list_filter = ('is_verified', 'created_at')
-    search_fields = ('fullname', 'phone_number', 'comment')
-    filter_horizontal = ('services',)  
+    search_fields = ('fullname', 'phone_number', 'comment') 
  
 
  # Order Admin 

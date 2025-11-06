@@ -62,3 +62,23 @@ msgstr "Ваш заказ успешно отправлен"
 msgid "Zəhmət olmasa formu düzgün doldurun"
 msgstr "Пожалуйста, заполните форму правильно"
 
+#: services/views/calculator_view.py:50
+msgid "Heç bir servis seçilməyib."
+msgstr "Не выбрана ни одна услуга."
+
+#: services/views/calculator_view.py:77
+msgid "Servis tapılmadı: ID %(service_id)s"
+msgstr "Услуга не найдена: ID %(service_id)s"
+
+#: services/views/calculator_view.py:109
+msgid "%(service_name)s üçün dəyər daxil edilməyib."
+msgstr "Значение не введено для %(service_name)s."
+
+#: services/views/calculator_view.py:118
+msgid "%(service_name)s üçün dəyər müsbət olmalıdır."
+msgstr "Значение для %(service_name)s должно быть положительным."
+
+#: services/views/calculator_view.py:123
+msgid "%(service_name)s üçün keçərsiz dəyər."
+msgstr "Неверное значение для %(service_name)s."
+
