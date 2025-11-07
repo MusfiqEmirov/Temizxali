@@ -1,6 +1,5 @@
 from django.urls import path
 
-from .views.calculator_view import service_calculator
 from .views.views_v1 import *
 
 
@@ -37,8 +36,8 @@ urlpatterns = [
     # Calculator
     path(
         'calculator/', 
-        service_calculator, 
-        name='service_calculator'
+        ServiceCalculatorView.as_view(), 
+        name='service-calculator'
     ),
 ]
 

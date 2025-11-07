@@ -82,3 +82,91 @@ msgstr "Значение для %(service_name)s должно быть поло�
 msgid "%(service_name)s üçün keçərsiz dəyər."
 msgstr "Неверное значение для %(service_name)s."
 
+#: templates/calculator.html
+msgid "Servis Kalkulyatoru"
+msgstr "Калькулятор услуг"
+
+#: templates/calculator.html
+msgid "Normal"
+msgstr "Обычный"
+
+#: templates/calculator.html
+msgid "Premium"
+msgstr "Премиум"
+
+#: templates/calculator.html
+msgid "Variantlar"
+msgstr "Варианты"
+
+#: templates/calculator.html
+msgid "Dəyər"
+msgstr "Значение"
+
+#: templates/calculator.html
+msgid "ədəd"
+msgstr "шт"
+
+#: templates/calculator.html
+msgid "Dəyər daxil edin"
+msgstr "Введите значение"
+
+#: templates/calculator.html
+msgid "Hesabla"
+msgstr "Рассчитать"
+
+#: templates/calculator.html
+msgid "Hesablanma Nəticələri"
+msgstr "Результаты расчета"
+
+#: templates/calculator.html
+msgid "Servis"
+msgstr "Услуга"
+
+#: templates/calculator.html
+msgid "Variant"
+msgstr "Вариант"
+
+#: templates/calculator.html
+msgid "Növ"
+msgstr "Тип"
+
+#: templates/calculator.html
+msgid "Əsas Qiymət"
+msgstr "Базовая цена"
+
+#: templates/calculator.html
+msgid "Endirimsiz"
+msgstr "Без скидки"
+
+#: templates/calculator.html
+msgid "Endirim"
+msgstr "Скидка"
+
+#: templates/calculator.html
+msgid "Yekun"
+msgstr "Итого"
+
+#: templates/calculator.html
+msgid "Vahid"
+msgstr "Ед."
+
+#: templates/calculator.html
+msgid "Yekun məbləğ"
+msgstr "Итоговая сумма"
+
+#: templates/calculator.html
+msgid "Dil"
+msgstr "Язык"
+
+#: templates/calculator.html
+msgid "Ana Səhifə"
+msgstr "Главная"
+
+#: templates/calculator.html
+msgid "Kalkulyator"
+msgstr "Калькулятор"
+
+#: templates/calculator.html
+msgid "Qiymət Növü"
+msgstr "Тип цены"
+
