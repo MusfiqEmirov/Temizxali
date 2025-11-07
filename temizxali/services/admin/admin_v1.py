@@ -66,7 +66,7 @@ class ServiceTranslationInline(NestedTabularInline):
     max_num = len(LANGUAGES)
     verbose_name = 'Servis Tərcüməsi'
     verbose_name_plural = 'Servis Tərcümələri'
-    # exclude = ['slug']
+    exclude = ['slug']
 
 
 class ServiceVariantTranslationInline(NestedTabularInline):
