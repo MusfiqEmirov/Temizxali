@@ -4,33 +4,33 @@ from .views.views_v1 import *
 
 
 urlpatterns = [
-    # HomePage
+    # Pages
     path(
         '', 
         HomePageView.as_view(), 
         name='home-page'
     ),
-    # Order
+    path(
+        'about/', 
+        AboutPageView.as_view(), 
+        name='about-page'
+    ),
+    path(
+        'service/<slug:service_slug>/', 
+        ServiceDetailPage.as_view(), 
+        name='service-page'
+    ),
     path(
         'order/',
-        OrderCreateView.as_view(),
-        name='create-order'
+        OrderPageView.as_view(),
+        name='order-page'
     ),
-    path(
-        'order/success/',
-        OrderSuccessView.as_view(),
-        name='order-success'
-    ),
+
     # Review
     path(
         'review/',
         ReviewCreateView.as_view(),
         name='create-review'
-    ),
-    path(
-        'review/success/',
-        ReviewSuccessView.as_view(),
-        name='review-success'
     ),
 
     # Calculator

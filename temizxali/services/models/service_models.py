@@ -55,6 +55,12 @@ class Service(models.Model):
         blank=True,
         verbose_name='Premium'
     )
+    is_number = models.BooleanField(
+        default=False,
+        null=True,
+        blank=True,
+        verbose_name='Ədəd ilə hesablanırsa'
+    )
     is_kq = models.BooleanField(
         default=False,
         null=True,
@@ -62,11 +68,13 @@ class Service(models.Model):
         verbose_name='KQ ilə hesablanırsa'
     )
     is_kv_metr = models.BooleanField(
+        default=False,
         null=True,
         blank=True,
         verbose_name='Kvadrat metr (m²) ilə hesablanırsa'
     )
     is_metr = models.BooleanField(
+        default=False,
         null=True,
         blank=True,
         verbose_name='Metr (m) ilə hesablanırsa'

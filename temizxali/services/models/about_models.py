@@ -42,6 +42,6 @@ class AboutTranslation(models.Model):
         verbose_name = 'Haqqımızda tərcümələri'
 
     def __str__(self):
-        return self.about[:20]
+        return self.description[:20]
 
 

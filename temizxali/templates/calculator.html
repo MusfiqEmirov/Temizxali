@@ -83,7 +83,7 @@
                                     </select>
                                     <input type="text"
                                            name="value_{{ service.id }}_{{ variant.id }}"
-                                           placeholder="Dəyər ({{ service.is_kq|yesno:'kq,' }}{{ service.is_kv_metr|yesno:'m²,' }}{{ service.is_metr|yesno:'m,' }}ədəd)"
+                                           placeholder="Dəyər ({% if service.is_kq %}kq{% elif service.is_kv_metr %}m²{% elif service.is_metr %}m{% elif service.is_number %}ədəd{% else %}ədəd{% endif %})"
                                            style="width: 100px;">
                                 </div>
                             {% endfor %}
@@ -91,7 +91,7 @@
                     {% else %}
                         <input type="text"
                                name="value_{{ service.id }}"
-                               placeholder="Dəyər daxil edin ({{ service.is_kq|yesno:'kq,' }}{{ service.is_kv_metr|yesno:'m²,' }}{{ service.is_metr|yesno:'m,' }}ədəd)"
+                               placeholder="Dəyər daxil edin ({% if service.is_kq %}kq{% elif service.is_kv_metr %}m²{% elif service.is_metr %}m{% elif service.is_number %}ədəd{% else %}ədəd{% endif %})"
                                style="width: 150px;">
                     {% endif %}
                 </div>

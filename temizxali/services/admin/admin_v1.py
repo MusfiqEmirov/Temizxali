@@ -66,7 +66,7 @@ class ServiceTranslationInline(NestedTabularInline):
     max_num = len(LANGUAGES)
     verbose_name = 'Servis Tərcüməsi'
     verbose_name_plural = 'Servis Tərcümələri'
-    exclude = ('slug',)
+    # exclude = ['slug']
 
 
 class ServiceVariantTranslationInline(NestedTabularInline):
@@ -88,8 +88,8 @@ class ServiceVariantInline(NestedTabularInline):
 @admin.register(Service)
 class ServiceAdmin(NestedModelAdmin):
     list_display = (
-        'id', 'get_service_name', 'price', 'vip_price', 'is_kq', 'is_kv_metr', 'is_metr',
-        'premium_price', 'sale', 'is_active', 'delivery', 'created_at',
+        'id', 'get_service_name', 'price', 'vip_price', 'is_number', 'is_kq', 'is_kv_metr', 'is_metr',
+        'premium_price', 'sale', 'is_active', 'delivery', 'created_at', 
         
     )
     list_display_links = ('id', 'get_service_name')

@@ -94,10 +94,21 @@ class CalculatorService:
                 )
                 variant_name = ''
 
-            if service.is_kq: calculated = base_price * value; unit = 'kq'
-            elif service.is_kv_metr: calculated = base_price * value; unit = 'm²'
-            elif service.is_metr: calculated = base_price * value; unit = 'm'
-            else: calculated = base_price; unit = 'ədəd'
+            if service.is_kq: 
+                calculated = base_price * value
+                unit = 'kq'
+            elif service.is_kv_metr: 
+                calculated = base_price * value
+                unit = 'm²'
+            elif service.is_metr: 
+                calculated = base_price * value
+                unit = 'm'
+            elif service.is_number: 
+                calculated = base_price * value
+                unit = 'ədəd'
+            else: 
+                calculated = base_price
+                unit = 'ədəd'
 
             discount_percent = Decimal(str(service.sale or '0'))
             discount_amount = (calculated * discount_percent) / Decimal('100')
