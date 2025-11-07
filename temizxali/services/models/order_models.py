@@ -13,10 +13,9 @@ class Order(models.Model):
         max_length=32,
         verbose_name='Ad soyad'
     )
-    # order_models.py və review_models.py
     phone_number = models.CharField(
-        max_length=12,                    # indi 12 rəqəm saxlayırıq
-        # unique=True,                      # istəyə görə unikallıq əlavə etdim
+        max_length=12,                    
+        # unique=True,                     
         verbose_name='Mobil nömrə'
     )
     text = models.TextField(

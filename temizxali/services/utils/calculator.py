@@ -3,15 +3,50 @@ from django.contrib import messages
 from django.utils.translation import gettext as _
 
 class CalculatorService:
+    """
+    Service class for calculating total prices of selected services and variants.
+    Handles dynamic price types, discounts, and unit-based calculations.
+    """
     def __init__(self, lang):
+        """
+        Initialize the calculator with language and default totals.
+
+        Args:
+            lang (str): The current active language code.
+        """
         self.lang = lang
         self.result = []
         self.total_price = Decimal('0.00')
 
     def apply_item(self, request, service):
+        """
+        Process a single service and add its calculation result.
+
+        Args:
+            request (HttpRequest): The current request object containing form data.
+            service (Service): The service instance being calculated.
+
+        Returns:
+            None
+        """
         return self._process(request, service)
 
     def _process(self, request, service):
+        """
+        Internal method to process the calculation logic for a service.
+
+        - Retrieves variants and input values from POST data.
+        - Applies base prices, price type (normal/premium/vip).
+        - Calculates discounts and totals.
+        - Appends calculation details to `self.result`.
+
+        Args:
+            request (HttpRequest): The request object containing POST data.
+            service (Service): The service instance being processed.
+
+        Returns:
+            None
+        """
         service_name = service.translations.first().name if service.translations.exists() else f'Servis{service.id}'
         variant_ids = request.POST.getlist(f'variant_{service.id}')
         selected_variants = []

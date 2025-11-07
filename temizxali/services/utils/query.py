@@ -9,8 +9,19 @@ from services.models import (
 
 
 class CalculatorQuery:
+    """
+    Utility class responsible for loading services and their translations
+    based on the current active language.
+    """
     @staticmethod
     def load_services():
+        """
+        Load all active services with language-specific translations.
+
+        Returns:
+            QuerySet: A queryset of `Service` objects prefetching translations
+                      and variant translations filtered by current language.
+        """
         lang = translation.get_language()
         return (
             Service.objects.filter(

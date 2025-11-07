@@ -127,9 +127,19 @@ class ReviewSuccessView(View):
 
 
 class ServiceCalculatorView(View):
+    """
+    Handles display and processing of the service price calculator.
+    """
     template_name = 'calculator.html'
 
     def get(self, request):
+        """
+        Handle GET requests to render the calculator page.
+
+        - Activates language based on the session or query.
+        - Loads available services.
+        - Retrieves any stored calculation results from the session.
+        """
         self._language_switch(request)
         services = CalculatorQuery.load_services()
         result = []
@@ -147,6 +157,13 @@ class ServiceCalculatorView(View):
         })
 
     def post(self, request):
+        """
+        Handle POST requests to calculate selected services' total price.
+
+        - Reads selected service IDs from the request.
+        - Applies each service to the calculator service.
+        - Stores the calculation result in the session.
+        """
         lang = translation.get_language()
         service_ids = request.POST.getlist('service_id')
 
@@ -169,6 +186,12 @@ class ServiceCalculatorView(View):
         return redirect(self._redirect_with_lang())
 
     def _redirect_with_lang(self):
+        """
+        Build redirect URL that preserves the current language parameter.
+
+        Returns:
+            str: URL with language code if not default.
+        """
         lang = translation.get_language()
         url = reverse('service_calculator')
         if lang != settings.LANGUAGE_CODE:
@@ -176,6 +199,11 @@ class ServiceCalculatorView(View):
         return url
 
     def _language_switch(self, request):
+        """
+        Handle language switching from query parameters.
+
+        Activates the requested language and stores it in session if valid.
+        """
         lang_param = request.GET.get('lang') or request.GET.get('language')
         if lang_param and lang_param in dict(settings.LANGUAGES):
             request.session['django_language'] = lang_param
