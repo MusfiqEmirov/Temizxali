@@ -1,0 +1,50 @@
+{# templates/about_page.html #}
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Haqqımızda</title>
+</head>
+<body>
+
+<form method="post" action="{% url 'set_language' %}" style="margin-bottom:20px;">
+  {% csrf_token %}
+  <input name="next" type="hidden" value="{{ request.path }}">
+  <select name="language" onchange="this.form.submit()">
+      <option value="az" {% if languages == 'az' %}selected{% endif %}>Azərbaycan</option>
+      <option value="ru" {% if languages == 'ru' %}selected{% endif %}>Русский</option>
+  </select>
+</form>
+
+
+<h1>Haqqımızda</h1>
+
+{% for item in about %}
+  <div style="border:1px solid #ddd;padding:10px;margin-bottom:15px;">
+
+    {% with tr=item.translations.all.0 %}
+      {% if tr %}
+        <p>{{ tr.description|safe }}</p>
+      {% else %}
+        <p>Bu dil üçün məlumat yoxdur.</p>
+      {% endif %}
+    {% endwith %}
+
+    {% if item.image %}
+      <img src="{{ item.image.url }}" width="200">
+    {% endif %}
+
+  </div>
+{% endfor %}
+
+
+<h2>Statistikalar</h2>
+{% for stat in statistics %}
+  {% if stat.client_count %}<div>Client sayı: {{ stat.client_count }}</div>{% endif %}
+  {% if stat.work_done_count %}<div>Görülmüş iş sayı: {{ stat.work_done_count }}</div>{% endif %}
+  {% if stat.staff_count %}<div>İşçi sayı: {{ stat.staff_count }}</div>{% endif %}
+  {% if stat.achievement_count %}<div>Nailiyyət sayı: {{ stat.achievement_count }}</div>{% endif %}
+{% endfor %}
+
+</body>
+</html>

@@ -14,7 +14,8 @@ class Order(models.Model):
         verbose_name='Ad soyad'
     )
     phone_number = models.CharField(
-        max_length=10,
+        max_length=12,                    
+        # unique=True,                     
         verbose_name='Mobil nömrə'
     )
     text = models.TextField(
@@ -33,3 +34,13 @@ class Order(models.Model):
     
     def __str__(self):
        return f'{self.phone_number}: {self.text[:20]}'
+   
+    def save(self, *args, **kwargs):
+        if self.phone_number:
+            from services.utils.normalize_phone_number import normalize_az_phone
+            normalized = normalize_az_phone(self.phone_number)
+            if normalized:
+                self.phone_number = normalized
+            else:
+                raise ValueError("Düzgün Azərbaycan mobil nömrəsi deyil.")
+        super().save(*args, **kwargs)
