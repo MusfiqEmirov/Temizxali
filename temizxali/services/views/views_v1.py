@@ -9,6 +9,9 @@ from django.db.models import Prefetch
 from django.conf import settings
 from django.urls import reverse
 from decimal import Decimal
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from django.conf import settings
 
 from services.models import *
 from services.forms import OrderForm
@@ -26,7 +29,7 @@ __all__ = [
     'ServiceCalculatorView'
 ]
 
-
+@method_decorator(cache_page(settings.CACHE_TTL), name='dispatch')
 class HomePageView(View):
     template_name = 'home_page.html'
     
@@ -63,7 +66,7 @@ class HomePageView(View):
             'reviews': reviews
         })
 
-
+@method_decorator(cache_page((settings.CACHE_TTL)), name='dispatch')
 class AboutPageView(View):
     template_name = 'about_page.html'
 
@@ -80,7 +83,7 @@ class AboutPageView(View):
             'active_lang': languages,
             })
 
-
+@method_decorator(cache_page((settings.CACHE_TTL)), name='dispatch')
 class ServiceDetailPage(View):
     template_name = 'service_detail_page.html'
     def get(self, request, service_slug):
