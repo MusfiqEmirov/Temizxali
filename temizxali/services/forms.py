@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from .models.review_models import Review
 from .models.order_models import Order
-from services.utils.normalize_phone_number import normalize_az_phone
+from services.utils import normalize_az_phone
 
 
 class OrderForm(forms.ModelForm):

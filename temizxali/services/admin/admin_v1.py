@@ -3,37 +3,30 @@ from nested_admin.nested import NestedModelAdmin, NestedTabularInline
 from django.utils.html import format_html
 
 from services.utils import LANGUAGES
-from services.models import (
-    Service,
-    ServiceVariant, 
-    ServiceTranslation, 
-    ServiceVariantTranslation,
-    SpecialProject, 
-    SpecialProjectTranslation,
-    Image,
-    About,
-    AboutTranslation,
-    Statistic,
-    Review,
-    Order
-)
+from services.models import *
+
 
 # Image Admin
-class ImageInline(NestedTabularInline):
+class ServiceImageInline(NestedTabularInline):
     model = Image
+    fk_name = 'service'
     extra = 1
-    verbose_name = 'Şəkil'
-    verbose_name_plural = 'Şəkillər'
     readonly_fields = ('image_preview',)
-    exclude = ('is_background_image',)
+    fields = ('image_name', 'image', 'image_preview')
 
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "service":
-            if hasattr(self, 'parent_model') and self.parent_model == Service:
-                kwargs['queryset'] = Service.objects.filter(is_active=True)
-            else:
-                kwargs['queryset'] = Service.objects.none()
-        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="100" />', obj.image.url)
+        return "-"
+    image_preview.short_description = "Preview"
+
+
+class SpecialProjectImageInline(NestedTabularInline):
+    model = Image
+    fk_name = 'special_project'
+    extra = 1
+    readonly_fields = ('image_preview',)
+    fields = ('image_name', 'image', 'image_preview')
 
     def image_preview(self, obj):
         if obj.image:
@@ -98,7 +91,7 @@ class ServiceAdmin(NestedModelAdmin):
     inlines = [
         ServiceTranslationInline,
         ServiceVariantInline,
-        ImageInline
+        ServiceImageInline
     ]
 
     def get_queryset(self, request):
@@ -127,7 +120,7 @@ class SpecialProjectTranslationInline(admin.TabularInline):
 class SpecialProjectAdmin(admin.ModelAdmin):
     list_display = ('id', 'get_project_description', 'url')
     list_display_links = ('id', 'get_project_description')
-    inlines = [SpecialProjectTranslationInline, ImageInline]
+    inlines = [SpecialProjectTranslationInline, SpecialProjectImageInline]
 
     def get_project_description(self, obj):
         translation = obj.translations.first()  
@@ -183,3 +176,34 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
     search_fields = ('fullname', 'phone_number', 'text')
     filter_horizontal = ('services',) 
+
+
+# Motto Admin
+class MottoTranslationInline(admin.TabularInline):
+    model = MottoTranslation
+    extra = len(LANGUAGES)
+    min_num = len(LANGUAGES)
+    max_num = len(LANGUAGES)
+    verbose_name = 'Deviz Tərcüməsi'
+    verbose_name_plural = 'Deviz Tərcümələri'
+
+
+@admin.register(Motto)
+class MottoAdmin(admin.ModelAdmin):
+    inlines = [MottoTranslationInline]
+    list_display = ['id', '__str__']
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('id', 'address', 'phone', 'phone_second', 'email', 'email_second')
+    search_fields = ('address', 'phone', 'phone_second', 'email', 'email_second')
+    list_display_links = ('id', 'address')
+    fieldsets = (
+        ('Əsas Məlumat', {
+            'fields': ('address', 'phone', 'phone_second', 'email', 'email_second')
+        }),
+        ('Sosial Şəbəkələr', {
+            'fields': ('social_one', 'social_two', 'social_three')
+        }),
+    )

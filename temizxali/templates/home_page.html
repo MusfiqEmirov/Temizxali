@@ -238,6 +238,73 @@
             color: #999;
             font-size: 1.1em;
         }
+        .mottos-section {
+            position: relative;
+            max-width: 800px;
+            margin: 20px auto 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .mottos-carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .motto-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            padding: 40px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            min-width: 100%;
+            flex-shrink: 0;
+        }
+        .motto-text {
+            font-size: 1.3em;
+            line-height: 1.8;
+            font-style: italic;
+        }
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .carousel-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: opacity 0.3s;
+        }
+        .carousel-btn:hover {
+            opacity: 0.8;
+        }
+        .carousel-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ccc;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .carousel-dot.active {
+            background: #667eea;
+        }
         @media (max-width: 768px) {
             .hero-content h1 {
                 font-size: 2em;
@@ -309,6 +376,33 @@
                     <div class="stat-number">{{ statistics.achievement_count }}</div>
                     <div class="stat-label">{% if languages == 'az' %}Nailiyyət{% else %}Достижение{% endif %}</div>
                 </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Mottos Section -->
+        {% if mottos %}
+        <div class="section">
+            <h2 class="section-title">{% if languages == 'az' %}Devizlər{% else %}Девизы{% endif %}</h2>
+            <div class="mottos-section">
+                <div class="mottos-carousel" id="mottosCarousel">
+                    {% for motto in mottos %}
+                        {% with translation=motto.translations.all|first %}
+                            {% if translation %}
+                            <div class="motto-card">
+                                <div class="motto-text">{{ translation.text }}</div>
+                            </div>
+                            {% endif %}
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+                {% if mottos|length > 1 %}
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="prevBtn" onclick="changeMotto(-1)">‹ {% if languages == 'az' %}Əvvəlki{% else %}Предыдущий{% endif %}</button>
+                    <button class="carousel-btn" id="nextBtn" onclick="changeMotto(1)">{% if languages == 'az' %}Növbəti{% else %}Следующий{% endif %} ›</button>
+                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
                 {% endif %}
             </div>
         </div>
@@ -388,5 +482,102 @@
         </div>
         {% endif %}
     </div>
+
+    <script>
+        let currentMottoIndex = 0;
+        const mottosCarousel = document.getElementById('mottosCarousel');
+        const mottoCards = mottosCarousel ? mottosCarousel.querySelectorAll('.motto-card') : [];
+        const totalMottos = mottoCards.length;
+
+        // Dots yarat
+        function createDots() {
+            const dotsContainer = document.getElementById('carouselDots');
+            if (!dotsContainer || totalMottos <= 1) return;
+            
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalMottos; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+                dot.onclick = () => goToMotto(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        // Müəyyən bir motto-ya keç
+        function goToMotto(index) {
+            if (index < 0 || index >= totalMottos) return;
+            currentMottoIndex = index;
+            updateCarousel();
+            updateButtons();
+            updateDots();
+        }
+
+        // Carousel-i yenilə
+        function updateCarousel() {
+            if (mottosCarousel) {
+                mottosCarousel.style.transform = `translateX(-${currentMottoIndex * 100}%)`;
+            }
+        }
+
+        // Düymələri yenilə
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            if (prevBtn) prevBtn.disabled = currentMottoIndex === 0;
+            if (nextBtn) nextBtn.disabled = currentMottoIndex === totalMottos - 1;
+        }
+
+        // Dots-u yenilə
+        function updateDots() {
+            const dots = document.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => {
+                if (index === currentMottoIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        // Növbəti/Əvvəlki motto
+        function changeMotto(direction) {
+            const newIndex = currentMottoIndex + direction;
+            if (newIndex >= 0 && newIndex < totalMottos) {
+                goToMotto(newIndex);
+            }
+        }
+
+        // Avtomatik fırlanma (5 saniyədə bir)
+        let autoRotateInterval;
+        function startAutoRotate() {
+            if (totalMottos <= 1) return;
+            autoRotateInterval = setInterval(() => {
+                const nextIndex = (currentMottoIndex + 1) % totalMottos;
+                goToMotto(nextIndex);
+            }, 5000);
+        }
+
+        function stopAutoRotate() {
+            if (autoRotateInterval) {
+                clearInterval(autoRotateInterval);
+            }
+        }
+
+        // Səhifə yüklənəndə
+        document.addEventListener('DOMContentLoaded', function() {
+            if (totalMottos > 1) {
+                createDots();
+                updateButtons();
+                startAutoRotate();
+                
+                // Mouse hover olduqda avtomatik fırlanmanı dayandır
+                const mottosSection = document.querySelector('.mottos-section');
+                if (mottosSection) {
+                    mottosSection.addEventListener('mouseenter', stopAutoRotate);
+                    mottosSection.addEventListener('mouseleave', startAutoRotate);
+                }
+            }
+        });
+    </script>
 </body>
 </html>

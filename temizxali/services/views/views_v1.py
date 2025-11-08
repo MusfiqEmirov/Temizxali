@@ -16,8 +16,7 @@ from django.conf import settings
 from services.models import *
 from services.forms import OrderForm
 from services.forms import ReviewForm
-from services.utils.calculator import CalculatorService
-from services.utils.query import CalculatorQuery
+from services.utils import CalculatorService, CalculatorQuery
 
 
 __all__ = [
@@ -55,7 +54,12 @@ class HomePageView(View):
         ).order_by('-created_at')
         
         statistics = Statistic.objects.first()
-        reviews = Review.objects.filter(is_verified=True).order_by('-created_at')[:6]
+        mottos = Motto.objects.filter(
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=MottoTranslation.objects.filter(languages=languages))
+        ).order_by('-id')
+        reviews = Review.objects.filter(is_verified=True).order_by('-created_at')
 
         return render(request, self.template_name, {
             'languages': languages,
@@ -63,6 +67,7 @@ class HomePageView(View):
             'services': services,
             'special_projects': special_projects,
             'statistics': statistics,
+            'mottos': mottos,
             'reviews': reviews
         })
 

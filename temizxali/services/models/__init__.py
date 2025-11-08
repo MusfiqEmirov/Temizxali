@@ -5,7 +5,8 @@ from .about_models import About, AboutTranslation
 from .statistic_models import Statistic
 from .review_models import Review
 from .order_models import Order
-
+from .motto_models import Motto, MottoTranslation
+from .contact_models import Contact
 
 __all__ = [
     'Service',
@@ -20,4 +21,7 @@ __all__ = [
     'Statistic',
     'Review',
     'Order',
+    'Motto',
+    'MottoTranslation',
+    'Contact'
 ]

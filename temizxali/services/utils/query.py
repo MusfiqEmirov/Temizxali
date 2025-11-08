@@ -1,11 +1,7 @@
 from django.db.models import Prefetch
 from django.utils import translation
 from django.conf import settings
-from services.models import (
-    Service, 
-    ServiceTranslation, 
-    ServiceVariantTranslation
-)
+from services.models import *
 
 
 class CalculatorQuery:
