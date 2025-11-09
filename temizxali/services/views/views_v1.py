@@ -235,7 +235,6 @@ class ReviewCreateView(View):
         if form.is_valid():
             form.save()
             messages.success(request, _('Rəyiniz uğurla göndərildi ✅'))
-            return redirect('review-success')
         else:
             messages.error(request, _('Melumatlari duzgun daxil edin'))
 

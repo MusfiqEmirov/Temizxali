@@ -21,7 +21,7 @@ class Review(models.Model):
         verbose_name='Mobil nömrə'
     )
     text = models.TextField(
-        validators=[MaxLengthValidator(2000)],
+        validators=[MaxLengthValidator(140)],
         verbose_name='Mesaj'
     )
     is_verified = models.BooleanField(
