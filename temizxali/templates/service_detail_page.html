@@ -8,6 +8,13 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="{{ translation.description|truncatewords:20 }}" name="description">
     <meta content="{{ translation.name }}" name="keywords">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="{{ translation.name }} - Xidmət Detalları">
+    <meta property="og:description" content="{{ translation.description|truncatewords:20 }}">
+    {% if service.images.first %}
+    <meta property="og:image" content="{{ service.images.first.image.url }}">
+    {% endif %}
+    <meta property="og:type" content="website">
 
     <!-- Favicon -->
     <link href="{% static 'img/favicon.ico' %}" rel="icon">
@@ -140,11 +147,11 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s" 
          {% if service.images.first %}
-             style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{{ service.images.first.image.url }}') center center no-repeat; background-size: cover;"
+             style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{{ service.images.first.image.url }}') center center no-repeat; background-size: cover; background-attachment: fixed;"
          {% elif service.video %}
-             style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% static 'img/carousel-1.jpg' %}') center center no-repeat; background-size: cover;"
+             style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% static 'img/carousel-1.jpg' %}') center center no-repeat; background-size: cover; background-attachment: fixed;"
          {% else %}
-             style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% static 'img/carousel-1.jpg' %}') center center no-repeat; background-size: cover;"
+             style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% static 'img/carousel-1.jpg' %}') center center no-repeat; background-size: cover; background-attachment: fixed;"
          {% endif %}>
         <div class="container text-center py-5">
             <h1 class="display-3 text-white mb-4 animated slideInDown">{{ translation.name }}</h1>
@@ -168,7 +175,14 @@
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     {% if service.video %}
                         <div class="mb-4">
-                            <video class="img-fluid rounded" controls autoplay muted loop playsinline style="width: 100%; max-height: 500px; object-fit: cover;">
+                            <video class="img-fluid rounded service-video" 
+                                   controls 
+                                   autoplay 
+                                   muted 
+                                   loop 
+                                   playsinline 
+                                   preload="metadata"
+                                   style="width: 100%; max-height: 500px; object-fit: cover;">
                                 <source src="{{ service.video.url }}" type="video/mp4">
                                 Sənin brauzerin videonu dəstəkləmir.
                             </video>
@@ -176,18 +190,27 @@
                     {% elif service.images.first %}
                         <div class="mb-4">
                             <a href="{{ service.images.first.image.url }}" data-lightbox="service-gallery">
-                                <img class="img-fluid rounded" src="{{ service.images.first.image.url }}" alt="{{ translation.name }}" style="width: 100%; max-height: 500px; object-fit: cover;">
+                                <img class="img-fluid rounded service-main-image" 
+                                     src="{{ service.images.first.image.url }}" 
+                                     alt="{{ translation.name }}" 
+                                     loading="eager"
+                                     decoding="async"
+                                     style="width: 100%; max-height: 500px; object-fit: cover;">
                             </a>
                         </div>
                     {% endif %}
 
                     <!-- Image Gallery -->
                     {% if service.images.count > 1 %}
-                        <div class="row g-3">
+                        <div class="row g-3 service-gallery-thumbs">
                             {% for image in service.images.all %}
                                 <div class="col-4 col-md-3">
                                     <a href="{{ image.image.url }}" data-lightbox="service-gallery" data-title="{{ image.image_name }}">
-                                        <img class="img-fluid rounded" src="{{ image.image.url }}" alt="{{ image.image_name }}">
+                                        <img class="img-fluid rounded service-gallery-thumb" 
+                                             src="{{ image.image.url }}" 
+                                             alt="{{ image.image_name }}"
+                                             loading="lazy"
+                                             decoding="async">
                                     </a>
                                 </div>
                             {% endfor %}
@@ -350,14 +373,19 @@
                                         <div class="service-item rounded d-flex h-100">
                                             <div class="service-img rounded">
                                                 {% if serv.video %}
-                                                    <video autoplay muted loop playsinline class="video-bg">
+                                                    <video autoplay muted loop playsinline class="video-bg" preload="metadata">
                                                         <source src="{{ serv.video.url }}" type="video/mp4">
                                                         Sənin brauzerin videonu dəstəkləmir.
                                                     </video>
                                                 {% elif serv.images.first %}
-                                                    <img class="w-100 h-100" src="{{ serv.images.first.image.url }}" alt="{{ serv_translation.name }}" style="object-fit: cover;">
+                                                    <img class="w-100 h-100 related-service-image" 
+                                                         src="{{ serv.images.first.image.url }}" 
+                                                         alt="{{ serv_translation.name }}" 
+                                                         loading="lazy"
+                                                         decoding="async"
+                                                         style="object-fit: cover;">
                                                 {% else %}
-                                                    <video autoplay muted loop playsinline class="video-bg">
+                                                    <video autoplay muted loop playsinline class="video-bg" preload="metadata">
                                                         <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
                                                         Sənin brauzerin videonu dəstəkləmir.
                                                     </video>
