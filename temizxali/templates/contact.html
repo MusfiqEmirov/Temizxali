@@ -137,8 +137,8 @@
                 </div>
 
                 <!-- <a href="service.html" class="nav-item nav-link">Xidmətlər</a> -->
-                <a href="project.html" class="nav-item nav-link">Layihələr</a>
-                <a href="testimonial.html" class="nav-item nav-link">Rəylər</a>
+                <a href="{% url 'home-page' %}#projects" class="nav-item nav-link">Layihələr</a>
+                <a href="{% url 'home-page' %}#testimonials" class="nav-item nav-link">Rəylər</a>
 
                 <!-- <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -163,8 +163,8 @@
             <h1 class="display-3 text-white mb-4 animated slideInDown">Bizimlə əlaqə saxlayın</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="{% url 'home-page' %}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                    <li class="breadcrumb-item"><a href="{% url 'home-page' %}">Ana səhifə</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Əlaqə</li>
                 </ol>
             </nav>
         </div>

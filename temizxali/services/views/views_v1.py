@@ -206,11 +206,31 @@ class ReviewCreateView(View):
     template_name = 'comment_add.html'
 
     def get(self, request):
+        languages = translation.get_language()
         form = ReviewForm()
-        return render(request, self.template_name, {'form': form})
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')
+        contact = Contact.objects.first()
+        return render(request, self.template_name, {
+            'form': form,
+            'services': services,
+            'contact': contact
+        })
 
     def post(self, request):
+        languages = translation.get_language()
         form = ReviewForm(request.POST)
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')
+        contact = Contact.objects.first()
 
         if form.is_valid():
             form.save()
@@ -219,7 +239,11 @@ class ReviewCreateView(View):
         else:
             messages.error(request, _('Melumatlari duzgun daxil edin'))
 
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {
+            'form': form,
+            'services': services,
+            'contact': contact
+        })
     
 
 
