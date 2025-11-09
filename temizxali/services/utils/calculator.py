@@ -80,18 +80,20 @@ class CalculatorService:
                 continue
 
             if variant:
-                base_price = (
+                raw_price = (
                     variant.vip_price if price_type == 'vip' and variant.vip_price else
                     variant.premium_price if price_type == 'premium' and variant.premium_price else
                     variant.price
                 )
+                base_price = Decimal(str(raw_price)) if raw_price is not None else Decimal('0')
                 variant_name = variant.translations.first().name if variant.translations.exists() else ''
             else:
-                base_price = (
+                raw_price = (
                     service.vip_price if price_type == 'vip' and service.vip_price else
                     service.premium_price if price_type == 'premium' and service.premium_price else
                     service.price
                 )
+                base_price = Decimal(str(raw_price)) if raw_price is not None else Decimal('0')
                 variant_name = ''
 
             if service.is_kq: 
@@ -110,7 +112,14 @@ class CalculatorService:
                 calculated = base_price
                 unit = 'ədəd'
 
-            discount_percent = Decimal(str(service.sale or '0'))
+            if service.is_kv_metr:
+                if value > Decimal('10'):
+                    discount_percent = Decimal(str(service.sale or '0'))
+                else:
+                    discount_percent = Decimal('0')
+            else:
+                discount_percent = Decimal(str(service.sale or '0'))
+            
             discount_amount = (calculated * discount_percent) / Decimal('100')
             final_price = calculated - discount_amount
 

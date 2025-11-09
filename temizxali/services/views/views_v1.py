@@ -30,14 +30,13 @@ __all__ = [
 
 @method_decorator(cache_page(settings.CACHE_TTL), name='dispatch')
 class HomePageView(View):
-    template_name = 'home_page.html'
+    template_name = 'index.html'
     
     def get(self, request):
         languages = translation.get_language()
-        background_image = Image.objects.filter(
-            image_name='home_page_background', 
+        background_images = Image.objects.filter(
             is_background_image=True
-        ).first()
+        ).order_by('-created_at')
         services = Service.objects.filter(
             is_active=True,
             translations__languages=languages
@@ -60,15 +59,36 @@ class HomePageView(View):
             Prefetch('translations', queryset=MottoTranslation.objects.filter(languages=languages))
         ).order_by('-id')
         reviews = Review.objects.filter(is_verified=True).order_by('-created_at')
+        contact = Contact.objects.first()
+
+        # Mottos və background_images-i birləşdir
+        mottos_with_bg = []
+        background_images_list = list(background_images)
+        if mottos.exists() and background_images_list:
+            for index, motto in enumerate(mottos):
+                bg_image = background_images_list[index % len(background_images_list)]
+                mottos_with_bg.append({
+                    'motto': motto,
+                    'background_image': bg_image
+                })
+        elif mottos.exists():
+            for motto in mottos:
+                mottos_with_bg.append({
+                    'motto': motto,
+                    'background_image': None
+                })
 
         return render(request, self.template_name, {
             'languages': languages,
-            'background_image': background_image,
+            'background_images': background_images,
+            'background_image': background_images.first() if background_images.exists() else None,
+            'mottos_with_bg': mottos_with_bg,
             'services': services,
             'special_projects': special_projects,
             'statistics': statistics,
             'mottos': mottos,
-            'reviews': reviews
+            'reviews': reviews,
+            'contact': contact
         })
 
 @method_decorator(cache_page((settings.CACHE_TTL)), name='dispatch')
@@ -137,28 +157,43 @@ class ServiceDetailPage(View):
 
 
 class OrderPageView(View):
-    template_name = 'order_form.html'
+    template_name = 'contact.html'
     
     def get(self, request):
         form = OrderForm()
+        services = CalculatorQuery.load_services()
         current_language = translation.get_language()
         return render(request, self.template_name, {
             'form': form,
+            'services': services,
             'current_language': current_language,
+            'view_type': 'order',
         })
     
     def post(self, request):
         form = OrderForm(request.POST)
+        services = CalculatorQuery.load_services()
         current_language = translation.get_language()
         if form.is_valid():
-            form.save()
-            messages.success(request, _('Sifarişiniz uğurla göndərildi'))
-            return redirect('order-success')
+            try:
+                form.save()
+                messages.success(request, _('Sifarişiniz uğurla göndərildi'))
+                return redirect('order-page')
+            except Exception as e:
+                messages.error(request, _('Xəta baş verdi: %s') % str(e))
+                return render(request, self.template_name, {
+                    'form': form,
+                    'services': services,
+                    'current_language': current_language,
+                    'view_type': 'order',
+                })
         else:
             messages.error(request, _('Zəhmət olmasa formu düzgün doldurun'))
             return render(request, self.template_name, {
                 'form': form,
+                'services': services,
                 'current_language': current_language,
+                'view_type': 'order',
             })
     
 
@@ -188,7 +223,7 @@ class ServiceCalculatorView(View):
     """
     Handles display and processing of the service price calculator.
     """
-    template_name = 'calculator.html'
+    template_name = 'contact.html'
 
     def get(self, request):
         """
@@ -207,11 +242,14 @@ class ServiceCalculatorView(View):
             result = request.session.pop('calculator_result')
             total_price = Decimal(request.session.pop('calculator_total'))
 
+        form = OrderForm()
         return render(request, self.template_name, {
             'services': services,
             'result': result,
             'total_price': total_price,
+            'form': form,
             'current_language': translation.get_language(),
+            'view_type': 'calculator',
         })
 
     def post(self, request):

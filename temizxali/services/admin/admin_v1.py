@@ -24,7 +24,7 @@ class ServiceImageInline(NestedTabularInline):
 class SpecialProjectImageInline(NestedTabularInline):
     model = Image
     fk_name = 'special_project'
-    extra = 1
+    extra = 6
     readonly_fields = ('image_preview',)
     fields = ('image_name', 'image', 'image_preview')
 
@@ -118,7 +118,7 @@ class SpecialProjectTranslationInline(admin.TabularInline):
 
 @admin.register(SpecialProject)
 class SpecialProjectAdmin(admin.ModelAdmin):
-    list_display = ('id', 'get_project_description', 'url')
+    list_display = ('id', 'get_project_description', 'is_completed', 'is_contiune', 'url')
     list_display_links = ('id', 'get_project_description')
     inlines = [SpecialProjectTranslationInline, SpecialProjectImageInline]
 
@@ -127,6 +127,7 @@ class SpecialProjectAdmin(admin.ModelAdmin):
         if translation:
             return format_html('<strong style="font-size: 14px;">{}</strong>', translation.description[:30])
         return '-'
+      
     get_project_description.short_description = 'Xüsusi Layihə'
 
 
@@ -171,11 +172,37 @@ class ReviewAdmin(admin.ModelAdmin):
  # Order Admin 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'fullname', 'phone_number', 'created_at')
+    list_display = ('id', 'fullname', 'phone_number', 'created_at', 'get_services')
     list_display_links = ('id', 'fullname')
     list_filter = ('created_at',)
     search_fields = ('fullname', 'phone_number', 'text')
-    filter_horizontal = ('services',) 
+    readonly_fields = ('services_badges', 'created_at')  # created_at burada readonly olmalı
+
+    fieldsets = (
+        (None, {
+            'fields': ('fullname', 'phone_number', 'text', 'services_badges')
+        }),
+        ('Əlavə məlumat', {
+            'fields': ('created_at',),
+        }),
+    )
+
+    def services_badges(self, obj):
+        badges = [
+            f'<span style="background-color:#5bc0de; color:white; padding:4px 10px; border-radius:6px; margin:2px; font-weight:bold; font-size:14px;">{str(s)}</span>'
+            for s in obj.services.all()
+        ]
+        return format_html(" ".join(badges))
+    services_badges.short_description = "Şifariş verilən servislər"
+
+    def get_services(self, obj):
+        badges = [
+            f'<span style="background-color:#5bc0de; color:white; padding:2px 6px; border-radius:4px; margin:1px;">{str(s)}</span>'
+            for s in obj.services.all()
+        ]
+        return format_html(" ".join(badges))
+    get_services.short_description = "Services"
+
 
 
 # Motto Admin
