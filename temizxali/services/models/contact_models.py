@@ -10,36 +10,30 @@ class Contact(models.Model):
         max_length=50,
         verbose_name='Telefon'
     )
-    phone_second = models.CharField(
-        max_length=50,
-        null=True,
-        blank=True,
-        verbose_name='Telefon ikinci'
-    )
     email = models.EmailField(
         null=True,
         blank=True,
         verbose_name='Email'
     )
-    email_second = models.EmailField(
+    instagram = models.URLField(
         null=True,
         blank=True,
-        verbose_name='Email ikinci'
     )
-    social_one = models.URLField(
+    facebook = models.URLField(
         null=True,
         blank=True,
-        verbose_name='Sosial şəbəkə 1 urli'
     )
-    social_two = models.URLField(
+    youtube = models.URLField(
         null=True,
         blank=True,
-        verbose_name='Sosial şəbəkə 2 urli'
     )
-    social_three = models.URLField(
+    linkedn = models.URLField(
         null=True,
         blank=True,
-        verbose_name='Sosial şəbəkə 3 urli'
+    )
+    tiktok = models.URLField(
+        null=True,
+        blank=True,
     )
 
     class Meta:

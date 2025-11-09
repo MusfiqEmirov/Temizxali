@@ -81,22 +81,25 @@
             </div>
             <div class="col-lg-5 px-5 text-end">
                 <div class="h-100 d-inline-flex align-items-center mx-n2">
-                    <span>Follow Us:</span>
                     {% if contact %}
-                        {% if contact.social_one %}
-                            <a class="btn btn-link text-light" href="{{ contact.social_one }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
+                            <span>Follow Us:</span>
+                            {% if contact.facebook %}
+                                <a class="btn btn-link text-light" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            {% endif %}
+                            {% if contact.instagram %}
+                                <a class="btn btn-link text-light" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                            {% endif %}
+                            {% if contact.youtube %}
+                                <a class="btn btn-link text-light" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                            {% endif %}
+                            {% if contact.linkedn %}
+                                <a class="btn btn-link text-light" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            {% endif %}
+                            {% if contact.tiktok %}
+                                <a class="btn btn-link text-light" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            {% endif %}
                         {% endif %}
-                        {% if contact.social_two %}
-                            <a class="btn btn-link text-light" href="{{ contact.social_two }}" target="_blank"><i class="fab fa-instagram"></i></a>
-                        {% endif %}
-                        {% if contact.social_three %}
-                            <a class="btn btn-link text-light" href="{{ contact.social_three }}" target="_blank"><i class="fab fa-youtube"></i></a>
-                        {% endif %}
-                    {% else %}
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-linkedin-in"></i></a>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-instagram"></i></a>
                     {% endif %}
                 </div>
             </div>
@@ -401,25 +404,21 @@
                             <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{ contact.email }}</p>
                         {% endif %}
                         <div class="d-flex pt-2">
-                            {% if contact.social_one %}
-                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.social_one }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            {% if contact.facebook %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                             {% endif %}
-                            {% if contact.social_two %}
-                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.social_two }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                            {% if contact.instagram %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
                             {% endif %}
-                            {% if contact.social_three %}
-                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.social_three }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                            {% if contact.youtube %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
                             {% endif %}
-                        </div>
-                    {% else %}
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>ehmed recebli businesscup</p>
-                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                        <div class="d-flex pt-2">
-                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-tiktok"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-instagram"></i></a>
+                            {% if contact.linkedn %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            {% endif %}
+                            {% if contact.tiktok %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            {% endif %}
                         </div>
                     {% endif %}
                 </div>

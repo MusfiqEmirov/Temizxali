@@ -223,14 +223,14 @@ class MottoAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('id', 'address', 'phone', 'phone_second', 'email', 'email_second')
-    search_fields = ('address', 'phone', 'phone_second', 'email', 'email_second')
+    list_display = ('id', 'address', 'phone', 'email')
+    search_fields = ('address', 'phone', 'email')
     list_display_links = ('id', 'address')
     fieldsets = (
         ('Əsas Məlumat', {
-            'fields': ('address', 'phone', 'phone_second', 'email', 'email_second')
+            'fields': ('address', 'phone', 'email')
         }),
         ('Sosial Şəbəkələr', {
-            'fields': ('social_one', 'social_two', 'social_three')
+            'fields': ('instagram', 'facebook', 'youtube', 'linkedn', 'tiktok')
         }),
     )
