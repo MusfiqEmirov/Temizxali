@@ -207,7 +207,7 @@ msgstr "Наши услуги"
 
 #: templates/index.html
 msgid "etrafli"
-msgstr "подробнее"
+msgstr "Далее"
 
 #: templates/index.html
 msgid "Hazırda xidmət mövcud deyil."
