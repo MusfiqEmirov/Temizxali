@@ -25,6 +25,7 @@ __all__ = [
     'ServiceCalculatorView'
 ]
 
+
 class HomePageView(View):
     template_name = 'index.html'
     
@@ -86,6 +87,7 @@ class HomePageView(View):
             'contact': contact
         })
 
+
 class AboutPageView(View):
     template_name = 'about_page.html'
 
@@ -101,6 +103,7 @@ class AboutPageView(View):
             'statistics': statistics,
             'active_lang': languages,
             })
+
 
 class ServiceDetailPage(View):
     template_name = 'service_detail_page.html'
@@ -139,7 +142,7 @@ class ServiceDetailPage(View):
             if service.premium_price:
                 sale_premium_price = Decimal(str(service.premium_price)) * (Decimal('1') - sale_percent)
 
-        # Get contact and services for template consistency
+        
         contact = Contact.objects.first()
         services = Service.objects.filter(
             is_active=True,
@@ -147,7 +150,7 @@ class ServiceDetailPage(View):
         ).distinct().prefetch_related(
             Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages)),
             'images'
-        ).order_by('-created_at')[:6]  # Limit to 6 for related services
+        ).order_by('-created_at')[:6]  
 
         return render(request, self.template_name, {
             'languages': languages,
@@ -206,7 +209,6 @@ class OrderPageView(View):
                 'contact': contact,
             })
     
-
 
 class ReviewCreateView(View):
     template_name = 'comment_add.html'

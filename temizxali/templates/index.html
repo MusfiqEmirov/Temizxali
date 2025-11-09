@@ -1,6 +1,7 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE|default:'az' }}">
 
 <head>
     <meta charset="utf-8">
@@ -74,9 +75,23 @@
             </div>
             <div class="col-lg-5 px-5 text-end">
                 <div class="h-100 d-inline-flex align-items-center mx-n2">
+                    <!-- Language Switcher -->
+                    <form action="{% url 'set_language' %}" method="post" class="d-inline me-3">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <select name="language" onchange="this.form.submit()" class="form-select form-select-sm d-inline-block" style="width: auto; display: inline-block;">
+                            {% get_current_language as CURRENT_LANGUAGE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% for lang_code, lang_name in LANGUAGES %}
+                                <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                                    {% if lang_code == 'az' %}Azərbaycan{% elif lang_code == 'ru' %}Русский{% else %}{{ lang_name }}{% endif %}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
                     {% if contact %}
                         {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
-                            <span>Buradan izlə:</span>
+                            <span>{% trans "Buradan izlə:" %}</span>
                             {% if contact.facebook %}
                                 <a class="btn btn-link text-light" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                             {% endif %}
@@ -112,10 +127,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="{% url 'home-page' %}" class="nav-item nav-link active">Ana səhifə</a>
+                <a href="{% url 'home-page' %}" class="nav-item nav-link active">{% trans "Ana səhifə" %}</a>
 
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Xidmetler</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{% trans "Xidmetler" %}</a>
                     <div class="dropdown-menu bg-light m-0">
                         {% if services %}
                             {% for service in services|slice:":10" %}
@@ -126,14 +141,14 @@
                                 {% endwith %}
                             {% endfor %}
                         {% else %}
-                            <a href="#" class="dropdown-item">Xidmət tapılmadı</a>
+                            <a href="#" class="dropdown-item">{% trans "Xidmət tapılmadı" %}</a>
                         {% endif %}
                     </div>
                 </div>
 
                 <!-- <a href="service.html" class="nav-item nav-link">Xidmətlər</a> -->
-                <a href="{% url 'home-page' %}#projects" class="nav-item nav-link">Layihələr</a>
-                <a href="{% url 'home-page' %}#testimonials" class="nav-item nav-link">Rəylər</a>
+                <a href="{% url 'home-page' %}#projects" class="nav-item nav-link">{% trans "Layihələr" %}</a>
+                <a href="{% url 'home-page' %}#testimonials" class="nav-item nav-link">{% trans "Rəylər" %}</a>
 
                 <!-- <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -145,7 +160,7 @@
                         <a href="404.html" class="dropdown-item">404 Page</a>
                     </div>
                 </div> -->
-            <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">Hesabla ve Sifariş et<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">{% trans "Hesabla ve Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -186,7 +201,7 @@
                                 <div class="container">
                                     <div class="row justify-content-center">
                                         <div class="col-lg-8">
-                                            <h1 class="display-1 text-white mb-5 animated slideInDown">Xoş gəlmisiniz</h1>
+                                            <h1 class="display-1 text-white mb-5 animated slideInDown">{% trans "Xoş gəlmisiniz" %}</h1>
                                         </div>
                                     </div>
                                 </div>
@@ -200,7 +215,7 @@
                             <div class="container">
                                 <div class="row justify-content-center">
                                     <div class="col-lg-8">
-                                        <h1 class="display-1 text-white mb-5 animated slideInDown">Xoş gəlmisiniz</h1>
+                                        <h1 class="display-1 text-white mb-5 animated slideInDown">{% trans "Xoş gəlmisiniz" %}</h1>
                                     </div>
                                 </div>
                             </div>
@@ -277,43 +292,43 @@
                     {% if statistics.client_count %}
                         <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
                             <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.client_count }}</h1>
-                            <span class="fs-5 fw-semi-bold text-light">Məmnun Müştərilər</span>
+                            <span class="fs-5 fw-semi-bold text-light">{% trans "Məmnun Müştərilər" %}</span>
                         </div>
                     {% endif %}
                     {% if statistics.work_done_count %}
                         <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
                             <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.work_done_count }}</h1>
-                            <span class="fs-5 fw-semi-bold text-light">Tamamlanmış İşlər</span>
+                            <span class="fs-5 fw-semi-bold text-light">{% trans "Tamamlanmış İşlər" %}</span>
                         </div>
                     {% endif %}
                     {% if statistics.staff_count %}
                         <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
                             <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.staff_count }}</h1>
-                            <span class="fs-5 fw-semi-bold text-light">Peşəkar Komanda</span>
+                            <span class="fs-5 fw-semi-bold text-light">{% trans "Peşəkar Komanda" %}</span>
                         </div>
                     {% endif %}
                     {% if statistics.achievement_count %}
                         <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
                             <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.achievement_count }}</h1>
-                            <span class="fs-5 fw-semi-bold text-light">Nailiyyətlər</span>
+                            <span class="fs-5 fw-semi-bold text-light">{% trans "Nailiyyətlər" %}</span>
                         </div>
                     {% endif %}
                 {% else %}
                     <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
                         <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">Məmnun Müştərilər</span>
+                        <span class="fs-5 fw-semi-bold text-light">{% trans "Məmnun Müştərilər" %}</span>
                     </div>
                     <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
                         <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">Tamamlanmış İşlər</span>
+                        <span class="fs-5 fw-semi-bold text-light">{% trans "Tamamlanmış İşlər" %}</span>
                     </div>
                     <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
                         <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">Peşəkar Komanda</span>
+                        <span class="fs-5 fw-semi-bold text-light">{% trans "Peşəkar Komanda" %}</span>
                     </div>
                     <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
                         <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">Nailiyyətlər</span>
+                        <span class="fs-5 fw-semi-bold text-light">{% trans "Nailiyyətlər" %}</span>
                     </div>
                 {% endif %}
             </div>
@@ -329,7 +344,7 @@
     <div id="services" class="container-xxl py-5">
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-5 text-primary">Xidmətlərimiz</h1>
+                    <h1 class="display-5 mb-5 text-primary">{% trans "Xidmətlərimiz" %}</h1>
             </div>
             <div class="row g-4">
                 {% if services %}
@@ -357,9 +372,9 @@
                                             <h4 class="mb-3" style="margin-top: 90px;">{{ translation.name }}</h4>
                                             <p class="mb-4">{{ translation.description|truncatewords:15 }}</p>
                                             {% if translation.slug %}
-                                                <a class="btn btn-sm" href="{% url 'service-page' translation.slug %}"><i class="fa fa-plus text-primary me-2"></i>etrafli</a>
+                                                <a class="btn btn-sm" href="{% url 'service-page' translation.slug %}"><i class="fa fa-plus text-primary me-2"></i>{% trans "etrafli" %}</a>
                                             {% else %}
-                                                <a class="btn btn-sm" href="#"><i class="fa fa-plus text-primary me-2"></i>etrafli</a>
+                                                <a class="btn btn-sm" href="#"><i class="fa fa-plus text-primary me-2"></i>{% trans "etrafli" %}</a>
                                             {% endif %}
                                         </div>
                                     </div>
@@ -369,7 +384,7 @@
                     {% endfor %}
                 {% else %}
                     <div class="col-12 text-center">
-                        <p class="text-muted">Hazırda xidmət mövcud deyil.</p>
+                        <p class="text-muted">{% trans "Hazırda xidmət mövcud deyil." %}</p>
                     </div>
                 {% endif %}
             </div>
@@ -383,7 +398,7 @@
     <div id="projects" class="container-xxl py-5">
         <div class="container">
             <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-5 text-primary">Layihələrimiz</h1>
+                <h1 class="display-5 mb-5 text-primary">{% trans "Layihələrimiz" %}</h1>
             </div>
 
             <div class="row g-4 portfolio-container">
@@ -431,9 +446,9 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
-                    <h1 class="display-5 mb-5">Sizdən gələn rəylər</h1>
-                    <p class="mb-4">Rəyləri yalnız xidmətimizdən istifadə edən müştərilər yaza bilər</p>
-                    <a class="btn btn-primary py-3 px-4" href="{% url 'create-review' %}">Rəy bildir</a>
+                    <h1 class="display-5 mb-5">{% trans "Sizdən gələn rəylər" %}</h1>
+                    <p class="mb-4">{% trans "Rəyləri yalnız xidmətimizdən istifadə edən müştərilər yaza bilər" %}</p>
+                    <a class="btn btn-primary py-3 px-4" href="{% url 'create-review' %}">{% trans "Rəy bildir" %}</a>
                 </div>
                 <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="owl-carousel testimonial-carousel">
@@ -453,7 +468,7 @@
                             {% endfor %}
                         {% else %}
                             <div class="testimonial-item">
-                                <p class="fs-5">Hazırda rəy mövcud deyil.</p>
+                                <p class="fs-5">{% trans "Hazırda rəy mövcud deyil." %}</p>
                                 <h4>-</h4>
                                 <span>-</span>
                             </div>
@@ -471,7 +486,7 @@
         <div class="container ">
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">Ünvan</h4>
+                    <h4 class="text-white mb-4">{% trans "Ünvan" %}</h4>
                     {% if contact %}
                         {% if contact.address %}
                             <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ contact.address }}</p>
@@ -502,7 +517,7 @@
                     {% endif %}
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">Xidmətlər</h4>
+                    <h4 class="text-white mb-4">{% trans "Xidmətlər" %}</h4>
                     {% if services %}
                         {% for service in services|slice:":10" %}
                             {% with translation=service.translations.first %}
@@ -512,17 +527,17 @@
                             {% endwith %}
                         {% endfor %}
                     {% else %}
-                        <a class="btn btn-link" href="#">Xidmət tapılmadı</a>
+                        <a class="btn btn-link" href="#">{% trans "Xidmət tapılmadı" %}</a>
                     {% endif %}
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">Digər</h4>
-                    <a class="btn btn-link" href="{% url 'home-page' %}">Ana səhifə</a>
-                    <a class="btn btn-link" href="{% url 'order-page' %}">Sifariş</a>
+                    <h4 class="text-white mb-4">{% trans "Digər" %}</h4>
+                    <a class="btn btn-link" href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
+                    <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Sifariş" %}</a>
                     {% if services %}
-                        <a class="btn btn-link" href="{% url 'home-page' %}#services">Bütün Xidmətlər</a>
+                        <a class="btn btn-link" href="{% url 'home-page' %}#services">{% trans "Bütün Xidmətlər" %}</a>
                     {% endif %}
-                    <a class="btn btn-link" href="{% url 'order-page' %}">Əlaqə</a>
+                    <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Əlaqə" %}</a>
                 </div>
 
             </div>
@@ -535,7 +550,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center  mb-3 mb-md-0" style="margin: auto;">
-                   &copy; <a class="border-bottom" href="https://digiboom.az" target="_blank">Digiboom.az</a> tərəfindən hazırlanıb. Bütün hüquqlar qorunur.
+                   &copy; <a class="border-bottom" href="https://digiboom.az" target="_blank">Digiboom.az</a> {% trans "tərəfindən hazırlanıb. Bütün hüquqlar qorunur." %}
 
                 </div>
 

@@ -1,15 +1,16 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE|default:'az' }}">
 
 <head>
     <meta charset="utf-8">
-    <title>{{ translation.name }} - Xidmət Detalları</title>
+    <title>{{ translation.name }} - {% trans "Xidmət Detalları" %}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="{{ translation.description|truncatewords:20 }}" name="description">
     <meta content="{{ translation.name }}" name="keywords">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="{{ translation.name }} - Xidmət Detalları">
+    <meta property="og:title" content="{{ translation.name }} - {% trans 'Xidmət Detalları' %}">
     <meta property="og:description" content="{{ translation.description|truncatewords:20 }}">
     {% if service.images.first %}
     <meta property="og:image" content="{{ service.images.first.image.url }}">
@@ -79,9 +80,23 @@
             </div>
             <div class="col-lg-5 px-5 text-end">
                 <div class="h-100 d-inline-flex align-items-center mx-n2">
+                    <!-- Language Switcher -->
+                    <form action="{% url 'set_language' %}" method="post" class="d-inline me-3">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <select name="language" onchange="this.form.submit()" class="form-select form-select-sm d-inline-block" style="width: auto; display: inline-block;">
+                            {% get_current_language as CURRENT_LANGUAGE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% for lang_code, lang_name in LANGUAGES %}
+                                <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                                    {% if lang_code == 'az' %}Azərbaycan{% elif lang_code == 'ru' %}Русский{% else %}{{ lang_name }}{% endif %}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
                     {% if contact %}
                         {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
-                            <span>Buradan izlə:</span>
+                            <span>{% trans "Buradan izlə:" %}</span>
                             {% if contact.facebook %}
                                 <a class="btn btn-link text-light" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                             {% endif %}
@@ -116,10 +131,10 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="{% url 'home-page' %}" class="nav-item nav-link">Ana səhifə</a>
+                <a href="{% url 'home-page' %}" class="nav-item nav-link">{% trans "Ana səhifə" %}</a>
 
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Xidmetler</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{% trans "Xidmetler" %}</a>
                     <div class="dropdown-menu bg-light m-0">
                         {% if services %}
                             {% for serv in services|slice:":10" %}
@@ -130,14 +145,14 @@
                                 {% endwith %}
                             {% endfor %}
                         {% else %}
-                            <a href="#" class="dropdown-item">Xidmət tapılmadı</a>
+                            <a href="#" class="dropdown-item">{% trans "Xidmət tapılmadı" %}</a>
                         {% endif %}
                     </div>
                 </div>
 
-                <a href="{% url 'home-page' %}#projects" class="nav-item nav-link">Layihələr</a>
-                <a href="{% url 'home-page' %}#testimonials" class="nav-item nav-link">Rəylər</a>
-                <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0 d-lg-block">Hesabla ve Sifariş et<i class="fa fa-arrow-right ms-3"></i></a>
+                <a href="{% url 'home-page' %}#projects" class="nav-item nav-link">{% trans "Layihələr" %}</a>
+                <a href="{% url 'home-page' %}#testimonials" class="nav-item nav-link">{% trans "Rəylər" %}</a>
+                <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Hesabla ve Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </div>
     </nav>
@@ -157,8 +172,8 @@
             <h1 class="display-3 text-white mb-4 animated slideInDown">{{ translation.name }}</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="{% url 'home-page' %}">Ana səhifə</a></li>
-                    <li class="breadcrumb-item"><a href="{% url 'home-page' %}#services">Xidmətlər</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'home-page' %}#services">{% trans "Xidmətlər" %}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ translation.name }}</li>
                 </ol>
             </nav>
@@ -184,7 +199,7 @@
                                    preload="metadata"
                                    style="width: 100%; max-height: 500px; object-fit: cover;">
                                 <source src="{{ service.video.url }}" type="video/mp4">
-                                Sənin brauzerin videonu dəstəkləmir.
+                                {% trans "Sənin brauzerin videonu dəstəkləmir." %}
                             </video>
                         </div>
                     {% elif service.images.first %}
@@ -233,7 +248,7 @@
                     <div class="border-start border-primary border-4 ps-4 mb-5">
                         <h1 class="display-5 mb-3">{{ translation.name }}</h1>
                         {% if service.sale %}
-                            <span class="badge bg-danger mb-3">-{{ service.sale }}% Endirim</span>
+                            <span class="badge bg-danger mb-3">-{{ service.sale }}% {% trans "Endirim" %}</span>
                         {% endif %}
                     </div>
 
@@ -246,12 +261,12 @@
 
                     <!-- Pricing Section -->
                     <div class="mb-4">
-                        <h4 class="mb-3 text-primary">Qiymətlər</h4>
+                        <h4 class="mb-3 text-primary">{% trans "Qiymətlər" %}</h4>
                         <div class="row g-3">
                             {% if service.price %}
                                 <div class="col-12">
                                     <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
-                                        <span class="fw-bold">Standart:</span>
+                                        <span class="fw-bold">{% trans "Standart:" %}</span>
                                         {% if sale_price %}
                                             <div>
                                                 <span class="text-decoration-line-through text-muted me-2">{{ service.price }} AZN</span>
@@ -267,7 +282,7 @@
                             {% if service.vip_price %}
                                 <div class="col-12">
                                     <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
-                                        <span class="fw-bold">VIP:</span>
+                                        <span class="fw-bold">{% trans "VIP:" %}</span>
                                         {% if sale_vip_price %}
                                             <div>
                                                 <span class="text-decoration-line-through text-muted me-2">{{ service.vip_price }} AZN</span>
@@ -283,7 +298,7 @@
                             {% if service.premium_price %}
                                 <div class="col-12">
                                     <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
-                                        <span class="fw-bold">Premium:</span>
+                                        <span class="fw-bold">{% trans "Premium:" %}</span>
                                         {% if sale_premium_price %}
                                             <div>
                                                 <span class="text-decoration-line-through text-muted me-2">{{ service.premium_price }} AZN</span>
@@ -301,11 +316,11 @@
                     <!-- CTA Buttons -->
                     <div class="d-flex gap-3 flex-wrap">
                         <a href="{% url 'order-page' %}" class="btn btn-primary py-3 px-5">
-                            <i class="fa fa-shopping-cart me-2"></i>Sifariş Ver
+                            <i class="fa fa-shopping-cart me-2"></i>{% trans "Sifariş Ver" %}
                         </a>
                         {% if service.url %}
                             <a href="{{ service.url }}" target="_blank" class="btn btn-outline-primary py-3 px-5">
-                                <i class="fa fa-external-link-alt me-2"></i>Ətraflı Məlumat
+                                <i class="fa fa-external-link-alt me-2"></i>{% trans "Ətraflı Məlumat" %}
                             </a>
                         {% endif %}
                     </div>
@@ -317,8 +332,8 @@
                 <div class="row g-4 mt-5">
                     <div class="col-12">
                         <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
-                            <h2 class="display-5 mb-3 text-primary">Xidmət Növləri</h2>
-                            <p class="fs-5">Müxtəlif paket seçimləri</p>
+                            <h2 class="display-5 mb-3 text-primary">{% trans "Xidmət Növləri" %}</h2>
+                            <p class="fs-5">{% trans "Müxtəlif paket seçimləri" %}</p>
                         </div>
                     </div>
                     {% for variant in service.variants.all %}
@@ -334,19 +349,19 @@
                                             <div class="mb-4">
                                                 {% if variant.price %}
                                                     <div class="mb-2">
-                                                        <strong>Standart:</strong> 
+                                                        <strong>{% trans "Standart:" %}</strong> 
                                                         <span class="text-primary">{{ variant.price }} AZN</span>
                                                     </div>
                                                 {% endif %}
                                                 {% if variant.vip_price %}
                                                     <div class="mb-2">
-                                                        <strong>VIP:</strong> 
+                                                        <strong>{% trans "VIP:" %}</strong> 
                                                         <span class="text-primary">{{ variant.vip_price }} AZN</span>
                                                     </div>
                                                 {% endif %}
                                                 {% if variant.premium_price %}
                                                     <div>
-                                                        <strong>Premium:</strong> 
+                                                        <strong>{% trans "Premium:" %}</strong> 
                                                         <span class="text-primary">{{ variant.premium_price }} AZN</span>
                                                     </div>
                                                 {% endif %}
@@ -369,7 +384,7 @@
         <div class="container-xxl py-5">
             <div class="container">
                 <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                    <h2 class="display-5 mb-5 text-primary">Digər Xidmətlər</h2>
+                    <h2 class="display-5 mb-5 text-primary">{% trans "Digər Xidmətlər" %}</h2>
                 </div>
                 <div class="row g-4">
                     {% for serv in services %}
@@ -382,7 +397,7 @@
                                                 {% if serv.video %}
                                                     <video autoplay muted loop playsinline class="video-bg" preload="metadata">
                                                         <source src="{{ serv.video.url }}" type="video/mp4">
-                                                        Sənin brauzerin videonu dəstəkləmir.
+                                                        {% trans "Sənin brauzerin videonu dəstəkləmir." %}
                                                     </video>
                                                 {% elif serv.images.first %}
                                                     <img class="w-100 h-100 related-service-image" 
@@ -394,7 +409,7 @@
                                                 {% else %}
                                                     <video autoplay muted loop playsinline class="video-bg" preload="metadata">
                                                         <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
-                                                        Sənin brauzerin videonu dəstəkləmir.
+                                                        {% trans "Sənin brauzerin videonu dəstəkləmir." %}
                                                     </video>
                                                 {% endif %}
                                             </div>
@@ -402,7 +417,7 @@
                                                 <h4 class="mb-3" style="margin-top: 90px;">{{ serv_translation.name }}</h4>
                                                 <p class="mb-4">{{ serv_translation.description|truncatewords:15 }}</p>
                                                 {% if serv_translation.slug %}
-                                                    <a class="btn btn-sm" href="{% url 'service-page' serv_translation.slug %}"><i class="fa fa-plus text-primary me-2"></i>etrafli</a>
+                                                    <a class="btn btn-sm" href="{% url 'service-page' serv_translation.slug %}"><i class="fa fa-plus text-primary me-2"></i>{% trans "etrafli" %}</a>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -413,7 +428,7 @@
                     {% endfor %}
                     <div class="col-12 text-center mt-4">
                         <a href="{% url 'home-page' %}#services" class="btn btn-primary py-3 px-5">
-                            <i class="fa fa-arrow-left me-2"></i>Bütün Xidmətlərə Bax
+                            <i class="fa fa-arrow-left me-2"></i>{% trans "Bütün Xidmətlərə Bax" %}
                         </a>
                     </div>
                 </div>
@@ -428,7 +443,7 @@
         <div class="container ">
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">Ünvan</h4>
+                    <h4 class="text-white mb-4">{% trans "Ünvan" %}</h4>
                     {% if contact %}
                         {% if contact.address %}
                             <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ contact.address }}</p>
@@ -457,13 +472,13 @@
                             {% endif %}
                         </div>
                     {% else %}
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Əhməd Rəcəbli Business Center</p>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{% trans "Əhməd Rəcəbli Business Center" %}</p>
                         <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                         <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
                     {% endif %}
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">Xidmətlər</h4>
+                    <h4 class="text-white mb-4">{% trans "Xidmətlər" %}</h4>
                     {% if services %}
                         {% for serv in services|slice:":5" %}
                             {% with serv_translation=serv.translations.first %}
@@ -473,14 +488,14 @@
                             {% endwith %}
                         {% endfor %}
                     {% endif %}
-                    <a class="btn btn-link" href="{% url 'home-page' %}#services">Bütün Xidmətlər</a>
+                    <a class="btn btn-link" href="{% url 'home-page' %}#services">{% trans "Bütün Xidmətlər" %}</a>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">Digər</h4>
-                    <a class="btn btn-link" href="{% url 'home-page' %}">Ana səhifə</a>
-                    <a class="btn btn-link" href="{% url 'order-page' %}">Sifariş</a>
-                    <a class="btn btn-link" href="{% url 'home-page' %}#testimonials">Rəylər</a>
-                    <a class="btn btn-link" href="{% url 'order-page' %}">Əlaqə</a>
+                    <h4 class="text-white mb-4">{% trans "Digər" %}</h4>
+                    <a class="btn btn-link" href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
+                    <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Sifariş" %}</a>
+                    <a class="btn btn-link" href="{% url 'home-page' %}#testimonials">{% trans "Rəylər" %}</a>
+                    <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Əlaqə" %}</a>
                 </div>
             </div>
         </div>
@@ -492,7 +507,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center mb-3 mb-md-0" style="margin: auto;">
-                   &copy; <a class="border-bottom" href="https://digiboom.az" target="_blank">Digiboom.az</a> tərəfindən hazırlanıb. Bütün hüquqlar qorunur.
+                   &copy; <a class="border-bottom" href="https://digiboom.az" target="_blank">Digiboom.az</a> {% trans "tərəfindən hazırlanıb. Bütün hüquqlar qorunur." %}
                 </div>
             </div>
         </div>

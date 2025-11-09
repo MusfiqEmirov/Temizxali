@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -169,4 +168,224 @@ msgstr "Калькулятор"
 #: templates/calculator.html
 msgid "Qiymət Növü"
 msgstr "Тип цены"
+
+#: templates/index.html
+msgid "Buradan izlə:"
+msgstr "Следите за нами:"
+
+#: templates/index.html
+msgid "Ana səhifə"
+msgstr "Главная"
+
+#: templates/index.html
+msgid "Xidmetler"
+msgstr "Услуги"
+
+#: templates/index.html
+msgid "Xidmət tapılmadı"
+msgstr "Услуга не найдена"
+
+#: templates/index.html
+msgid "Layihələr"
+msgstr "Проекты"
+
+#: templates/index.html
+msgid "Rəylər"
+msgstr "Отзывы"
+
+#: templates/index.html
+msgid "Hesabla ve Sifariş et"
+msgstr "Рассчитать и Заказать"
+
+#: templates/index.html
+msgid "Xoş gəlmisiniz"
+msgstr "Добро пожаловать"
+
+#: templates/index.html
+msgid "Xidmətlərimiz"
+msgstr "Наши услуги"
+
+#: templates/index.html
+msgid "etrafli"
+msgstr "подробнее"
+
+#: templates/index.html
+msgid "Hazırda xidmət mövcud deyil."
+msgstr "В настоящее время услуга недоступна."
+
+#: templates/index.html
+msgid "Layihələrimiz"
+msgstr "Наши проекты"
+
+#: templates/index.html
+msgid "Sizdən gələn rəylər"
+msgstr "Отзывы от вас"
+
+#: templates/index.html
+msgid "Rəyləri yalnız xidmətimizdən istifadə edən müştərilər yaza bilər"
+msgstr "Отзывы могут оставлять только клиенты, которые использовали наши услуги"
+
+#: templates/index.html
+msgid "Rəy bildir"
+msgstr "Оставить отзыв"
+
+#: templates/index.html
+msgid "Hazırda rəy mövcud deyil."
+msgstr "В настоящее время отзывов нет."
+
+#: templates/index.html
+msgid "Məmnun Müştərilər"
+msgstr "Довольные клиенты"
+
+#: templates/index.html
+msgid "Tamamlanmış İşlər"
+msgstr "Завершенные работы"
+
+#: templates/index.html
+msgid "Peşəkar Komanda"
+msgstr "Профессиональная команда"
+
+#: templates/index.html
+msgid "Nailiyyətlər"
+msgstr "Достижения"
+
+#: templates/index.html
+msgid "Ünvan"
+msgstr "Адрес"
+
+#: templates/index.html
+msgid "Xidmətlər"
+msgstr "Услуги"
+
+#: templates/index.html
+msgid "Digər"
+msgstr "Другое"
+
+#: templates/index.html
+msgid "Sifariş"
+msgstr "Заказ"
+
+#: templates/index.html
+msgid "Bütün Xidmətlər"
+msgstr "Все услуги"
+
+#: templates/index.html
+msgid "Əlaqə"
+msgstr "Контакты"
+
+#: templates/index.html
+msgid "tərəfindən hazırlanıb. Bütün hüquqlar qorunur."
+msgstr "разработано. Все права защищены."
+
+#: templates/contact.html
+msgid "Bizimlə əlaqə saxlayın"
+msgstr "Свяжитесь с нами"
+
+#: templates/contact.html
+msgid "Sifariş Verin"
+msgstr "Сделать заказ"
+
+#: templates/contact.html
+msgid "Məlumatlarınızı doldurun və sifarişinizi göndərin"
+msgstr "Заполните ваши данные и отправьте заказ"
+
+#: templates/contact.html
+msgid "Xidmət növü seçin"
+msgstr "Выберите тип услуги"
+
+#: templates/contact.html
+msgid "Sifarişi Göndər"
+msgstr "Отправить заказ"
+
+#: templates/contact.html
+msgid "Xidmətləri seçin və qiyməti hesablayın"
+msgstr "Выберите услуги и рассчитайте цену"
+
+#: templates/contact.html
+msgid "Xidmət əlavə edin:"
+msgstr "Добавить услугу:"
+
+#: templates/contact.html
+msgid "Xidmət seçin..."
+msgstr "Выберите услугу..."
+
+#: templates/contact.html
+msgid "Ümumi məbləğ:"
+msgstr "Общая сумма:"
+
+#: templates/comment_add.html
+msgid "Rəyinizi paylaşın"
+msgstr "Поделитесь своим отзывом"
+
+#: templates/comment_add.html
+msgid "Rəyinizi Paylaşın"
+msgstr "Поделитесь своим отзывом"
+
+#: templates/comment_add.html
+msgid "Xidmətimizdən istifadə etdikdən sonra rəyinizi bizimlə və digərləri ilə paylaşın. Sizin fikriniz çox dəyərlidir."
+msgstr "После использования наших услуг поделитесь своим отзывом с нами и другими. Ваше мнение очень ценно."
+
+#: templates/comment_add.html
+msgid "Rəyi Göndər"
+msgstr "Отправить отзыв"
+
+#: templates/service_detail_page.html
+msgid "Xidmət Detalları"
+msgstr "Детали услуги"
+
+#: templates/service_detail_page.html
+msgid "Sənin brauzerin videonu dəstəkləmir."
+msgstr "Ваш браузер не поддерживает видео."
+
+#: templates/service_detail_page.html
+msgid "Qiymətlər"
+msgstr "Цены"
+
+#: templates/service_detail_page.html
+msgid "Standart:"
+msgstr "Стандарт:"
+
+#: templates/service_detail_page.html
+msgid "VIP:"
+msgstr "VIP:"
+
+#: templates/service_detail_page.html
+msgid "Premium:"
+msgstr "Премиум:"
+
+#: templates/service_detail_page.html
+msgid "Sifariş Ver"
+msgstr "Сделать заказ"
+
+#: templates/service_detail_page.html
+msgid "Ətraflı Məlumat"
+msgstr "Подробная информация"
+
+#: templates/service_detail_page.html
+msgid "Xidmət Növləri"
+msgstr "Типы услуг"
+
+#: templates/service_detail_page.html
+msgid "Müxtəlif paket seçimləri"
+msgstr "Различные варианты пакетов"
+
+#: templates/service_detail_page.html
+msgid "Digər Xidmətlər"
+msgstr "Другие услуги"
+
+#: templates/service_detail_page.html
+msgid "Bütün Xidmətlərə Bax"
+msgstr "Посмотреть все услуги"
+
+#: templates/service_detail_page.html
+msgid "Əhməd Rəcəbli Business Center"
+msgstr "Бизнес-центр Ахмеда Раджабли"
+
+#: services/views/views_v1.py
+msgid "Rəyiniz uğurla göndərildi ✅"
+msgstr "Ваш отзыв успешно отправлен ✅"
+
+#: services/views/views_v1.py
+msgid "Melumatlari duzgun daxil edin"
+msgstr "Введите данные правильно"
 
