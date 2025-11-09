@@ -198,6 +198,16 @@
                                      style="width: 100%; max-height: 500px; object-fit: cover;">
                             </a>
                         </div>
+                    {% else %}
+                        <!-- Default image if no images or video -->
+                        <div class="mb-4">
+                            <img class="img-fluid rounded service-main-image" 
+                                 src="{% static 'img/carousel-1.jpg' %}" 
+                                 alt="{{ translation.name }}" 
+                                 loading="eager"
+                                 decoding="async"
+                                 style="width: 100%; max-height: 500px; object-fit: cover;">
+                        </div>
                     {% endif %}
 
                     <!-- Image Gallery -->
@@ -341,9 +351,6 @@
                                                     </div>
                                                 {% endif %}
                                             </div>
-                                            <a href="{% url 'order-page' %}" class="btn btn-sm">
-                                                <i class="fa fa-plus text-primary me-2"></i>Sifariş Ver
-                                            </a>
                                         </div>
                                     </div>
                                 </div>
