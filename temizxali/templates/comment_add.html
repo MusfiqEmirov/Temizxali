@@ -152,58 +152,94 @@
     <!-- Page Header End -->
 
 
-    <!-- Quote Start -->
+    <!-- Review Form Start -->
     <div class="container-fluid py-5">
         <div class="container">
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-5 text-primary">rey gonder</h1>
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+                <h1 class="display-5 mb-3 text-primary">Rəyinizi Paylaşın</h1>
+                <p class="mb-5">Xidmətimizdən istifadə etdikdən sonra rəyinizi bizimlə və digərləri ilə paylaşın. Sizin fikriniz çox dəyərlidir.</p>
             </div>
             <div class="row justify-content-center">
-                <div class="col-lg-7">
+                <div class="col-lg-8">
                     <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="row g-3">
-                            <div class="col-sm-6">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control border-0" id="gname" placeholder="Gurdian Name">
-                                    <label for="gname">Ad Soyad</label>
+                        <form method="post" action="{% url 'create-review' %}">
+                            {% csrf_token %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.fullname }}
+                                        <label for="{{ form.fullname.id_for_label }}">
+                                            <i class="fas fa-user me-2 text-primary"></i>{{ form.fullname.label }}
+                                        </label>
+                                        {% if form.fullname.errors %}
+                                            <div class="text-danger small mt-1">{{ form.fullname.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        {{ form.phone_number }}
+                                        <label for="{{ form.phone_number.id_for_label }}">
+                                            <i class="fas fa-phone me-2 text-primary"></i>{{ form.phone_number.label }}
+                                        </label>
+                                        {% if form.phone_number.errors %}
+                                            <div class="text-danger small mt-1">{{ form.phone_number.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <select name="{{ form.service.name }}" class="form-select" id="{{ form.service.id_for_label }}" required>
+                                            <option value="">Xidmət seçin...</option>
+                                            {% for service in services %}
+                                                {% with translation=service.translations.first %}
+                                                    {% if translation %}
+                                                        <option value="{{ service.id }}" {% if form.service.value == service.id %}selected{% endif %}>{{ translation.name }}</option>
+                                                    {% endif %}
+                                                {% endwith %}
+                                            {% endfor %}
+                                        </select>
+                                        <label for="{{ form.service.id_for_label }}">
+                                            <i class="fas fa-list me-2 text-primary"></i>{{ form.service.label|default:"Xidmət" }}
+                                        </label>
+                                        {% if form.service.errors %}
+                                            <div class="text-danger small mt-1">{{ form.service.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        {{ form.text }}
+                                        <label for="{{ form.text.id_for_label }}">
+                                            <i class="fas fa-comment-alt me-2 text-primary"></i>{{ form.text.label }}
+                                        </label>
+                                        {% if form.text.errors %}
+                                            <div class="text-danger small mt-1">{{ form.text.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">
+                                        <i class="fas fa-paper-plane me-2"></i>
+                                        Rəyi Göndər
+                                    </button>
                                 </div>
                             </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-floating">
-                                    <input type="number" class="form-control border-0" id="cname" placeholder="Child Name">
-                                    <label for="cname">sizin nomre</label>
-                                </div>
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="form-floating">
-                                    <select class="form-select border-0 " id="serviceType">
-                                        <option value="">Xidmət növü seçin</option>
-                                        <option value="perde">Pərdə yuma</option>
-                                        <option value="xalca">Xalça yuma</option>
-                                        <option value="divan">Divan yuma</option>
-                                        <option value="paltar">Paltar yuma</option>
-                                        <option value="təmizlik">Ümumi təmizlik</option>
-                                        <option value="pəncərə">Pəncərə təmizləmə</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <textarea class="form-control border-0" placeholder="Leave a message here" id="message" style="height: 100px"></textarea>
-                                    <label for="message">mezmun</label>
-                                </div>
-                            </div>
-                            <div class="col-12 text-center">
-                                <button class="btn btn-primary py-3 px-4" type="submit">Gonder</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Quote End -->
+    <!-- Review Form End -->
 
 
     <!-- Footer Start -->

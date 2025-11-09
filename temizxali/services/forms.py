@@ -71,27 +71,34 @@ class ReviewForm(forms.ModelForm):
         fields = ['service', 'fullname', 'phone_number', 'text']
 
         widgets = {
-            'services': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'service': forms.Select(attrs={
+                'class': 'form-select',
+                'id': 'id_service',
+            }),
             'fullname': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Ad və soyadınızı daxil edin'),
+                'id': 'id_fullname',
             }),
             'phone_number': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Mobil nömrənizi daxil edin (məs: 501234567)'),
+                'id': 'id_phone_number',
             }),
             'text': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 4,
                 'placeholder': _('Rəyinizi yazın...'),
+                'id': 'id_text',
+                'style': 'height: 120px;',
             }),
         }
 
         labels = {
-            # 'services': _('Servislər'),
+            'service': _('Xidmət'),
             'fullname': _('Ad Soyad'),
             'phone_number': _('Mobil nömrə'),
-            'text': _('Mesaj'),
+            'text': _('Rəy'),
         }
 
     def clean_phone_number(self):
