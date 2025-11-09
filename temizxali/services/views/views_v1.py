@@ -145,6 +145,16 @@ class ServiceDetailPage(View):
             if service.premium_price:
                 sale_premium_price = Decimal(str(service.premium_price)) * (Decimal('1') - sale_percent)
 
+        # Get contact and services for template consistency
+        contact = Contact.objects.first()
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages)),
+            'images'
+        ).order_by('-created_at')[:6]  # Limit to 6 for related services
+
         return render(request, self.template_name, {
             'languages': languages,
             'service': service,
@@ -152,6 +162,8 @@ class ServiceDetailPage(View):
             'sale_price': sale_price,
             'sale_vip_price': sale_vip_price,
             'sale_premium_price': sale_premium_price,
+            'contact': contact,
+            'services': services,
             })
 
 
