@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +10,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.7.0/css/flag-icons.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta3/css/bootstrap-select.min.css"/>
     <!-- Google Web Fonts -->
@@ -24,15 +25,15 @@
 
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 
 <body>
@@ -47,24 +48,53 @@
     <div class="container-fluid bg-dark text-light px-0 py-2">
         <div class="row gx-0 d-none d-lg-flex">
             <div class="col-lg-7 px-5 text-start">
-                <div class="h-100 d-inline-flex align-items-center me-4">
-                    <span class="fa fa-phone-alt me-2"></span>
-                    <span>+012 345 6789</span>
-                </div>
-                <div class="h-100 d-inline-flex align-items-center">
-                    <span class="far fa-envelope me-2"></span>
-                    <span>info@example.com</span>
-                </div>
+                {% if contact %}
+                    {% if contact.phone %}
+                        <div class="h-100 d-inline-flex align-items-center me-4">
+                            <span class="fa fa-phone-alt me-2"></span>
+                            <span>{{ contact.phone }}</span>
+                        </div>
+                    {% endif %}
+                    {% if contact.email %}
+                        <div class="h-100 d-inline-flex align-items-center">
+                            <span class="far fa-envelope me-2"></span>
+                            <span>{{ contact.email }}</span>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="h-100 d-inline-flex align-items-center me-4">
+                        <span class="fa fa-phone-alt me-2"></span>
+                        <span>+012 345 6789</span>
+                    </div>
+                    <div class="h-100 d-inline-flex align-items-center">
+                        <span class="far fa-envelope me-2"></span>
+                        <span>info@example.com</span>
+                    </div>
+                {% endif %}
             </div>
             <div class="col-lg-5 px-5 text-end">
                 <div class="h-100 d-inline-flex align-items-center mx-n2">
-                    <span>Buradan izlə:</span>
-                    <a class="btn btn-link text-light" href=""><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-link text-light" href=""><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-link text-light" href=""><i class="fab fa-linkedin-in"></i></a>
-                    <a class="btn btn-link text-light" href=""><i class="fab fa-instagram"></i></a>
+                    {% if contact %}
+                        {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
+                            <span>Buradan izlə:</span>
+                            {% if contact.facebook %}
+                                <a class="btn btn-link text-light" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            {% endif %}
+                            {% if contact.instagram %}
+                                <a class="btn btn-link text-light" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                            {% endif %}
+                            {% if contact.youtube %}
+                                <a class="btn btn-link text-light" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                            {% endif %}
+                            {% if contact.linkedn %}
+                                <a class="btn btn-link text-light" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            {% endif %}
+                            {% if contact.tiktok %}
+                                <a class="btn btn-link text-light" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
                 </div>
-
             </div>
         </div>
     </div>
@@ -74,7 +104,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h1 class="m-0">logo</h1>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -82,22 +112,28 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Ana səhifə</a>
+                <a href="{% url 'home-page' %}" class="nav-item nav-link active">Ana səhifə</a>
 
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Xidmetler</a>
                     <div class="dropdown-menu bg-light m-0">
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        {% if services %}
+                            {% for service in services|slice:":10" %}
+                                {% with translation=service.translations.first %}
+                                    {% if translation and translation.slug %}
+                                        <a href="{% url 'service-page' translation.slug %}" class="dropdown-item">{{ translation.name }}</a>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endfor %}
+                        {% else %}
+                            <a href="#" class="dropdown-item">Xidmət tapılmadı</a>
+                        {% endif %}
                     </div>
                 </div>
 
                 <!-- <a href="service.html" class="nav-item nav-link">Xidmətlər</a> -->
-                <a href="project.html" class="nav-item nav-link">Layihələr</a>
-                <a href="testimonial.html" class="nav-item nav-link">Rəylər</a>
+                <a href="{% url 'home-page' %}#projects" class="nav-item nav-link">Layihələr</a>
+                <a href="{% url 'home-page' %}#testimonials" class="nav-item nav-link">Rəylər</a>
 
                 <!-- <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -109,7 +145,7 @@
                         <a href="404.html" class="dropdown-item">404 Page</a>
                     </div>
                 </div> -->
-            <a href="contact.html" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">Hesabla ve Sifariş et<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">Hesabla ve Sifariş et<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -119,93 +155,76 @@
     <div class="container-fluid p-0 wow fadeIn" data-wow-delay="0.1s">
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="w-100" src="img/carousel-1.jpg" alt="Image">
-                    <div class="carousel-caption">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-8">
-                                    <h1 class="display-1 text-white mb-5 animated slideInDown">devis 1</h1>
+                {% if mottos_with_bg %}
+                    {% for item in mottos_with_bg %}
+                        {% with translation=item.motto.translations.first %}
+                            {% if translation %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                    {% if item.background_image %}
+                                        <img class="w-100" src="{{ item.background_image.image.url }}" alt="{{ translation.text|truncatewords:5 }}">
+                                    {% else %}
+                                        <img class="w-100" src="{% static 'img/carousel-1.jpg' %}" alt="{{ translation.text|truncatewords:5 }}">
+                                    {% endif %}
+                                    <div class="carousel-caption">
+                                        <div class="container">
+                                            <div class="row justify-content-center">
+                                                <div class="col-lg-8">
+                                                    <h1 class="display-1 text-white mb-5 animated slideInDown">{{ translation.text }}</h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    {% endfor %}
+                {% elif background_images %}
+                    {% for bg_image in background_images %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img class="w-100" src="{{ bg_image.image.url }}" alt="Image">
+                            <div class="carousel-caption">
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-8">
+                                            <h1 class="display-1 text-white mb-5 animated slideInDown">Xoş gəlmisiniz</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="carousel-item active">
+                        <img class="w-100" src="{% static 'img/carousel-1.jpg' %}" alt="Image">
+                        <div class="carousel-caption">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <h1 class="display-1 text-white mb-5 animated slideInDown">Xoş gəlmisiniz</h1>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="carousel-item">
-                    <img class="w-100" src="img/carousel-2.jpg" alt="Image">
-                    <div class="carousel-caption">
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-lg-7">
-                                    <h1 class="display-1 text-white mb-5 animated slideInDown">Devis 2</h1>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% endif %}
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+            {% if mottos_with_bg|length > 1 or background_images|length > 1 %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            {% endif %}
         </div>
     </div>
     <!-- Carousel End -->
 
 
-    <!-- Top Feature Start -->
-    <div class="container-fluid top-feature py-5 pt-lg-0">
-        <div class="container py-5 pt-lg-0">
-            <div class="row gx-0">
-                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="bg-white shadow d-flex align-items-center h-100 px-5" style="min-height: 160px;">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0 btn-lg-square rounded-circle bg-light">
-                                <i class="fa fa-times text-primary"></i>
-                            </div>
-                            <div class="ps-3">
-                                <h4>No Hidden Cost</h4>
-                                <span>Clita erat ipsum lorem sit sed stet duo justo</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.3s">
-                    <div class="bg-white shadow d-flex align-items-center h-100 px-5" style="min-height: 160px;">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0 btn-lg-square rounded-circle bg-light">
-                                <i class="fa fa-users text-primary"></i>
-                            </div>
-                            <div class="ps-3">
-                                <h4>Dedicated Team</h4>
-                                <span>Clita erat ipsum lorem sit sed stet duo justo</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.5s">
-                    <div class="bg-white shadow d-flex align-items-center h-100 px-5" style="min-height: 160px;">
-                        <div class="d-flex">
-                            <div class="flex-shrink-0 btn-lg-square rounded-circle bg-light">
-                                <i class="fa fa-phone text-primary"></i>
-                            </div>
-                            <div class="ps-3">
-                                <h4>24/7 Available</h4>
-                                <span>Clita erat ipsum lorem sit sed stet duo justo</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Top Feature End -->
 
 
     <!-- About Start -->
@@ -213,7 +232,7 @@
         <div class="container">
             <div class="row g-5 align-items-end">
                 <div class="col-lg-3 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
-                    <img class="img-fluid rounded" data-wow-delay="0.1s" src="img/about.jpg">
+                    <img class="img-fluid rounded" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}">
                 </div>
                 <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
                     <h1 class="display-1 text-primary mb-0">25</h1>
@@ -247,25 +266,52 @@
 
 
     <!-- Facts Start -->
-    <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="img/carousel-1.jpg">
+    <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{% static 'img/carousel-1.jpg' %}">
         <div class="container py-5">
             <div class="row g-5">
-                <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
-                    <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                    <span class="fs-5 fw-semi-bold text-light">Happy Clients</span>
-                </div>
-                <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
-                    <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                    <span class="fs-5 fw-semi-bold text-light">Garden Complated</span>
-                </div>
-                <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
-                    <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                    <span class="fs-5 fw-semi-bold text-light">Dedicated Staff</span>
-                </div>
-                <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
-                    <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                    <span class="fs-5 fw-semi-bold text-light">Awards Achieved</span>
-                </div>
+                {% if statistics %}
+                    {% if statistics.client_count %}
+                        <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
+                            <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.client_count }}</h1>
+                            <span class="fs-5 fw-semi-bold text-light">Məmnun Müştərilər</span>
+                        </div>
+                    {% endif %}
+                    {% if statistics.work_done_count %}
+                        <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
+                            <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.work_done_count }}</h1>
+                            <span class="fs-5 fw-semi-bold text-light">Tamamlanmış İşlər</span>
+                        </div>
+                    {% endif %}
+                    {% if statistics.staff_count %}
+                        <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
+                            <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.staff_count }}</h1>
+                            <span class="fs-5 fw-semi-bold text-light">Peşəkar Komanda</span>
+                        </div>
+                    {% endif %}
+                    {% if statistics.achievement_count %}
+                        <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
+                            <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.achievement_count }}</h1>
+                            <span class="fs-5 fw-semi-bold text-light">Nailiyyətlər</span>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
+                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
+                        <span class="fs-5 fw-semi-bold text-light">Məmnun Müştərilər</span>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
+                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
+                        <span class="fs-5 fw-semi-bold text-light">Tamamlanmış İşlər</span>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
+                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
+                        <span class="fs-5 fw-semi-bold text-light">Peşəkar Komanda</span>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
+                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
+                        <span class="fs-5 fw-semi-bold text-light">Nailiyyətlər</span>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -287,7 +333,7 @@
                     <div class="service-item rounded d-flex h-100" >
                         <div class="service-img rounded">
                             <video autoplay muted loop playsinline class="video-bg">
-                                <source src="video1.mp4" type="video/mp4">
+                                <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
                                 Sənin brauzerin videonu dəstəkləmir.
                             </video>
                         </div>
@@ -303,7 +349,7 @@
                     <div class="service-item rounded d-flex h-100" >
                         <div class="service-img rounded">
                             <video autoplay muted loop playsinline class="video-bg">
-                                <source src="video1.mp4" type="video/mp4">
+                                <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
                                 Sənin brauzerin videonu dəstəkləmir.
                             </video>
                         </div>
@@ -319,7 +365,7 @@
                     <div class="service-item rounded d-flex h-100" >
                         <div class="service-img rounded">
                             <video autoplay muted loop playsinline class="video-bg">
-                                <source src="video1.mp4" type="video/mp4">
+                                <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
                                 Sənin brauzerin videonu dəstəkləmir.
                             </video>
                         </div>
@@ -335,7 +381,7 @@
                     <div class="service-item rounded d-flex h-100" >
                         <div class="service-img rounded">
                             <video autoplay muted loop playsinline class="video-bg">
-                                <source src="video1.mp4" type="video/mp4">
+                                <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
                                 Sənin brauzerin videonu dəstəkləmir.
                             </video>
                         </div>
@@ -351,7 +397,7 @@
                     <div class="service-item rounded d-flex h-100" >
                         <div class="service-img rounded">
                             <video autoplay muted loop playsinline class="video-bg">
-                                <source src="video1.mp4" type="video/mp4">
+                                <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
                                 Sənin brauzerin videonu dəstəkləmir.
                             </video>
                         </div>
@@ -367,7 +413,7 @@
                     <div class="service-item rounded d-flex h-100" >
                         <div class="service-img rounded">
                             <video autoplay muted loop playsinline class="video-bg">
-                                <source src="video1.mp4" type="video/mp4">
+                                <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
                                 Sənin brauzerin videonu dəstəkləmir.
                             </video>
                         </div>
@@ -400,109 +446,37 @@
             <div class="row g-4 portfolio-container">
                 <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
                     <div class="portfolio-inner rounded">
-                        <img class="img-fluid" src="img/service-1.jpg" alt="">
+                        <img class="img-fluid" src="{% static 'img/service-1.jpg' %}" alt="Layihə 1">
                         <div class="portfolio-text">
-                            <h4 class="text-white mb-4">Xidmetin adi</h4>
+                            <h4 class="text-white mb-4">Layihə 1</h4>
                             <div class="d-flex">
-                                <a class="btn btn-lg-square rounded-circle mx-2" href="img/service-1.jpg" data-lightbox="xidmet1"><i class="fa fa-eye"></i></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="İkinci şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Üçüncü şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Dördüncü şəkil"></a>
-                                r
-                                <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
+                                <a class="btn btn-lg-square rounded-circle mx-2" href="{% static 'img/service-1.jpg' %}" data-lightbox="project_1"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
                     <div class="portfolio-inner rounded">
-                        <img class="img-fluid" src="img/service-1.jpg" alt="">
+                        <img class="img-fluid" src="{% static 'img/service-2.jpg' %}" alt="Layihə 2">
                         <div class="portfolio-text">
-                            <h4 class="text-white mb-4">Xidmetin adi</h4>
+                            <h4 class="text-white mb-4">Layihə 2</h4>
                             <div class="d-flex">
-                                <a class="btn btn-lg-square rounded-circle mx-2" href="img/service-1.jpg" data-lightbox="xidmet1"><i class="fa fa-eye"></i></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="İkinci şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Üçüncü şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Dördüncü şəkil"></a>
-                                r
-                                <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
+                                <a class="btn btn-lg-square rounded-circle mx-2" href="{% static 'img/service-2.jpg' %}" data-lightbox="project_2"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
                     <div class="portfolio-inner rounded">
-                        <img class="img-fluid" src="img/service-1.jpg" alt="">
+                        <img class="img-fluid" src="{% static 'img/service-3.jpg' %}" alt="Layihə 3">
                         <div class="portfolio-text">
-                            <h4 class="text-white mb-4">Xidmetin adi</h4>
+                            <h4 class="text-white mb-4">Layihə 3</h4>
                             <div class="d-flex">
-                                <a class="btn btn-lg-square rounded-circle mx-2" href="img/service-1.jpg" data-lightbox="xidmet1"><i class="fa fa-eye"></i></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="İkinci şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Üçüncü şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Dördüncü şəkil"></a>
-                                r
-                                <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
+                                <a class="btn btn-lg-square rounded-circle mx-2" href="{% static 'img/service-3.jpg' %}" data-lightbox="project_3"><i class="fa fa-eye"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="portfolio-inner rounded">
-                        <img class="img-fluid" src="img/service-1.jpg" alt="">
-                        <div class="portfolio-text">
-                            <h4 class="text-white mb-4">Xidmetin adi</h4>
-                            <div class="d-flex">
-                                <a class="btn btn-lg-square rounded-circle mx-2" href="img/service-1.jpg" data-lightbox="xidmet1"><i class="fa fa-eye"></i></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="İkinci şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Üçüncü şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Dördüncü şəkil"></a>
-                                r
-                                <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="portfolio-inner rounded">
-                        <img class="img-fluid" src="img/service-1.jpg" alt="">
-                        <div class="portfolio-text">
-                            <h4 class="text-white mb-4">Xidmetin adi</h4>
-                            <div class="d-flex">
-                                <a class="btn btn-lg-square rounded-circle mx-2" href="img/service-1.jpg" data-lightbox="xidmet1"><i class="fa fa-eye"></i></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="İkinci şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Üçüncü şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Dördüncü şəkil"></a>
-                                r
-                                <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item first wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="portfolio-inner rounded">
-                        <img class="img-fluid" src="img/service-1.jpg" alt="">
-                        <div class="portfolio-text">
-                            <h4 class="text-white mb-4">Xidmetin adi</h4>
-                            <div class="d-flex">
-                                <a class="btn btn-lg-square rounded-circle mx-2" href="img/service-1.jpg" data-lightbox="xidmet1"><i class="fa fa-eye"></i></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="İkinci şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Üçüncü şəkil"></a>
-                                <a href="img/service-1.jpg" data-lightbox="xidmet1" data-title="Dördüncü şəkil"></a>
-                                r
-                                <a class="btn btn-lg-square rounded-circle mx-2" href=""><i class="fa fa-link"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                
-
-
             </div>
         </div>
     </div>
@@ -516,48 +490,25 @@
                 <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
                     <h1 class="display-5 mb-5">Sizdən gələn rəylər</h1>
                     <p class="mb-4">Rəyləri  ancaq xidmetimizden istifade eden musteriler yaza biler</p>
-                    <a class="btn btn-primary py-3 px-4" href="commet_add.html">Rəy bildir</a>
+                    <a class="btn btn-primary py-3 px-4" href="{% url 'create-review' %}">Rəy bildir</a>
                 </div>
                 <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="owl-carousel testimonial-carousel">
-
                         <div class="testimonial-item">
-                            <p class="fs-5">musterinin reyi ---> praqramistleriniz cox yarasiqlidi masallah yiyesine qismet </p>
-                            <h4>musterinin adi</h4>
-                            <span>xidmetin adi</span>
+                            <p class="fs-5">Çox yaxşı xidmət aldım. Həqiqətən məmnunam.</p>
+                            <h4>Müştəri 1</h4>
+                            <span>Xidmət adı</span>
                         </div>
                         <div class="testimonial-item">
-                            <p class="fs-5">musterinin reyi ---> praqramistleriniz2 cox yarasiqlidi masallah yiyesine qismet </p>
-                            <h4>musterinin adi</h4>
-                            <span>xidmetin adi</span>
+                            <p class="fs-5">Əla iş gördülər. Çox peşəkar komanda.</p>
+                            <h4>Müştəri 2</h4>
+                            <span>Xidmət adı</span>
                         </div>
                         <div class="testimonial-item">
-                            <p class="fs-5">musterinin reyi ---> praqramistleriniz3 cox yarasiqlidi masallah yiyesine qismet </p>
-                            <h4>musterinin adi</h4>
-                            <span>xidmetin adi</span>
+                            <p class="fs-5">Tövsiyə edirəm. Çox keyfiyyətli xidmət.</p>
+                            <h4>Müştəri 3</h4>
+                            <span>Xidmət adı</span>
                         </div>
-                        <div class="testimonial-item">
-                            <p class="fs-5">musterinin reyi ---> praqramistleriniz4 cox yarasiqlidi masallah yiyesine qismet </p>
-                            <h4>musterinin adi</h4>
-                            <span>xidmetin adi</span>
-                        </div>
-                        <div class="testimonial-item">
-                            <p class="fs-5">musterinin reyi ---> praqramistleriniz5 cox yarasiqlidi masallah yiyesine qismet </p>
-                            <h4>musterinin adi</h4>
-                            <span>xidmetin adi</span>
-                        </div>
-                        <div class="testimonial-item">
-                            <p class="fs-5">musterinin reyi ---> praqramistleriniz6 cox yarasiqlidi masallah yiyesine qismet </p>
-                            <h4>musterinin adi</h4>
-                            <span>xidmetin adi</span>
-                        </div>
-                        <div class="testimonial-item">
-                            <p class="fs-5">musterinin reyi ---> praqramistleriniz7 cox yarasiqlidi masallah yiyesine qismet </p>
-                            <h4>musterinin adi</h4>
-                            <span>xidmetin adi</span>
-                        </div>
-
-
                     </div>
                 </div>
             </div>
@@ -571,32 +522,58 @@
         <div class="container ">
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">adress</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>ehmed recebli businesscup</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-tiktok"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-instagram"></i></a>
-                    </div>
+                    <h4 class="text-white mb-4">Ünvan</h4>
+                    {% if contact %}
+                        {% if contact.address %}
+                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ contact.address }}</p>
+                        {% endif %}
+                        {% if contact.phone %}
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>{{ contact.phone }}</p>
+                        {% endif %}
+                        {% if contact.email %}
+                            <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{ contact.email }}</p>
+                        {% endif %}
+                        <div class="d-flex pt-2">
+                            {% if contact.facebook %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            {% endif %}
+                            {% if contact.instagram %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                            {% endif %}
+                            {% if contact.youtube %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                            {% endif %}
+                            {% if contact.linkedn %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            {% endif %}
+                            {% if contact.tiktok %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">Xidmetlər</h4>
-                    <a class="btn btn-link" href="">xidmet1</a>
-                    <a class="btn btn-link" href="">xidmet2</a>
-                    <a class="btn btn-link" href="">xidmet3</a>
-                    <a class="btn btn-link" href="">xidmet4</a>
-                    <a class="btn btn-link" href="">xidmet5</a>
-
+                    <h4 class="text-white mb-4">Xidmətlər</h4>
+                    {% if services %}
+                        {% for service in services|slice:":10" %}
+                            {% with translation=service.translations.first %}
+                                {% if translation and translation.slug %}
+                                    <a class="btn btn-link" href="{% url 'service-page' translation.slug %}">{{ translation.name }}</a>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    {% else %}
+                        <a class="btn btn-link" href="#">Xidmət tapılmadı</a>
+                    {% endif %}
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-4">Digər</h4>
-                    <a class="btn btn-link" href="">Haqqimizda</a>
-                    <a class="btn btn-link" href="">Sifaris</a>
-                    <a class="btn btn-link" href="">Butun Xidmetler</a>
-                    <a class="btn btn-link" href="">Əlaqə</a>
+                    <a class="btn btn-link" href="{% url 'home-page' %}">Ana səhifə</a>
+                    <a class="btn btn-link" href="{% url 'order-page' %}">Sifariş</a>
+                    {% if services %}
+                        <a class="btn btn-link" href="{% url 'home-page' %}#services">Bütün Xidmətlər</a>
+                    {% endif %}
+                    <a class="btn btn-link" href="{% url 'order-page' %}">Əlaqə</a>
                 </div>
 
             </div>
@@ -786,18 +763,18 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/parallax/parallax.min.js"></script>
-    <script src="lib/isotope/isotope.pkgd.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'lib/parallax/parallax.min.js' %}"></script>
+    <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta3/js/bootstrap-select.min.js"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 
 </html>

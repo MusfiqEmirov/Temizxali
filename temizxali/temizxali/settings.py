@@ -123,8 +123,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# Static files directories
 STATICFILES_DIRS = [
-    str(BASE_DIR / 'static'),  # temizxali/static folder
+    os.path.join(str(BASE_DIR), 'static'),
 ]
 
 # Default primary key field type
