@@ -163,7 +163,7 @@ class StatisticsAdmin(admin.ModelAdmin):
 # Review Admin
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('id', 'fullname', 'phone_number', 'is_verified', 'created_at')
+    list_display = ('id', 'service', 'fullname', 'phone_number', 'is_verified', 'created_at')
     list_display_links = ('id', 'fullname')
     list_filter = ('is_verified', 'created_at')
     search_fields = ('fullname', 'phone_number', 'comment') 

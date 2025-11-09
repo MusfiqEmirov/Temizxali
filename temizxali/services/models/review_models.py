@@ -6,6 +6,11 @@ from services.utils.normalize_phone_number import normalize_az_phone
 
 
 class Review(models.Model):
+    service = models.ForeignKey(
+        Service,
+        on_delete=models.CASCADE,
+        verbose_name='Service'
+    )
     fullname = models.CharField(
         max_length=32,
         verbose_name='Ad soyad'

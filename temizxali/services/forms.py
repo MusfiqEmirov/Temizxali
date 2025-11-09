@@ -68,10 +68,10 @@ class ReviewForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        fields = ['fullname', 'phone_number', 'text']
+        fields = ['service', 'fullname', 'phone_number', 'text']
 
         widgets = {
-            # 'services': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+            'services': forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
             'fullname': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': _('Ad və soyadınızı daxil edin'),
