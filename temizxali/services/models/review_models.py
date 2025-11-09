@@ -9,7 +9,8 @@ class Review(models.Model):
     service = models.ForeignKey(
         Service,
         on_delete=models.CASCADE,
-        verbose_name='Service'
+        related_name='reviews',
+        verbose_name='Service',
     )
     fullname = models.CharField(
         max_length=32,

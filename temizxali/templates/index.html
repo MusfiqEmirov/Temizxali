@@ -432,26 +432,32 @@
             <div class="row g-5">
                 <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
                     <h1 class="display-5 mb-5">Sizdən gələn rəylər</h1>
-                    <p class="mb-4">Rəyləri  ancaq xidmetimizden istifade eden musteriler yaza biler</p>
+                    <p class="mb-4">Rəyləri yalnız xidmətimizdən istifadə edən müştərilər yaza bilər</p>
                     <a class="btn btn-primary py-3 px-4" href="{% url 'create-review' %}">Rəy bildir</a>
                 </div>
                 <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="owl-carousel testimonial-carousel">
-                        <div class="testimonial-item">
-                            <p class="fs-5">Çox yaxşı xidmət aldım. Həqiqətən məmnunam.</p>
-                            <h4>Müştəri 1</h4>
-                            <span>Xidmət adı</span>
-                        </div>
-                        <div class="testimonial-item">
-                            <p class="fs-5">Əla iş gördülər. Çox peşəkar komanda.</p>
-                            <h4>Müştəri 2</h4>
-                            <span>Xidmət adı</span>
-                        </div>
-                        <div class="testimonial-item">
-                            <p class="fs-5">Tövsiyə edirəm. Çox keyfiyyətli xidmət.</p>
-                            <h4>Müştəri 3</h4>
-                            <span>Xidmət adı</span>
-                        </div>
+                        {% if reviews %}
+                            {% for review in reviews %}
+                                <div class="testimonial-item">
+                                    <p class="fs-5">{{ review.text }}</p>
+                                    <h4>{{ review.fullname }}</h4>
+                                    {% if review.service %}
+                                        {% with translation=review.service.translations.first %}
+                                            {% if translation %}
+                                                <span>{{ translation.name }}</span>
+                                            {% endif %}
+                                        {% endwith %}
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="testimonial-item">
+                                <p class="fs-5">Hazırda rəy mövcud deyil.</p>
+                                <h4>-</h4>
+                                <span>-</span>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

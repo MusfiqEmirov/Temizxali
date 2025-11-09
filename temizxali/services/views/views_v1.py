@@ -61,7 +61,6 @@ class HomePageView(View):
         reviews = Review.objects.filter(is_verified=True).order_by('-created_at')
         contact = Contact.objects.first()
 
-        # Mottos və background_images-i birləşdir
         mottos_with_bg = []
         background_images_list = list(background_images)
         if mottos.exists() and background_images_list:
@@ -164,7 +163,6 @@ class OrderPageView(View):
         services = CalculatorQuery.load_services()
         current_language = translation.get_language()
         contact = Contact.objects.first()
-        # Services artıq aktiv xidmətləri ehtiva edir, navbar və footer üçün istifadə edək
         return render(request, self.template_name, {
             'form': form,
             'services': services,
@@ -205,7 +203,7 @@ class OrderPageView(View):
 
 
 class ReviewCreateView(View):
-    template_name = 'review_form.html'
+    template_name = 'comment_add.html'
 
     def get(self, request):
         form = ReviewForm()
