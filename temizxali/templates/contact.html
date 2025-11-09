@@ -55,22 +55,49 @@
     <div class="container-fluid bg-dark text-light px-0 py-2">
         <div class="row gx-0 d-none d-lg-flex">
             <div class="col-lg-7 px-5 text-start">
-                <div class="h-100 d-inline-flex align-items-center me-4">
-                    <span class="fa fa-phone-alt me-2"></span>
-                    <span>+012 345 6789</span>
-                </div>
-                <div class="h-100 d-inline-flex align-items-center">
-                    <span class="far fa-envelope me-2"></span>
-                    <span>info@example.com</span>
-                </div>
+                {% if contact %}
+                    {% if contact.phone %}
+                        <div class="h-100 d-inline-flex align-items-center me-4">
+                            <span class="fa fa-phone-alt me-2"></span>
+                            <span>{{ contact.phone }}</span>
+                        </div>
+                    {% endif %}
+                    {% if contact.email %}
+                        <div class="h-100 d-inline-flex align-items-center">
+                            <span class="far fa-envelope me-2"></span>
+                            <span>{{ contact.email }}</span>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="h-100 d-inline-flex align-items-center me-4">
+                        <span class="fa fa-phone-alt me-2"></span>
+                        <span>+012 345 6789</span>
+                    </div>
+                    <div class="h-100 d-inline-flex align-items-center">
+                        <span class="far fa-envelope me-2"></span>
+                        <span>info@example.com</span>
+                    </div>
+                {% endif %}
             </div>
             <div class="col-lg-5 px-5 text-end">
                 <div class="h-100 d-inline-flex align-items-center mx-n2">
                     <span>Follow Us:</span>
-                    <a class="btn btn-link text-light" href=""><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-link text-light" href=""><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-link text-light" href=""><i class="fab fa-linkedin-in"></i></a>
-                    <a class="btn btn-link text-light" href=""><i class="fab fa-instagram"></i></a>
+                    {% if contact %}
+                        {% if contact.social_one %}
+                            <a class="btn btn-link text-light" href="{{ contact.social_one }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if contact.social_two %}
+                            <a class="btn btn-link text-light" href="{{ contact.social_two }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if contact.social_three %}
+                            <a class="btn btn-link text-light" href="{{ contact.social_three }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                        {% endif %}
+                    {% else %}
+                        <a class="btn btn-link text-light" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-link text-light" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-link text-light" href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-link text-light" href=""><i class="fab fa-instagram"></i></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -92,11 +119,17 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Xidmetler</a>
                     <div class="dropdown-menu bg-light m-0">
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        {% if services %}
+                            {% for service in services|slice:":10" %}
+                                {% with translation=service.translations.first %}
+                                    {% if translation and translation.slug %}
+                                        <a href="{% url 'service-page' translation.slug %}" class="dropdown-item">{{ translation.name }}</a>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endfor %}
+                        {% else %}
+                            <a href="#" class="dropdown-item">Xidmət tapılmadı</a>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -356,36 +389,62 @@
         <div class="container ">
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">adress</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>ehmed recebli businesscup</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
-                                class="fab fa-tiktok"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
-                                class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
-                                class="fab fa-instagram"></i></a>
-                    </div>
+                    <h4 class="text-white mb-4">Ünvan</h4>
+                    {% if contact %}
+                        {% if contact.address %}
+                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ contact.address }}</p>
+                        {% endif %}
+                        {% if contact.phone %}
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>{{ contact.phone }}</p>
+                        {% endif %}
+                        {% if contact.email %}
+                            <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{ contact.email }}</p>
+                        {% endif %}
+                        <div class="d-flex pt-2">
+                            {% if contact.social_one %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.social_one }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            {% endif %}
+                            {% if contact.social_two %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.social_two }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                            {% endif %}
+                            {% if contact.social_three %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.social_three }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>ehmed recebli businesscup</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-tiktok"></i></a>
+                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
+                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-4">Xidmətlər</h4>
-                    <a class="btn btn-link" href="">xidmet1</a>
-                    <a class="btn btn-link" href="">xidmet2</a>
-                    <a class="btn btn-link" href="">xidmet3</a>
-                    <a class="btn btn-link" href="">xidmet4</a>
-                    <a class="btn btn-link" href="">xidmet5</a>
-
+                    {% if services %}
+                        {% for service in services|slice:":10" %}
+                            {% with translation=service.translations.first %}
+                                {% if translation and translation.slug %}
+                                    <a class="btn btn-link" href="{% url 'service-page' translation.slug %}">{{ translation.name }}</a>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    {% else %}
+                        <a class="btn btn-link" href="#">Xidmət tapılmadı</a>
+                    {% endif %}
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-4">Digər</h4>
-                    <a class="btn btn-link" href="">Haqqimizda</a>
-                    <a class="btn btn-link" href="">Sifaris</a>
-                    <a class="btn btn-link" href="">Butun Xidmetler</a>
-                    <a class="btn btn-link" href="">Əlaqə</a>
+                    <a class="btn btn-link" href="{% url 'home-page' %}">Ana səhifə</a>
+                    <a class="btn btn-link" href="{% url 'order-page' %}">Sifariş</a>
+                    {% if services %}
+                        <a class="btn btn-link" href="{% url 'home-page' %}#services">Bütün Xidmətlər</a>
+                    {% endif %}
+                    <a class="btn btn-link" href="{% url 'order-page' %}">Əlaqə</a>
                 </div>
 
             </div>

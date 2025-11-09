@@ -163,17 +163,21 @@ class OrderPageView(View):
         form = OrderForm()
         services = CalculatorQuery.load_services()
         current_language = translation.get_language()
+        contact = Contact.objects.first()
+        # Services artıq aktiv xidmətləri ehtiva edir, navbar və footer üçün istifadə edək
         return render(request, self.template_name, {
             'form': form,
             'services': services,
             'current_language': current_language,
             'view_type': 'order',
+            'contact': contact,
         })
     
     def post(self, request):
         form = OrderForm(request.POST)
         services = CalculatorQuery.load_services()
         current_language = translation.get_language()
+        contact = Contact.objects.first()
         if form.is_valid():
             try:
                 form.save()
@@ -186,6 +190,7 @@ class OrderPageView(View):
                     'services': services,
                     'current_language': current_language,
                     'view_type': 'order',
+                    'contact': contact,
                 })
         else:
             messages.error(request, _('Zəhmət olmasa formu düzgün doldurun'))
@@ -194,6 +199,7 @@ class OrderPageView(View):
                 'services': services,
                 'current_language': current_language,
                 'view_type': 'order',
+                'contact': contact,
             })
     
 
@@ -243,6 +249,7 @@ class ServiceCalculatorView(View):
             total_price = Decimal(request.session.pop('calculator_total'))
 
         form = OrderForm()
+        contact = Contact.objects.first()
         return render(request, self.template_name, {
             'services': services,
             'result': result,
@@ -250,6 +257,7 @@ class ServiceCalculatorView(View):
             'form': form,
             'current_language': translation.get_language(),
             'view_type': 'calculator',
+            'contact': contact,
         })
 
     def post(self, request):
