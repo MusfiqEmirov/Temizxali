@@ -18,7 +18,7 @@ class CalculatorQuery:
                       and variant translations filtered by current language.
         """
         # Lazy import to avoid circular import
-        from services.models import Service, ServiceTranslation, ServiceVariant, ServiceVariantTranslation
+        from services.models import Service, ServiceTranslation, ServiceVariant, ServiceVariantTranslation, SaleEvent
         
         lang = translation.get_language()
         return (
@@ -40,6 +40,10 @@ class CalculatorQuery:
                             queryset=ServiceVariantTranslation.objects.filter(languages=lang),
                         )
                     ),
+                ),
+                Prefetch(
+                    'sales',
+                    queryset=SaleEvent.objects.filter(active=True),
                 ),
             )
         )

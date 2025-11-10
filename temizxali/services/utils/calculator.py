@@ -96,29 +96,55 @@ class CalculatorService:
                 base_price = Decimal(str(raw_price)) if raw_price is not None else Decimal('0')
                 variant_name = ''
 
-            if service.is_kq: 
+            # Calculate based on measure_type
+            measure_type = service.measure_type
+            if measure_type == 'kg':
                 calculated = base_price * value
                 unit = 'kq'
-            elif service.is_kv_metr: 
+            elif measure_type == 'm2':
                 calculated = base_price * value
                 unit = 'm²'
-            elif service.is_metr: 
+            elif measure_type == 'm':
                 calculated = base_price * value
                 unit = 'm'
-            elif service.is_number: 
+            elif measure_type == 'unit':
                 calculated = base_price * value
                 unit = 'ədəd'
-            else: 
+            else:
                 calculated = base_price
                 unit = 'ədəd'
 
-            if service.is_kv_metr:
-                if value > Decimal('10'):
-                    discount_percent = Decimal(str(service.sale or '0'))
+            # Get applicable SaleEvent discount based on min_quantity
+            # SaleEvent service-ə bağlıdır və service-in measure_type-ı ilə uyğun olmalıdır
+            discount_percent = Decimal('0')
+            applicable_sale = None
+            
+            # Find active SaleEvent that matches service measure_type and min_quantity condition
+            try:
+                # Prefetch edilmiş sales-i istifadə et, yoxdursa query et
+                if hasattr(service, '_prefetched_objects_cache') and 'sales' in service._prefetched_objects_cache:
+                    sales_queryset = service._prefetched_objects_cache['sales']
                 else:
-                    discount_percent = Decimal('0')
-            else:
-                discount_percent = Decimal(str(service.sale or '0'))
+                    sales_queryset = service.sales.filter(active=True)
+                
+                for sale_event in sales_queryset:
+                    # Yalnız aktiv sale event-ləri nəzərə al
+                    if not getattr(sale_event, 'active', False):
+                        continue
+                    # SaleEvent service-ə bağlıdır, ona görə də service-in measure_type-ı ilə uyğun olur
+                    min_qty = Decimal(str(getattr(sale_event, 'min_quantity', 0)))
+                    if value >= min_qty:
+                        sale_percent = getattr(sale_event, 'sale', None)
+                        if sale_percent and (not applicable_sale or sale_percent > getattr(applicable_sale, 'sale', 0)):
+                            applicable_sale = sale_event
+            except (AttributeError, Exception):
+                # Əgər sales mövcud deyilsə və ya xəta baş verərsə, endirim yoxdur
+                pass
+            
+            if applicable_sale:
+                sale_percent = getattr(applicable_sale, 'sale', None)
+                if sale_percent:
+                    discount_percent = Decimal(str(sale_percent))
             
             discount_amount = (calculated * discount_percent) / Decimal('100')
             final_price = calculated - discount_amount

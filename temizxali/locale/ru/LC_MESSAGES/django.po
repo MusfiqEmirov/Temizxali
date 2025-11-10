@@ -389,3 +389,7 @@ msgstr "Ваш отзыв успешно отправлен ✅"
 msgid "Melumatlari duzgun daxil edin"
 msgstr "Введите данные правильно"
 
+#: templates/service_detail_page.html
+msgid "Aktiv Endirim Kampaniyaları"
+msgstr "Активные акции"
+

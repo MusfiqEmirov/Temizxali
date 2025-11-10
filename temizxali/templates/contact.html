@@ -346,11 +346,16 @@
                                                 data-price="{% if service.price %}{{ service.price }}{% else %}0{% endif %}"
                                                 data-vip-price="{% if service.vip_price %}{{ service.vip_price }}{% else %}0{% endif %}"
                                                 data-premium-price="{% if service.premium_price %}{{ service.premium_price }}{% else %}0{% endif %}"
-                                                data-sale="{% if service.sale %}{{ service.sale }}{% else %}0{% endif %}"
-                                                data-is-kq="{% if service.is_kq %}true{% else %}false{% endif %}"
-                                                data-is-kv-metr="{% if service.is_kv_metr %}true{% else %}false{% endif %}"
-                                                data-is-metr="{% if service.is_metr %}true{% else %}false{% endif %}"
-                                                data-is-number="{% if service.is_number %}true{% else %}false{% endif %}"
+                                                data-measure-type="{{ service.measure_type }}"
+                                                data-sales="[
+                                                    {% for sale_event in service.sales.all %}
+                                                        {
+                                                            &quot;sale&quot;: {% if sale_event.sale %}{{ sale_event.sale }}{% else %}0{% endif %},
+                                                            &quot;min_quantity&quot;: {% if sale_event.min_quantity %}{{ sale_event.min_quantity }}{% else %}0{% endif %},
+                                                            &quot;active&quot;: {% if sale_event.active %}true{% else %}false{% endif %}
+                                                        }{% if not forloop.last %},{% endif %}
+                                                    {% endfor %}
+                                                ]"
                                                 data-variants="[
                                                     {% for variant in service.variants.all %}
                                                         {
@@ -369,7 +374,6 @@
                                                         Service #{{ service.id }}
                                                     {% endif %}
                                                 {% endwith %}
-                                                {% if service.sale %}(-{{ service.sale }}%){% endif %}
                                             </option>
                                         {% empty %}
                                             <option value="">{% trans "Xidmət tapılmadı" %}</option>

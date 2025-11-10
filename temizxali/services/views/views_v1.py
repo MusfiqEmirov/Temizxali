@@ -127,20 +127,14 @@ class ServiceDetailPage(View):
             'images',
             Prefetch('variants', queryset=ServiceVariant.objects.all().prefetch_related(
                 Prefetch('translations', queryset=ServiceVariantTranslation.objects.filter(languages=languages))
+            )),
+            Prefetch('sales', queryset=SaleEvent.objects.filter(active=True).prefetch_related(
+                Prefetch('translations', queryset=SaleEventTranslation.objects.filter(languages=languages))
             ))
         ).first()
-        sale_price = None
-        sale_vip_price = None
-        sale_premium_price = None
         
-        if service.sale:
-            sale_percent = Decimal(str(service.sale)) / Decimal('100')
-            if service.price:
-                sale_price = Decimal(str(service.price)) * (Decimal('1') - sale_percent)
-            if service.vip_price:
-                sale_vip_price = Decimal(str(service.vip_price)) * (Decimal('1') - sale_percent)
-            if service.premium_price:
-                sale_premium_price = Decimal(str(service.premium_price)) * (Decimal('1') - sale_percent)
+        # Get active sale events for display
+        active_sale_events = service.sales.filter(active=True) if service else []
 
         
         contact = Contact.objects.first()
@@ -156,9 +150,7 @@ class ServiceDetailPage(View):
             'languages': languages,
             'service': service,
             'translation': display_translation,
-            'sale_price': sale_price,
-            'sale_vip_price': sale_vip_price,
-            'sale_premium_price': sale_premium_price,
+            'active_sale_events': active_sale_events,
             'contact': contact,
             'services': services,
             })

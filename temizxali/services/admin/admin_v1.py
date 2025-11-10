@@ -81,8 +81,8 @@ class ServiceVariantInline(NestedTabularInline):
 @admin.register(Service)
 class ServiceAdmin(NestedModelAdmin):
     list_display = (
-        'id', 'get_service_name', 'price', 'vip_price', 'is_number', 'is_kq', 'is_kv_metr', 'is_metr',
-        'premium_price', 'sale', 'is_active', 'delivery', 'created_at', 
+        'id', 'get_service_name', 'price', 'vip_price', 'measure_type',
+        'premium_price', 'is_active', 'delivery', 'created_at', 
         
     )
     list_display_links = ('id', 'get_service_name')
@@ -104,6 +104,27 @@ class ServiceAdmin(NestedModelAdmin):
             return format_html('<strong style="font-size: 14px;">{}</strong>', translation.name)
         return '-'
     get_service_name.short_description = 'Xidmət Adı'
+
+
+# #Sale Events
+class SaleEventTranslationInline(admin.TabularInline):
+    model = SaleEventTranslation
+    extra = len(LANGUAGES)
+    min_num = len(LANGUAGES)
+    max_num = len(LANGUAGES)
+
+
+@admin.register(SaleEvent)
+class SaleEventAdmin(admin.ModelAdmin):
+    list_display = ('service_name', 'sale', 'min_quantity', 'active')
+    list_filter = ('service', 'active')
+    search_fields = ('service__translations__name',)
+    inlines = [SaleEventTranslationInline]
+
+    def service_name(self, obj):
+        return obj.service.translations.first().name
+    
+    service_name.short_description = 'Servis'
 
 
 # SpecialProject Admin

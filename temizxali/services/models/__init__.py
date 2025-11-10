@@ -1,4 +1,5 @@
 from .service_models import Service, ServiceVariant, ServiceTranslation, ServiceVariantTranslation
+from .sale_event_models import SaleEvent, SaleEventTranslation
 from .image_models import Image
 from .special_project_models import SpecialProject, SpecialProjectTranslation
 from .about_models import About, AboutTranslation
@@ -13,6 +14,8 @@ __all__ = [
     'ServiceVariant',
     'ServiceTranslation',
     'ServiceVariantTranslation',
+    'SaleEvent',
+    'SaleEventTranslation',
     'Image',
     'SpecialProject',
     'SpecialProjectTranslation',
