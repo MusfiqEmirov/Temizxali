@@ -55,7 +55,9 @@ class HomePageView(View):
         ).distinct().prefetch_related(
             Prefetch('translations', queryset=MottoTranslation.objects.filter(languages=languages))
         ).order_by('-id')
-        reviews = Review.objects.filter(is_verified=True).order_by('-created_at')
+        reviews = Review.objects.filter(is_verified=True).prefetch_related(
+            Prefetch('service__translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')
         contact = Contact.objects.first()
 
         mottos_with_bg = []
@@ -74,6 +76,9 @@ class HomePageView(View):
                     'background_image': None
                 })
 
+        has_completed_projects = special_projects.filter(is_completed=True).exists()
+        has_ongoing_projects = special_projects.filter(is_contiune=True).exists()
+        
         return render(request, self.template_name, {
             'languages': languages,
             'background_images': background_images,
@@ -81,6 +86,8 @@ class HomePageView(View):
             'mottos_with_bg': mottos_with_bg,
             'services': services,
             'special_projects': special_projects,
+            'has_completed_projects': has_completed_projects,
+            'has_ongoing_projects': has_ongoing_projects,
             'statistics': statistics,
             'mottos': mottos,
             'reviews': reviews,
@@ -133,10 +140,9 @@ class ServiceDetailPage(View):
             ))
         ).first()
         
-        # Get active sale events for display
+       
         active_sale_events = service.sales.filter(active=True) if service else []
 
-        
         contact = Contact.objects.first()
         services = Service.objects.filter(
             is_active=True,
