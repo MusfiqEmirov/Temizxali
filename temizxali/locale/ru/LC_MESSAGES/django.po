@@ -393,3 +393,19 @@ msgstr "Введите данные правильно"
 msgid "Aktiv Endirim Kampaniyaları"
 msgstr "Активные акции"
 
+#: services/forms.py
+msgid "Mobil nömrə daxil edin."
+msgstr "Введите мобильный номер."
+
+#: services/forms.py
+msgid "Düzgün nömrə daxil edin!\n"
+"Nümunələr: 50 123 45 67 | 0501234567 | +994501234567"
+msgstr "Введите правильный номер!\n"
+"Примеры: 50 123 45 67 | 0501234567 | +994501234567"
+
+#: services/forms.py
+msgid "Bu nömrə ilə heç bir sifariş tapılmadı. "
+"Rəy yazmaq üçün əvvəlcə sifariş verməlisiniz"
+msgstr "Заказ с этим номером не найден. "
+"Чтобы оставить отзыв, сначала необходимо сделать заказ"
+

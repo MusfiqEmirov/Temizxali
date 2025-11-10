@@ -95,7 +95,11 @@ document.addEventListener('DOMContentLoaded', function () {
     cb.addEventListener('change', () => {
       const selected = Array.from(checkboxes)
         .filter(c => c.checked)
-        .map(c => c.value);
+        .map(c => {
+          // Checkbox-un label-ını tap (xidmət adı)
+          const label = c.closest('.form-check')?.querySelector('label.form-check-label');
+          return label ? label.textContent.trim() : c.value;
+        });
       input.value = selected.join(', ');
     });
   });
