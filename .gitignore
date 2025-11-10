@@ -19,7 +19,6 @@ venv.bak/
 db.sqlite3
 media/
 staticfiles/
-
 static_root/
 
 # VSCode / IDE
