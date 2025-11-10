@@ -436,12 +436,10 @@
                         {% for project in special_projects %}
                             {% with translation=project.translations.first %}
                                 {% if translation %}
-                                    <div class="col-lg-4 col-md-6 portfolio-item {% if project.is_completed %}first{% elif project.is_contiune %}second{% else %}first{% endif %} wow fadeInUp" data-wow-delay="0.{% cycle '1' '3' '5' %}s">
+                                    <div class="col-12 col-md-6 col-lg-4 portfolio-item {% if project.is_completed %}first{% elif project.is_contiune %}second{% else %}first{% endif %} wow fadeInUp" data-wow-delay="0.{% cycle '1' '3' '5' %}s">
                                         <div class="portfolio-inner rounded">
                                             {% if project.images.first %}
-                                                <img class="img-fluid" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
-                                            {% else %}
-                                                <img class="img-fluid" src="{% static 'img/service-1.jpg' %}" alt="{{ translation.description|truncatewords:5 }}">
+                                                <img class="img-fluid portfolio-image" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
                                             {% endif %}
                                             <div class="portfolio-text">
                                                 <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>
@@ -461,52 +459,244 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <div id="project-carousel" class="carousel slide">
-                        <div class="carousel-inner">
-                            {% for project in special_projects %}
-                                {% with translation=project.translations.first %}
-                                    {% if translation %}
-                                        {% if forloop.counter0|divisibleby:6 %}
-                                            <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-                                                <div class="row g-4">
-                                        {% endif %}
-                                        <div class="col-lg-4 col-md-6 portfolio-item {% if project.is_completed %}first{% elif project.is_contiune %}second{% else %}first{% endif %} wow fadeInUp" data-wow-delay="0.1s">
-                                            <div class="portfolio-inner rounded">
-                                                {% if project.images.first %}
-                                                    <img class="img-fluid" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
-                                                {% else %}
-                                                    <img class="img-fluid" src="{% static 'img/service-1.jpg' %}" alt="{{ translation.description|truncatewords:5 }}">
-                                                {% endif %}
-                                                <div class="portfolio-text">
-                                                    <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>
-                                                    <div class="d-flex">
-                                                        {% if project.images.first %}
-                                                            <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.images.first.image.url }}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                                        {% endif %}
-                                                        {% if project.url %}
-                                                            <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.url }}"><i class="fa fa-link"></i></a>
-                                                        {% endif %}
+                    <div class="d-none d-lg-block">
+                        <div id="project-carousel-desktop" class="carousel slide" data-bs-interval="false">
+                            <div class="carousel-inner">
+                                {% for project in special_projects %}
+                                    {% with translation=project.translations.first %}
+                                        {% if translation %}
+                                            {% if forloop.counter0|divisibleby:"6" %}
+                                                <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+                                                    <div class="row g-4 justify-content-center mb-3">
+                                            {% elif forloop.counter0|divisibleby:"3" %}
+                                                <div class="row g-4 justify-content-center mt-0">
+                                            {% endif %}
+                                            <div class="col-12 col-lg-4 portfolio-item {% if project.is_completed %}first{% elif project.is_contiune %}second{% else %}first{% endif %} wow fadeInUp" data-wow-delay="0.{% cycle '1' '3' '5' %}s">
+                                                <div class="portfolio-inner rounded">
+                                                    {% if project.images.first %}
+                                                        <img class="img-fluid portfolio-image" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
+                                                    {% endif %}
+                                                    <div class="portfolio-text">
+                                                        <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>
+                                                        <div class="d-flex">
+                                                            {% if project.images.first %}
+                                                                <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.images.first.image.url }}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
+                                                            {% endif %}
+                                                            {% if project.url %}
+                                                                <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.url }}"><i class="fa fa-link"></i></a>
+                                                            {% endif %}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        {% if forloop.counter|divisibleby:6 or forloop.last %}
+                                            {% if forloop.counter|divisibleby:"3" and not forloop.counter|divisibleby:"6" %}
+                                                </div> <!-- row (ilk 3 kart satırı) -->
+                                            {% endif %}
+                                            {% if forloop.counter|divisibleby:"6" or forloop.last %}
+                                                {% if forloop.counter|divisibleby:"3" %}
+                                                    {% if forloop.counter|divisibleby:"6" %}
+                                                        </div> <!-- row (ikinci 3 kart satırı) -->
+                                                    {% endif %}
+                                                {% else %}
+                                                    <!-- add missing in row -->
+                                                    {% if forloop.counter|add:"-1"|divisibleby:"3" %}
+                                                        <!-- remaining=2 -->
+                                                        <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                            <div class="portfolio-inner rounded">
+                                                                <div class="portfolio-text">
+                                                                    <h4 class="text-white mb-4"></h4>
+                                                                    <div class="d-flex">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                            <div class="portfolio-inner rounded">
+                                                                <div class="portfolio-text">
+                                                                    <h4 class="text-white mb-4"></h4>
+                                                                    <div class="d-flex">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% elif forloop.counter|add:"-2"|divisibleby:"3" %}
+                                                        <!-- remaining=1 -->
+                                                        <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                            <div class="portfolio-inner rounded">
+                                                                <div class="portfolio-text">
+                                                                    <h4 class="text-white mb-4"></h4>
+                                                                    <div class="d-flex">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                    </div> <!-- row -->
+                                                {% endif %}
+                                                {% if forloop.last %}
+                                                    {% if forloop.counter|divisibleby:"6" %}
+                                                        {# Tam 6'ya bölünüyor, ekstra satır gerekmez #}
+                                                    {% elif forloop.counter|add:"-1"|divisibleby:"6" %}
+                                                        {# 1 kart kaldı, 3'lü satır ekle #}
+                                                        <div class="row g-4 justify-content-center mt-0">
+                                                            <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                                <div class="portfolio-inner rounded">
+                                                                    <div class="portfolio-text">
+                                                                        <h4 class="text-white mb-4"></h4>
+                                                                        <div class="d-flex">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                                <div class="portfolio-inner rounded">
+                                                                    <div class="portfolio-text">
+                                                                        <h4 class="text-white mb-4"></h4>
+                                                                        <div class="d-flex">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                                <div class="portfolio-inner rounded">
+                                                                    <div class="portfolio-text">
+                                                                        <h4 class="text-white mb-4"></h4>
+                                                                        <div class="d-flex">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% elif forloop.counter|add:"-2"|divisibleby:"6" %}
+                                                        {# 2 kart kaldı, 3'lü satır ekle #}
+                                                        <div class="row g-4 justify-content-center mt-0">
+                                                            <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                                <div class="portfolio-inner rounded">
+                                                                    <div class="portfolio-text">
+                                                                        <h4 class="text-white mb-4"></h4>
+                                                                        <div class="d-flex">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                                <div class="portfolio-inner rounded">
+                                                                    <div class="portfolio-text">
+                                                                        <h4 class="text-white mb-4"></h4>
+                                                                        <div class="d-flex">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                                <div class="portfolio-inner rounded">
+                                                                    <div class="portfolio-text">
+                                                                        <h4 class="text-white mb-4"></h4>
+                                                                        <div class="d-flex">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% elif forloop.counter|add:"-3"|divisibleby:"6" %}
+                                                        {# 3 kart kaldı, 3'lü satır ekle #}
+                                                        <div class="row g-4 justify-content-center mt-0">
+                                                            <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                                <div class="portfolio-inner rounded">
+                                                                    <div class="portfolio-text">
+                                                                        <h4 class="text-white mb-4"></h4>
+                                                                        <div class="d-flex">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                                <div class="portfolio-inner rounded">
+                                                                    <div class="portfolio-text">
+                                                                        <h4 class="text-white mb-4"></h4>
+                                                                        <div class="d-flex">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4 portfolio-item wow fadeInUp" data-wow-delay="0.1s" style="visibility: hidden;">
+                                                                <div class="portfolio-inner rounded">
+                                                                    <div class="portfolio-text">
+                                                                        <h4 class="text-white mb-4"></h4>
+                                                                        <div class="d-flex">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                {% endif %}
+                                                </div> <!-- carousel-item -->
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endwith %}
+                                {% endfor %}
+                            </div>
+
+                            <button class="carousel-control-prev" type="button" data-bs-target="#project-carousel-desktop" data-bs-slide="prev" style="left: -120px; top: 50%; transform: translateY(-50%);">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+
+                            <button class="carousel-control-next" type="button" data-bs-target="#project-carousel-desktop" data-bs-slide="next" style="right: -120px; top: 50%; transform: translateY(-50%);">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="d-lg-none">
+                        <div id="project-carousel-mobile" class="carousel slide" data-bs-interval="false">
+                            <div class="carousel-inner">
+                                {% for project in special_projects %}
+                                    {% with translation=project.translations.first %}
+                                        {% if translation %}
+                                            <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+                                                <div class="row g-4 justify-content-center">
+                                                    <div class="col-12 col-lg-4 portfolio-item {% if project.is_completed %}first{% elif project.is_contiune %}second{% else %}first{% endif %} wow fadeInUp" data-wow-delay="0.1s">
+                                                        <div class="portfolio-inner rounded">
+                                                            {% if project.images.first %}
+                                                                <img class="img-fluid portfolio-image" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
+                                                            {% endif %}
+                                                            <div class="portfolio-text">
+                                                                <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>
+                                                                <div class="d-flex">
+                                                                    {% if project.images.first %}
+                                                                        <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.images.first.image.url }}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
+                                                                    {% endif %}
+                                                                    {% if project.url %}
+                                                                        <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.url }}"><i class="fa fa-link"></i></a>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div> <!-- row -->
                                             </div> <!-- carousel-item -->
                                         {% endif %}
-                                    {% endif %}
-                                {% endwith %}
-                            {% endfor %}
+                                    {% endwith %}
+                                {% endfor %}
+                            </div>
+
+                            <button class="carousel-control-prev" type="button" data-bs-target="#project-carousel-mobile" data-bs-slide="prev" style="left: -120px; top: 50%; transform: translateY(-50%);">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+
+                            <button class="carousel-control-next" type="button" data-bs-target="#project-carousel-mobile" data-bs-slide="next" style="right: -120px; top: 50%; transform: translateY(-50%);">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#project-carousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#project-carousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
                     </div>
+
                 {% endif %}
             {% else %}
                 <div class="row g-4 portfolio-container">
@@ -660,6 +850,60 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
+    
+    <!-- Project Carousel Button Styles -->
+    <style>
+        #project-carousel-desktop .carousel-control-prev,
+        #project-carousel-desktop .carousel-control-next,
+        #project-carousel-mobile .carousel-control-prev,
+        #project-carousel-mobile .carousel-control-next {
+            opacity: 0.5 !important;
+            background: transparent !important;
+            border: none !important;
+        }
+        #project-carousel-desktop .carousel-control-prev:hover,
+        #project-carousel-desktop .carousel-control-next:hover,
+        #project-carousel-mobile .carousel-control-prev:hover,
+        #project-carousel-mobile .carousel-control-next:hover {
+            opacity: 0.8 !important;
+        }
+        #project-carousel-desktop .carousel-control-prev:focus,
+        #project-carousel-desktop .carousel-control-next:focus,
+        #project-carousel-desktop .carousel-control-prev:active,
+        #project-carousel-desktop .carousel-control-next:active,
+        #project-carousel-mobile .carousel-control-prev:focus,
+        #project-carousel-mobile .carousel-control-next:focus,
+        #project-carousel-mobile .carousel-control-prev:active,
+        #project-carousel-mobile .carousel-control-next:active {
+            opacity: 0.5 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+        /* Mobile responsive - butonlar daha yakın */
+        @media (max-width: 991px) {
+            #project-carousel-mobile .carousel-control-prev {
+                left: -20px !important;
+            }
+            #project-carousel-mobile .carousel-control-next {
+                right: -20px !important;
+            }
+        }
+        /* Portfolio Image Standard Sizes */
+        .portfolio-inner {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .portfolio-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            object-position: center;
+        }
+        .portfolio-text {
+            flex: 1;
+        }
+    </style>
     
     <!-- Carousel Auto-play Script -->
     <script>
