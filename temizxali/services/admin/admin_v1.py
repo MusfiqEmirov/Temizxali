@@ -193,11 +193,11 @@ class ReviewAdmin(admin.ModelAdmin):
  # Order Admin 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'fullname', 'phone_number', 'created_at', 'get_services')
+    list_display = ('id', 'fullname', 'phone_number_link', 'created_at', 'get_services')
     list_display_links = ('id', 'fullname')
     list_filter = ('created_at',)
     search_fields = ('fullname', 'phone_number', 'text')
-    readonly_fields = ('services_badges', 'created_at')  # created_at burada readonly olmalı
+    readonly_fields = ('services_badges', 'created_at') 
 
     fieldsets = (
         (None, {
@@ -207,6 +207,16 @@ class OrderAdmin(admin.ModelAdmin):
             'fields': ('created_at',),
         }),
     )
+
+    def phone_number_link(self, obj):
+        if obj.phone_number:
+            return format_html(
+                '<a href="{}" target="_blank">{}</a>',
+                obj.whatsapp_link(),
+                obj.phone_number
+            )
+        return "-"
+    phone_number_link.short_description = "Mobil Nömrə (WhatsApp)"
 
     def services_badges(self, obj):
         badges = [
@@ -222,9 +232,9 @@ class OrderAdmin(admin.ModelAdmin):
             for s in obj.services.all()
         ]
         return format_html(" ".join(badges))
-    get_services.short_description = "Services"
+    get_services.short_description = "Servislər"
 
-
+    
 
 # Motto Admin
 class MottoTranslationInline(admin.TabularInline):

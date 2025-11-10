@@ -44,3 +44,7 @@ class Order(models.Model):
             else:
                 raise ValueError("Düzgün Azərbaycan mobil nömrəsi deyil.")
         super().save(*args, **kwargs)
+        
+    def whatsapp_link(self):
+         return f"https://wa.me/994{self.phone_number}"  # admin paneldə kliklənə bilsin
+
