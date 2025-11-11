@@ -2,12 +2,14 @@ from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Prefetch
 from django.conf import settings
 from django.urls import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template.loader import render_to_string
 from decimal import Decimal
 
 from services.models import *
@@ -22,7 +24,8 @@ __all__ = [
     'OrderPageView',
     'ServiceDetailPage',
     'ReviewCreateView',
-    'ServiceCalculatorView'
+    'ServiceCalculatorView',
+    'ProjectsPaginationView'
 ]
 
 
@@ -79,13 +82,23 @@ class HomePageView(View):
         has_completed_projects = special_projects.filter(is_completed=True).exists()
         has_ongoing_projects = special_projects.filter(is_contiune=True).exists()
         
+        # Pagination - hər səhifədə 6 layihə
+        paginator = Paginator(special_projects, 6)
+        page = request.GET.get('page', 1)
+        try:
+            projects_page = paginator.page(page)
+        except PageNotAnInteger:
+            projects_page = paginator.page(1)
+        except EmptyPage:
+            projects_page = paginator.page(paginator.num_pages)
+        
         return render(request, self.template_name, {
             'languages': languages,
             'background_images': background_images,
             'background_image': background_images.first() if background_images.exists() else None,
             'mottos_with_bg': mottos_with_bg,
             'services': services,
-            'special_projects': special_projects,
+            'special_projects': projects_page,
             'has_completed_projects': has_completed_projects,
             'has_ongoing_projects': has_ongoing_projects,
             'statistics': statistics,
@@ -339,3 +352,44 @@ class ServiceCalculatorView(View):
         if lang_param and lang_param in dict(settings.LANGUAGES):
             request.session['django_language'] = lang_param
             translation.activate(lang_param)
+
+
+class ProjectsPaginationView(View):
+    """AJAX pagination for projects"""
+    
+    def get(self, request):
+        languages = translation.get_language()
+        special_projects = SpecialProject.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=SpecialProjectTranslation.objects.filter(languages=languages)),
+            'images'
+        ).order_by('-created_at')
+        
+        # Pagination - hər səhifədə 6 layihə
+        paginator = Paginator(special_projects, 6)
+        page = request.GET.get('page', 1)
+        try:
+            projects_page = paginator.page(page)
+        except PageNotAnInteger:
+            projects_page = paginator.page(1)
+        except EmptyPage:
+            projects_page = paginator.page(paginator.num_pages)
+        
+        # HTML render et
+        projects_html = render_to_string('projects_partial.html', {
+            'special_projects': projects_page,
+        }, request=request)
+        
+        # Pagination HTML render et
+        pagination_html = render_to_string('pagination_partial.html', {
+            'special_projects': projects_page,
+        }, request=request)
+        
+        return JsonResponse({
+            'projects_html': projects_html,
+            'pagination_html': pagination_html,
+            'current_page': projects_page.number,
+            'total_pages': paginator.num_pages
+        })

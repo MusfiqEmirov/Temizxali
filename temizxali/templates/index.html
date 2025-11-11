@@ -413,30 +413,18 @@
 <div id="projects" class="container-xxl py-5">
   <div class="container position-relative">
     <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-      <h1 class="display-5 mb-3 text-primary">{% trans "Layihələrimiz" %}</h1>
-
-      <!-- Filter düymələri başlığın altında -->
-      {% if special_projects %}
-        <ul class="list-inline rounded mb-5" id="portfolio-flters">
-          <li class="mx-2 active" data-filter="*">{% trans "Hamısı" %}</li>
-          {% if has_completed_projects %}
-            <li class="mx-2" data-filter=".first">{% trans "Tamamlanmış Layihələr" %}</li>
-          {% endif %}
-          {% if has_ongoing_projects %}
-            <li class="mx-2" data-filter=".second">{% trans "Davam edən Layihələr" %}</li>
-          {% endif %}
-        </ul>
-      {% endif %}
+      <h1 class="display-5 mb-5 text-primary">{% trans "Layihələrimiz" %}</h1>
     </div>
 
-    {% if special_projects %}
-      {% if special_projects|length <= 6 %}
-        <!-- 6 və ya az layihə üçün grid -->
+    <!-- Projects Container (AJAX ilə yenilənir) -->
+    <div id="projects-container">
+      {% if special_projects %}
+        <!-- Layihələr grid -->
         <div class="row g-4 portfolio-container justify-content-center wow fadeInUp" data-wow-delay="0.3s">
           {% for project in special_projects %}
             {% with translation=project.translations.first %}
               {% if translation %}
-                <div class="col-lg-4 col-md-6 portfolio-item {% if project.is_completed %}first{% elif project.is_contiune %}second{% endif %}">
+                <div class="col-lg-4 col-md-6 portfolio-item">
                   <div class="portfolio-inner">
                     {% if project.images.first %}
                       <img src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
@@ -460,60 +448,71 @@
             {% endwith %}
           {% endfor %}
         </div>
-      {% else %}
-        <!-- 7+ layihə üçün Carousel -->
-        <div id="project-carousel" class="carousel slide" data-bs-ride="false">
-          <div class="carousel-inner fixed-carousel-height">
-            {% for project in special_projects %}
-              {% with translation=project.translations.first %}
-                {% if translation %}
-                  {% if forloop.counter0|divisibleby:6 %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                      <div class="row g-4 justify-content-center carousel-row">
-                  {% endif %}
-                  <div class="col-lg-4 col-md-6 portfolio-item {% if project.is_completed %}first{% elif project.is_contiune %}second{% endif %}">
-                    <div class="portfolio-inner">
-                      {% if project.images.first %}
-                        <img src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
-                      {% else %}
-                        <img src="{% static 'img/service-1.jpg' %}" alt="Default">
-                      {% endif %}
-                      <div class="portfolio-text">
-                        <h4>{{ translation.description|truncatewords:10 }}</h4>
-                        <div class="d-flex justify-content-center gap-2">
-                          {% if project.images.first %}
-                            <a class="btn btn-lg-square" href="{{ project.images.first.image.url }}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                          {% endif %}
-                          {% if project.url %}
-                            <a class="btn btn-lg-square" href="{{ project.url }}" target="_blank"><i class="fa fa-link"></i></a>
-                          {% endif %}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {% if forloop.counter|divisibleby:6 or forloop.last %}
-                      </div>
-                    </div>
-                  {% endif %}
-                {% endif %}
-              {% endwith %}
-            {% endfor %}
-          </div>
 
-          <!-- Oxlar -->
-          <button class="carousel-control-prev custom-carousel-btn" type="button" data-bs-target="#project-carousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          </button>
-          <button class="carousel-control-next custom-carousel-btn" type="button" data-bs-target="#project-carousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          </button>
+        <!-- Pagination -->
+        {% if special_projects.has_other_pages %}
+          <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
+              {% if special_projects.has_previous %}
+                <li class="page-item">
+                  <a class="page-link pagination-link" href="#" data-page="1" aria-label="First">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link pagination-link" href="#" data-page="{{ special_projects.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <span class="page-link">&laquo;&laquo;</span>
+                </li>
+                <li class="page-item disabled">
+                  <span class="page-link">&laquo;</span>
+                </li>
+              {% endif %}
+
+              {% for num in special_projects.paginator.page_range %}
+                {% if special_projects.number == num %}
+                  <li class="page-item active">
+                    <span class="page-link">{{ num }}</span>
+                  </li>
+                {% elif num > special_projects.number|add:'-3' and num < special_projects.number|add:'3' %}
+                  <li class="page-item">
+                    <a class="page-link pagination-link" href="#" data-page="{{ num }}">{{ num }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+
+              {% if special_projects.has_next %}
+                <li class="page-item">
+                  <a class="page-link pagination-link" href="#" data-page="{{ special_projects.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link pagination-link" href="#" data-page="{{ special_projects.paginator.num_pages }}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                  </a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <span class="page-link">&raquo;</span>
+                </li>
+                <li class="page-item disabled">
+                  <span class="page-link">&raquo;&raquo;</span>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+        {% endif %}
+      {% else %}
+        <div class="row g-4 text-center">
+          <p class="text-muted">{% trans "Hazırda layihə mövcud deyil." %}</p>
         </div>
       {% endif %}
-    {% else %}
-      <div class="row g-4 text-center">
-        <p class="text-muted">{% trans "Hazırda layihə mövcud deyil." %}</p>
-      </div>
-    {% endif %}
+    </div>
   </div>
 </div>
 
@@ -550,71 +549,53 @@
   }
   .portfolio-inner:hover .portfolio-text {
     opacity: 1;
-    background: rgba(102, 255, 153, 0.7); /* açıq yaşıl */
+    background: rgba(52, 142, 56, 0.9); /* primary color - yaşıl */
   }
   .portfolio-inner:hover .portfolio-text h4 {
-    color: white; /* yazı ağ olur */
+    color: white;
+    font-weight: 600;
   }
 
   /* Düymələr */
   .btn-lg-square {
     width: 45px; height: 45px;
     display: flex; align-items: center; justify-content: center;
-    background: #007bff; color: white;
+    background: #348E38; color: white;
     border-radius: 50%; transition: 0.3s;
+    border: none;
   }
-  .btn-lg-square:hover { background: #0056b3; transform: scale(1.1); }
+  .btn-lg-square:hover { 
+    background: #2d7a31; 
+    transform: scale(1.1); 
+    box-shadow: 0 4px 12px rgba(52, 142, 56, 0.4);
+  }
 
-  /* Filter düymələri */
-  #portfolio-flters li {
-    cursor: pointer;
-    padding: 8px 20px;
-    background: #f8f9fa;
-    border-radius: 50px;
-    transition: 0.3s;
-    font-weight: 500;
+  /* Pagination */
+  .pagination {
+    margin-top: 2rem;
   }
-  #portfolio-flters li.active, #portfolio-flters li:hover {
-    background: #007bff;
+  .pagination .page-link {
+    color: #348E38;
+    border-color: #e9ecef;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+  }
+  .pagination .page-link:hover {
+    color: white;
+    background-color: #348E38;
+    border-color: #348E38;
+    transform: translateY(-2px);
+  }
+  .pagination .page-item.active .page-link {
+    background-color: #348E38;
+    border-color: #348E38;
     color: white;
   }
-
-  /* Carousel oxları */
-  .custom-carousel-btn {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 50%;
-    top: 50%;
-    transform: translateY(-50%);
-    position: absolute;
-    z-index: 10;
-  }
-  .carousel-control-prev.custom-carousel-btn { left: -80px; }
-  .carousel-control-next.custom-carousel-btn { right: -80px; }
-  .custom-carousel-btn:hover { background-color: rgba(0, 0, 0, 0.8); }
-
-  /* Səhifələrdə hündürlüyü sabit saxla */
-  .fixed-carousel-height {
-    min-height: 820px;
-    display: flex;
-    align-items: center;
-  }
-  .carousel-row {
-    min-height: 700px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-  }
-
-  @media (max-width: 992px) {
-    .carousel-control-prev.custom-carousel-btn { left: -40px; }
-    .carousel-control-next.custom-carousel-btn { right: -40px; }
-    .fixed-carousel-height { min-height: 700px; }
-  }
-  @media (max-width: 768px) {
-    .fixed-carousel-height { min-height: 600px; }
-    .carousel-row { min-height: 500px; }
+  .pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+    cursor: not-allowed;
   }
 </style>
 <!-- Projects End -->
@@ -765,6 +746,54 @@
     <script src="{% static 'js/main.js' %}"></script>
     
     
+    <!-- AJAX Pagination Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pagination link-lərinə event listener əlavə et
+            $(document).on('click', '.pagination-link', function(e) {
+                e.preventDefault();
+                var page = $(this).data('page');
+                if (page) {
+                    loadProjects(page);
+                }
+            });
+
+            function loadProjects(page) {
+                // Loading indicator göstər
+                $('#projects-container').html('<div class="text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+
+                // AJAX request göndər
+                $.ajax({
+                    url: '{% url "projects-pagination" %}',
+                    type: 'GET',
+                    data: {
+                        'page': page
+                    },
+                    success: function(data) {
+                        // Projects və pagination HTML-i yenilə
+                        $('#projects-container').html(data.projects_html + data.pagination_html);
+                        
+                        // Smooth scroll to projects section
+                        $('html, body').animate({
+                            scrollTop: $('#projects').offset().top - 100
+                        }, 500);
+                        
+                        // Lightbox-u yenidən initialize et
+                        if (typeof lightbox !== 'undefined') {
+                            lightbox.option({
+                                'resizeDuration': 200,
+                                'wrapAround': true
+                            });
+                        }
+                    },
+                    error: function() {
+                        $('#projects-container').html('<div class="text-center py-5"><p class="text-danger">{% trans "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin." %}</p></div>');
+                    }
+                });
+            }
+        });
+    </script>
+
     <!-- Carousel Auto-play Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
