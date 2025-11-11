@@ -139,7 +139,7 @@ class SpecialProjectTranslationInline(admin.TabularInline):
 
 @admin.register(SpecialProject)
 class SpecialProjectAdmin(admin.ModelAdmin):
-    list_display = ('id', 'get_project_description', 'is_completed', 'is_contiune', 'url')
+    list_display = ('id', 'get_project_description', 'url')
     list_display_links = ('id', 'get_project_description')
     inlines = [SpecialProjectTranslationInline, SpecialProjectImageInline]
 
