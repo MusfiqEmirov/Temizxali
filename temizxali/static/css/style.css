@@ -391,12 +391,11 @@ h6,
     background: rgba(15, 66, 41, .6);
     opacity: 0;
     z-index: 2;
-    transition: none !important;
+    transition: opacity 0.3s ease;
 }
 
 .portfolio-inner:hover::before {
     opacity: 1;
-    transition: none !important;
 }
 
 .portfolio-inner .portfolio-text {
@@ -411,12 +410,11 @@ h6,
     justify-content: center;
     z-index: 3;
     opacity: 0;
-    transition: none !important;
+    transition: opacity 0.3s ease;
 }
 
 .portfolio-inner:hover .portfolio-text {
     opacity: 1;
-    transition: none !important;
 }
 
 .portfolio-inner .portfolio-text .btn {
