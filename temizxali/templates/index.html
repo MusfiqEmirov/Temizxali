@@ -409,116 +409,215 @@
 
 
 
-    <!-- Projects Start -->
-    <div id="projects" class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                <h1 class="display-5 mb-5 text-primary">{% trans "Layihələrimiz" %}</h1>
-            </div>
-
-            {% if special_projects %}
-                {% if special_projects|length <= 6 %}
-                    <div class="row wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="col-12 text-center">
-                            <ul class="list-inline rounded mb-5" id="portfolio-flters">
-                                <li class="mx-2 active" data-filter="*">{% trans "Hamısı" %}</li>
-                                {% if has_completed_projects %}
-                                    <li class="mx-2" data-filter=".first">{% trans "Tamamlanmış Layihələr" %}</li>
-                                {% endif %}
-                                {% if has_ongoing_projects %}
-                                    <li class="mx-2" data-filter=".second">{% trans "Davam edən Layihələr" %}</li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="row g-4 portfolio-container">
-                        {% for project in special_projects %}
-                            {% with translation=project.translations.first %}
-                                {% if translation %}
-                                    <div class="col-12 col-md-6 col-lg-4 portfolio-item {% if project.is_completed %}first{% elif project.is_contiune %}second{% else %}first{% endif %} wow fadeInUp" data-wow-delay="0.{% cycle '1' '3' '5' %}s">
-                                        <div class="portfolio-inner rounded">
-                                            {% if project.images.first %}
-                                                <img class="img-fluid" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
-                                            {% else %}
-                                                <img class="img-fluid" src="{% static 'img/service-1.jpg' %}" alt="{{ translation.description|truncatewords:5 }}">
-                                            {% endif %}
-                                            <div class="portfolio-text">
-                                                <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>
-                                                <div class="d-flex">
-                                                    {% if project.images.first %}
-                                                        <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.images.first.image.url }}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                                    {% endif %}
-                                                    {% if project.url %}
-                                                        <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.url }}"><i class="fa fa-link"></i></a>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endwith %}
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <div id="project-carousel" class="carousel slide" data-bs-interval="false">
-                        <div class="carousel-inner">
-                            {% for project in special_projects %}
-                                {% with translation=project.translations.first %}
-                                    {% if translation %}
-                                        {% if forloop.counter0|divisibleby:6 %}
-                                            <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
-                                                <div class="row g-4">
-                                        {% endif %}
-                                        <div class="col-lg-4 col-md-6 portfolio-item {% if project.is_completed %}first{% elif project.is_contiune %}second{% else %}first{% endif %} wow fadeInUp" data-wow-delay="0.{% cycle '1' '3' '5' %}s">
-                                            <div class="portfolio-inner rounded">
-                                                {% if project.images.first %}
-                                                    <img class="img-fluid" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
-                                                {% else %}
-                                                    <img class="img-fluid" src="{% static 'img/service-1.jpg' %}" alt="{{ translation.description|truncatewords:5 }}">
-                                                {% endif %}
-                                                <div class="portfolio-text">
-                                                    <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>
-                                                    <div class="d-flex">
-                                                        {% if project.images.first %}
-                                                            <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.images.first.image.url }}" data-lightbox="portfolio"><i class="fa fa-eye"></i></a>
-                                                        {% endif %}
-                                                        {% if project.url %}
-                                                            <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.url }}"><i class="fa fa-link"></i></a>
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {% if forloop.counter|divisibleby:6 or forloop.last %}
-                                                </div> <!-- row -->
-                                            </div> <!-- carousel-item -->
-                                        {% endif %}
-                                    {% endif %}
-                                {% endwith %}
-                            {% endfor %}
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#project-carousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#project-carousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-
-                {% endif %}
-            {% else %}
-                <div class="row g-4 portfolio-container">
-                    <div class="col-12 text-center">
-                        <p class="text-muted">{% trans "Hazırda layihə mövcud deyil." %}</p>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
+<!-- Projects Start -->
+<div id="projects" class="container-xxl py-5">
+  <div class="container position-relative">
+    <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+      <h1 class="display-5 mb-5 text-primary">{% trans "Layihələrimiz" %}</h1>
     </div>
-    <!-- Projects End -->
+
+    <!-- Projects Container (AJAX ilə yenilənir) -->
+    <div id="projects-container">
+      {% if special_projects %}
+        <!-- Layihələr grid -->
+        <div class="row g-4 portfolio-container justify-content-center wow fadeInUp" data-wow-delay="0.3s">
+          {% for project in special_projects %}
+            {% with translation=project.translations.first %}
+              {% if translation %}
+                <div class="col-lg-4 col-md-6 portfolio-item">
+                  <div class="portfolio-inner rounded">
+                    {% if project.images.first %}
+                      <img class="img-fluid" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
+                    {% else %}
+                      <img class="img-fluid" src="{% static 'img/service-1.jpg' %}" alt="Default">
+                    {% endif %}
+                    <div class="portfolio-text">
+                      <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>
+                      <div class="d-flex">
+                        {% if project.images.all %}
+                          <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.images.first.image.url }}" data-lightbox="project-{{ project.id }}"><i class="fa fa-eye"></i></a>
+                          <!-- Hər layihənin bütün şəkillərini gizli link-lər kimi əlavə et -->
+                          {% for image in project.images.all %}
+                            {% if not forloop.first %}
+                              <a href="{{ image.image.url }}" data-lightbox="project-{{ project.id }}" style="display: none;"></a>
+                            {% endif %}
+                          {% endfor %}
+                        {% endif %}
+                        {% if project.url %}
+                          <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.url }}" target="_blank"><i class="fa fa-link"></i></a>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            {% endwith %}
+          {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if special_projects.has_other_pages %}
+          <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
+              {% if special_projects.has_previous %}
+                <li class="page-item">
+                  <a class="page-link pagination-link" href="#" data-page="1" aria-label="First">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link pagination-link" href="#" data-page="{{ special_projects.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <span class="page-link">&laquo;&laquo;</span>
+                </li>
+                <li class="page-item disabled">
+                  <span class="page-link">&laquo;</span>
+                </li>
+              {% endif %}
+
+              {% for num in special_projects.paginator.page_range %}
+                {% if special_projects.number == num %}
+                  <li class="page-item active">
+                    <span class="page-link">{{ num }}</span>
+                  </li>
+                {% elif num > special_projects.number|add:'-3' and num < special_projects.number|add:'3' %}
+                  <li class="page-item">
+                    <a class="page-link pagination-link" href="#" data-page="{{ num }}">{{ num }}</a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+
+              {% if special_projects.has_next %}
+                <li class="page-item">
+                  <a class="page-link pagination-link" href="#" data-page="{{ special_projects.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link pagination-link" href="#" data-page="{{ special_projects.paginator.num_pages }}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                  </a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <span class="page-link">&raquo;</span>
+                </li>
+                <li class="page-item disabled">
+                  <span class="page-link">&raquo;&raquo;</span>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+        {% endif %}
+      {% else %}
+        <div class="row g-4 text-center">
+          <p class="text-muted">{% trans "Hazırda layihə mövcud deyil." %}</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- CSS -->
+<style>
+  /* Layihə kartları */
+  .portfolio-inner {
+    height: 380px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  .portfolio-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Sadə hover animasiyası */
+  .portfolio-inner::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(15, 66, 41, .6);
+    opacity: 0;
+    z-index: 2;
+    border-radius: 12px;
+    transition: opacity 0.3s ease;
+  }
+
+  .portfolio-inner:hover::before {
+    opacity: 1;
+  }
+
+  .portfolio-inner .portfolio-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .portfolio-inner:hover .portfolio-text {
+    opacity: 1;
+  }
+
+  .portfolio-inner .portfolio-text .btn {
+    background: #E8F5E9;
+    color: #348E38;
+  }
+
+  .portfolio-inner .portfolio-text .btn:hover {
+    background: #348E38;
+    color: #E8F5E9;
+  }
+
+  /* Pagination */
+  .pagination {
+    margin-top: 2rem;
+  }
+  .pagination .page-link {
+    color: #348E38;
+    border-color: #e9ecef;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+  }
+  .pagination .page-link:hover {
+    color: white;
+    background-color: #348E38;
+    border-color: #348E38;
+    transform: translateY(-2px);
+  }
+  .pagination .page-item.active .page-link {
+    background-color: #348E38;
+    border-color: #348E38;
+    color: white;
+  }
+  .pagination .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+    cursor: not-allowed;
+  }
+</style>
+<!-- Projects End -->
+
+
+
 
 
     <!-- Testimonial Start -->
@@ -663,6 +762,54 @@
     <script src="{% static 'js/main.js' %}"></script>
     
     
+    <!-- AJAX Pagination Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pagination link-lərinə event listener əlavə et
+            $(document).on('click', '.pagination-link', function(e) {
+                e.preventDefault();
+                var page = $(this).data('page');
+                if (page) {
+                    loadProjects(page);
+                }
+            });
+
+            function loadProjects(page) {
+                // Loading indicator göstər
+                $('#projects-container').html('<div class="text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+
+                // AJAX request göndər
+                $.ajax({
+                    url: '{% url "projects-pagination" %}',
+                    type: 'GET',
+                    data: {
+                        'page': page
+                    },
+                    success: function(data) {
+                        // Projects və pagination HTML-i yenilə
+                        $('#projects-container').html(data.projects_html + data.pagination_html);
+                        
+                        // Smooth scroll to projects section
+                        $('html, body').animate({
+                            scrollTop: $('#projects').offset().top - 100
+                        }, 500);
+                        
+                        // Lightbox-u yenidən initialize et
+                        if (typeof lightbox !== 'undefined') {
+                            lightbox.option({
+                                'resizeDuration': 200,
+                                'wrapAround': true
+                            });
+                        }
+                    },
+                    error: function() {
+                        $('#projects-container').html('<div class="text-center py-5"><p class="text-danger">{% trans "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin." %}</p></div>');
+                    }
+                });
+            }
+        });
+    </script>
+
     <!-- Carousel Auto-play Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {

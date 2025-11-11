@@ -39,5 +39,12 @@ urlpatterns = [
         ServiceCalculatorView.as_view(), 
         name='service-calculator'
     ),
+
+    # Projects Pagination (AJAX)
+    path(
+        'projects/pagination/',
+        ProjectsPaginationView.as_view(),
+        name='projects-pagination'
+    ),
 ]
 
