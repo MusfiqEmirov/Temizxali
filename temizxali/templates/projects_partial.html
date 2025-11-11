@@ -7,17 +7,17 @@
       {% with translation=project.translations.first %}
         {% if translation %}
           <div class="col-lg-4 col-md-6 portfolio-item">
-            <div class="portfolio-inner">
+            <div class="portfolio-inner rounded">
               {% if project.images.first %}
-                <img src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
+                <img class="img-fluid" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
               {% else %}
-                <img src="{% static 'img/service-1.jpg' %}" alt="Default">
+                <img class="img-fluid" src="{% static 'img/service-1.jpg' %}" alt="Default">
               {% endif %}
               <div class="portfolio-text">
-                <h4>{{ translation.description|truncatewords:10 }}</h4>
-                <div class="d-flex justify-content-center gap-2">
+                <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>
+                <div class="d-flex">
                   {% if project.images.all %}
-                    <a class="btn btn-lg-square" href="{{ project.images.first.image.url }}" data-lightbox="project-{{ project.id }}"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.images.first.image.url }}" data-lightbox="project-{{ project.id }}"><i class="fa fa-eye"></i></a>
                     <!-- Hər layihənin bütün şəkillərini gizli link-lər kimi əlavə et -->
                     {% for image in project.images.all %}
                       {% if not forloop.first %}
@@ -26,7 +26,7 @@
                     {% endfor %}
                   {% endif %}
                   {% if project.url %}
-                    <a class="btn btn-lg-square" href="{{ project.url }}" target="_blank"><i class="fa fa-link"></i></a>
+                    <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.url }}" target="_blank"><i class="fa fa-link"></i></a>
                   {% endif %}
                 </div>
               </div>
