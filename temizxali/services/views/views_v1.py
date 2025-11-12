@@ -50,6 +50,9 @@ class HomePageView(View):
         ).order_by('-created_at')
         
         statistics = Statistic.objects.first()
+        about = About.objects.all().distinct().prefetch_related(
+            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages))
+        )
         mottos = Motto.objects.filter(
             translations__languages=languages
         ).distinct().prefetch_related(
@@ -93,6 +96,7 @@ class HomePageView(View):
             'services': services,
             'special_projects': projects_page,
             'statistics': statistics,
+            'about': about,
             'mottos': mottos,
             'reviews': reviews,
             'contact': contact
@@ -100,19 +104,28 @@ class HomePageView(View):
 
 
 class AboutPageView(View):
-    template_name = 'about_page.html'
+    template_name = 'about.html'
 
     def get(self, request):
         languages = translation.get_language()
         about = About.objects.all().distinct().prefetch_related(
             Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages))
         )
-        statistics = Statistic.objects.all()
+        statistics = Statistic.objects.first()
+        contact = Contact.objects.first()
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')
 
         return render(request, self.template_name, {
             'about': about,
             'statistics': statistics,
             'active_lang': languages,
+            'contact': contact,
+            'services': services,
             })
 
 
