@@ -13,7 +13,7 @@ class ServiceImageInline(NestedTabularInline):
     fk_name = 'service'
     extra = 1
     readonly_fields = ('image_preview',)
-    fields = ('image_name', 'image', 'image_preview')
+    fields = ('image', 'image_preview')
 
     def image_preview(self, obj):
         if obj.image:
@@ -27,7 +27,21 @@ class SpecialProjectImageInline(NestedTabularInline):
     fk_name = 'special_project'
     extra = 6
     readonly_fields = ('image_preview',)
-    fields = ('image_name', 'image', 'image_preview')
+    fields = ('image', 'image_preview')
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="100" />', obj.image.url)
+        return "-"
+    image_preview.short_description = "Preview"
+
+
+class AboutImageInline(NestedTabularInline):
+    model = Image
+    fk_name = 'about'
+    extra = 6
+    readonly_fields = ('image_preview',)
+    fields = ('image', 'image_preview')
 
     def image_preview(self, obj):
         if obj.image:
@@ -38,10 +52,10 @@ class SpecialProjectImageInline(NestedTabularInline):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('image_name', 'image_tag', 'created_at',)
+    list_display = ('image_tag', 'created_at',)
     readonly_fields = ('image_tag',)
     fields = (
-        'image_name', 
+        
         'image', 
         'image_tag', 
         'is_home_page_background_image',
@@ -180,8 +194,8 @@ class AboutTranslationInline(admin.TabularInline):
 
 @admin.register(About)
 class AboutAdmin(admin.ModelAdmin):
-    inlines = [AboutTranslationInline]
-    list_display = ['id', '__str__']
+    inlines = [AboutTranslationInline, AboutImageInline]
+    list_display = ['id', 'experience_years',  '__str__']
 
 
 # Statistics Admin

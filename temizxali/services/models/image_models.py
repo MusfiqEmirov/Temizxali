@@ -2,6 +2,7 @@ from django.db import models
 
 from .service_models import Service
 from .special_project_models import SpecialProject
+from .about_models import About
 
 
 class Image(models.Model):
@@ -12,6 +13,14 @@ class Image(models.Model):
         null=True,
         blank=True,
         verbose_name='Servis'
+    )
+    about = models.ForeignKey(
+        About,
+        related_name='images',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='About'
     )
     special_project = models.ForeignKey(
         SpecialProject,
@@ -25,10 +34,10 @@ class Image(models.Model):
         upload_to='images/',  
         verbose_name='Şəkil'
     )
-    image_name = models.CharField(
-        max_length=50,
-        verbose_name='Şəkil adı'
-    )
+    # image_name = models.CharField(
+    #     max_length=50,
+    #     verbose_name='Şəkil adı'
+    # )
     is_home_page_background_image = models.BooleanField(
         default=False,
         verbose_name='Ana sehifesi üçün arxa plan şəkli'
@@ -55,5 +64,4 @@ class Image(models.Model):
         verbose_name = 'Şəkil'
         verbose_name_plural = 'Şəkillər'
 
-    def __str__(self):
-        return self.image_name
+   

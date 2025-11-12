@@ -51,7 +51,8 @@ class HomePageView(View):
         
         statistics = Statistic.objects.first()
         about = About.objects.all().distinct().prefetch_related(
-            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages))
+            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages)),
+            'images'
         )
         mottos = Motto.objects.filter(
             translations__languages=languages
@@ -109,7 +110,8 @@ class AboutPageView(View):
     def get(self, request):
         languages = translation.get_language()
         about = About.objects.all().distinct().prefetch_related(
-            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages))
+            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages)),
+            'images'
         )
         statistics = Statistic.objects.first()
         contact = Contact.objects.first()
