@@ -170,30 +170,62 @@ msgid "Qiymət Növü"
 msgstr "Тип цены"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Buradan izlə:"
 msgstr "Следите за нами:"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Ana səhifə"
 msgstr "Главная"
+
+#: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
+msgid "Haqqımızda"
+msgstr "О нас"
 
 #: templates/index.html
 msgid "Xidmetler"
 msgstr "Услуги"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Xidmət tapılmadı"
 msgstr "Услуга не найдена"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Layihələr"
 msgstr "Проекты"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Rəylər"
 msgstr "Отзывы"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Hesabla ve Sifariş et"
 msgstr "Рассчитать и Заказать"
 
@@ -250,30 +282,58 @@ msgid "Nailiyyətlər"
 msgstr "Достижения"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Ünvan"
 msgstr "Адрес"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Xidmətlər"
 msgstr "Услуги"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Digər"
 msgstr "Другое"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Sifariş"
 msgstr "Заказ"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Bütün Xidmətlər"
 msgstr "Все услуги"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "Əlaqə"
 msgstr "Контакты"
 
 #: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 msgid "tərəfindən hazırlanıb. Bütün hüquqlar qorunur."
 msgstr "разработано. Все права защищены."
 
@@ -408,4 +468,47 @@ msgid "Bu nömrə ilə heç bir sifariş tapılmadı. "
 "Rəy yazmaq üçün əvvəlcə sifariş verməlisiniz"
 msgstr "Заказ с этим номером не найден. "
 "Чтобы оставить отзыв, сначала необходимо сделать заказ"
+
+#: templates/about.html
+#: templates/index.html
+msgid "İl Təcrübə"
+msgstr "Лет опыта"
+
+#: templates/about.html
+#: templates/index.html
+msgid "Biz Evinizi Bağ Kimi Edirik"
+msgstr "Мы делаем ваш дом как сад"
+
+#: templates/about.html
+#: templates/index.html
+msgid "Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir."
+msgstr "Мы предоставляем высококачественные услуги с нашей профессиональной командой. Удовлетворенность наших клиентов является для нас самым важным."
+
+#: templates/about.html
+#: templates/index.html
+msgid "Ətraflı"
+msgstr "Подробнее"
+
+#: templates/about.html
+#: templates/index.html
+msgid "Mükafat Qazanan"
+msgstr "Награжденный"
+
+#: templates/about.html
+#: templates/index.html
+msgid "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik"
+msgstr "Мы предоставляем высококачественные услуги с нашей профессиональной командой"
+
+#: templates/about.html
+#: templates/index.html
+msgid "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik"
+msgstr "Мы обеспечиваем ваше обслуживание с нашими опытными и профессиональными сотрудниками"
+
+#: templates/index.html
+msgid "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin."
+msgstr "Произошла ошибка. Пожалуйста, попробуйте снова."
+
+#: templates/projects_partial.html
+msgid "Hazırda layihə mövcud deyil."
+msgstr "В настоящее время проекты недоступны."
 

@@ -170,6 +170,7 @@
                 <!-- <a href="service.html" class="nav-item nav-link">Xidmətlər</a> -->
                 <a href="{% url 'home-page' %}#projects" class="nav-item nav-link">{% trans "Layihələr" %}</a>
                 <a href="{% url 'home-page' %}#testimonials" class="nav-item nav-link">{% trans "Rəylər" %}</a>
+                <a href="{% url 'about-page' %}" class="nav-item nav-link">{% trans "Haqqımızda" %}</a>
 
                 <!-- <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -472,6 +473,7 @@
                 <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-4">{% trans "Digər" %}</h4>
                     <a class="btn btn-link" href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
+                    <a class="btn btn-link" href="{% url 'about-page' %}">{% trans "Haqqımızda" %}</a>
                     <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Sifariş" %}</a>
                     {% if services %}
                         <a class="btn btn-link" href="{% url 'home-page' %}#services">{% trans "Bütün Xidmətlər" %}</a>
