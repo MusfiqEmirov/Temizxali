@@ -1,20 +1,30 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator, MaxLengthValidator
+from django.core.validators import MaxLengthValidator
 
-from services.utils import SluggedModel, LANGUAGES
+from services.utils import SluggedModel, LANGUAGES, MEASURE_TYPE_CHOICES
 
 
 class Service(models.Model):
     price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
-        verbose_name='Qiymət'
-    )
-    sale = models.FloatField(
-        validators=[MaxValueValidator(100), MinValueValidator(1)],
         null=True,
         blank=True,
-        verbose_name='Endirim'
+        verbose_name='Qiymət'
+    )
+    vip_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name='VIP Qiymət'
+    )
+    premium_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name='Premium Qiymət',
     )
     video = models.FileField(
         upload_to='videos/',  
@@ -38,6 +48,11 @@ class Service(models.Model):
         null=True,
         blank=True,
         verbose_name='Premium'
+    )
+    measure_type = models.CharField(
+        max_length=10, 
+        choices=MEASURE_TYPE_CHOICES, 
+        verbose_name='Ölçü Növü'
     )
     delivery = models.BooleanField(
         default=False,
@@ -67,16 +82,57 @@ class Service(models.Model):
         return f'Service #{self.id}'
 
 
+class ServiceVariant(models.Model):
+    service = models.ForeignKey(
+        Service,
+        related_name='variants',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='Servis üçün növlər'
+    )
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name='Qiymət'
+    )
+
+    vip_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True, 
+        blank=True,
+        verbose_name='VIP Qiymət '
+    )
+
+    premium_price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True, 
+        blank=True,
+        verbose_name='Premium Qiymət'
+    )
+
+    class Meta:
+        verbose_name = 'Servis növü'
+        verbose_name_plural = 'Servis növləri'
+
+    def __str__(self):
+        return f'{self.translations.name} — {self.service.translations.name}'
+
+
 class ServiceTranslation(SluggedModel):
     service = models.ForeignKey(
         Service,
         related_name='translations',
-        on_delete=models.CASCADE,
-        verbose_name='Servis'
+        on_delete=models.CASCADE, 
+        verbose_name='Servis',
     )
     languages = models.CharField(
         max_length=12,
-        choices=LANGUAGES
+        choices=LANGUAGES,
     )
     name = models.CharField(
         max_length=250,
@@ -97,6 +153,35 @@ class ServiceTranslation(SluggedModel):
     def __str__(self):
         return f'{self.name}'
 
+
+class ServiceVariantTranslation(models.Model):
+    variant = models.ForeignKey(
+        ServiceVariant,
+        related_name='translations',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='Növ'
+    )
+    languages = models.CharField(
+        max_length=12,
+        choices=LANGUAGES,
+        null=True,
+        blank=True,
+    )
+    name = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+        verbose_name='Növ adı'
+    )
+
+    class Meta:
+        verbose_name = 'Növ ad tərcüməsi'
+        verbose_name_plural = 'Növ ad tərcümələri'
+
+    def __str__(self):
+        return f'{self.name}'
 
     
 

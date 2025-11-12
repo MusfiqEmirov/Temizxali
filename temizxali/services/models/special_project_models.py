@@ -10,16 +10,15 @@ class SpecialProject(models.Model):
         blank=True,
         verbose_name='Url'
     )
-
     is_active = models.BooleanField(
-        default=True,
+        default=False,
         null=True,
         blank=True,
-        verbose_name='Servis aktivliyi'
+        verbose_name='Lahiyə aktivliyi'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name='Servis yaradılma tarixi'
+        verbose_name='Lahiyə yaradılma tarixi'
     )
 
     class Meta:

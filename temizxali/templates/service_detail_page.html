@@ -1,0 +1,536 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE|default:'az' }}">
+
+<head>
+    <meta charset="utf-8">
+    <title>{{ translation.name }} - {% trans "Xidmət Detalları" %}</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="{{ translation.description|truncatewords:20 }}" name="description">
+    <meta content="{{ translation.name }}" name="keywords">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="{{ translation.name }} - {% trans 'Xidmət Detalları' %}">
+    <meta property="og:description" content="{{ translation.description|truncatewords:20 }}">
+    {% if service.images.first %}
+    <meta property="og:image" content="{{ service.images.first.image.url }}">
+    {% endif %}
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">  
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark text-light px-0 py-2">
+        <div class="row gx-0 d-none d-lg-flex">
+            <div class="col-lg-7 px-5 text-start">
+                {% if contact %}
+                    {% if contact.phone %}
+                        <div class="h-100 d-inline-flex align-items-center me-4">
+                            <span class="fa fa-phone-alt me-2"></span>
+                            <span>{{ contact.phone }}</span>
+                        </div>
+                    {% endif %}
+                    {% if contact.email %}
+                        <div class="h-100 d-inline-flex align-items-center">
+                            <span class="far fa-envelope me-2"></span>
+                            <span>{{ contact.email }}</span>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="h-100 d-inline-flex align-items-center me-4">
+                        <span class="fa fa-phone-alt me-2"></span>
+                        <span>+012 345 6789</span>
+                    </div>
+                    <div class="h-100 d-inline-flex align-items-center">
+                        <span class="far fa-envelope me-2"></span>
+                        <span>info@example.com</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-lg-5 px-5 text-end">
+                <div class="h-100 d-inline-flex align-items-center mx-n2">
+                    <!-- Language Switcher -->
+                    <form action="{% url 'set_language' %}" method="post" class="d-inline me-3">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.path }}">
+                        <select name="language" onchange="this.form.submit()" class="form-select form-select-sm d-inline-block" style="width: auto; display: inline-block;">
+                            {% get_current_language as CURRENT_LANGUAGE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% for lang_code, lang_name in LANGUAGES %}
+                                <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                                    {% if lang_code == 'az' %}Azərbaycan{% elif lang_code == 'ru' %}Русский{% else %}{{ lang_name }}{% endif %}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                    {% if contact %}
+                        {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
+                            <span>{% trans "Buradan izlə:" %}</span>
+                            {% if contact.facebook %}
+                                <a class="btn btn-link text-light" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            {% endif %}
+                            {% if contact.instagram %}
+                                <a class="btn btn-link text-light" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                            {% endif %}
+                            {% if contact.youtube %}
+                                <a class="btn btn-link text-light" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                            {% endif %}
+                            {% if contact.linkedn %}
+                                <a class="btn btn-link text-light" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            {% endif %}
+                            {% if contact.tiktok %}
+                                <a class="btn btn-link text-light" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+        <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+            <h1 class="m-0">logo</h1>
+        </a>
+        <!-- Language Switcher - Mobile Only -->
+        <div class="d-lg-none ms-auto me-2">
+            <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <select name="language" onchange="this.form.submit()" class="form-select form-select-sm" style="width: auto; min-width: 70px;">
+                    {% get_current_language as CURRENT_LANGUAGE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% for lang_code, lang_name in LANGUAGES %}
+                        <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                            {% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name }}{% endif %}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a href="{% url 'home-page' %}" class="nav-item nav-link">{% trans "Ana səhifə" %}</a>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{% trans "Xidm'tler" %}</a>
+                    <div class="dropdown-menu bg-light m-0">
+                        {% if services %}
+                            {% for serv in services|slice:":10" %}
+                                {% with serv_translation=serv.translations.first %}
+                                    {% if serv_translation and serv_translation.slug %}
+                                        <a href="{% url 'service-page' serv_translation.slug %}" class="dropdown-item">{{ serv_translation.name }}</a>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endfor %}
+                        {% else %}
+                            <a href="#" class="dropdown-item">{% trans "Xidmət tapılmadı" %}</a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <a href="{% url 'home-page' %}#projects" class="nav-item nav-link">{% trans "Layihələr" %}</a>
+                <a href="{% url 'home-page' %}#testimonials" class="nav-item nav-link">{% trans "Rəylər" %}</a>
+                <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Hesabla ve Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s" 
+         style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% static 'img/carousel-1.jpg' %}') center center no-repeat; background-size: cover; background-attachment: fixed;">
+        <div class="container text-center py-5">
+            <h1 class="display-3 text-white mb-4 animated slideInDown">{{ translation.name }}</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'home-page' %}#services">{% trans "Xidmətlər" %}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ translation.name }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+    <!-- Service Detail Start -->
+    <div class="container-xxl py-5 service-detail-page">
+        <div class="container">
+            <div class="row g-5">
+                <!-- Service Images/Video Section -->
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                    {% if service.video %}
+                        <div class="mb-4">
+                            <video class="img-fluid rounded service-video" 
+                                   controls 
+                                   autoplay 
+                                   muted 
+                                   loop 
+                                   playsinline 
+                                   preload="metadata"
+                                   style="width: 100%; max-height: 500px; object-fit: cover;">
+                                <source src="{{ service.video.url }}" type="video/mp4">
+                                {% trans "Sənin brauzerin videonu dəstəkləmir." %}
+                            </video>
+                        </div>
+                    {% elif service.images.first %}
+                        <div class="mb-4">
+                            <a href="{{ service.images.first.image.url }}" data-lightbox="service-gallery">
+                                <img class="img-fluid rounded service-main-image" 
+                                     src="{{ service.images.first.image.url }}" 
+                                     alt="{{ translation.name }}" 
+                                     loading="eager"
+                                     decoding="async"
+                                     style="width: 100%; max-height: 500px; object-fit: cover;">
+                            </a>
+                        </div>
+                    {% else %}
+                        <!-- Default image if no images or video -->
+                        <div class="mb-4">
+                            <img class="img-fluid rounded service-main-image" 
+                                 src="{% static 'img/carousel-1.jpg' %}" 
+                                 alt="{{ translation.name }}" 
+                                 loading="eager"
+                                 decoding="async"
+                                 style="width: 100%; max-height: 500px; object-fit: cover;">
+                        </div>
+                    {% endif %}
+
+                    <!-- Image Gallery -->
+                    {% if service.images.count > 1 %}
+                        <div class="row g-3 service-gallery-thumbs">
+                            {% for image in service.images.all %}
+                                <div class="col-4 col-md-3">
+                                    <a href="{{ image.image.url }}" data-lightbox="service-gallery" data-title="{{ image.image_name }}">
+                                        <img class="img-fluid rounded service-gallery-thumb" 
+                                             src="{{ image.image.url }}" 
+                                             alt="{{ image.image_name }}"
+                                             loading="lazy"
+                                             decoding="async">
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Service Info Section -->
+                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="border-start border-primary border-4 ps-4 mb-5">
+                        <h1 class="display-5 mb-3">{{ translation.name }}</h1>
+                    </div>
+
+                    <!-- Description Section -->
+                    <div class="service-description mb-5">
+                        <div class="description-content" style="max-height: 300px; overflow-y: auto; padding: 15px; border: 1px solid #dee2e6; border-radius: 5px;">
+                            {{ translation.description|linebreaks }}
+                        </div>
+                    </div>
+
+                    <!-- Sale Events Section -->
+                    {% if active_sale_events %}
+                        <div class="sale-events-container mb-5 p-4 bg-light rounded">
+                            <h4 class="mb-3 text-primary">
+                                <i class="fas fa-tags me-2"></i>{% trans "Aktiv Endirim Kampaniyaları" %}
+                            </h4>
+                            <div class="row g-3">
+                                {% for sale_event in active_sale_events %}
+                                    {% with sale_translation=sale_event.translations.first %}
+                                        <div class="col-12 col-md-6">
+                                            <div class="card border-primary h-100">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                                        <h5 class="card-title mb-0">
+                                                            {% if sale_translation %}
+                                                                {{ sale_translation.name }}
+                                                            {% else %}
+                                                                {{ sale_event.name }}
+                                                            {% endif %}
+                                                        </h5>
+                                                        {% if sale_event.sale %}
+                                                            <span class="badge bg-danger fs-6">-{{ sale_event.sale }}%</span>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% if sale_translation and sale_translation.description %}
+                                                        <div class="text-muted small mt-2">
+                                                            {{ sale_translation.description|linebreaks }}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endwith %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Pricing Section -->
+                    <div class="mb-4">
+                        <h4 class="mb-3 text-primary">{% trans "Qiymətlər" %}</h4>
+                        <div class="row g-3">
+                            {% if service.price %}
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                                        <span class="fw-bold">{% trans "Standart:" %}</span>
+                                        {% if sale_price %}
+                                            <div>
+                                                <span class="text-decoration-line-through text-muted me-2">{{ service.price }} AZN</span>
+                                                <span class="text-primary fw-bold fs-5">{{ sale_price|floatformat:2 }} AZN</span>
+                                            </div>
+                                        {% else %}
+                                            <span class="text-primary fw-bold fs-5">{{ service.price }} AZN</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if service.vip_price %}
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                                        <span class="fw-bold">{% trans "VIP:" %}</span>
+                                        {% if sale_vip_price %}
+                                            <div>
+                                                <span class="text-decoration-line-through text-muted me-2">{{ service.vip_price }} AZN</span>
+                                                <span class="text-primary fw-bold fs-5">{{ sale_vip_price|floatformat:2 }} AZN</span>
+                                            </div>
+                                        {% else %}
+                                            <span class="text-primary fw-bold fs-5">{{ service.vip_price }} AZN</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if service.premium_price %}
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                                        <span class="fw-bold">{% trans "Premium:" %}</span>
+                                        {% if sale_premium_price %}
+                                            <div>
+                                                <span class="text-decoration-line-through text-muted me-2">{{ service.premium_price }} AZN</span>
+                                                <span class="text-primary fw-bold fs-5">{{ sale_premium_price|floatformat:2 }} AZN</span>
+                                            </div>
+                                        {% else %}
+                                            <span class="text-primary fw-bold fs-5">{{ service.premium_price }} AZN</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="{% url 'order-page' %}" class="btn btn-primary py-3 px-5">
+                            <i class="fa fa-shopping-cart me-2"></i>{% trans "Sifariş Ver" %}
+                        </a>
+                        {% if service.url %}
+                            <a href="{{ service.url }}" target="_blank" class="btn btn-outline-primary py-3 px-5">
+                                <i class="fa fa-external-link-alt me-2"></i>{% trans "Ətraflı Məlumat" %}
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Variants Section -->
+            {% if service.variants.all %}
+                <div class="row g-4 mt-5">
+                    <div class="col-12">
+                        <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+                            <h2 class="display-5 mb-3 text-primary">{% trans "Xidmət Növləri" %}</h2>
+                            <p class="fs-5">{% trans "Müxtəlif paket seçimləri" %}</p>
+                        </div>
+                    </div>
+                    {% for variant in service.variants.all %}
+                        {% with variant_translation=variant.translations.first %}
+                            {% if variant_translation %}
+                                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{% cycle '1' '3' '5' %}s">
+                                    <div class="service-item rounded d-flex h-100">
+                                        <div class="service-text rounded p-5 w-100">
+                                            <h4 class="mb-3">{{ variant_translation.name }}</h4>
+                                            {% if variant_translation.description %}
+                                                <p class="mb-4">{{ variant_translation.description|truncatewords:20 }}</p>
+                                            {% endif %}
+                                            <div class="mb-4">
+                                                {% if variant.price %}
+                                                    <div class="mb-2">
+                                                        <strong>{% trans "Standart:" %}</strong> 
+                                                        <span class="text-primary">{{ variant.price }} AZN</span>
+                                                    </div>
+                                                {% endif %}
+                                                {% if variant.vip_price %}
+                                                    <div class="mb-2">
+                                                        <strong>{% trans "VIP:" %}</strong> 
+                                                        <span class="text-primary">{{ variant.vip_price }} AZN</span>
+                                                    </div>
+                                                {% endif %}
+                                                {% if variant.premium_price %}
+                                                    <div>
+                                                        <strong>{% trans "Premium:" %}</strong> 
+                                                        <span class="text-primary">{{ variant.premium_price }} AZN</span>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Service Detail End -->
+
+    <!-- View All Services Button -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center">
+                <a href="{% url 'home-page' %}#services" class="btn btn-primary py-3 px-5">
+                    <i class="fa fa-arrow-left me-2"></i>{% trans "Bütün Xidmətlərə Bax" %}
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container ">
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-white mb-4">{% trans "Ünvan" %}</h4>
+                    {% if contact %}
+                        {% if contact.address %}
+                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ contact.address }}</p>
+                        {% endif %}
+                        {% if contact.phone %}
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>{{ contact.phone }}</p>
+                        {% endif %}
+                        {% if contact.email %}
+                            <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{ contact.email }}</p>
+                        {% endif %}
+                        <div class="d-flex pt-2">
+                            {% if contact.facebook %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            {% endif %}
+                            {% if contact.instagram %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                            {% endif %}
+                            {% if contact.youtube %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                            {% endif %}
+                            {% if contact.linkedn %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            {% endif %}
+                            {% if contact.tiktok %}
+                                <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{% trans "Əhməd Rəcəbli Business Center" %}</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    {% endif %}
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-white mb-4">{% trans "Xidmətlər" %}</h4>
+                    {% if services %}
+                        {% for serv in services|slice:":5" %}
+                            {% with serv_translation=serv.translations.first %}
+                                {% if serv_translation and serv_translation.slug %}
+                                    <a class="btn btn-link" href="{% url 'service-page' serv_translation.slug %}">{{ serv_translation.name }}</a>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    {% endif %}
+                    <a class="btn btn-link" href="{% url 'home-page' %}#services">{% trans "Bütün Xidmətlər" %}</a>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h4 class="text-white mb-4">{% trans "Digər" %}</h4>
+                    <a class="btn btn-link" href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
+                    <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Sifariş" %}</a>
+                    <a class="btn btn-link" href="{% url 'home-page' %}#testimonials">{% trans "Rəylər" %}</a>
+                    <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Əlaqə" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center mb-3 mb-md-0" style="margin: auto;">
+                   &copy; <a class="border-bottom" href="https://digiboom.az" target="_blank">Digiboom.az</a> {% trans "tərəfindən hazırlanıb. Bütün hüquqlar qorunur." %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'lib/parallax/parallax.min.js' %}"></script>
+    <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
+

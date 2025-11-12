@@ -1,0 +1,1295 @@
+/********** Template CSS **********/
+:root {
+    --primary: #348E38;
+    --secondary: #525368;
+    --light: #E8F5E9;
+    --dark: #0F4229;
+}
+
+.back-to-top {
+    position: fixed;
+    display: none;
+    right: 30px;
+    bottom: 30px;
+    z-index: 99;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+.fw-bold {
+    font-weight: 700 !important;
+}
+
+h3,
+.h3,
+h4,
+.h4,
+.fw-medium {
+    font-weight: 600 !important;
+}
+
+h5,
+.h5,
+h6,
+.h6,
+.fw-semi-bold {
+    font-weight: 500 !important;
+}
+
+
+/*** Spinner ***/
+#spinner {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .5s ease-out, visibility 0s linear .5s;
+    z-index: 99999;
+}
+
+#spinner.show {
+    transition: opacity .5s ease-out, visibility 0s linear 0s;
+    visibility: visible;
+    opacity: 1;
+}
+
+
+/*** Button - Yaşıl rəng ***/
+.btn {
+    transition: .5s;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: var(--light) !important;
+}
+
+.btn-primary:hover {
+    background-color: #2d7a31 !important;
+    border-color: #2d7a31 !important;
+    color: var(--light) !important;
+    box-shadow: 0 4px 12px rgba(52, 142, 56, 0.4);
+}
+
+.btn-outline-primary {
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: var(--light) !important;
+}
+
+.btn-square {
+    width: 38px;
+    height: 38px;
+}
+
+.btn-sm-square {
+    width: 32px;
+    height: 32px;
+}
+
+.btn-lg-square {
+    width: 48px;
+    height: 48px;
+}
+
+.btn-square,
+.btn-sm-square,
+.btn-lg-square {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+}
+
+
+/*** Navbar ***/
+.navbar.sticky-top {
+    top: -100px;
+    transition: .5s;
+}
+
+.navbar .navbar-brand,
+.navbar a.btn {
+    height: 80px
+}
+
+.navbar .navbar-nav .nav-link {
+    margin-right: 35px;
+    padding: 25px 0;
+    color: var(--dark);
+    font-size: 18px;
+    font-weight: 500;
+    outline: none;
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link.active {
+    color: var(--primary);
+}
+
+/* Navbar button - Hesabla ve Sifariş et - Yaşıl */
+.navbar .btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, #2d7a31 100%);
+    border-color: var(--primary);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.navbar .btn-primary:hover {
+    background: linear-gradient(135deg, #2d7a31 0%, var(--primary) 100%);
+    border-color: #2d7a31;
+    color: white;
+    box-shadow: 0 4px 12px rgba(52, 142, 56, 0.4);
+}
+
+.navbar .dropdown-toggle::after {
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+@media (max-width: 991.98px) {
+    .navbar .navbar-nav .nav-link  {
+        margin-right: 0;
+        padding: 10px 0;
+    }
+
+    .navbar .navbar-nav {
+        border-top: 1px solid #EEEEEE;
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar .nav-item .dropdown-menu {
+        display: block;
+        border: none;
+        margin-top: 0;
+        top: 150%;
+        opacity: 0;
+        visibility: hidden;
+        transition: .5s;
+    }
+
+    .navbar .nav-item:hover .dropdown-menu {
+        top: 100%;
+        visibility: visible;
+        transition: .5s;
+        opacity: 1;
+    }
+}
+
+
+/*** Header ***/
+.carousel-caption {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: rgba(15, 66, 41, .6);
+    z-index: 1;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 15%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 3rem;
+    background-color: var(--primary);
+    border: 10px solid var(--primary);
+}
+
+@media (max-width: 768px) {
+    #header-carousel .carousel-item {
+        position: relative;
+        min-height: 450px;
+    }
+    
+    #header-carousel .carousel-item img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.page-header {
+    background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url(../img/carousel-1.jpg) center center no-repeat;
+    background-size: cover;
+}
+
+.page-header .breadcrumb-item+.breadcrumb-item::before {
+    color: var(--light);
+}
+
+.page-header .breadcrumb-item,
+.page-header .breadcrumb-item a {
+    font-size: 18px;
+    color: var(--light);
+}
+
+
+/*** Top Feature ***/
+@media (min-width: 991.98px) {
+    .top-feature {
+        position: relative;
+        margin-top: -80px;
+        z-index: 1;
+    }
+}
+
+
+/*** Facts & Quote ***/
+.facts,
+.quote {
+    background: rgba(15, 66, 41, .6);
+}
+
+
+/*** Service ***/
+.service-item {
+    position: relative;
+    text-align: center;
+}
+
+.service-item .service-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.service-item .service-img video,
+.service-item .service-img img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    transform: scale(1.2);
+    transition: .3s;
+    z-index: -1;
+}
+
+.service-item:hover .service-img video,
+.service-item:hover .service-img img {
+    transform: scale(1);
+}
+
+.service-item .service-text {
+    background: #FFFFFF;
+    box-shadow: 0 0 45px rgba(0, 0, 0, .08);
+    transition: .3s;
+    width: 100%;
+    
+    
+}
+
+.service-item:hover .service-text {
+    background: rgba(15, 66, 41, .6);
+    
+}
+
+.service-item .service-text h4,
+.service-item .service-text p {
+    transition: .3;
+}
+
+.service-item:hover .service-text h4 {
+    color: #FFFFFF;
+}
+
+.service-item:hover .service-text p {
+    color: var(--light);
+}
+
+.service-item .service-text .btn-square {
+    width: 100px;
+    height: 100px;
+    background: transparent;
+    transition: .5s;
+}
+
+.service-item:hover .service-text .btn-square {
+    background: var(--light);
+}
+
+.service-item .service-text .btn {
+    width: 31px;
+    height: 31px;
+    display: inline-flex;
+    align-items: center;
+    color: var(--dark);
+    background: var(--light);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.service-item:hover .service-text .btn {
+    width: 85px;
+}
+
+
+/*** Project Portfolio ***/
+#portfolio-flters {
+    display: inline-block;
+    background: var(--light);
+    padding: 10px 15px;
+}
+
+#portfolio-flters li {
+    display: inline-block;
+    font-weight: 500;
+    color: var(--primary);
+    cursor: pointer;
+    transition: .5s;
+    border-bottom: 2px solid transparent;
+}
+
+#portfolio-flters li:hover,
+#portfolio-flters li.active {
+    color: var(--dark);
+    border-color: var(--dark);
+}
+
+.portfolio-inner {
+    position: relative;
+    overflow: hidden;
+}
+
+.portfolio-inner::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(15, 66, 41, .6);
+    opacity: 0;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-inner:hover::before {
+    opacity: 1;
+}
+
+.portfolio-inner .portfolio-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.portfolio-inner:hover .portfolio-text {
+    opacity: 1;
+}
+
+.portfolio-inner .portfolio-text .btn {
+    background: var(--light);
+    color: var(--primary);
+}
+
+.portfolio-inner .portfolio-text .btn:hover {
+    background: var(--primary);
+    color: var(--light);
+}
+
+
+/*** Team ***/
+.team-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.team-item .team-text {
+    position: absolute;
+    width: calc(100% - 45px);
+    left: -100%;
+    bottom: 45px;
+    padding: 1.5rem;
+    background: #FFFFFF;
+    border-radius: 0 4px 4px 0;
+    opacity: 0;
+    transition: .5s;
+}
+
+.team-item:hover .team-text {
+    left: 0;
+    opacity: 1;
+}
+
+.team-item .team-social .btn {
+    background: var(--light);
+    color: var(--primary);
+}
+
+.team-item .team-social .btn:hover {
+    background: var(--primary);
+    color: var(--light);
+}
+
+.team-item .team-img .team-social {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .5s;
+    z-index: 3;
+    opacity: 0;
+}
+
+.team-item:hover .team-img .team-social {
+    transition-delay: .3s;
+    opacity: 1;
+}
+
+
+/*** Testimonial ***/
+
+.testimonial-carousel .owl-item img {
+    width: 100px;
+    height: 100px;
+}
+
+.testimonial-carousel .owl-nav {
+    margin-top: 30px;
+    display: flex;
+}
+
+.testimonial-carousel .owl-nav .owl-prev,
+.testimonial-carousel .owl-nav .owl-next {
+    margin-right: 15px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    background: var(--light);
+    border-radius: 4px;
+    font-size: 22px;
+    transition: .5s;
+}
+
+.testimonial-carousel .owl-nav .owl-prev:hover,
+.testimonial-carousel .owl-nav .owl-next:hover {
+    background: var(--primary);
+    color: var(--light);
+}
+
+
+/*** Footer ***/
+.footer .btn.btn-link {
+    display: block;
+    margin-bottom: 5px;
+    padding: 0;
+    text-align: left;
+    color: var(--light);
+    font-weight: normal;
+    text-transform: capitalize;
+    transition: .3s;
+}
+
+.footer .btn.btn-link::before {
+    position: relative;
+    content: "\f105";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 10px;
+}
+
+.footer .btn.btn-link:hover {
+    color: var(--primary);
+    letter-spacing: 1px;
+    box-shadow: none;
+}
+
+.copyright {
+    color: var(--light);
+    background: #072A19;
+}
+
+.copyright a {
+    color: #FFFFFF;
+}
+
+.copyright a:hover {
+    color: var(--primary);
+}
+/* form  */
+.form-floating > select.form-select {
+    padding-top: 1.625rem;
+    padding-bottom: 0.625rem;
+}
+
+
+/* calculyator */
+
+.dropdown-checkbox-list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  z-index: 9999;
+  max-height: 230px;
+  overflow-y: auto;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-checkbox-list.show {
+  display: block;
+}
+
+.dropdown-checkbox-list .form-check {
+  margin-bottom: 8px;
+}
+
+.dropdown-checkbox-list .form-check-input {
+  accent-color: #0d6efd;
+}
+
+.form-floating input[readonly] {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* ===== Ox stili ===== */
+.dropdown-arrow {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 1.1rem;
+  color: #6c757d;
+}
+
+.form-floating input:focus + label + .dropdown-arrow {
+  color: #0d6efd;
+}
+
+/* Service Text Mobile Fix */
+.service-text {
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.service-text p,
+.service-text h4 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+@media (max-width: 768px) {
+  .service-text {
+    padding: 1rem !important;
+  }
+  
+  .service-text p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}
+
+/* Service Detail Description Styles */
+.service-description {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 2rem;
+  border-left: 4px solid var(--primary);
+}
+
+.service-description .description-content {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--secondary);
+  text-align: justify;
+  max-height: none;
+  overflow: visible;
+}
+
+.service-description .description-content p {
+  margin-bottom: 1.2rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.service-description .description-content p:last-child {
+  margin-bottom: 0;
+}
+
+.service-description .description-content h1,
+.service-description .description-content h2,
+.service-description .description-content h3,
+.service-description .description-content h4,
+.service-description .description-content h5,
+.service-description .description-content h6 {
+  color: var(--dark);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.service-description .description-content h1:first-child,
+.service-description .description-content h2:first-child,
+.service-description .description-content h3:first-child {
+  margin-top: 0;
+}
+
+.service-description .description-content ul,
+.service-description .description-content ol {
+  margin-bottom: 1.2rem;
+  padding-left: 2rem;
+}
+
+.service-description .description-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+}
+
+.service-description .description-content strong {
+  color: var(--dark);
+  font-weight: 600;
+}
+
+.service-description .description-content a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.service-description .description-content a:hover {
+  color: var(--dark);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .service-description {
+    padding: 1.5rem;
+  }
+  
+  .service-description .description-content {
+    font-size: 1rem;
+    line-height: 1.7;
+    text-align: left;
+  }
+  
+  .service-description .description-content p {
+    margin-bottom: 1rem;
+  }
+}
+
+
+/*** Service Detail Image Gallery - Standart Kart Ölçüləri ***/
+.service-detail-page .row.g-3 .col-4,
+.service-detail-page .row.g-3 .col-md-3 {
+  position: relative;
+  padding: 0.5rem;
+}
+
+/* Aspect ratio üçün padding-top trick */
+.service-detail-page .row.g-3 .col-4::before,
+.service-detail-page .row.g-3 .col-md-3::before {
+  content: "";
+  display: block;
+  padding-top: 100%; /* 1:1 aspect ratio - kvadrat */
+}
+
+/* Link wrapper - absolute positioning */
+.service-detail-page .row.g-3 .col-4 > a,
+.service-detail-page .row.g-3 .col-md-3 > a {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  display: block;
+  overflow: hidden;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.service-detail-page .row.g-3 .col-4 > a:hover,
+.service-detail-page .row.g-3 .col-md-3 > a:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Şəkillər - tam ölçüdə doldurur */
+.service-detail-page .row.g-3 img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.service-detail-page .row.g-3 .col-4:hover img,
+.service-detail-page .row.g-3 .col-md-3:hover img {
+  transform: scale(1.05);
+}
+
+
+/*** Lightbox Modal - Səliqəli və Kiçik Ölçülər ***/
+/* Lightbox overlay - arxa fon */
+.lb-overlay {
+  background: rgba(0, 0, 0, 0.85) !important;
+}
+
+/* Lightbox wrapper */
+.lb-wrapper {
+  max-width: 70vw !important;
+  max-height: 75vh !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Lightbox container */
+.lb-container {
+  max-width: 70vw !important;
+  max-height: 75vh !important;
+  width: 70vw !important;
+  height: 75vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  background: #fff !important;
+  padding: 20px !important;
+}
+
+/* Lightbox outer container */
+.lb-outerContainer {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+/* Lightbox image - proporsiyaları qoruyur, eyni konteyner ölçüsündə */
+.lb-image {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  margin: 0 auto !important;
+  display: block !important;
+  border-radius: 8px !important;
+}
+
+/* Close button - daha səliqəli və yaşıl */
+.lb-close {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  width: 40px !important;
+  height: 40px !important;
+  background: var(--primary) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 100 !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(52, 142, 56, 0.4) !important;
+  color: #fff !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.lb-close:hover {
+  background: #2d7a31 !important;
+  transform: scale(1.1) !important;
+  box-shadow: 0 4px 12px rgba(52, 142, 56, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.lb-close img {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* Navigation buttons - daha səliqəli və görünən */
+.lb-nav {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 100 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+}
+
+.lb-nav a {
+  pointer-events: all !important;
+}
+
+.lb-prev,
+.lb-next,
+a.lb-prev,
+a.lb-next {
+  width: 45px !important;
+  height: 45px !important;
+  background: var(--primary) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(52, 142, 56, 0.4) !important;
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 100 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+  color: #fff !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Prev button - Bootstrap carousel icon */
+.lb-prev::before,
+a.lb-prev::before {
+  content: "" !important;
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+}
+
+/* Next button - Bootstrap carousel icon */
+.lb-next::before,
+a.lb-next::before {
+  content: "" !important;
+  display: block !important;
+  width: 20px !important;
+  height: 20px !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size: contain !important;
+}
+
+.lb-prev {
+  left: 15px !important;
+}
+
+.lb-next {
+  right: 15px !important;
+}
+
+.lb-prev:hover,
+.lb-next:hover,
+a.lb-prev:hover,
+a.lb-next:hover {
+  background: #2d7a31 !important;
+  transform: translateY(-50%) scale(1.15) !important;
+  box-shadow: 0 4px 12px rgba(52, 142, 56, 0.6) !important;
+  color: #fff !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Navigation düymələrinin icon-ları - gizlədirik çünki ::before istifadə edirik */
+.lb-prev img,
+.lb-next img {
+  display: none !important;
+}
+
+/* Data container (title, counter) - Gizlədirik */
+.lb-dataContainer {
+  display: none !important;
+}
+
+/* Lightbox number/counter - Gizlədirik */
+.lb-number {
+  display: none !important;
+}
+
+/* Lightbox caption/title - Gizlədirik */
+.lb-caption {
+  display: none !important;
+}
+
+/* Loading state */
+.lb-loading {
+  max-width: 70vw !important;
+  max-height: 75vh !important;
+  width: 70vw !important;
+  height: 75vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+}
+
+/* Responsive - Mobil */
+@media (max-width: 767px) {
+  .lb-wrapper {
+    max-width: 90vw !important;
+    max-height: 80vh !important;
+    border-radius: 10px !important;
+  }
+  
+  .lb-container,
+  .lb-loading {
+    max-width: 90vw !important;
+    max-height: 80vh !important;
+    width: 90vw !important;
+    height: 80vh !important;
+    padding: 15px !important;
+    border-radius: 10px !important;
+  }
+  
+  .lb-close {
+    width: 35px !important;
+    height: 35px !important;
+    top: 8px !important;
+    right: 8px !important;
+  }
+  
+  .lb-prev,
+  .lb-next,
+  a.lb-prev,
+  a.lb-next {
+    width: 40px !important;
+    height: 40px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Responsive - Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+  .lb-wrapper {
+    max-width: 75vw !important;
+    max-height: 80vh !important;
+  }
+  
+  .lb-container,
+  .lb-loading {
+    max-width: 75vw !important;
+    max-height: 80vh !important;
+    width: 75vw !important;
+    height: 80vh !important;
+    padding: 18px !important;
+  }
+}
+
+/* Responsive - Desktop */
+@media (min-width: 992px) {
+  .lb-wrapper {
+    max-width: 70vw !important;
+    max-height: 75vh !important;
+  }
+  
+  .lb-container,
+  .lb-loading {
+    max-width: 70vw !important;
+    max-height: 75vh !important;
+    width: 70vw !important;
+    height: 75vh !important;
+    padding: 20px !important;
+  }
+}
+
+/* Lightbox optimizasiyası - sürətli yüklənmə və az loading ekranı */
+.lb-loader {
+  transition: opacity 0.1s ease-in-out !important;
+  opacity: 0.6 !important;
+}
+
+/* Flash problemini həll etmək üçün - şəkil transition (crossfade) */
+.lb-image {
+  transition: opacity 0.3s ease-in-out !important;
+  opacity: 1 !important;
+  will-change: opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Şəkil görünəndə display block olsun */
+  display: block;
+}
+
+/* Ağ background flash-i tam aradan qaldırır */
+.lb-outerContainer {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* Container background da transparent */
+.lb-container {
+  background-color: transparent !important;
+  background: transparent !important;
+  /* Şəkil üçün position relative - crossfade üçün */
+  position: relative;
+}
+
+/* Şəkil dəyişdikdə smooth fade - flash-i aradan qaldırır */
+.lb-outerContainer.animating .lb-image {
+  /* Opacity-ni CSS ilə dəyişmə - JavaScript idarə edir */
+  transition: opacity 0.3s ease-in-out !important;
+}
+
+/* Şəkil visibility hidden olsa belə, display block qalsın */
+.lb-image[style*="visibility: hidden"],
+.lb-image[style*="opacity: 0"] {
+  display: block !important;
+  transition: opacity 0.3s ease-in-out !important;
+}
+
+/* Preloaded şəkillər üçün - loading ekranını gizlət */
+.lb-outerContainer.animating .lb-loader {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Şəkil yüklənəndə loading-i daha tez gizlət */
+.lb-image[src]:not([src=""]) ~ .lb-loader,
+.lb-image[src]:not([src*="data:image/gif"]) ~ .lb-loader {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Loading ekranını daha az görünən et */
+.lb-loader .lb-cancel {
+  opacity: 0.5 !important;
+}
+
+/* Şəkil görünəndə loading-i tam gizlət */
+.lb-image:not([src=""]) + .lb-loader {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Preloaded şəkillər üçün loading-i gizlət */
+.lb-container .lb-image[src]:not([src*="data:image/gif"]) ~ .lb-loader {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* ===== Service Detail Page Optimizasiyaları ===== */
+
+/* Service Main Image - Smooth loading */
+.service-main-image {
+  transition: opacity 0.3s ease-in-out;
+  will-change: opacity;
+}
+
+.service-main-image[loading="lazy"] {
+  opacity: 0;
+}
+
+.service-main-image.loaded {
+  opacity: 1;
+}
+
+/* Service Gallery Thumbnails - Optimized */
+.service-gallery-thumb {
+  transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.service-gallery-thumb:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.service-gallery-thumb[loading="lazy"] {
+  opacity: 0;
+  background: #f0f0f0;
+}
+
+.service-gallery-thumb.loaded {
+  opacity: 1;
+}
+
+/* Service Video Optimization */
+.service-video {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.service-video[preload="metadata"] {
+  background: #000;
+}
+
+/* Related Services Images - Lazy Loading */
+.related-service-image {
+  transition: opacity 0.3s ease-in-out;
+  will-change: opacity;
+}
+
+.related-service-image[loading="lazy"] {
+  opacity: 0;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+}
+
+.related-service-image.loaded {
+  opacity: 1;
+  animation: none;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Service Detail Page - Performance Optimizations */
+.service-detail-page {
+  contain: layout style paint;
+}
+
+.service-gallery-thumbs {
+  contain: layout style;
+}
+
+/* Image Container Optimization */
+.service-main-image,
+.service-gallery-thumb,
+.related-service-image {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .service-main-image,
+  .service-gallery-thumb {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .service-gallery-thumb {
+    min-height: 100px;
+  }
+  
+  .related-service-image {
+    min-height: 200px;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .service-main-image,
+  .service-gallery-thumb,
+  .related-service-image,
+  .service-video {
+    transition: none;
+    animation: none;
+  }
+  
+  .service-gallery-thumb:hover {
+    transform: none;
+  }
+}
+
+/* Page Header Optimization */
+.page-header {
+  position: relative;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  will-change: background-position;
+}
+
+/* Mobile optimization - disable fixed background */
+@media (max-width: 768px) {
+  .page-header {
+    background-attachment: scroll !important;
+  }
+}
+
+/* Performance optimization for page header */
+.page-header {
+  contain: layout style paint;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Service card button styling for better text wrapping */
+.service-item .btn-sm {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+}

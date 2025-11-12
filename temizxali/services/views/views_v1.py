@@ -1,131 +1,384 @@
-
 from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
+from django.http import Http404, JsonResponse
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Prefetch
+from django.conf import settings
+from django.urls import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template.loader import render_to_string
+from decimal import Decimal
 
 from services.models import *
 from services.forms import OrderForm
 from services.forms import ReviewForm
+from services.utils import CalculatorService, CalculatorQuery
 
 
 __all__ = [
     'HomePageView',
-    'OrderCreateView',
-    'OrderSuccessView',
+    'AboutPageView',
+    'OrderPageView',
+    'ServiceDetailPage',
     'ReviewCreateView',
-    'ReviewSuccessView',
+    'ProjectsPaginationView',
+    'ServiceCalculatorView'
 ]
 
 
 class HomePageView(View):
-    template_name = 'home_page.html'
+    template_name = 'index.html'
+    
     def get(self, request):
         languages = translation.get_language()
-
-        background_image = Image.objects.filter(
-            image_name='home_page_background', 
+        background_images = Image.objects.filter(
             is_background_image=True
-        ).first()
+        ).order_by('-created_at')
         services = Service.objects.filter(
             is_active=True,
-            translations__languages = languages
+            translations__languages=languages
         ).distinct().prefetch_related(
             Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages)),
             'images'
-        )
+        ).order_by('-created_at')
         special_projects = SpecialProject.objects.filter(
             is_active=True,
-            translations__languages = languages
+            translations__languages=languages
         ).distinct().prefetch_related(
             Prefetch('translations', queryset=SpecialProjectTranslation.objects.filter(languages=languages)),
             'images'
+        ).order_by('-created_at')
+        
+        statistics = Statistic.objects.first()
+        mottos = Motto.objects.filter(
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=MottoTranslation.objects.filter(languages=languages))
+        ).order_by('-id')
+        reviews = Review.objects.filter(is_verified=True).prefetch_related(
+            Prefetch('service__translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')
+        contact = Contact.objects.first()
+
+        mottos_with_bg = []
+        background_images_list = list(background_images)
+        if mottos.exists() and background_images_list:
+            for index, motto in enumerate(mottos):
+                bg_image = background_images_list[index % len(background_images_list)]
+                mottos_with_bg.append({
+                    'motto': motto,
+                    'background_image': bg_image
+                })
+        elif mottos.exists():
+            for motto in mottos:
+                mottos_with_bg.append({
+                    'motto': motto,
+                    'background_image': None
+                })
+
+        paginator = Paginator(special_projects, 6)
+        page = request.GET.get('page', 1)
+        try:
+            projects_page = paginator.page(page)
+        except PageNotAnInteger:
+            projects_page = paginator.page(1)
+        except EmptyPage:
+            projects_page = paginator.page(paginator.num_pages)
+        
+        return render(request, self.template_name, {
+            'languages': languages,
+            'background_images': background_images,
+            'background_image': background_images.first() if background_images.exists() else None,
+            'mottos_with_bg': mottos_with_bg,
+            'services': services,
+            'special_projects': projects_page,
+            'statistics': statistics,
+            'mottos': mottos,
+            'reviews': reviews,
+            'contact': contact
+        })
+
+
+class AboutPageView(View):
+    template_name = 'about_page.html'
+
+    def get(self, request):
+        languages = translation.get_language()
+        about = About.objects.all().distinct().prefetch_related(
+            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages))
         )
         statistics = Statistic.objects.all()
-        reviews = Review.objects.filter(is_verified=True)
 
         return render(request, self.template_name, {
-            'background_image': background_image,
-            'services': services,
-            'special_projects': special_projects,
+            'about': about,
             'statistics': statistics,
-            'reviews': reviews
+            'active_lang': languages,
             })
 
 
-class OrderCreateView(View):
-    template_name = 'order_form.html'
+class ServiceDetailPage(View):
+    template_name = 'service_detail_page.html'
+    def get(self, request, service_slug):
+        languages = translation.get_language()
+        translation_obj = get_object_or_404(
+            ServiceTranslation,
+            slug=service_slug
+        )
+        service = translation_obj.service
+        current_lang_translation = service.translations.filter(
+            languages=languages
+        ).first()
+        display_translation = current_lang_translation if current_lang_translation else translation_obj
+        service = Service.objects.filter(
+            id=service.id
+        ).prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(
+                languages=languages
+            )),
+            'images',
+            Prefetch('variants', queryset=ServiceVariant.objects.all().prefetch_related(
+                Prefetch('translations', queryset=ServiceVariantTranslation.objects.filter(languages=languages))
+            )),
+            Prefetch('sales', queryset=SaleEvent.objects.filter(active=True).prefetch_related(
+                Prefetch('translations', queryset=SaleEventTranslation.objects.filter(languages=languages))
+            ))
+        ).first()
+        
+       
+        active_sale_events = service.sales.filter(active=True) if service else []
+
+        contact = Contact.objects.first()
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages)),
+            'images'
+        ).order_by('-created_at')[:6]  
+
+        return render(request, self.template_name, {
+            'languages': languages,
+            'service': service,
+            'translation': display_translation,
+            'active_sale_events': active_sale_events,
+            'contact': contact,
+            'services': services,
+            })
+
+
+class OrderPageView(View):
+    template_name = 'contact.html'
     
     def get(self, request):
         form = OrderForm()
+        services = CalculatorQuery.load_services()
         current_language = translation.get_language()
+        contact = Contact.objects.first()
         return render(request, self.template_name, {
-            "form": form,
-            "current_language": current_language,
+            'form': form,
+            'services': services,
+            'current_language': current_language,
+            'view_type': 'order',
+            'contact': contact,
         })
     
     def post(self, request):
         form = OrderForm(request.POST)
+        services = CalculatorQuery.load_services()
         current_language = translation.get_language()
+        contact = Contact.objects.first()
         if form.is_valid():
-            form.save()
-            messages.success(request, _('Sifarişiniz uğurla göndərildi'))
-            return redirect('order-success')
+            try:
+                form.save()
+                messages.success(request, _('Sifarişiniz uğurla göndərildi'))
+                return redirect('order-page')
+            except Exception as e:
+                messages.error(request, _('Xəta baş verdi: %s') % str(e))
+                return render(request, self.template_name, {
+                    'form': form,
+                    'services': services,
+                    'current_language': current_language,
+                    'view_type': 'order',
+                    'contact': contact,
+                })
         else:
             messages.error(request, _('Zəhmət olmasa formu düzgün doldurun'))
             return render(request, self.template_name, {
                 'form': form,
+                'services': services,
                 'current_language': current_language,
+                'view_type': 'order',
+                'contact': contact,
             })
     
 
-
-class OrderSuccessView(View):
-    template_name = 'order_success.html'
-
-    def get(self, request):
-        """Sifarişin uğurla göndərildiyi səhifə"""
-        return render(request, self.template_name)
-    
-
 class ReviewCreateView(View):
-    """Rəy əlavə etmək üçün səhifə"""
-    template_name = 'review_form.html'
+    template_name = 'comment_add.html'
 
     def get(self, request):
-        """Formu göstərir"""
+        languages = translation.get_language()
         form = ReviewForm()
-        return render(request, self.template_name, {'form': form})
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')
+        contact = Contact.objects.first()
+        return render(request, self.template_name, {
+            'form': form,
+            'services': services,
+            'contact': contact
+        })
 
     def post(self, request):
+        languages = translation.get_language()
         form = ReviewForm(request.POST)
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')
+        contact = Contact.objects.first()
 
         if form.is_valid():
-            phone = form.cleaned_data.get('phone_number')
-            if Order.objects.filter(phone_number=phone).exists():
-                form.save()
-                messages.success(request, "Rəyiniz uğurla göndərildi ✅")
-                return redirect('review-success')
-            else:
-                messages.error(
-                    request,
-                    "Bu nömrə ilə verilmiş sifariş tapılmadı. Rəy yazmaq üçün əvvəlcə sifariş verməlisiniz ❌"
-                )
+            form.save()
+            messages.success(request, _('Rəyiniz uğurla göndərildi ✅'))
         else:
-            messages.error(request, "Zəhmət olmasa formu düzgün doldurun ❌")
+            messages.error(request, _('Melumatlari duzgun daxil edin'))
 
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, {
+            'form': form,
+            'services': services,
+            'contact': contact
+        })
+    
+
+class ProjectsPaginationView(View):
+    def get(self, request):
+        languages = translation.get_language()
+        special_projects = SpecialProject.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=SpecialProjectTranslation.objects.filter(languages=languages)),
+            'images'
+        ).order_by('-created_at')
+        
+        paginator = Paginator(special_projects, 6)
+        page = request.GET.get('page', 1)
+        try:
+            projects_page = paginator.page(page)
+        except PageNotAnInteger:
+            projects_page = paginator.page(1)
+        except EmptyPage:
+            projects_page = paginator.page(paginator.num_pages)
+        
+        projects_html = render_to_string('projects_partial.html', {
+            'special_projects': projects_page,
+        }, request=request)
+        
+        pagination_html = render_to_string('pagination_partial.html', {
+            'special_projects': projects_page,
+        }, request=request)
+        
+        return JsonResponse({
+            'projects_html': projects_html,
+            'pagination_html': pagination_html,
+            'current_page': projects_page.number,
+            'total_pages': paginator.num_pages
+        })
 
 
-class ReviewSuccessView(View):
-    template_name = 'review_success.html'
+class ServiceCalculatorView(View):
+    """
+    Handles display and processing of the service price calculator.
+    """
+    template_name = 'contact.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        """
+        Handle GET requests to render the calculator page.
 
+        - Activates language based on the session or query.
+        - Loads available services.
+        - Retrieves any stored calculation results from the session.
+        """
+        self._language_switch(request)
+        services = CalculatorQuery.load_services()
+        result = []
+        total_price = Decimal('0.00')
 
+        if 'calculator_result' in request.session:
+            result = request.session.pop('calculator_result')
+            total_price = Decimal(request.session.pop('calculator_total'))
 
+        form = OrderForm()
+        contact = Contact.objects.first()
+        return render(request, self.template_name, {
+            'services': services,
+            'result': result,
+            'total_price': total_price,
+            'form': form,
+            'current_language': translation.get_language(),
+            'view_type': 'calculator',
+            'contact': contact,
+        })
+
+    def post(self, request):
+        """
+        Handle POST requests to calculate selected services' total price.
+
+        - Reads selected service IDs from the request.
+        - Applies each service to the calculator service.
+        - Stores the calculation result in the session.
+        """
+        lang = translation.get_language()
+        service_ids = request.POST.getlist('service_id')
+
+        if not service_ids:
+            messages.warning(request, _('Heç bir servis seçilməyib.'))
+            return redirect(self._redirect_with_lang())
+
+        calc = CalculatorService(lang)
+
+        for sid in service_ids:
+            services = CalculatorQuery.load_services()
+            try:
+                service = services.get(id=sid, is_active=True)
+                calc.apply_item(request, service)
+            except:
+                pass
+
+        request.session['calculator_result'] = calc.result
+        request.session['calculator_total'] = str(calc.total_price)
+        return redirect(self._redirect_with_lang())
+
+    def _redirect_with_lang(self):
+        """
+        Build redirect URL that preserves the current language parameter.
+
+        Returns:
+            str: URL with language code if not default.
+        """
+        lang = translation.get_language()
+        url = reverse('service_calculator')
+        if lang != settings.LANGUAGE_CODE:
+            url += f'?lang={lang}'
+        return url
+
+    def _language_switch(self, request):
+        """
+        Handle language switching from query parameters.
+
+        Activates the requested language and stores it in session if valid.
+        """
+        lang_param = request.GET.get('lang') or request.GET.get('language')
+        if lang_param and lang_param in dict(settings.LANGUAGES):
+            request.session['django_language'] = lang_param
+            translation.activate(lang_param)
 

@@ -1,0 +1,134 @@
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#orderMessage {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid;
+}
+
+#orderMessage.alert-success {
+    border-left-color: #28a745;
+}
+
+#orderMessage.alert-error,
+#orderMessage.alert-danger {
+    border-left-color: #dc3545;
+}
+
+/* Mesaj textarea label-i xaricdə sabit saxlamaq */
+.form-floating {
+    position: relative;
+}
+
+.form-floating > textarea[name="text"] {
+    padding-top: 1.25rem !important;
+    min-height: 100px;
+    overflow-y: auto;
+}
+
+.form-floating > textarea[name="text"] ~ label {
+    position: absolute !important;
+    top: -0.5rem !important;
+    left: 0.75rem !important;
+    height: auto !important;
+    padding: 0 0.25rem !important;
+    background-color: white !important;
+    z-index: 10 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+    font-size: 0.875rem !important;
+}
+
+.form-floating > textarea[name="text"]:focus ~ label,
+.form-floating > textarea[name="text"]:not(:placeholder-shown) ~ label {
+    position: absolute !important;
+    top: -0.5rem !important;
+    left: 0.75rem !important;
+    transform: none !important;
+    background-color: white !important;
+}
+
+/* Body-nin ən üstdəki və altındakı padding-i silmək */
+body {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Footer-in altındakı boşluğu silmək */
+.footer,
+.copyright {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Footer container azca böyütmə - yalnız padding, yazıların ölçüsü eyni qalır */
+.footer {
+    padding: 3rem 0 !important;
+}
+
+body > *:last-child {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Copyright mərkəzləşdirmə və böyütmə */
+.copyright {
+    padding: 1rem 0 !important;
+}
+
+.copyright-center {
+    margin: auto;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+.copyright .container {
+    max-width: 100%;
+    width: 100%;
+}
+
+.copyright .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Navbar üçün ən üstdəki padding və margin-i silmək */
+.navbar {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Topbar-dan sonra navbar-dan əvvəl boşluq olmaması üçün */
+.container-fluid.bg-dark + .navbar {
+    margin-top: 0 !important;
+}
+
+/* WOW.js animasiyaları söndürülüb - heç bir effekt yoxdur */
+.wow {
+    visibility: visible !important;
+}
+
+.wow.animated {
+    visibility: visible !important;
+}
+
+/* Animasiyalar söndürülüb */
+.col-lg-6.wow.fadeIn,
+.col-lg-6.wow.fadeIn.animated {
+    visibility: visible !important;
+    -webkit-animation: none !important;
+    animation: none !important;
+}
+

@@ -1,7 +1,9 @@
 from django.utils.text import slugify
+from unidecode import unidecode
 
 
 def unique_slugify(instance, value, slug_field='slug'):
+    value = unidecode(value)  
     slug = slugify(value)
     ModelClass = instance.__class__
     unique_slug = slug
@@ -12,3 +14,5 @@ def unique_slugify(instance, value, slug_field='slug'):
         num += 1
 
     setattr(instance, slug_field, unique_slug)
+
+    
