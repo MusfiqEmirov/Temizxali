@@ -29,10 +29,23 @@ class Image(models.Model):
         max_length=50,
         verbose_name='Şəkil adı'
     )
-    is_background_image = models.BooleanField(
+    is_home_page_background_image = models.BooleanField(
         default=False,
-        verbose_name='Sayt üçün arxa plan şəkli'
+        verbose_name='Ana sehifesi üçün arxa plan şəkli'
     )
+    is_about_page_background_image = models.BooleanField(
+        default=False,
+        verbose_name='Haqqımızda sehifesi üçün arxa plan şəkli'
+    )
+    is_calculator_page_background_image = models.BooleanField(
+        default=False,
+        verbose_name='Calculator sehifesi üçün arxa plan şəkli'
+    )
+    is_review_page_background_image = models.BooleanField(
+        default=False,
+        verbose_name='Comment elave et sehifesi üçün arxa plan şəkli'
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name='Image yaradılma tarixi'
