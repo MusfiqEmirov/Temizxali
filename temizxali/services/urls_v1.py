@@ -33,11 +33,11 @@ urlpatterns = [
         name='create-review'
     ),
 
-    # Calculator
+    # Projects Pagination (AJAX)
     path(
-        'calculator/', 
-        ServiceCalculatorView.as_view(), 
-        name='service-calculator'
+        'projects/pagination/',
+        ProjectsPaginationView.as_view(),
+        name='projects-pagination'
     ),
 ]
 

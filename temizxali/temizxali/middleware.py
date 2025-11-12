@@ -10,12 +10,13 @@ class CustomLocaleMiddleware(LocaleMiddleware):
             translation.activate(language)
             request.LANGUAGE_CODE = translation.get_language()
         else:
+            # First call parent to handle standard locale detection
+            super().process_request(request)
+            # Then override with session language if set
             language = request.session.get('django_language')
-            if language:
+            if language and language in dict(settings.LANGUAGES):
                 translation.activate(language)
-            else:
-                translation.activate(settings.LANGUAGE_CODE)
-            request.LANGUAGE_CODE = translation.get_language()
+                request.LANGUAGE_CODE = translation.get_language()
     
     def process_response(self, request, response):
         if not request.path.startswith('/admin/'):

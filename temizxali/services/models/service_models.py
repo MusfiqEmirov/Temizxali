@@ -1,7 +1,7 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator, MaxLengthValidator
+from django.core.validators import MaxLengthValidator
 
-from services.utils import SluggedModel, LANGUAGES
+from services.utils import SluggedModel, LANGUAGES, MEASURE_TYPE_CHOICES
 
 
 class Service(models.Model):
@@ -26,12 +26,6 @@ class Service(models.Model):
         blank=True,
         verbose_name='Premium Qiymət',
     )
-    sale = models.FloatField(
-        validators=[MaxValueValidator(100), MinValueValidator(1)],
-        null=True,
-        blank=True,
-        verbose_name='Endirim'
-    )
     video = models.FileField(
         upload_to='videos/',  
         null=True,
@@ -55,29 +49,10 @@ class Service(models.Model):
         blank=True,
         verbose_name='Premium'
     )
-    is_number = models.BooleanField(
-        default=False,
-        null=True,
-        blank=True,
-        verbose_name='Ədəd ilə hesablanırsa'
-    )
-    is_kq = models.BooleanField(
-        default=False,
-        null=True,
-        blank=True,
-        verbose_name='KQ ilə hesablanırsa'
-    )
-    is_kv_metr = models.BooleanField(
-        default=False,
-        null=True,
-        blank=True,
-        verbose_name='Kvadrat metr (m²) ilə hesablanırsa'
-    )
-    is_metr = models.BooleanField(
-        default=False,
-        null=True,
-        blank=True,
-        verbose_name='Metr (m) ilə hesablanırsa'
+    measure_type = models.CharField(
+        max_length=10, 
+        choices=MEASURE_TYPE_CHOICES, 
+        verbose_name='Ölçü Növü'
     )
     delivery = models.BooleanField(
         default=False,

@@ -1,14 +1,8 @@
 from django.db.models import Prefetch
 from django.utils import translation
-from django.conf import settings
-from services.models import (
-    Service, 
-    ServiceTranslation, 
-    ServiceVariantTranslation
-)
 
 
-class CalculatorQuery:
+class ServiceQuery:
     """
     Utility class responsible for loading services and their translations
     based on the current active language.
@@ -22,6 +16,9 @@ class CalculatorQuery:
             QuerySet: A queryset of `Service` objects prefetching translations
                       and variant translations filtered by current language.
         """
+        # Lazy import to avoid circular import
+        from services.models import Service, ServiceTranslation, ServiceVariant, ServiceVariantTranslation, SaleEvent
+        
         lang = translation.get_language()
         return (
             Service.objects.filter(
@@ -35,8 +32,17 @@ class CalculatorQuery:
                     queryset=ServiceTranslation.objects.filter(languages=lang),
                 ),
                 Prefetch(
-                    'variants__translations',
-                    queryset=ServiceVariantTranslation.objects.filter(languages=lang),
+                    'variants',
+                    queryset=ServiceVariant.objects.all().prefetch_related(
+                        Prefetch(
+                            'translations',
+                            queryset=ServiceVariantTranslation.objects.filter(languages=lang),
+                        )
+                    ),
+                ),
+                Prefetch(
+                    'sales',
+                    queryset=SaleEvent.objects.filter(active=True),
                 ),
             )
         )

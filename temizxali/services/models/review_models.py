@@ -6,6 +6,12 @@ from services.utils.normalize_phone_number import normalize_az_phone
 
 
 class Review(models.Model):
+    service = models.ForeignKey(
+        Service,
+        on_delete=models.CASCADE,
+        related_name='reviews',
+        verbose_name='Service',
+    )
     fullname = models.CharField(
         max_length=32,
         verbose_name='Ad soyad'
@@ -15,7 +21,7 @@ class Review(models.Model):
         verbose_name='Mobil nömrə'
     )
     text = models.TextField(
-        validators=[MaxLengthValidator(2000)],
+        validators=[MaxLengthValidator(140)],
         verbose_name='Mesaj'
     )
     is_verified = models.BooleanField(
