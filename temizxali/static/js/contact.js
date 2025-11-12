@@ -299,40 +299,54 @@ function calculateServicePrice(serviceId) {
             const discountAmount = (calculated * discountPercent) / 100;
             serviceTotal += calculated - discountAmount;
         }
-    }
-    
-    variants.forEach((variant) => {
-        const variantId = variant.id;
-        const variantCheck = document.getElementById(`${serviceId}_variant_${variantId}_check`);
-        if (variantCheck && variantCheck.checked) {
-            const variantValue = parseFloat(document.getElementById(`${serviceId}_variant_${variantId}_value`)?.value) || 0;
-            const variantPriceType = document.getElementById(`${serviceId}_variant_${variantId}_type`)?.value || 'normal';
-            
-            // Dinamik qiymətlər
-            let variantBasePrice = 0;
-            if (variantPriceType === 'vip') {
-                variantBasePrice = parseFloat(String(variant.vip_price || 0).replace(',', '.')) || 0;
-            } else if (variantPriceType === 'premium') {
-                variantBasePrice = parseFloat(String(variant.premium_price || 0).replace(',', '.')) || 0;
-            } else {
-                variantBasePrice = parseFloat(String(variant.price || 0).replace(',', '.')) || 0;
+    } else {
+        // Variantlar varsa - əvvəlcə bütün variantların cəmini hesabla
+        let totalVariantValue = 0;
+        variants.forEach((variant) => {
+            const variantId = variant.id;
+            const variantCheck = document.getElementById(`${serviceId}_variant_${variantId}_check`);
+            if (variantCheck && variantCheck.checked) {
+                const variantValue = parseFloat(document.getElementById(`${serviceId}_variant_${variantId}_value`)?.value) || 0;
+                totalVariantValue += variantValue;
             }
-            
-            if (variantValue > 0 && variantBasePrice > 0) {
-                let variantCalculated = 0;
-                if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'unit') {
-                    variantCalculated = variantBasePrice * variantValue;
+        });
+        
+        // Variantların cəminə əsasən endirim faizini tap
+        const discountPercent = getApplicableDiscount(totalVariantValue);
+        
+        // İndi hər variant üçün hesabla və endirimi tətbiq et
+        variants.forEach((variant) => {
+            const variantId = variant.id;
+            const variantCheck = document.getElementById(`${serviceId}_variant_${variantId}_check`);
+            if (variantCheck && variantCheck.checked) {
+                const variantValue = parseFloat(document.getElementById(`${serviceId}_variant_${variantId}_value`)?.value) || 0;
+                const variantPriceType = document.getElementById(`${serviceId}_variant_${variantId}_type`)?.value || 'normal';
+                
+                // Dinamik qiymətlər
+                let variantBasePrice = 0;
+                if (variantPriceType === 'vip') {
+                    variantBasePrice = parseFloat(String(variant.vip_price || 0).replace(',', '.')) || 0;
+                } else if (variantPriceType === 'premium') {
+                    variantBasePrice = parseFloat(String(variant.premium_price || 0).replace(',', '.')) || 0;
                 } else {
-                    variantCalculated = variantBasePrice;
+                    variantBasePrice = parseFloat(String(variant.price || 0).replace(',', '.')) || 0;
                 }
                 
-                // Endirim tətbiq et - yalnız value >= min_quantity olduqda
-                const variantDiscountPercent = getApplicableDiscount(variantValue);
-                const variantDiscountAmount = (variantCalculated * variantDiscountPercent) / 100;
-                serviceTotal += variantCalculated - variantDiscountAmount;
+                if (variantValue > 0 && variantBasePrice > 0) {
+                    let variantCalculated = 0;
+                    if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'unit') {
+                        variantCalculated = variantBasePrice * variantValue;
+                    } else {
+                        variantCalculated = variantBasePrice;
+                    }
+                    
+                    // Endirim tətbiq et - variantların cəminə əsasən
+                    const variantDiscountAmount = (variantCalculated * discountPercent) / 100;
+                    serviceTotal += variantCalculated - variantDiscountAmount;
+                }
             }
-        }
-    });
+        });
+    }
     
     // Xidmət qiymətini göstər
     // Variantlar olan service-lər üçün _price_final, digərləri üçün _price
@@ -353,23 +367,21 @@ function calculateServicePrice(serviceId) {
                     }
                 }
             } else {
-                // Variantlar üçün - ən yüksək endirim faizini tap
-                let maxDiscount = 0;
+                // Variantlar üçün - variantların cəminə əsasən endirim faizini tap
+                let totalVariantValue = 0;
                 variants.forEach((variant) => {
                     const variantId = variant.id;
                     const variantCheck = document.getElementById(`${serviceId}_variant_${variantId}_check`);
                     if (variantCheck && variantCheck.checked) {
                         const variantValue = parseFloat(document.getElementById(`${serviceId}_variant_${variantId}_value`)?.value) || 0;
-                        if (variantValue > 0) {
-                            const discountPercent = getApplicableDiscount(variantValue);
-                            if (discountPercent > maxDiscount) {
-                                maxDiscount = discountPercent;
-                            }
-                        }
+                        totalVariantValue += variantValue;
                     }
                 });
-                if (maxDiscount > 0) {
-                    discountInfo = ` <span class="text-success small">(-${maxDiscount.toFixed(0)}%)</span>`;
+                if (totalVariantValue > 0) {
+                    const discountPercent = getApplicableDiscount(totalVariantValue);
+                    if (discountPercent > 0) {
+                        discountInfo = ` <span class="text-success small">(-${discountPercent.toFixed(0)}%)</span>`;
+                    }
                 }
             }
             priceAmount.innerHTML = serviceTotal.toFixed(2) + ' ₼' + discountInfo;
@@ -467,40 +479,54 @@ function calculateTotal() {
                 const discountAmount = (calculated * discountPercent) / 100;
                 total += calculated - discountAmount;
             }
-        }
-        
-        variants.forEach((variant) => {
-            const variantId = variant.id;
-            const variantCheck = document.getElementById(`${serviceId}_variant_${variantId}_check`);
-            if (variantCheck && variantCheck.checked) {
-                const variantValue = parseFloat(document.getElementById(`${serviceId}_variant_${variantId}_value`)?.value) || 0;
-                const variantPriceType = document.getElementById(`${serviceId}_variant_${variantId}_type`)?.value || 'normal';
-                
-                // Dinamik qiymətlər
-                let variantBasePrice = 0;
-                if (variantPriceType === 'vip') {
-                    variantBasePrice = parseFloat(variant.vip_price) || 0;
-                } else if (variantPriceType === 'premium') {
-                    variantBasePrice = parseFloat(variant.premium_price) || 0;
-                } else {
-                    variantBasePrice = parseFloat(variant.price) || 0;
+        } else {
+            // Variantlar varsa - əvvəlcə bütün variantların cəmini hesabla
+            let totalVariantValue = 0;
+            variants.forEach((variant) => {
+                const variantId = variant.id;
+                const variantCheck = document.getElementById(`${serviceId}_variant_${variantId}_check`);
+                if (variantCheck && variantCheck.checked) {
+                    const variantValue = parseFloat(document.getElementById(`${serviceId}_variant_${variantId}_value`)?.value) || 0;
+                    totalVariantValue += variantValue;
                 }
-                
-                if (variantValue > 0 && variantBasePrice > 0) {
-                    let variantCalculated = 0;
-                    if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'unit') {
-                        variantCalculated = variantBasePrice * variantValue;
+            });
+            
+            // Variantların cəminə əsasən endirim faizini tap
+            const discountPercent = getApplicableDiscount(totalVariantValue);
+            
+            // İndi hər variant üçün hesabla və endirimi tətbiq et
+            variants.forEach((variant) => {
+                const variantId = variant.id;
+                const variantCheck = document.getElementById(`${serviceId}_variant_${variantId}_check`);
+                if (variantCheck && variantCheck.checked) {
+                    const variantValue = parseFloat(document.getElementById(`${serviceId}_variant_${variantId}_value`)?.value) || 0;
+                    const variantPriceType = document.getElementById(`${serviceId}_variant_${variantId}_type`)?.value || 'normal';
+                    
+                    // Dinamik qiymətlər
+                    let variantBasePrice = 0;
+                    if (variantPriceType === 'vip') {
+                        variantBasePrice = parseFloat(variant.vip_price) || 0;
+                    } else if (variantPriceType === 'premium') {
+                        variantBasePrice = parseFloat(variant.premium_price) || 0;
                     } else {
-                        variantCalculated = variantBasePrice;
+                        variantBasePrice = parseFloat(variant.price) || 0;
                     }
                     
-                    // Endirim tətbiq et - yalnız value >= min_quantity olduqda
-                    const variantDiscountPercent = getApplicableDiscount(variantValue);
-                    const variantDiscountAmount = (variantCalculated * variantDiscountPercent) / 100;
-                    total += variantCalculated - variantDiscountAmount;
+                    if (variantValue > 0 && variantBasePrice > 0) {
+                        let variantCalculated = 0;
+                        if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'unit') {
+                            variantCalculated = variantBasePrice * variantValue;
+                        } else {
+                            variantCalculated = variantBasePrice;
+                        }
+                        
+                        // Endirim tətbiq et - variantların cəminə əsasən
+                        const variantDiscountAmount = (variantCalculated * discountPercent) / 100;
+                        total += variantCalculated - variantDiscountAmount;
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
     // Nəticəni göstər
