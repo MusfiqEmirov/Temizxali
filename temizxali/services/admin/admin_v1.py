@@ -1,6 +1,7 @@
 from django.contrib import admin
 from nested_admin.nested import NestedModelAdmin, NestedTabularInline
 from django.utils.html import format_html
+from django.db.models import Q
 
 from services.utils import LANGUAGES
 from services.models import *
@@ -12,7 +13,7 @@ class ServiceImageInline(NestedTabularInline):
     fk_name = 'service'
     extra = 1
     readonly_fields = ('image_preview',)
-    fields = ('image_name', 'image', 'image_preview')
+    fields = ('image', 'image_preview')
 
     def image_preview(self, obj):
         if obj.image:
@@ -26,7 +27,21 @@ class SpecialProjectImageInline(NestedTabularInline):
     fk_name = 'special_project'
     extra = 6
     readonly_fields = ('image_preview',)
-    fields = ('image_name', 'image', 'image_preview')
+    fields = ('image', 'image_preview')
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="100" />', obj.image.url)
+        return "-"
+    image_preview.short_description = "Preview"
+
+
+class AboutImageInline(NestedTabularInline):
+    model = Image
+    fk_name = 'about'
+    extra = 1
+    readonly_fields = ('image_preview',)
+    fields = ('image', 'image_preview')
 
     def image_preview(self, obj):
         if obj.image:
@@ -37,9 +52,17 @@ class SpecialProjectImageInline(NestedTabularInline):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('image_name', 'image_tag', 'created_at',)
+    list_display = ('image_tag', 'created_at',)
     readonly_fields = ('image_tag',)
-    fields = ('image_name', 'image', 'image_tag', 'is_background_image')  
+    fields = (
+        
+        'image', 
+        'image_tag', 
+        'is_home_page_background_image',
+        'is_about_page_background_image',
+        'is_calculator_page_background_image',
+        'is_review_page_background_image',
+    )  
 
     def image_tag(self, obj):
         if obj.image:
@@ -49,7 +72,13 @@ class ImageAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(is_background_image=True)
+        return qs.filter(
+            Q(is_home_page_background_image=True) |
+            Q(is_about_page_background_image=True) |
+            Q(is_calculator_page_background_image=True) |
+            Q(is_review_page_background_image=True)
+        )
+
 
 # Service Admin
 class ServiceTranslationInline(NestedTabularInline):
@@ -77,6 +106,7 @@ class ServiceVariantInline(NestedTabularInline):
     verbose_name = 'Servis Növü'
     verbose_name_plural = 'Servis Növləri'
     inlines = [ServiceVariantTranslationInline]
+
 
 @admin.register(Service)
 class ServiceAdmin(NestedModelAdmin):
@@ -164,8 +194,8 @@ class AboutTranslationInline(admin.TabularInline):
 
 @admin.register(About)
 class AboutAdmin(admin.ModelAdmin):
-    inlines = [AboutTranslationInline]
-    list_display = ['id', '__str__']
+    inlines = [AboutTranslationInline, AboutImageInline]
+    list_display = ['id', 'experience_years',  '__str__']
 
 
 # Statistics Admin
