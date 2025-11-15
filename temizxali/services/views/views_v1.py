@@ -32,7 +32,7 @@ class HomePageView(View):
     def get(self, request):
         languages = translation.get_language()
         background_images = Image.objects.filter(
-            is_background_image=True
+            is_home_page_background_image=True
         ).order_by('-created_at')
         services = Service.objects.filter(
             is_active=True,
@@ -51,7 +51,8 @@ class HomePageView(View):
         
         statistics = Statistic.objects.first()
         about = About.objects.all().distinct().prefetch_related(
-            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages))
+            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages)),
+            'images'
         )
         mottos = Motto.objects.filter(
             translations__languages=languages
@@ -109,7 +110,8 @@ class AboutPageView(View):
     def get(self, request):
         languages = translation.get_language()
         about = About.objects.all().distinct().prefetch_related(
-            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages))
+            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages)),
+            'images'
         )
         statistics = Statistic.objects.first()
         contact = Contact.objects.first()
@@ -119,6 +121,9 @@ class AboutPageView(View):
         ).distinct().prefetch_related(
             Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
         ).order_by('-created_at')
+        about_background_image = Image.objects.filter(
+            is_about_page_background_image=True
+        ).first()
 
         return render(request, self.template_name, {
             'about': about,
@@ -126,6 +131,7 @@ class AboutPageView(View):
             'active_lang': languages,
             'contact': contact,
             'services': services,
+            'about_background_image': about_background_image,
             })
 
 
@@ -187,12 +193,16 @@ class OrderPageView(View):
         services = ServiceQuery.load_services()
         current_language = translation.get_language()
         contact = Contact.objects.first()
+        calculator_background_image = Image.objects.filter(
+            is_calculator_page_background_image=True
+        ).first()
         return render(request, self.template_name, {
             'form': form,
             'services': services,
             'current_language': current_language,
             'view_type': 'order',
             'contact': contact,
+            'calculator_background_image': calculator_background_image,
         })
     
     def post(self, request):
@@ -200,6 +210,9 @@ class OrderPageView(View):
         services = ServiceQuery.load_services()
         current_language = translation.get_language()
         contact = Contact.objects.first()
+        calculator_background_image = Image.objects.filter(
+            is_calculator_page_background_image=True
+        ).first()
         if form.is_valid():
             try:
                 form.save()
@@ -213,6 +226,7 @@ class OrderPageView(View):
                     'current_language': current_language,
                     'view_type': 'order',
                     'contact': contact,
+                    'calculator_background_image': calculator_background_image,
                 })
         else:
             messages.error(request, _('Zəhmət olmasa formu düzgün doldurun'))
@@ -222,6 +236,7 @@ class OrderPageView(View):
                 'current_language': current_language,
                 'view_type': 'order',
                 'contact': contact,
+                'calculator_background_image': calculator_background_image,
             })
     
 
@@ -238,10 +253,14 @@ class ReviewCreateView(View):
             Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
         ).order_by('-created_at')
         contact = Contact.objects.first()
+        review_background_image = Image.objects.filter(
+            is_review_page_background_image=True
+        ).first()
         return render(request, self.template_name, {
             'form': form,
             'services': services,
-            'contact': contact
+            'contact': contact,
+            'review_background_image': review_background_image,
         })
 
     def post(self, request):
@@ -254,6 +273,9 @@ class ReviewCreateView(View):
             Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
         ).order_by('-created_at')
         contact = Contact.objects.first()
+        review_background_image = Image.objects.filter(
+            is_review_page_background_image=True
+        ).first()
 
         if form.is_valid():
             form.save()
@@ -264,7 +286,8 @@ class ReviewCreateView(View):
         return render(request, self.template_name, {
             'form': form,
             'services': services,
-            'contact': contact
+            'contact': contact,
+            'review_background_image': review_background_image,
         })
     
 

@@ -5,11 +5,8 @@ from services.utils import LANGUAGES
 
 
 class About(models.Model):
-    image = models.ImageField(
-        upload_to='about-image/',  
-        null=True,
-        blank=True,
-        verbose_name='Haqqımızda arxa plan şəkili'
+    experience_years = models.PositiveSmallIntegerField(
+        verbose_name='Xidmət etdiyiniz il'
     )
 
     class Mete:
