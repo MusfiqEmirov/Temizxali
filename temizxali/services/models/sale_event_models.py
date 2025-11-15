@@ -7,9 +7,8 @@ from services.models import Service
 
 
 class SaleEvent(models.Model):
-    service = models.ForeignKey(
+    service = models.ManyToManyField(
         Service, 
-        on_delete=models.CASCADE, 
         related_name='sales', 
         verbose_name='Servis'
     )
@@ -34,7 +33,10 @@ class SaleEvent(models.Model):
         verbose_name_plural = 'Endirim kampaniyaları'
 
     def __str__(self):
-        return f'{self.translations.name} ({self.service.translations.first().name})'
+        translation = self.translations.first()
+        if translation:
+            return translation.name
+        return f'SaleEvent #{self.id}'
     
 
 class SaleEventTranslation(models.Model):

@@ -11,7 +11,7 @@ class SpecialProject(models.Model):
         verbose_name='Url'
     )
     is_active = models.BooleanField(
-        default=False,
+        default=True,
         null=True,
         blank=True,
         verbose_name='Lahiyə aktivliyi'

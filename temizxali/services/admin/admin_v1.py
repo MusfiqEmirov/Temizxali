@@ -148,11 +148,13 @@ class SaleEventTranslationInline(admin.TabularInline):
 class SaleEventAdmin(admin.ModelAdmin):
     list_display = ('service_name', 'sale', 'min_quantity', 'active')
     list_filter = ('service', 'active')
-    search_fields = ('service__translations__name',)
+    filter_horizontal = ('service',)
     inlines = [SaleEventTranslationInline]
 
     def service_name(self, obj):
-        return obj.service.translations.first().name
+        service = obj.service.first()
+        translation = service.translations.first() if service else None
+        return translation.name if translation else '-'
     
     service_name.short_description = 'Servis'
 

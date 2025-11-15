@@ -14,8 +14,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 'yes')
-
+# DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 'yes')
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 # Admin URL - secret path (required)

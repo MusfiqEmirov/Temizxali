@@ -12,16 +12,17 @@ def set_language(request):
         if not next_url:
             next_url = '/'
     
-    is_admin = next_url.startswith('/admin/') if next_url else False
+    admin_url = settings.ADMIN_URL.rstrip('/')
+    is_admin = next_url.startswith(admin_url) if next_url else False
+    
+    if is_admin:
+        return HttpResponseRedirect(next_url)
+    
     language = request.POST.get('language', request.GET.get('language'))
     
     if language and language in dict(settings.LANGUAGES):
-        if is_admin:
-            request.session['admin_language'] = language
-            translation.activate(language)
-        else:
-            request.session['django_language'] = language
-            translation.activate(language)
+        request.session['django_language'] = language
+        translation.activate(language)
     
     return HttpResponseRedirect(next_url)
 
