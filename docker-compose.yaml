@@ -19,7 +19,7 @@ services:
     container_name: temizxali_web
     command: gunicorn --bind 0.0.0.0:8000 --workers 3 --timeout 120 --chdir temizxali temizxali.wsgi:application
     volumes:
-     - .:/app                                 
+      - .:/app                                 
       - ./temizxali/staticfiles:/app/temizxali/staticfiles
       - ./temizxali/media:/app/temizxali/media
 
