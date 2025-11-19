@@ -1295,9 +1295,3 @@ a.lb-next:hover {
   align-items: center;
 }
 
-
-.navbar .navbar-logo {
-    width: 60px !important;
-    height: 65px !important;
-    object-fit: contain;
-}
