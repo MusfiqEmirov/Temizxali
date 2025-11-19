@@ -19,9 +19,13 @@ services:
     container_name: temizxali_web
     command: gunicorn --bind 0.0.0.0:8000 --workers 3 --timeout 120 --chdir temizxali temizxali.wsgi:application
     volumes:
-      - .:/app
-      - static_volume:/app/temizxali/staticfiles
+     - .:/app                                 
+      - ./temizxali/staticfiles:/app/temizxali/staticfiles
       - ./temizxali/media:/app/temizxali/media
+
+      # - .:/app
+      # - static_volume:/app/temizxali/staticfiles
+      # - ./temizxali/media:/app/temizxali/media
     expose:
       - "8000"
     environment:
@@ -46,8 +50,11 @@ services:
       - "8080:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - static_volume:/staticfiles:ro
+      - ./temizxali/staticfiles:/staticfiles:ro
       - ./temizxali/media:/media:ro
+
+      # - static_volume:/staticfiles:ro
+      # - ./temizxali/media:/media:ro
     depends_on:
       - web
     restart: unless-stopped
