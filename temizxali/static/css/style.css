@@ -1294,3 +1294,15 @@ a.lb-next:hover {
   display: inline-flex;
   align-items: center;
 }
+.navbar .navbar-brand {
+    height: auto !important;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar .navbar-logo {
+    width: 60px !important;
+    height: 65px !important;
+    object-fit: contain;
+}
