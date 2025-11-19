@@ -198,17 +198,30 @@ class AboutAdmin(admin.ModelAdmin):
     list_display = ['id', 'experience_years',  '__str__']
 
 
-# Statistics Admin
+
+class StatisticTranslationInline(admin.TabularInline):
+    model = StatisticTranslation
+    extra = 1  # Yeni Statistika Tərcüməsi üçün əlavə sətir
+    min_num = 1
+    max_num = 10
+    verbose_name = "Statistika Tərcüməsi"
+    verbose_name_plural = "Statistika Tərcümələri"
+
 @admin.register(Statistic)
-class StatisticsAdmin(admin.ModelAdmin):
-    list_display = (
-        'id',
-        'client_count',
-        'work_done_count',
-        'staff_count',
-        'achievement_count',
-    )
-    list_display_links = ('id',)
+class StatisticAdmin(admin.ModelAdmin):
+    list_display = ('get_admin_names',)  # __str__ əvəzinə custom metod
+    inlines = [StatisticTranslationInline]
+
+    def get_admin_names(self, obj):
+        """Adminin daxil etdiyi translation adlarını göstərir"""
+        translations = obj.translations.all()
+        if translations.exists():
+            # bütün translation adlarını birləşdiririk
+            return ", ".join([t.name for t in translations])
+        return "-"
+    get_admin_names.short_description = "Statistika Adları"
+
+
 
 
 # Review Admin

@@ -49,7 +49,7 @@ class HomePageView(View):
             'images'
         ).order_by('-created_at')
         
-        statistics = Statistic.objects.first()
+        statistics = Statistic.objects.prefetch_related('translations').all()
         about = About.objects.all().distinct().prefetch_related(
             Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages)),
             'images'
@@ -113,7 +113,7 @@ class AboutPageView(View):
             Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages)),
             'images'
         )
-        statistics = Statistic.objects.first()
+        statistics = Statistic.objects.prefetch_related('translations').all()
         contact = Contact.objects.first()
         services = Service.objects.filter(
             is_active=True,

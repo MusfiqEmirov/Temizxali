@@ -278,70 +278,32 @@
 
 
     <!-- Facts Start -->
-    {% if statistics %}
-        {% if about_background_image %}
-            <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{{ about_background_image.image.url }}">
-        {% else %}
-            <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{% static 'img/carousel-1.jpg' %}">
-        {% endif %}
-            <div class="container py-5">
-                <div class="row g-5">
-                    {% if statistics.client_count %}
-                        <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
-                            <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.client_count }}</h1>
-                            <span class="fs-5 fw-semi-bold text-light">{% trans "Məmnun Müştərilər" %}</span>
-                        </div>
-                    {% endif %}
-                    {% if statistics.work_done_count %}
-                        <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
-                            <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.work_done_count }}</h1>
-                            <span class="fs-5 fw-semi-bold text-light">{% trans "Tamamlanmış İşlər" %}</span>
-                        </div>
-                    {% endif %}
-                    {% if statistics.staff_count %}
-                        <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
-                            <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.staff_count }}</h1>
-                            <span class="fs-5 fw-semi-bold text-light">{% trans "Peşəkar Komanda" %}</span>
-                        </div>
-                    {% endif %}
-                    {% if statistics.achievement_count %}
-                        <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
-                            <h1 class="display-4 text-white" data-toggle="counter-up">{{ statistics.achievement_count }}</h1>
-                            <span class="fs-5 fw-semi-bold text-light">{% trans "Nailiyyətlər" %}</span>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+{% if statistics %}
+    {% if about_background_image %}
+        <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{{ about_background_image.image.url }}">
     {% else %}
-        {% if about_background_image %}
-            <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{{ about_background_image.image.url }}">
-        {% else %}
-            <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{% static 'img/carousel-1.jpg' %}">
-        {% endif %}
-            <div class="container py-5">
-                <div class="row g-5">
-                    <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
-                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">{% trans "Məmnun Müştərilər" %}</span>
-                    </div>
-                    <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
-                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">{% trans "Tamamlanmış İşlər" %}</span>
-                    </div>
-                    <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
-                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">{% trans "Peşəkar Komanda" %}</span>
-                    </div>
-                    <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
-                        <h1 class="display-4 text-white" data-toggle="counter-up">1234</h1>
-                        <span class="fs-5 fw-semi-bold text-light">{% trans "Nailiyyətlər" %}</span>
-                    </div>
-                </div>
+        <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{% static 'img/carousel-1.jpg' %}">
+    {% endif %}
+        <div class="container py-5">
+            <div class="row g-5">
+                {% for statistic in statistics %}
+                    {% for stat in statistic.translations.all %}
+                        {% if stat.language == active_lang %}
+                            <div class="col-sm-6 col-lg-3 text-center wow fadeIn" data-wow-delay="{{ forloop.parentloop.counter0|add:"0.2"|floatformat:1 }}s">
+                                <h1 class="display-4 text-white" data-toggle="counter-up">{{ stat.value }}</h1>
+                                <span class="fs-5 fw-semi-bold text-light">{{ stat.name }}</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
             </div>
         </div>
-    {% endif %}
-    <!-- Facts End -->
+    </div>
+{% endif %}
+<!-- Facts End -->
+
+
+
 
 
     <!-- Footer Start -->
