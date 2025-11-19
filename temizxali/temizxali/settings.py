@@ -28,7 +28,6 @@ if not ADMIN_URL.endswith('/'):
 # Application definition
 
 INSTALLED_APPS = [
-    'grappelli', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
