@@ -165,6 +165,7 @@
                 <!-- <a href="service.html" class="nav-item nav-link">Xidmətlər</a> -->
                 <a href="{% url 'home-page' %}#projects" class="nav-item nav-link">{% trans "Layihələr" %}</a>
                 <a href="{% url 'home-page' %}#testimonials" class="nav-item nav-link">{% trans "Rəylər" %}</a>
+                <a href="{% url 'about-page' %}" class="nav-item nav-link">{% trans "Haqqımızda" %}</a>
 
                 <!-- <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -261,36 +262,90 @@
     <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5 align-items-end">
-                <div class="col-lg-3 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
-                    <img class="img-fluid rounded" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}">
-                </div>
-                <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
-                    <h1 class="display-1 text-primary mb-0">25</h1>
-                    <p class="text-primary mb-4">Year of Experience</p>
-                    <h1 class="display-5 mb-4">We Make Your Home Like A Garden</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                    <a class="btn btn-primary py-3 px-4" href="">Explore More</a>
-                </div>
-                <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="row g-5">
-                        <div class="col-12 col-sm-6 col-lg-12">
-                            <div class="border-start ps-4">
-                                <i class="fa fa-award fa-3x text-primary mb-3"></i>
-                                <h4 class="mb-3">Award Winning</h4>
-                                <span>Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna</span>
+            {% if about %}
+                {% with about_item=about.first translation=about.first.translations.first %}
+                    <div class="row g-5 align-items-start mt-5">
+                        <div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
+                            {% if about_item.images.first %}
+                                <img style="" class="img-fluid  object-fit-cover rounded  mx-auto d-block mb-auto" data-wow-delay="0.1s" src="{{ about_item.images.first.image.url }}" alt="{% trans 'Haqqımızda' %}">
+                            {% else %}
+                                <img class="img-fluid rounded  object-fit-cover mx-auto d-block mb-auto" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}" alt="{% trans 'Haqqımızda' %}">
+                            {% endif %}
+                        </div>
+                        <div class="col-lg-5 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
+                            {% if about_item.experience_years %}
+                                <h1 class="display-1 text-primary mb-0">{{ about_item.experience_years }}</h1>
+                            {% elif statistics and statistics.work_done_count %}
+                                <h1 class="display-1 text-primary mb-0">{{ statistics.work_done_count|floatformat:0 }}</h1>
+                            {% else %}
+                                <h1 class="display-1 text-primary mb-0">25</h1>
+                            {% endif %}
+                            <p class="text-primary mb-4">{% trans "İl Təcrübə" %}</p>
+                            {% if translation %}
+                                <h1 class="display-5 mb-4">{% trans "Biz Evinizi Bağ Kimi Edirik" %}</h1>
+                                <p class="mb-4">{{ translation.description|truncatewords:30|linebreaks }}</p>
+                            {% else %}
+                                <h1 class="display-5 mb-4">{% trans "Biz Evinizi Bağ Kimi Edirik" %}</h1>
+                                <p class="mb-4">{% trans "Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir." %}</p>
+                            {% endif %}
+                            <a class="btn btn-primary py-3 px-4" href="{% url 'about-page' %}">{% trans "Ətraflı" %}</a>
+                        </div>
+                        <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
+                            <div class="row g-5">
+                                <div class="col-12 col-sm-6 col-lg-12">
+                                    <div class="border-start ps-4">
+                                        <i class="fa fa-award fa-3x text-primary mb-3"></i>
+                                        <h4 class="mb-3">{% trans "Mükafat Qazanan" %}</h4>
+                                        <span>{% trans "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik" %}</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-lg-12">
+                                    <div class="border-start ps-4">
+                                        <i class="fa fa-users fa-3x text-primary mb-3"></i>
+                                        <h4 class="mb-3">{% trans "Peşəkar Komanda" %}</h4>
+                                        <span>{% trans "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik" %}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-lg-12">
-                            <div class="border-start ps-4">
-                                <i class="fa fa-users fa-3x text-primary mb-3"></i>
-                                <h4 class="mb-3">Dedicated Team</h4>
-                                <span>Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna</span>
+                    </div>
+                {% endwith %}
+            {% else %}
+                <div class="row g-5 align-items-end">
+                    <div class="col-lg-3 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
+                        <img class="img-fluid rounded" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}" alt="{% trans 'Haqqımızda' %}">
+                    </div>
+                    <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
+                        {% if statistics and statistics.work_done_count %}
+                            <h1 class="display-1 text-primary mb-0">{{ statistics.work_done_count|floatformat:0 }}</h1>
+                        {% else %}
+                            <h1 class="display-1 text-primary mb-0">25</h1>
+                        {% endif %}
+                        <p class="text-primary mb-4">{% trans "İl Təcrübə" %}</p>
+                        <h1 class="display-5 mb-4">{% trans "Biz Evinizi Bağ Kimi Edirik" %}</h1>
+                        <p class="mb-4">{% trans "Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir." %}</p>
+                        <a class="btn btn-primary py-3 px-4" href="{% url 'about-page' %}">{% trans "Ətraflı" %}</a>
+                    </div>
+                    <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
+                        <div class="row g-5">
+                            <div class="col-12 col-sm-6 col-lg-12">
+                                <div class="border-start ps-4">
+                                    <i class="fa fa-award fa-3x text-primary mb-3"></i>
+                                    <h4 class="mb-3">{% trans "Mükafat Qazanan" %}</h4>
+                                    <span>{% trans "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik" %}</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-12">
+                                <div class="border-start ps-4">
+                                    <i class="fa fa-users fa-3x text-primary mb-3"></i>
+                                    <h4 class="mb-3">{% trans "Peşəkar Komanda" %}</h4>
+                                    <span>{% trans "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik" %}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
     <!-- About End -->
@@ -712,6 +767,7 @@
                 <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-4">{% trans "Digər" %}</h4>
                     <a class="btn btn-link" href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
+                    <a class="btn btn-link" href="{% url 'about-page' %}">{% trans "Haqqımızda" %}</a>
                     <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Sifariş" %}</a>
                     {% if services %}
                         <a class="btn btn-link" href="{% url 'home-page' %}#services">{% trans "Bütün Xidmətlər" %}</a>

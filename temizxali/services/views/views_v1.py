@@ -7,15 +7,13 @@ from django.utils import translation
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Prefetch
 from django.conf import settings
-from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import render_to_string
-from decimal import Decimal
 
 from services.models import *
 from services.forms import OrderForm
 from services.forms import ReviewForm
-from services.utils import CalculatorService, CalculatorQuery
+from services.utils import ServiceQuery
 
 
 __all__ = [
@@ -25,7 +23,6 @@ __all__ = [
     'ServiceDetailPage',
     'ReviewCreateView',
     'ProjectsPaginationView',
-    'ServiceCalculatorView'
 ]
 
 
@@ -35,7 +32,7 @@ class HomePageView(View):
     def get(self, request):
         languages = translation.get_language()
         background_images = Image.objects.filter(
-            is_background_image=True
+            is_home_page_background_image=True
         ).order_by('-created_at')
         services = Service.objects.filter(
             is_active=True,
@@ -53,6 +50,10 @@ class HomePageView(View):
         ).order_by('-created_at')
         
         statistics = Statistic.objects.first()
+        about = About.objects.all().distinct().prefetch_related(
+            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages)),
+            'images'
+        )
         mottos = Motto.objects.filter(
             translations__languages=languages
         ).distinct().prefetch_related(
@@ -96,6 +97,7 @@ class HomePageView(View):
             'services': services,
             'special_projects': projects_page,
             'statistics': statistics,
+            'about': about,
             'mottos': mottos,
             'reviews': reviews,
             'contact': contact
@@ -103,19 +105,33 @@ class HomePageView(View):
 
 
 class AboutPageView(View):
-    template_name = 'about_page.html'
+    template_name = 'about.html'
 
     def get(self, request):
         languages = translation.get_language()
         about = About.objects.all().distinct().prefetch_related(
-            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages))
+            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages)),
+            'images'
         )
-        statistics = Statistic.objects.all()
+        statistics = Statistic.objects.first()
+        contact = Contact.objects.first()
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')
+        about_background_image = Image.objects.filter(
+            is_about_page_background_image=True
+        ).first()
 
         return render(request, self.template_name, {
             'about': about,
             'statistics': statistics,
             'active_lang': languages,
+            'contact': contact,
+            'services': services,
+            'about_background_image': about_background_image,
             })
 
 
@@ -174,22 +190,29 @@ class OrderPageView(View):
     
     def get(self, request):
         form = OrderForm()
-        services = CalculatorQuery.load_services()
+        services = ServiceQuery.load_services()
         current_language = translation.get_language()
         contact = Contact.objects.first()
+        calculator_background_image = Image.objects.filter(
+            is_calculator_page_background_image=True
+        ).first()
         return render(request, self.template_name, {
             'form': form,
             'services': services,
             'current_language': current_language,
             'view_type': 'order',
             'contact': contact,
+            'calculator_background_image': calculator_background_image,
         })
     
     def post(self, request):
         form = OrderForm(request.POST)
-        services = CalculatorQuery.load_services()
+        services = ServiceQuery.load_services()
         current_language = translation.get_language()
         contact = Contact.objects.first()
+        calculator_background_image = Image.objects.filter(
+            is_calculator_page_background_image=True
+        ).first()
         if form.is_valid():
             try:
                 form.save()
@@ -203,6 +226,7 @@ class OrderPageView(View):
                     'current_language': current_language,
                     'view_type': 'order',
                     'contact': contact,
+                    'calculator_background_image': calculator_background_image,
                 })
         else:
             messages.error(request, _('Zəhmət olmasa formu düzgün doldurun'))
@@ -212,6 +236,7 @@ class OrderPageView(View):
                 'current_language': current_language,
                 'view_type': 'order',
                 'contact': contact,
+                'calculator_background_image': calculator_background_image,
             })
     
 
@@ -228,10 +253,14 @@ class ReviewCreateView(View):
             Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
         ).order_by('-created_at')
         contact = Contact.objects.first()
+        review_background_image = Image.objects.filter(
+            is_review_page_background_image=True
+        ).first()
         return render(request, self.template_name, {
             'form': form,
             'services': services,
-            'contact': contact
+            'contact': contact,
+            'review_background_image': review_background_image,
         })
 
     def post(self, request):
@@ -244,6 +273,9 @@ class ReviewCreateView(View):
             Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
         ).order_by('-created_at')
         contact = Contact.objects.first()
+        review_background_image = Image.objects.filter(
+            is_review_page_background_image=True
+        ).first()
 
         if form.is_valid():
             form.save()
@@ -254,7 +286,8 @@ class ReviewCreateView(View):
         return render(request, self.template_name, {
             'form': form,
             'services': services,
-            'contact': contact
+            'contact': contact,
+            'review_background_image': review_background_image,
         })
     
 
@@ -292,93 +325,4 @@ class ProjectsPaginationView(View):
             'current_page': projects_page.number,
             'total_pages': paginator.num_pages
         })
-
-
-class ServiceCalculatorView(View):
-    """
-    Handles display and processing of the service price calculator.
-    """
-    template_name = 'contact.html'
-
-    def get(self, request):
-        """
-        Handle GET requests to render the calculator page.
-
-        - Activates language based on the session or query.
-        - Loads available services.
-        - Retrieves any stored calculation results from the session.
-        """
-        self._language_switch(request)
-        services = CalculatorQuery.load_services()
-        result = []
-        total_price = Decimal('0.00')
-
-        if 'calculator_result' in request.session:
-            result = request.session.pop('calculator_result')
-            total_price = Decimal(request.session.pop('calculator_total'))
-
-        form = OrderForm()
-        contact = Contact.objects.first()
-        return render(request, self.template_name, {
-            'services': services,
-            'result': result,
-            'total_price': total_price,
-            'form': form,
-            'current_language': translation.get_language(),
-            'view_type': 'calculator',
-            'contact': contact,
-        })
-
-    def post(self, request):
-        """
-        Handle POST requests to calculate selected services' total price.
-
-        - Reads selected service IDs from the request.
-        - Applies each service to the calculator service.
-        - Stores the calculation result in the session.
-        """
-        lang = translation.get_language()
-        service_ids = request.POST.getlist('service_id')
-
-        if not service_ids:
-            messages.warning(request, _('Heç bir servis seçilməyib.'))
-            return redirect(self._redirect_with_lang())
-
-        calc = CalculatorService(lang)
-
-        for sid in service_ids:
-            services = CalculatorQuery.load_services()
-            try:
-                service = services.get(id=sid, is_active=True)
-                calc.apply_item(request, service)
-            except:
-                pass
-
-        request.session['calculator_result'] = calc.result
-        request.session['calculator_total'] = str(calc.total_price)
-        return redirect(self._redirect_with_lang())
-
-    def _redirect_with_lang(self):
-        """
-        Build redirect URL that preserves the current language parameter.
-
-        Returns:
-            str: URL with language code if not default.
-        """
-        lang = translation.get_language()
-        url = reverse('service_calculator')
-        if lang != settings.LANGUAGE_CODE:
-            url += f'?lang={lang}'
-        return url
-
-    def _language_switch(self, request):
-        """
-        Handle language switching from query parameters.
-
-        Activates the requested language and stores it in session if valid.
-        """
-        lang_param = request.GET.get('lang') or request.GET.get('language')
-        if lang_param and lang_param in dict(settings.LANGUAGES):
-            request.session['django_language'] = lang_param
-            translation.activate(lang_param)
 

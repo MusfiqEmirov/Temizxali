@@ -1,9 +1,8 @@
 from django.db.models import Prefetch
 from django.utils import translation
-from django.conf import settings
 
 
-class CalculatorQuery:
+class ServiceQuery:
     """
     Utility class responsible for loading services and their translations
     based on the current active language.
