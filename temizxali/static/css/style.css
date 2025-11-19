@@ -1295,7 +1295,6 @@ a.lb-next:hover {
   align-items: center;
 }
 .navbar .navbar-brand {
-    height: auto !important;
     min-height: 80px;
     display: flex;
     align-items: center;
