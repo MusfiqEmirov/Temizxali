@@ -512,3 +512,23 @@ msgstr "Произошла ошибка. Пожалуйста, попробуй�
 msgid "Hazırda layihə mövcud deyil."
 msgstr "В настоящее время проекты недоступны."
 
+#: templates/testimonial.html
+msgid "Müştərilərimizin bizim haqqımızda dedikləri!"
+msgstr "Что говорят о нас наши клиенты!"
+
+#: templates/testimonial.html
+msgid "Müştəri"
+msgstr "Клиент"
+
+#: templates/testimonial.html
+msgid "Bütün hüquqlar qorunur."
+msgstr "Все права защищены."
+
+#: templates/testimonial.html
+msgid "Dizayn edilib"
+msgstr "Разработано"
+
+#: templates/testimonial.html
+msgid "tərəfindən"
+msgstr "от"
+

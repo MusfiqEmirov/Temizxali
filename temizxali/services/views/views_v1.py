@@ -23,6 +23,7 @@ __all__ = [
     'ServiceDetailPage',
     'ReviewCreateView',
     'ProjectsPaginationView',
+    'TestimonialPageView',
 ]
 
 
@@ -324,5 +325,29 @@ class ProjectsPaginationView(View):
             'pagination_html': pagination_html,
             'current_page': projects_page.number,
             'total_pages': paginator.num_pages
+        })
+
+
+class TestimonialPageView(View):
+    template_name = 'testimonial.html'
+    
+    def get(self, request):
+        languages = translation.get_language()
+        reviews = Review.objects.filter(is_verified=True).prefetch_related(
+            Prefetch('service__translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')
+        contact = Contact.objects.first()
+        
+        return render(request, self.template_name, {
+            'reviews': reviews,
+            'services': services,
+            'contact': contact,
+            'current_language': languages,
         })
 

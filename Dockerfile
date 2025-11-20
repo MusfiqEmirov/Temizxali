@@ -12,12 +12,13 @@ WORKDIR /app
 # Set PYTHONPATH to include the temizxali directory
 ENV PYTHONPATH=/app/temizxali:$PYTHONPATH
 
-# Install system dependencies
+# Install system dependencies (gettext əlavə edildi)
 RUN apt-get update && apt-get install -y \
     postgresql-client \
     build-essential \
     libpq-dev \
     netcat-openbsd \
+    gettext \
     && rm -rf /var/lib/apt/lists/*
 
 # Install uv for faster package management
@@ -36,11 +37,7 @@ COPY . .
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Collect static files (will be done in entrypoint)
-# RUN python temizxali/manage.py collectstatic --noinput
-
 EXPOSE 8000
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "120", "--chdir", "temizxali", "temizxali.wsgi:application"]
-
