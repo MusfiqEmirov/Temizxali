@@ -128,7 +128,7 @@
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
         <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5" style="height: 80px;">
-            <img src="{% static 'img/logo.png' %}" alt="Təmizxali Logo" style="max-height: 70px; max-width: 200px; width: auto; height: auto; object-fit: contain; display: block;">
+            <img src="{% static 'img/logo.png' %}" alt="Təmizxali Logo" style="max-height: px; max-width: 200px; width: auto; height: auto; object-fit: contain; display: block;">
         </a>
         <!-- Language Switcher - Mobile Only -->
         <div class="d-lg-none ms-auto me-2">
@@ -172,7 +172,7 @@
 
                 <!-- <a href="service.html" class="nav-item nav-link">Xidmətlər</a> -->
                 <a href="{% url 'home-page' %}#projects" class="nav-item nav-link">{% trans "Layihələr" %}</a>
-                <a href="{% url 'home-page' %}#testimonials" class="nav-item nav-link">{% trans "Rəylər" %}</a>
+                <a href="{% url 'testimonial-page' %}" class="nav-item nav-link">{% trans "Rəylər" %}</a>
                 <a href="{% url 'about-page' %}" class="nav-item nav-link">{% trans "Haqqımızda" %}</a>
 
                 <!-- <div class="nav-item dropdown">
@@ -745,6 +745,7 @@
                     <h4 class="text-white mb-4">{% trans "Digər" %}</h4>
                     <a class="btn btn-link" href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
                     <a class="btn btn-link" href="{% url 'about-page' %}">{% trans "Haqqımızda" %}</a>
+                    <a class="btn btn-link" href="{% url 'testimonial-page' %}">{% trans "Rəylər" %}</a>
                     <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Sifariş" %}</a>
                     {% if services %}
                         <a class="btn btn-link" href="{% url 'home-page' %}#services">{% trans "Bütün Xidmətlər" %}</a>
