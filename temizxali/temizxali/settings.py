@@ -18,6 +18,23 @@ DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
 ALLOWED_HOSTS = ['*']
 
+# CSRF Settings
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1:8080',
+    'http://localhost:8080',
+    'http://127.0.0.1:8000',
+    'http://localhost:8000',
+]
+
+# CSRF Cookie Settings
+CSRF_COOKIE_SECURE = False  # Development üçün False, production-da True olmalıdır
+CSRF_COOKIE_HTTPONLY = False
+CSRF_USE_SESSIONS = False
+
+# Session Cookie Settings
+SESSION_COOKIE_SECURE = False  # Development üçün False, production-da True olmalıdır
+SESSION_COOKIE_HTTPONLY = True
+
 # Admin URL - secret path (required)
 ADMIN_URL = os.getenv('ADMIN_URL')
 if not ADMIN_URL:

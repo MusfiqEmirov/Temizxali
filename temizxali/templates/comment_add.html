@@ -33,6 +33,14 @@
 
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <style>
+        @media (max-width: 991.98px) {
+            .navbar .navbar-brand img {
+                max-height: 50px !important;
+                max-width: 150px !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -116,8 +124,8 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-        <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h1 class="m-0">logo</h1>
+        <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5" style="height: 80px;">
+            <img src="{% static 'img/logo.png' %}" alt="Təmizxali Logo" style="max-height: 70px; max-width: 200px; width: auto; height: auto; object-fit: contain; display: block;">
         </a>
         <!-- Language Switcher - Mobile Only -->
         <div class="d-lg-none ms-auto me-2">
