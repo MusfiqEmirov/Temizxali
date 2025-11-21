@@ -1,9 +1,9 @@
 /********** Template CSS **********/
 :root {
-    --primary: #348E38;
+    --primary: #6d021c;
     --secondary: #525368;
     --light: #E8F5E9;
-    --dark: #0F4229;
+    --dark: #9c6b01;
 }
 
 .back-to-top {
@@ -67,8 +67,8 @@ h6,
 }
 
 .btn-primary:hover {
-    background-color: #2d7a31 !important;
-    border-color: #2d7a31 !important;
+    background-color: #6d021c !important;
+    border-color: #6d021c !important;
     color: var(--light) !important;
     box-shadow: 0 4px 12px rgba(52, 142, 56, 0.4);
 }
@@ -156,15 +156,15 @@ h6,
 
 /* Navbar button - Hesabla ve Sifariş et - Yaşıl */
 .navbar .btn-primary {
-    background: linear-gradient(135deg, var(--primary) 0%, #2d7a31 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, #6c7302 100%);
     border-color: var(--primary);
     color: white;
     transition: all 0.3s ease;
 }
 
 .navbar .btn-primary:hover {
-    background: linear-gradient(135deg, #2d7a31 0%, var(--primary) 100%);
-    border-color: #2d7a31;
+    background: linear-gradient(135deg, #890224 0%, var(--primary) 100%);
+    border-color: #6d021c;
     color: white;
     box-shadow: 0 4px 12px rgba(52, 142, 56, 0.4);
 }
@@ -219,7 +219,7 @@ h6,
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: rgba(15, 66, 41, .6);
+    /* background: rgba(99, 175, 138, 0.6); */
     z-index: 1;
 }
 
@@ -555,7 +555,7 @@ h6,
 }
 
 .footer .btn.btn-link:hover {
-    color: var(--primary);
+    color: rgb(146, 141, 2);
     letter-spacing: 1px;
     box-shadow: none;
 }
