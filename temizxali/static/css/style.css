@@ -6,6 +6,18 @@
     --dark: #9c6b01;
 }
 
+html {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+body {
+    font-family: inherit !important;
+}
+
+* {
+    font-family: inherit !important;
+}
+
 .back-to-top {
     position: fixed;
     display: none;
