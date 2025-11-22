@@ -21,6 +21,11 @@ urlpatterns = [
         name='testimonial-page'
     ),
     path(
+        'projects/',
+        ProjectsPageView.as_view(),
+        name='projects-page'
+    ),
+    path(
         'service/<slug:service_slug>/', 
         ServiceDetailPage.as_view(), 
         name='service-page'
