@@ -158,7 +158,7 @@
                 <a href="{% url 'home-page' %}" class="nav-item nav-link">{% trans "Ana səhifə" %}</a>
 
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{% trans "Xidm'tler" %}</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{% trans "Xidmətler" %}</a>
                     <div class="dropdown-menu bg-light m-0">
                         {% if services %}
                             {% for serv in services|slice:":10" %}
@@ -314,24 +314,23 @@
                     {% endif %}
 
                     <!-- Pricing Section -->
+                    {% if service.price %}
                     <div class="mb-4">
                         <h4 class="mb-3 text-primary">{% trans "Qiymətlər" %}</h4>
                         <div class="row g-3">
-                            {% if service.price %}
-                                <div class="col-12">
-                                    <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
-                                        <span class="fw-bold">{% trans "Standart:" %}</span>
-                                        {% if sale_price %}
-                                            <div>
-                                                <span class="text-decoration-line-through text-muted me-2">{{ service.price }} AZN</span>
-                                                <span class="text-primary fw-bold fs-5">{{ sale_price|floatformat:2 }} AZN</span>
-                                            </div>
-                                        {% else %}
-                                            <span class="text-primary fw-bold fs-5">{{ service.price }} AZN</span>
-                                        {% endif %}
-                                    </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                                    <span class="fw-bold">{% trans "Standart:" %}</span>
+                                    {% if sale_price %}
+                                        <div>
+                                            <span class="text-decoration-line-through text-muted me-2">{{ service.price }} AZN</span>
+                                            <span class="text-primary fw-bold fs-5">{{ sale_price|floatformat:2 }} AZN</span>
+                                        </div>
+                                    {% else %}
+                                        <span class="text-primary fw-bold fs-5">{{ service.price }} AZN</span>
+                                    {% endif %}
                                 </div>
-                            {% endif %}
+                            </div>
 
                             {% if service.vip_price %}
                                 <div class="col-12">
@@ -366,6 +365,7 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% endif %}
 
                     <!-- CTA Buttons -->
                     <div class="d-flex gap-3 flex-wrap">
