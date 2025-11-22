@@ -236,15 +236,19 @@ class ReviewAdmin(admin.ModelAdmin):
  # Order Admin 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'fullname', 'phone_number_link', 'created_at', 'get_services')
-    list_display_links = ('id', 'fullname')
-    list_filter = ('created_at',)
+    list_display = ('id', 'fullname', 'phone_number_link', 'is_read', 'read_status', 'created_at', 'get_services')
+    list_display_links = ('id',)
+    list_filter = ('is_read', 'created_at')
     search_fields = ('fullname', 'phone_number', 'text')
-    readonly_fields = ('services_badges', 'created_at') 
+    readonly_fields = ('services_badges', 'created_at')
+    list_editable = ('is_read',) 
 
     fieldsets = (
         (None, {
             'fields': ('fullname', 'phone_number', 'text', 'services_badges')
+        }),
+        ('Status', {
+            'fields': ('is_read',),
         }),
         ('Əlavə məlumat', {
             'fields': ('created_at',),
@@ -270,12 +274,41 @@ class OrderAdmin(admin.ModelAdmin):
     services_badges.short_description = "Şifariş verilən servislər"
 
     def get_services(self, obj):
-        badges = [
-            f'<span style="background-color:#5bc0de; color:white; padding:2px 6px; border-radius:4px; margin:1px;">{str(s)}</span>'
-            for s in obj.services.all()
-        ]
-        return format_html(" ".join(badges))
+        """Servisləri badge formatında göstərir"""
+        try:
+            if not obj or not hasattr(obj, 'services'):
+                return "-"
+            services = obj.services.all()
+            if not services.exists():
+                return "-"
+            badges = [
+                f'<span style="background-color:#5bc0de; color:white; padding:2px 6px; border-radius:4px; margin:1px;">{str(s)}</span>'
+                for s in services
+            ]
+            return format_html(" ".join(badges))
+        except Exception as e:
+            return f"Error: {str(e)}"
     get_services.short_description = "Servislər"
+    get_services.admin_order_field = None
+
+    def read_status(self, obj):
+        """Oxunmuş/Oxunmamış statusunu göstərir"""
+        try:
+            if not obj:
+                return "-"
+            is_read = getattr(obj, 'is_read', False)
+            if is_read:
+                return format_html(
+                    '<span style="background-color: #28a745; color: white; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 12px;">✓ Oxunub</span>'
+                )
+            else:
+                return format_html(
+                    '<span style="background-color: #dc3545; color: white; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 12px;">✗ Oxunmayıb</span>'
+                )
+        except Exception as e:
+            return f"Error: {str(e)}"
+    read_status.short_description = "Status"
+    read_status.admin_order_field = 'is_read'
 
     
 

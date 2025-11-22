@@ -36,9 +36,6 @@ class HomePageView(View):
         from services.utils.homepage_queries import HomePageQueries
         
         lang = translation.get_language()
-        
-        # Bütün dataları bir funksiya ilə gətir - prefetch istifadə etmir
-        # RAM-a minimum yük, sürətli işləmə
         data = HomePageQueries.get_all_homepage_data(lang)
         
         return render(request, self.template_name, data)
@@ -282,8 +279,7 @@ class ProjectsPageView(View):
             'images'
         ).order_by('-created_at')
         
-        # Pagination - hər səhifədə 9 layihə
-        paginator = Paginator(special_projects, 9)
+        paginator = Paginator(special_projects, 6)
         page = request.GET.get('page', 1)
         try:
             projects_page = paginator.page(page)
@@ -294,7 +290,6 @@ class ProjectsPageView(View):
         
         contact = Contact.objects.first()
         
-        # Services navbar üçün
         services = Service.objects.filter(
             is_active=True,
             translations__languages=languages

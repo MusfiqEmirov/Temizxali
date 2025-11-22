@@ -1,6 +1,6 @@
 from django.utils import translation
 from django.core.cache import cache
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 
 
 class HomePageQueries:
@@ -42,22 +42,31 @@ class HomePageQueries:
         # Background image - birinci şəkil
         background_image = background_images[0] if background_images else None
         
-        # 2. Services (10 ədəd) - lazy queryset, prefetch yox
+        # 2. Services (10 ədəd) - prefetch translations with current language
+        from services.models import ServiceTranslation
         services = Service.objects.filter(
             is_active=True,
             translations__languages=lang
-        ).distinct().order_by('-created_at')[:10]
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=lang))
+        ).order_by('-created_at')[:10]
         
-        # 3. Special Projects (6 ədəd) - lazy queryset, prefetch yox
+        # 3. Special Projects (6 ədəd) - prefetch translations with current language
+        from services.models import SpecialProjectTranslation
         special_projects = SpecialProject.objects.filter(
             is_active=True,
             translations__languages=lang
-        ).distinct().order_by('-created_at')[:6]
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=SpecialProjectTranslation.objects.filter(languages=lang))
+        ).order_by('-created_at')[:6]
         
-        # 4. Mottos (10 ədəd) - lazy queryset, prefetch yox
+        # 4. Mottos (10 ədəd) - prefetch translations with current language
+        from services.models import MottoTranslation
         mottos = Motto.objects.filter(
             translations__languages=lang
-        ).distinct().order_by('-id')[:10]
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=MottoTranslation.objects.filter(languages=lang))
+        ).order_by('-id')[:10]
         
         # Mottos with background - lazy evaluate
         mottos_list = list(mottos)
@@ -80,13 +89,20 @@ class HomePageQueries:
         # 5. Statistics - lazy queryset, prefetch yox
         statistics = Statistic.objects.all()
         
-        # 6. About - lazy queryset, prefetch yox
-        about = About.objects.all()
+        # 6. About - prefetch translations with current language
+        from services.models import AboutTranslation
+        about = About.objects.all().prefetch_related(
+            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=lang)),
+            'images'
+        )
         
-        # 7. Reviews (10 ədəd) - lazy queryset, select_related yalnız service üçün
+        # 7. Reviews (10 ədəd) - prefetch service translations with current language
+        from services.models import Review
         reviews = Review.objects.filter(
             is_verified=True
-        ).select_related('service').order_by('-created_at')[:10]
+        ).select_related('service').prefetch_related(
+            Prefetch('service__translations', queryset=ServiceTranslation.objects.filter(languages=lang))
+        ).order_by('-created_at')[:10]
         
         # 8. Contact - bir sorğu
         contact = Contact.objects.first()

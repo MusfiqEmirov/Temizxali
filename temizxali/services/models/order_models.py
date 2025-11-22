@@ -26,6 +26,10 @@ class Order(models.Model):
         auto_now_add=True,
         verbose_name='Sifarişin verilmə tarixi'
     )
+    is_read = models.BooleanField(
+        default=False,
+        verbose_name='Oxunub'
+    )
 
     class Meta:
         verbose_name = 'Sifariş'
@@ -46,5 +50,5 @@ class Order(models.Model):
         super().save(*args, **kwargs)
         
     def whatsapp_link(self):
-         return f"https://wa.me/994{self.phone_number}"  # admin paneldə kliklənə bilsin
+         return f"https://wa.me/994{self.phone_number}"  
 

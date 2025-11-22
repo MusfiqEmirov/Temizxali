@@ -1325,3 +1325,55 @@ a.lb-next:hover {
   align-items: center;
 }
 
+/*** Pagination - Sayt rənglərinə uyğun ***/
+.pagination {
+  margin-top: 2rem;
+}
+
+.pagination .page-link {
+  color: var(--primary);
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.pagination .page-link:hover {
+  color: #fff;
+  background-color: var(--primary);
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(109, 2, 28, 0.3);
+}
+
+.pagination .page-link:focus {
+  color: var(--primary);
+  background-color: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 0.2rem rgba(109, 2, 28, 0.25);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(109, 2, 28, 0.3);
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #6c757d;
+  background-color: #fff;
+  border-color: #dee2e6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.pagination .page-item.disabled .page-link:hover {
+  transform: none;
+  box-shadow: none;
+  background-color: #fff;
+  border-color: #dee2e6;
+  color: #6c757d;
+}
+
