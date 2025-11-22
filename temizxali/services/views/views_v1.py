@@ -9,6 +9,7 @@ from django.db.models import Prefetch
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import render_to_string
+from django.core.cache import cache
 
 from services.models import *
 from services.forms import OrderForm
@@ -30,74 +31,17 @@ __all__ = [
 
 class HomePageView(View):
     template_name = 'index.html'
-    
+
     def get(self, request):
-        languages = translation.get_language()
-        background_images = Image.objects.filter(
-            is_home_page_background_image=True
-        ).order_by('-created_at')
-        services = Service.objects.filter(
-            is_active=True,
-            translations__languages=languages
-        ).distinct().prefetch_related(
-            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages)),
-            'images'
-        ).order_by('-created_at')
-        special_projects = SpecialProject.objects.filter(
-            is_active=True,
-            translations__languages=languages
-        ).distinct().prefetch_related(
-            Prefetch('translations', queryset=SpecialProjectTranslation.objects.filter(languages=languages)),
-            'images'
-        ).order_by('-created_at')
+        from services.utils.homepage_queries import HomePageQueries
         
-        statistics = Statistic.objects.prefetch_related('translations').all()
-        about = About.objects.all().distinct().prefetch_related(
-            Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages)),
-            'images'
-        )
-        mottos = Motto.objects.filter(
-            translations__languages=languages
-        ).distinct().prefetch_related(
-            Prefetch('translations', queryset=MottoTranslation.objects.filter(languages=languages))
-        ).order_by('-id')
-        reviews = Review.objects.filter(is_verified=True).prefetch_related(
-            Prefetch('service__translations', queryset=ServiceTranslation.objects.filter(languages=languages))
-        ).order_by('-created_at')
-        contact = Contact.objects.first()
-
-        mottos_with_bg = []
-        background_images_list = list(background_images)
-        if mottos.exists() and background_images_list:
-            for index, motto in enumerate(mottos):
-                bg_image = background_images_list[index % len(background_images_list)]
-                mottos_with_bg.append({
-                    'motto': motto,
-                    'background_image': bg_image
-                })
-        elif mottos.exists():
-            for motto in mottos:
-                mottos_with_bg.append({
-                    'motto': motto,
-                    'background_image': None
-                })
-
-        # Ana səhifədə yalnız son 6 layihə göstərilir
-        special_projects_home = special_projects[:6]
+        lang = translation.get_language()
         
-        return render(request, self.template_name, {
-            'languages': languages,
-            'background_images': background_images,
-            'background_image': background_images.first() if background_images.exists() else None,
-            'mottos_with_bg': mottos_with_bg,
-            'services': services,
-            'special_projects': special_projects_home,
-            'statistics': statistics,
-            'about': about,
-            'mottos': mottos,
-            'reviews': reviews,
-            'contact': contact
-        })
+        # Bütün dataları bir funksiya ilə gətir - prefetch istifadə etmir
+        # RAM-a minimum yük, sürətli işləmə
+        data = HomePageQueries.get_all_homepage_data(lang)
+        
+        return render(request, self.template_name, data)
 
 
 class AboutPageView(View):
