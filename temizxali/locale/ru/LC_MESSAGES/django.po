@@ -246,6 +246,7 @@ msgid "Hazırda xidmət mövcud deyil."
 msgstr "В настоящее время услуга недоступна."
 
 #: templates/index.html
+#: templates/projects.html
 msgid "Layihələrimiz"
 msgstr "Наши проекты"
 
@@ -531,4 +532,29 @@ msgstr "Разработано"
 #: templates/testimonial.html
 msgid "tərəfindən"
 msgstr "от"
+
+#: templates/projects.html
+msgid "Xüsusi Layihələr"
+msgstr "Специальные проекты"
+
+#: templates/projects.html
+msgid "Bəzi Gözəl Layihələrimiz"
+msgstr "Некоторые из наших замечательных проектов"
+
+#: templates/projects.html
+msgid "Hazırda layihə mövcud deyil"
+msgstr "В настоящее время проекты недоступны"
+
+#: templates/projects.html
+msgid "Bütün hüquqlar qorunur"
+msgstr "Все права защищены"
+
+#: templates/projects.html
+#: templates/index.html
+msgid "Bizi izləyin"
+msgstr "Следите за нами"
+
+#: templates/index.html
+msgid "Bütün Layihələrə Bax"
+msgstr "Посмотреть все проекты"
 

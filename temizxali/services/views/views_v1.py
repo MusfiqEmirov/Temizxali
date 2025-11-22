@@ -23,6 +23,7 @@ __all__ = [
     'ServiceDetailPage',
     'ReviewCreateView',
     'ProjectsPaginationView',
+    'ProjectsPageView',
     'TestimonialPageView',
 ]
 
@@ -81,14 +82,8 @@ class HomePageView(View):
                     'background_image': None
                 })
 
-        paginator = Paginator(special_projects, 6)
-        page = request.GET.get('page', 1)
-        try:
-            projects_page = paginator.page(page)
-        except PageNotAnInteger:
-            projects_page = paginator.page(1)
-        except EmptyPage:
-            projects_page = paginator.page(paginator.num_pages)
+        # Ana səhifədə yalnız son 6 layihə göstərilir
+        special_projects_home = special_projects[:6]
         
         return render(request, self.template_name, {
             'languages': languages,
@@ -96,7 +91,7 @@ class HomePageView(View):
             'background_image': background_images.first() if background_images.exists() else None,
             'mottos_with_bg': mottos_with_bg,
             'services': services,
-            'special_projects': projects_page,
+            'special_projects': special_projects_home,
             'statistics': statistics,
             'about': about,
             'mottos': mottos,
@@ -325,6 +320,49 @@ class ProjectsPaginationView(View):
             'pagination_html': pagination_html,
             'current_page': projects_page.number,
             'total_pages': paginator.num_pages
+        })
+
+
+class ProjectsPageView(View):
+    template_name = 'projects.html'
+    
+    def get(self, request):
+        languages = translation.get_language()
+        
+        # Bütün aktiv layihələri gətir
+        special_projects = SpecialProject.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=SpecialProjectTranslation.objects.filter(languages=languages)),
+            'images'
+        ).order_by('-created_at')
+        
+        # Pagination - hər səhifədə 9 layihə
+        paginator = Paginator(special_projects, 9)
+        page = request.GET.get('page', 1)
+        try:
+            projects_page = paginator.page(page)
+        except PageNotAnInteger:
+            projects_page = paginator.page(1)
+        except EmptyPage:
+            projects_page = paginator.page(paginator.num_pages)
+        
+        contact = Contact.objects.first()
+        
+        # Services navbar üçün
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')[:10]
+        
+        return render(request, self.template_name, {
+            'languages': languages,
+            'special_projects': projects_page,
+            'contact': contact,
+            'services': services,
         })
 
 

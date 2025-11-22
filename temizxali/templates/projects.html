@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>{% trans "Rəylər" %} - TƏMİZ XALI</title>
+    <title>{% trans "Xüsusi Layihələr" %} - TƏMİZ XALI</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -13,7 +13,6 @@
     {% comment %} favicon {% endcomment %}
     <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}"> 
 
-    
     <!-- Favicon -->
     <link href="{% static 'img/favicon.ico' %}" rel="icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.7.0/css/flag-icons.min.css"/>
@@ -38,9 +37,46 @@
 
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    
+    <!-- Portfolio Images - Eyni ölçü üçün CSS -->
+    <style>
+        .portfolio-inner {
+            position: relative;
+            overflow: hidden;
+            height: 300px;
+            width: 100%;
+            background-color: #f0f0f0;
+        }
 
-    
-    
+        .portfolio-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            object-position: center;
+        }
+
+        /* Responsive - mobil cihazlar */
+        @media (max-width: 767px) {
+            .portfolio-inner {
+                height: 250px;
+            }
+        }
+
+        /* Responsive - tablet cihazlar */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .portfolio-inner {
+                height: 280px;
+            }
+        }
+
+        /* Responsive - desktop */
+        @media (min-width: 992px) {
+            .portfolio-inner {
+                height: 300px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -49,7 +85,6 @@
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
     </div>
     <!-- Spinner End -->
-
 
     <!-- Topbar Start -->
     <div class="container-fluid bg-dark text-light px-0 py-2">
@@ -97,7 +132,7 @@
                     </form>
                     {% if contact %}
                         {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
-                            <span>{% trans "Bizi izləyin:" %}</span>
+                            <span>{% trans "Bizi izləyin" %}</span>
                             {% if contact.facebook %}
                                 <a class="btn btn-link text-light" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                             {% endif %}
@@ -114,12 +149,6 @@
                                 <a class="btn btn-link text-light" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
                             {% endif %}
                         {% endif %}
-                    {% else %}
-                        <span>{% trans "Bizi izləyin:" %}</span>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-linkedin-in"></i></a>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-instagram"></i></a>
                     {% endif %}
                 </div>
             </div>
@@ -129,9 +158,25 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-        <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5" style="height: 80px;">
             <img src="{% static 'img/logo.png' %}" alt="Təmizxali Logo" style="max-height: 140%; max-width: 140%; width: auto; height: auto; object-fit: contain; display: block;">
         </a>
+        <!-- Language Switcher - Mobile Only -->
+        <div class="d-lg-none ms-auto me-2">
+            <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <select name="language" onchange="this.form.submit()" class="form-select form-select-sm" style="width: auto; min-width: 70px;">
+                    {% get_current_language as CURRENT_LANGUAGE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% for lang_code, lang_name in LANGUAGES %}
+                        <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
+                            {% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name }}{% endif %}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -141,20 +186,24 @@
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{% trans "Xidmətlər" %}</a>
                     <div class="dropdown-menu bg-light m-0">
-                        {% for service in services %}
-                            {% with translation=service.translations.first %}
-                                {% if translation %}
-                                    <a href="{% url 'service-page' translation.slug %}" class="dropdown-item">{{ translation.name }}</a>
-                                {% endif %}
-                            {% endwith %}
-                        {% endfor %}
+                        {% if services %}
+                            {% for service in services|slice:":10" %}
+                                {% with translation=service.translations.first %}
+                                    {% if translation and translation.slug %}
+                                        <a href="{% url 'service-page' translation.slug %}" class="dropdown-item">{{ translation.name }}</a>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endfor %}
+                        {% else %}
+                            <a href="#" class="dropdown-item">{% trans "Xidmət tapılmadı" %}</a>
+                        {% endif %}
                     </div>
                 </div>
-                <a href="{% url 'projects-page' %}" class="nav-item nav-link">{% trans "Xüsusi Layihələr" %}</a>
-                <a href="{% url 'testimonial-page' %}" class="nav-item nav-link active">{% trans "Rəylər" %}</a>
+                <a href="{% url 'projects-page' %}" class="nav-item nav-link active">{% trans "Xüsusi Layihələr" %}</a>
+                <a href="{% url 'testimonial-page' %}" class="nav-item nav-link">{% trans "Rəylər" %}</a>
                 <a href="{% url 'about-page' %}" class="nav-item nav-link">{% trans "Haqqımızda" %}</a>
+                <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Hesabla ve Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
             </div>
-            <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">{% trans "Hesabla və Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -162,62 +211,131 @@
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container text-center py-5">
-            <h1 class="display-3 text-white mb-4 animated slideInDown">{% trans "Rəylər" %}</h1>
+            <h1 class="display-3 text-white mb-4 animated slideInDown">{% trans "Xüsusi Layihələr" %}</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{% trans "Rəylər" %}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{% trans "Xüsusi Layihələr" %}</li>
                 </ol>
             </nav>
         </div>
     </div>
     <!-- Page Header End -->
 
-    <!-- Testimonial Start -->
+    <!-- Projects Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="fs-5 fw-bold text-primary">{% trans "Rəylər" %}</p>
-                    <h1 class="display-5 mb-5">{% trans "Müştərilərimizin bizim haqqımızda dedikləri!" %}</h1>
-                    <p class="mb-4">{% trans "Rəyləri yalnız xidmətimizdən istifadə edən müştərilər yaza bilər" %}</p>
-                    <a class="btn btn-primary py-3 px-4" href="{% url 'create-review' %}">{% trans "Rəy bildir" %}</a>
-                </div>
-                <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="owl-carousel testimonial-carousel">
-                        {% if reviews %}
-                            {% for review in reviews %}
-                                <div class="testimonial-item">
-                                    <p class="fs-5">{{ review.text }}</p>
-                                    <h4>{{ review.fullname }}</h4>
-                                    {% if review.service %}
-                                        {% with translation=review.service.translations.first %}
-                                            {% if translation %}
-                                                <span>{{ translation.name }}</span>
-                                            {% endif %}
-                                        {% endwith %}
-                                    {% else %}
-                                        <span>{% trans "Müştəri" %}</span>
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            <div class="testimonial-item">
-                                <p class="fs-5">{% trans "Hazırda rəy mövcud deyil." %}</p>
-                                <h4>-</h4>
-                                <span>-</span>
-                            </div>
-                        {% endif %}
-                    </div>
-                </div>
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <p class="fs-5 fw-bold text-primary">{% trans "Layihələrimiz" %}</p>
+                <h1 class="display-5 mb-5">{% trans "Bəzi Gözəl Layihələrimiz" %}</h1>
             </div>
+
+            <div class="row g-4 portfolio-container">
+                {% if special_projects %}
+                    {% for project in special_projects %}
+                        {% with translation=project.translations.first %}
+                            {% if translation %}
+                                <div class="col-lg-4 col-md-6 portfolio-item wow fadeInUp" data-wow-delay="0.{% cycle '1' '3' '5' %}s">
+                                    <div class="portfolio-inner rounded">
+                                        {% if project.images.first %}
+                                            <img class="img-fluid" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
+                                        {% else %}
+                                            <img class="img-fluid" src="{% static 'img/service-1.jpg' %}" alt="Default">
+                                        {% endif %}
+                                        <div class="portfolio-text">
+                                            <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>
+                                            <div class="d-flex">
+                                                {% if project.images.all %}
+                                                    <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.images.first.image.url }}" data-lightbox="project-{{ project.id }}"><i class="fa fa-eye"></i></a>
+                                                    <!-- Hər layihənin bütün şəkillərini gizli link-lər kimi əlavə et -->
+                                                    {% for image in project.images.all %}
+                                                        {% if not forloop.first %}
+                                                            <a href="{{ image.image.url }}" data-lightbox="project-{{ project.id }}" style="display: none;"></a>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                {% if project.url %}
+                                                    <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.url }}" target="_blank"><i class="fa fa-link"></i></a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p class="text-muted">{% trans "Hazırda layihə mövcud deyil" %}</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if special_projects.has_other_pages %}
+                <nav aria-label="Page navigation" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        {% if special_projects.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" aria-label="First">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ special_projects.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">&laquo;&laquo;</span>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">&laquo;</span>
+                            </li>
+                        {% endif %}
+
+                        {% for num in special_projects.paginator.page_range %}
+                            {% if special_projects.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > special_projects.number|add:'-3' and num < special_projects.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if special_projects.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ special_projects.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ special_projects.paginator.num_pages }}" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">&raquo;</span>
+                            </li>
+                            <li class="page-item disabled">
+                                <span class="page-link">&raquo;&raquo;</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
         </div>
     </div>
-    <!-- Testimonial End -->
+    <!-- Projects End -->
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
+        <div class="container">
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-4">{% trans "Ünvan" %}</h4>
@@ -231,13 +349,7 @@
                         {% if contact.email %}
                             <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{ contact.email }}</p>
                         {% endif %}
-                    {% else %}
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    {% endif %}
-                    <div class="d-flex pt-2">
-                        {% if contact %}
+                        <div class="d-flex pt-2">
                             {% if contact.facebook %}
                                 <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                             {% endif %}
@@ -253,13 +365,8 @@
                             {% if contact.tiktok %}
                                 <a class="btn btn-square btn-outline-light rounded-circle me-2" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
                             {% endif %}
-                        {% else %}
-                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i class="fab fa-linkedin-in"></i></a>
-                        {% endif %}
-                    </div>
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <h4 class="text-white mb-4">{% trans "Xidmətlər" %}</h4>
@@ -280,10 +387,8 @@
                     <a class="btn btn-link" href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
                     <a class="btn btn-link" href="{% url 'about-page' %}">{% trans "Haqqımızda" %}</a>
                     <a class="btn btn-link" href="{% url 'testimonial-page' %}">{% trans "Rəylər" %}</a>
+                    <a class="btn btn-link" href="{% url 'projects-page' %}">{% trans "Xüsusi Layihələr" %}</a>
                     <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Sifariş" %}</a>
-                    {% if services %}
-                        <a class="btn btn-link" href="{% url 'home-page' %}#services">{% trans "Bütün Xidmətlər" %}</a>
-                    {% endif %}
                     <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Əlaqə" %}</a>
                 </div>
             </div>
@@ -296,10 +401,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#">TƏMİZ XALI</a>, {% trans "Bütün hüquqlar qorunur." %}
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    {% trans "Dizayn edilib" %} <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> {% trans "tərəfindən" %}
+                    &copy; <a class="border-bottom" href="{% url 'home-page' %}">TƏMİZ XALI</a>, {% trans "Bütün hüquqlar qorunur" %}
                 </div>
             </div>
         </div>
@@ -323,7 +425,6 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
-
 </body>
 
 </html>
