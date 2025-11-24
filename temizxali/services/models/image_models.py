@@ -1,4 +1,7 @@
 from django.db import models
+from PIL import Image as PilImage
+from io import BytesIO
+from django.core.files.base import ContentFile
 
 from .service_models import Service
 from .special_project_models import SpecialProject
@@ -64,4 +67,35 @@ class Image(models.Model):
         verbose_name = 'Şəkil'
         verbose_name_plural = 'Şəkillər'
 
-   
+    def save(self, *args, **kwargs):
+        # əvvəlcə normal save
+        super().save(*args, **kwargs)
+
+        # şəkilin yolunu açırıq
+        img = PilImage.open(self.image.path)
+
+        # RGB formatına salırıq (PNG/WebP üçün vacibdir)
+        if img.mode != "RGB":
+            img = img.convert("RGB")
+
+        # maksimum ölçü (çıxan ölçü 1920px genişlik)
+        max_width = 1920
+        if img.width > max_width:
+            ratio = max_width / float(img.width)
+            height = int((float(img.height) * float(ratio)))
+            img = img.resize((max_width, height), PilImage.LANCZOS)
+
+        # optimizasiya + compress
+        buffer = BytesIO()
+        img.save(buffer, format='JPEG', quality=70, optimize=True)
+        buffer.seek(0)
+
+        # yenidən faylı yazırıq
+        self.image.save(
+            self.image.name,
+            ContentFile(buffer.read()),
+            save=False
+        )
+
+        buffer.close()
+        super().save(*args, **kwargs)
