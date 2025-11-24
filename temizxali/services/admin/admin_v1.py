@@ -7,6 +7,8 @@ from services.utils import LANGUAGES
 from services.models import *
 
 
+admin.site.site_header = "Temizxali Admin Panel"
+
 # Image Admin
 class ServiceImageInline(NestedTabularInline):
     model = Image
