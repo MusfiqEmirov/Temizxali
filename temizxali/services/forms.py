@@ -130,5 +130,10 @@ class ReviewForm(forms.ModelForm):
                     gettext("Bu nömrə ilə heç bir sifariş tapılmadı. "
                     "Rəy yazmaq üçün əvvəlcə sifariş verməlisiniz")
                 )
+            if Order.objects.filter(phone_number=normalized, is_customer=False):
+                raise ValidationError(
+                    gettext("Bu nömrə üzrə sifarişiniz hələ təsdiqlənməyib. "
+                    "Rəy yazmaq üçün əvvəlcə sifarişin təsdiqlənməsini gözləməyiniz xahiş olunur.")
+                )
 
         return normalized

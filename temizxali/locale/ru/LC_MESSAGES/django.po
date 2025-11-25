@@ -466,10 +466,12 @@ msgstr "Введите правильный номер!\n"
 "Примеры: 50 123 45 67 | 0501234567 | +994501234567"
 
 #: services/forms.py
-msgid "Bu nömrə ilə heç bir sifariş tapılmadı. "
-"Rəy yazmaq üçün əvvəlcə sifariş verməlisiniz"
-msgstr "Заказ с этим номером не найден. "
-"Чтобы оставить отзыв, сначала необходимо сделать заказ"
+msgid ""
+"Bu nömrə üzrə sifarişiniz hələ təsdiqlənməyib. "
+"Rəy yazmaq üçün əvvəlcə sifarişin təsdiqlənməsini gözləməyiniz xahiş olunur."
+msgstr ""
+"Ваш заказ по этому номеру ещё не подтверждён. "
+"Чтобы оставить отзыв, дождитесь, пожалуйста, подтверждения заказа."
 
 #: templates/about.html
 #: templates/index.html

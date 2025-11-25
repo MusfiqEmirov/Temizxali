@@ -8,7 +8,7 @@ class Motto(models.Model):
 
     class Meta:
         verbose_name = 'Deviz'
-        verbose_name = 'Devizlər'
+        verbose_name_plural = 'Devizlər'
 
     def __str__(self):
         return 'Motto'

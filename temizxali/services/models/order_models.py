@@ -30,6 +30,10 @@ class Order(models.Model):
         default=False,
         verbose_name='Oxunub'
     )
+    is_customer = models.BooleanField(
+        default=False,
+        verbose_name='Müştəridirmi'
+    )
 
     class Meta:
         verbose_name = 'Sifariş'
