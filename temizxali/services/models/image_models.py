@@ -59,6 +59,14 @@ class Image(models.Model):
         default=False,
         verbose_name='Comment elave et sehifesi üçün arxa plan şəkli'
     )
+    is_testimonial_page_background_image = models.BooleanField(
+        default=False,
+        verbose_name='Rəylər sehifesi üçün arxa plan şəkli'
+    )
+    is_projects_page_background_image = models.BooleanField(
+        default=False,
+        verbose_name='Xüsusi Layihələr sehifesi üçün arxa plan şəkli'
+    )
 
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -72,7 +80,14 @@ class Image(models.Model):
    
 
     def save(self, *args, **kwargs):
-        if not self.pk or 'image' in self.get_dirty_fields():
+        old_image = None
+        if self.pk:
+            try:
+                old_image = Image.objects.get(pk=self.pk).image
+            except Image.DoesNotExist:
+                pass
+
+        if not self.pk or (old_image and old_image != self.image):
             ext = os.path.splitext(self.image.name)[1]
             new_name = f"{uuid.uuid4().hex}{ext}"
             self.image.name = new_name

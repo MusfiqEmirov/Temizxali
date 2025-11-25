@@ -297,11 +297,16 @@ class ProjectsPageView(View):
             Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
         ).order_by('-created_at')[:10]
         
+        projects_background_image = Image.objects.filter(
+            is_projects_page_background_image=True
+        ).first()
+        
         return render(request, self.template_name, {
             'languages': languages,
             'special_projects': projects_page,
             'contact': contact,
             'services': services,
+            'projects_background_image': projects_background_image,
         })
 
 
@@ -320,11 +325,15 @@ class TestimonialPageView(View):
             Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
         ).order_by('-created_at')
         contact = Contact.objects.first()
+        testimonial_background_image = Image.objects.filter(
+            is_testimonial_page_background_image=True
+        ).first()
         
         return render(request, self.template_name, {
             'reviews': reviews,
             'services': services,
             'contact': contact,
             'current_language': languages,
+            'testimonial_background_image': testimonial_background_image,
         })
 
