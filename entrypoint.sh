@@ -17,4 +17,3 @@ python temizxali/manage.py collectstatic --noinput
 
 # Execute the command passed to the container
 exec "$@"
-
