@@ -242,19 +242,19 @@ class ReviewAdmin(admin.ModelAdmin):
  # Order Admin 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'fullname', 'phone_number_link', 'is_read', 'read_status', 'created_at', 'get_services')
+    list_display = ('id', 'fullname', 'phone_number_link', 'is_read', 'is_customer', 'read_status', 'created_at', 'get_services')
     list_display_links = ('id',)
-    list_filter = ('is_read', 'created_at')
+    list_filter = ('is_read', 'is_customer', 'created_at')
     search_fields = ('fullname', 'phone_number', 'text')
     readonly_fields = ('services_badges', 'created_at')
-    list_editable = ('is_read',) 
+    list_editable = ('is_read', 'is_customer') 
 
     fieldsets = (
         (None, {
             'fields': ('fullname', 'phone_number', 'text', 'services_badges')
         }),
         ('Status', {
-            'fields': ('is_read',),
+            'fields': ('is_read', 'is_customer'),
         }),
         ('Əlavə məlumat', {
             'fields': ('created_at',),
@@ -316,7 +316,25 @@ class OrderAdmin(admin.ModelAdmin):
     read_status.short_description = "Status"
     read_status.admin_order_field = 'is_read'
 
-    
+    def is_customer_badge(self, obj):
+        try:
+            if obj.is_customer:
+                return format_html(
+                    '<span style="background-color:#007bff; color:white; padding:4px 10px; '
+                    'border-radius:4px; font-weight:bold; font-size:12px;">Müştəridir</span>'
+                )
+            else:
+                return format_html(
+                    '<span style="background-color:#6c757d; color:white; padding:4px 10px; '
+                    'border-radius:4px; font-weight:bold; font-size:12px;">Müştəri deyil</span>'
+                )
+        except Exception as e:
+            return f"Error: {str(e)}"
+
+    is_customer_badge.short_description = "Müştəri statusu"
+    is_customer_badge.admin_order_field = 'is_customer'
+
+        
 
 # Motto Admin
 class MottoTranslationInline(admin.TabularInline):

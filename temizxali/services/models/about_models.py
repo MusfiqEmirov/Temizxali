@@ -9,7 +9,7 @@ class About(models.Model):
         verbose_name='Xidmət etdiyiniz il'
     )
 
-    class Mete:
+    class Meta:
         verbose_name = 'Haqqımızda'
         verbose_name_plural = 'Haqqımızda'
 
@@ -36,7 +36,7 @@ class AboutTranslation(models.Model):
 
     class Meta:
         verbose_name = 'Haqqımızda tərcüməsi'
-        verbose_name = 'Haqqımızda tərcümələri'
+        verbose_name_plural = 'Haqqımızda tərcümələri'
 
     def __str__(self):
         return self.description[:20]
