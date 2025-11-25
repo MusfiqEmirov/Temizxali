@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 # Set PYTHONPATH to include the temizxali directory
-ENV PYTHONPATH=/app/temizxali:$PYTHONPATH
+ENV PYTHONPATH=/app:$PYTHONPATH
 
 # Install system dependencies (gettext əlavə edildi)
 RUN apt-get update && apt-get install -y \
