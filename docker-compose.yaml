@@ -24,9 +24,6 @@ services:
       - ./temizxali/media:/app/temizxali/media               # media mount
     expose:
       - "8000"
-    env_file:
-      - .env
-
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -58,4 +55,3 @@ services:
 volumes:
   postgres_data:
   static_volume:
-
