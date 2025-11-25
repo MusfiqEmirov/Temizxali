@@ -226,6 +226,7 @@ msgstr "Отзывы"
 #: templates/service_detail_page.html
 #: templates/contact.html
 #: templates/comment_add.html
+#: templates/testimonial.html
 msgid "Hesabla ve Sifariş et"
 msgstr "Рассчитать и Заказать"
 
