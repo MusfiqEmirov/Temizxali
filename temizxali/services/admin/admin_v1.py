@@ -64,6 +64,8 @@ class ImageAdmin(admin.ModelAdmin):
         'is_about_page_background_image',
         'is_calculator_page_background_image',
         'is_review_page_background_image',
+        'is_testimonial_page_background_image',
+        'is_projects_page_background_image',
     )  
 
     def image_tag(self, obj):
@@ -78,7 +80,9 @@ class ImageAdmin(admin.ModelAdmin):
             Q(is_home_page_background_image=True) |
             Q(is_about_page_background_image=True) |
             Q(is_calculator_page_background_image=True) |
-            Q(is_review_page_background_image=True)
+            Q(is_review_page_background_image=True) |
+            Q(is_testimonial_page_background_image=True) |
+            Q(is_projects_page_background_image=True)
         )
 
 
