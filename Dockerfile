@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 # Set PYTHONPATH to include the temizxali directory
-ENV PYTHONPATH=/app:$PYTHONPATH
+ENV PYTHONPATH=/app/temizxali:$PYTHONPATH
 
 # Install system dependencies (gettext əlavə edildi)
 RUN apt-get update && apt-get install -y \
@@ -39,4 +39,5 @@ RUN chmod +x /entrypoint.sh
 
 EXPOSE 8000
 
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "120", "--chdir", "temizxali", "temizxali.wsgi:application"]
