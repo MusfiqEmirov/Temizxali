@@ -371,3 +371,52 @@ $(document).ready(function() {
         handleImageLoad(this);
     });
 });
+
+// Language Switcher Toggle Script
+document.addEventListener('DOMContentLoaded', function() {
+    // Desktop language switcher
+    const desktopSwitcher = document.querySelector('.language-switcher');
+    const desktopBtn = document.querySelector('.language-btn-current');
+    
+    if (desktopBtn && desktopSwitcher) {
+        desktopBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            desktopSwitcher.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!desktopSwitcher.contains(e.target)) {
+                desktopSwitcher.classList.remove('active');
+            }
+        });
+    }
+
+    // Mobile language switcher
+    const mobileSwitcher = document.querySelector('.language-switcher-mobile');
+    const mobileBtn = document.querySelector('.language-btn-current-mobile');
+    
+    if (mobileBtn && mobileSwitcher) {
+        mobileBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mobileSwitcher.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileSwitcher.contains(e.target)) {
+                mobileSwitcher.classList.remove('active');
+            }
+        });
+    }
+
+    // Carousel Auto-play
+    var carouselElement = document.querySelector('#header-carousel');
+    if (carouselElement) {
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: 5000,
+            pause: false,
+            wrap: true
+        });
+    }
+});

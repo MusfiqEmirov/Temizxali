@@ -39,46 +39,6 @@
     
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    
-    <!-- Portfolio Images - Eyni ölçü üçün CSS -->
-    <style>
-        .portfolio-inner {
-            position: relative;
-            overflow: hidden;
-            height: 300px;
-            width: 100%;
-            background-color: #f0f0f0;
-        }
-
-        .portfolio-inner img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            object-position: center;
-        }
-
-        /* Responsive - mobil cihazlar */
-        @media (max-width: 767px) {
-            .portfolio-inner {
-                height: 250px;
-            }
-        }
-
-        /* Responsive - tablet cihazlar */
-        @media (min-width: 768px) and (max-width: 991px) {
-            .portfolio-inner {
-                height: 280px;
-            }
-        }
-
-        /* Responsive - desktop */
-        @media (min-width: 992px) {
-            .portfolio-inner {
-                height: 300px;
-            }
-        }
-    </style>
 
 </head>
 
@@ -121,19 +81,46 @@
             <div class="col-lg-5 px-5 text-end">
                 <div class="h-100 d-inline-flex align-items-center mx-n2">
                     <!-- Language Switcher -->
-                    <form action="{% url 'set_language' %}" method="post" class="d-inline me-3">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <select name="language" onchange="this.form.submit()" class="form-select form-select-sm d-inline-block" style="width: auto; display: inline-block;">
-                            {% get_current_language as CURRENT_LANGUAGE %}
-                            {% get_available_languages as LANGUAGES %}
+                    <div class="language-switcher-container me-3">
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as LANGUAGES %}
+                        <div class="language-switcher">
                             {% for lang_code, lang_name in LANGUAGES %}
-                                <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
-                                    {% if lang_code == 'az' %}Azərbaycan{% elif lang_code == 'ru' %}Русский{% else %}{{ lang_name }}{% endif %}
-                                </option>
+                                {% if lang_code == CURRENT_LANGUAGE %}
+                                    <button type="button" class="language-btn-current">
+                                        {% if lang_code == 'az' %}
+                                            <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon">
+                                        {% elif lang_code == 'ru' %}
+                                            <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon">
+                                        {% else %}
+                                            <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon">
+                                        {% endif %}
+                                        <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
+                                        <i class="fa fa-chevron-down ms-1"></i>
+                                    </button>
+                                {% endif %}
                             {% endfor %}
-                        </select>
-                    </form>
+                            <div class="language-dropdown">
+                                {% for lang_code, lang_name in LANGUAGES %}
+                                    <form action="{% url 'set_language' %}" method="post" class="language-dropdown-item">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{ request.path }}">
+                                        <input type="hidden" name="language" value="{{ lang_code }}">
+                                        <button type="submit" class="language-btn-dropdown {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
+                                            {% if lang_code == 'az' %}
+                                                <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon">
+                                            {% elif lang_code == 'ru' %}
+                                                <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon">
+                                            {% else %}
+                                                <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon">
+                                            {% endif %}
+                                            <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
+                                        </button>
+                                    </form>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                     {% if contact %}
                         {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
                             <span>{% trans "Buradan izlə:" %}</span>
@@ -169,19 +156,44 @@
         </a>
         <!-- Language Switcher - Mobile Only -->
         <div class="d-lg-none ms-auto me-2">
-            <form action="{% url 'set_language' %}" method="post" class="d-inline">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
-                <select name="language" onchange="this.form.submit()" class="form-select form-select-sm" style="width: auto; min-width: 70px;">
-                    {% get_current_language as CURRENT_LANGUAGE %}
-                    {% get_available_languages as LANGUAGES %}
+            <div class="language-switcher-container-mobile">
+                {% get_current_language as CURRENT_LANGUAGE %}
+                {% get_available_languages as LANGUAGES %}
+                <div class="language-switcher-mobile">
                     {% for lang_code, lang_name in LANGUAGES %}
-                        <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
-                            {% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name }}{% endif %}
-                        </option>
+                        {% if lang_code == CURRENT_LANGUAGE %}
+                            <button type="button" class="language-btn-current-mobile">
+                                {% if lang_code == 'az' %}
+                                    <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon-mobile">
+                                {% elif lang_code == 'ru' %}
+                                    <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon-mobile">
+                                {% else %}
+                                    <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
+                                {% endif %}
+                                <i class="fa fa-chevron-down ms-1"></i>
+                            </button>
+                        {% endif %}
                     {% endfor %}
-                </select>
-            </form>
+                    <div class="language-dropdown-mobile">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <form action="{% url 'set_language' %}" method="post" class="language-dropdown-item-mobile">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <input type="hidden" name="language" value="{{ lang_code }}">
+                                <button type="submit" class="language-btn-dropdown-mobile {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
+                                    {% if lang_code == 'az' %}
+                                        <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon-mobile">
+                                    {% elif lang_code == 'ru' %}
+                                        <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon-mobile">
+                                    {% else %}
+                                        <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
+                                    {% endif %}
+                                </button>
+                            </form>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -686,19 +698,6 @@
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
 
-    <!-- Carousel Auto-play Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var carouselElement = document.querySelector('#header-carousel');
-            if (carouselElement) {
-                var carousel = new bootstrap.Carousel(carouselElement, {
-                    interval: 5000,
-                    pause: false,
-                    wrap: true
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>
