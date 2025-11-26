@@ -1789,3 +1789,11 @@ a.lb-next:hover {
   }
 }
 
+/* Experience Text - h4 ölçüsündə */
+.experience-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+}
+
