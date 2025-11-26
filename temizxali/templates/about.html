@@ -83,22 +83,49 @@
             <div class="col-lg-5 px-5 text-end">
                 <div class="h-100 d-inline-flex align-items-center mx-n2">
                     <!-- Language Switcher -->
-                    <form action="{% url 'set_language' %}" method="post" class="d-inline me-3">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <select name="language" onchange="this.form.submit()" class="form-select form-select-sm d-inline-block" style="width: auto; display: inline-block;">
-                            {% get_current_language as CURRENT_LANGUAGE %}
-                            {% get_available_languages as LANGUAGES %}
+                    <div class="language-switcher-container me-3">
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as LANGUAGES %}
+                        <div class="language-switcher">
                             {% for lang_code, lang_name in LANGUAGES %}
-                                <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
-                                    {% if lang_code == 'az' %}Azərbaycan{% elif lang_code == 'ru' %}Русский{% else %}{{ lang_name }}{% endif %}
-                                </option>
+                                {% if lang_code == CURRENT_LANGUAGE %}
+                                    <button type="button" class="language-btn-current">
+                                        {% if lang_code == 'az' %}
+                                            <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon">
+                                        {% elif lang_code == 'ru' %}
+                                            <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon">
+                                        {% else %}
+                                            <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon">
+                                        {% endif %}
+                                        <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
+                                        <i class="fa fa-chevron-down ms-1"></i>
+                                    </button>
+                                {% endif %}
                             {% endfor %}
-                        </select>
-                    </form>
+                            <div class="language-dropdown">
+                                {% for lang_code, lang_name in LANGUAGES %}
+                                    <form action="{% url 'set_language' %}" method="post" class="language-dropdown-item">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{ request.path }}">
+                                        <input type="hidden" name="language" value="{{ lang_code }}">
+                                        <button type="submit" class="language-btn-dropdown {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
+                                            {% if lang_code == 'az' %}
+                                                <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon">
+                                            {% elif lang_code == 'ru' %}
+                                                <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon">
+                                            {% else %}
+                                                <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon">
+                                            {% endif %}
+                                            <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
+                                        </button>
+                                    </form>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                     {% if contact %}
                         {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
-                            <span>{% trans "Buradan izlə:" %}</span>
+                            <span>{% trans "Bizi izləyin:" %}</span>
                             {% if contact.facebook %}
                                 <a class="btn btn-link text-light" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                             {% endif %}
@@ -131,19 +158,44 @@
         </a>
         <!-- Language Switcher - Mobile Only -->
         <div class="d-lg-none ms-auto me-2">
-            <form action="{% url 'set_language' %}" method="post" class="d-inline">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ request.path }}">
-                <select name="language" onchange="this.form.submit()" class="form-select form-select-sm" style="width: auto; min-width: 70px;">
-                    {% get_current_language as CURRENT_LANGUAGE %}
-                    {% get_available_languages as LANGUAGES %}
+            <div class="language-switcher-container-mobile">
+                {% get_current_language as CURRENT_LANGUAGE %}
+                {% get_available_languages as LANGUAGES %}
+                <div class="language-switcher-mobile">
                     {% for lang_code, lang_name in LANGUAGES %}
-                        <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
-                            {% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name }}{% endif %}
-                        </option>
+                        {% if lang_code == CURRENT_LANGUAGE %}
+                            <button type="button" class="language-btn-current-mobile">
+                                {% if lang_code == 'az' %}
+                                    <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon-mobile">
+                                {% elif lang_code == 'ru' %}
+                                    <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon-mobile">
+                                {% else %}
+                                    <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
+                                {% endif %}
+                                <i class="fa fa-chevron-down ms-1"></i>
+                            </button>
+                        {% endif %}
                     {% endfor %}
-                </select>
-            </form>
+                    <div class="language-dropdown-mobile">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            <form action="{% url 'set_language' %}" method="post" class="language-dropdown-item-mobile">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}">
+                                <input type="hidden" name="language" value="{{ lang_code }}">
+                                <button type="submit" class="language-btn-dropdown-mobile {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
+                                    {% if lang_code == 'az' %}
+                                        <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon-mobile">
+                                    {% elif lang_code == 'ru' %}
+                                        <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon-mobile">
+                                    {% else %}
+                                        <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
+                                    {% endif %}
+                                </button>
+                            </form>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
@@ -172,7 +224,7 @@
                 <a href="{% url 'projects-page' %}" class="nav-item nav-link">{% trans "Xüsusi Layihələr" %}</a>
                 <a href="{% url 'testimonial-page' %}" class="nav-item nav-link">{% trans "Rəylər" %}</a>
                 <a href="{% url 'about-page' %}" class="nav-item nav-link active">{% trans "Haqqımızda" %}</a>
-                <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">{% trans "Hesabla ve Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
+                <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">{% trans "Hesabla və Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </div>
     </nav>
@@ -198,25 +250,27 @@
     <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            {% if about %}
-                {% with about_item=about.first translation=about.first.translations.first %}
-                    <div class="row g-5 align-items-end">
+            {% if about_item %}
+                {% with translation=about_item.translations.first %}
+                    <div class="row g-5 align-items-start">
                         <div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
                             {% if about_item.images.first %}
-                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block mb-auto" data-wow-delay="0.1s" src="{{ about_item.images.first.image.url }}" alt="{% trans 'Haqqımızda' %}">
+                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block" data-wow-delay="0.1s" src="{{ about_item.images.first.image.url }}" alt="{% trans 'Haqqımızda' %}">
                             {% else %}
-                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block mb-auto" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}" alt="{% trans 'Haqqımızda' %}">
+                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}" alt="{% trans 'Haqqımızda' %}">
                             {% endif %}
                         </div>
                         <div class="col-lg-5 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
-                            {% if about_item.experience_years %}
-                                <h1 class="display-1 text-primary mb-0">{{ about_item.experience_years }}</h1>
-                            {% elif statistics and statistics.work_done_count %}
-                                <h1 class="display-1 text-primary mb-0">{{ statistics.work_done_count|floatformat:0 }}</h1>
-                            {% else %}
-                                <h1 class="display-1 text-primary mb-0">25</h1>
-                            {% endif %}
-                            <p class="text-primary mb-4">{% trans "İl Təcrübə" %}</p>
+                            <div class="d-flex align-items-baseline gap-3 mb-4">
+                                {% if about_item.experience_years %}
+                                    <h1 class="display-1 text-primary mb-0">{{ about_item.experience_years }}</h1>
+                                {% elif statistics and statistics.work_done_count %}
+                                    <h1 class="display-1 text-primary mb-0">{{ statistics.work_done_count|floatformat:0 }}</h1>
+                                {% else %}
+                                    <h1 class="display-1 text-primary mb-0">25</h1>
+                                {% endif %}
+                                <p class="experience-text text-primary mb-0">{% trans "İllik Təcrübə" %}</p>
+                            </div>
                             {% if translation %}
                                 <h1 class="display-5 mb-4">{% trans "Biz Evinizi Bağ Kimi Edirik" %}</h1>
                                 <p class="mb-4">{{ translation.description|linebreaks }}</p>
@@ -251,12 +305,14 @@
                         <img class="img-fluid rounded" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}" alt="{% trans 'Haqqımızda' %}">
                     </div>
                     <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
-                        {% if statistics and statistics.work_done_count %}
-                            <h1 class="display-1 text-primary mb-0">{{ statistics.work_done_count|floatformat:0 }}</h1>
-                        {% else %}
-                            <h1 class="display-1 text-primary mb-0">25</h1>
-                        {% endif %}
-                        <p class="text-primary mb-4">{% trans "İl Təcrübə" %}</p>
+                        <div class="d-flex align-items-baseline gap-3 mb-4">
+                            {% if statistics and statistics.work_done_count %}
+                                <h1 class="display-1 text-primary mb-0">{{ statistics.work_done_count|floatformat:0 }}</h1>
+                            {% else %}
+                                <h1 class="display-1 text-primary mb-0">25</h1>
+                            {% endif %}
+                            <p class="experience-text text-primary mb-0">{% trans "İl Təcrübə" %}</p>
+                        </div>
                         <h1 class="display-5 mb-4">{% trans "Biz Evinizi Bağ Kimi Edirik" %}</h1>
                         <p class="mb-4">{% trans "Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir." %}</p>
                     </div>
@@ -283,6 +339,54 @@
         </div>
     </div>
     <!-- About End -->
+
+
+    <!-- Additional Images Gallery Start -->
+    {% if about_item and about_item.images.all %}
+        {% with total_images=about_item.images.all|length %}
+            {% if total_images > 1 %}
+                <div class="container-xxl py-5">
+                    <div class="container">
+                        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                            <h1 class="display-5 mb-5">{% trans "Qaleryamız" %}</h1>
+                        </div>
+                        <div class="row g-3 service-gallery-thumbs">
+                            {% with first_image=about_item.images.first %}
+                                {% if first_image %}
+                                    {% for image in about_item.images.all %}
+                                        {% if image.id != first_image.id %}
+                                            <div class="col-4 col-md-3">
+                                                <a href="{{ image.image.url }}" data-lightbox="about-gallery" data-title="{% trans 'Haqqımızda şəkli' %}">
+                                                    <img class="img-fluid rounded service-gallery-thumb" 
+                                                         src="{{ image.image.url }}" 
+                                                         alt="{% trans 'Haqqımızda şəkli' %}"
+                                                         loading="lazy"
+                                                         decoding="async">
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% for image in about_item.images.all %}
+                                        <div class="col-4 col-md-3">
+                                            <a href="{{ image.image.url }}" data-lightbox="about-gallery" data-title="{% trans 'Haqqımızda şəkli' %}">
+                                                <img class="img-fluid rounded service-gallery-thumb" 
+                                                     src="{{ image.image.url }}" 
+                                                     alt="{% trans 'Haqqımızda şəkli' %}"
+                                                     loading="lazy"
+                                                     decoding="async">
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endwith %}
+    {% endif %}
+    <!-- Additional Images Gallery End -->
 
 
     <!-- Facts Start -->
@@ -319,7 +423,7 @@
         <div class="container ">
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">{% trans "Ünvan" %}</h4>
+                    <h4 class="text-white mb-4">{% trans "Ünvan və Əlaqə:" %}</h4>
                     {% if contact %}
                         {% if contact.address %}
                             <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ contact.address }}</p>

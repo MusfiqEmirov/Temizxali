@@ -50,6 +50,7 @@ class AboutPageView(View):
             Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=languages)),
             'images'
         )
+        about_item = about.first() if about.exists() else None
         statistics = Statistic.objects.prefetch_related('translations').all()
         contact = Contact.objects.first()
         services = Service.objects.filter(
@@ -64,6 +65,7 @@ class AboutPageView(View):
 
         return render(request, self.template_name, {
             'about': about,
+            'about_item': about_item,
             'statistics': statistics,
             'active_lang': languages,
             'contact': contact,

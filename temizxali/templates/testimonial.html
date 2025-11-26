@@ -82,19 +82,46 @@
             <div class="col-lg-5 px-5 text-end">
                 <div class="h-100 d-inline-flex align-items-center mx-n2">
                     <!-- Language Switcher -->
-                    <form action="{% url 'set_language' %}" method="post" class="d-inline me-3">
-                        {% csrf_token %}
-                        <input type="hidden" name="next" value="{{ request.path }}">
-                        <select name="language" onchange="this.form.submit()" class="form-select form-select-sm d-inline-block" style="width: auto; display: inline-block;">
-                            {% get_current_language as CURRENT_LANGUAGE %}
-                            {% get_available_languages as LANGUAGES %}
+                    <div class="language-switcher-container me-3">
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as LANGUAGES %}
+                        <div class="language-switcher">
                             {% for lang_code, lang_name in LANGUAGES %}
-                                <option value="{{ lang_code }}" {% if lang_code == CURRENT_LANGUAGE %}selected{% endif %}>
-                                    {% if lang_code == 'az' %}Azərbaycan{% elif lang_code == 'ru' %}Русский{% else %}{{ lang_name }}{% endif %}
-                                </option>
+                                {% if lang_code == CURRENT_LANGUAGE %}
+                                    <button type="button" class="language-btn-current">
+                                        {% if lang_code == 'az' %}
+                                            <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon">
+                                        {% elif lang_code == 'ru' %}
+                                            <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon">
+                                        {% else %}
+                                            <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon">
+                                        {% endif %}
+                                        <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
+                                        <i class="fa fa-chevron-down ms-1"></i>
+                                    </button>
+                                {% endif %}
                             {% endfor %}
-                        </select>
-                    </form>
+                            <div class="language-dropdown">
+                                {% for lang_code, lang_name in LANGUAGES %}
+                                    <form action="{% url 'set_language' %}" method="post" class="language-dropdown-item">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{ request.path }}">
+                                        <input type="hidden" name="language" value="{{ lang_code }}">
+                                        <button type="submit" class="language-btn-dropdown {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
+                                            {% if lang_code == 'az' %}
+                                                <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon">
+                                            {% elif lang_code == 'ru' %}
+                                                <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon">
+                                            {% else %}
+                                                <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon">
+                                            {% endif %}
+                                            <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
+                                        </button>
+                                    </form>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                     {% if contact %}
                         {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
                             <span>{% trans "Bizi izləyin:" %}</span>
@@ -221,7 +248,7 @@
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-4 col-md-6">
-                    <h4 class="text-white mb-4">{% trans "Ünvan" %}</h4>
+                    <h4 class="text-white mb-4">{% trans "Ünvan və Əlaqə:" %}</h4>
                     {% if contact %}
                         {% if contact.address %}
                             <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ contact.address }}</p>

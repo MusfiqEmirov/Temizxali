@@ -169,13 +169,6 @@ msgstr "Калькулятор"
 msgid "Qiymət Növü"
 msgstr "Тип цены"
 
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Buradan izlə:"
-msgstr "Следите за нами:"
 
 #: templates/index.html
 #: templates/about.html
@@ -227,7 +220,7 @@ msgstr "Отзывы"
 #: templates/contact.html
 #: templates/comment_add.html
 #: templates/testimonial.html
-msgid "Hesabla ve Sifariş et"
+msgid "Hesabla və Sifariş et"
 msgstr "Рассчитать и Заказать"
 
 #: templates/index.html
@@ -288,8 +281,8 @@ msgstr "Достижения"
 #: templates/service_detail_page.html
 #: templates/contact.html
 #: templates/comment_add.html
-msgid "Ünvan"
-msgstr "Адрес"
+msgid "Ünvan və Əlaqə:"
+msgstr "Адрес и Контакты:"
 
 #: templates/index.html
 #: templates/about.html
@@ -298,6 +291,11 @@ msgstr "Адрес"
 #: templates/comment_add.html
 msgid "Xidmətlər"
 msgstr "Услуги"
+
+
+#: templates/about.html
+msgid "Qaleryamız"
+msgstr "Наша галерея"
 
 #: templates/index.html
 #: templates/about.html
@@ -475,8 +473,8 @@ msgstr ""
 
 #: templates/about.html
 #: templates/index.html
-msgid "İl Təcrübə"
-msgstr "Лет опыта"
+msgid "İllik Təcrübə"
+msgstr "Годовой опыт"
 
 #: templates/about.html
 #: templates/index.html
@@ -552,10 +550,16 @@ msgstr "В настоящее время проекты недоступны"
 msgid "Bütün hüquqlar qorunur"
 msgstr "Все права защищены"
 
+
+#: templates/index.html
+#: templates/about.html
+#: templates/service_detail_page.html
+#: templates/contact.html
+#: templates/comment_add.html
 #: templates/projects.html
 #: templates/index.html
-msgid "Bizi izləyin"
-msgstr "Следите за нами"
+msgid "Bizi izləyin:"
+msgstr "Следите за нами:"
 
 #: templates/index.html
 msgid "Bütün Layihələrə Bax"

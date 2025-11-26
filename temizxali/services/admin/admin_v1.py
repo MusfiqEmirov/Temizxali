@@ -41,7 +41,8 @@ class SpecialProjectImageInline(NestedTabularInline):
 class AboutImageInline(NestedTabularInline):
     model = Image
     fk_name = 'about'
-    extra = 1
+    extra = 9
+    max_num = 9
     readonly_fields = ('image_preview',)
     fields = ('image', 'image_preview')
 
