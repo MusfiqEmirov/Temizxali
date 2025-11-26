@@ -292,6 +292,11 @@ msgstr "Адрес и Контакты:"
 msgid "Xidmətlər"
 msgstr "Услуги"
 
+
+#: templates/about.html
+msgid "Qaleryamız"
+msgstr "Наша галерея"
+
 #: templates/index.html
 #: templates/about.html
 #: templates/service_detail_page.html

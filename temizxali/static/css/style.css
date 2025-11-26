@@ -1786,3 +1786,17 @@ a.lb-next:hover {
   margin: 0;
 }
 
+/* About Page - Cards Alignment */
+.container-xxl .row.align-items-start > .col-lg-3 {
+  align-self: flex-start;
+  margin-top: 0;
+}
+
+.container-xxl .row.align-items-start > .col-lg-3 .row.g-5 {
+  margin-top: 0;
+}
+
+.container-xxl .row.align-items-start > .col-lg-3 .border-start {
+  margin-top: 0;
+}
+

@@ -252,12 +252,12 @@
         <div class="container">
             {% if about_item %}
                 {% with translation=about_item.translations.first %}
-                    <div class="row g-5 align-items-end">
+                    <div class="row g-5 align-items-start">
                         <div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
                             {% if about_item.images.first %}
-                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block mb-auto" data-wow-delay="0.1s" src="{{ about_item.images.first.image.url }}" alt="{% trans 'Haqqımızda' %}">
+                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block" data-wow-delay="0.1s" src="{{ about_item.images.first.image.url }}" alt="{% trans 'Haqqımızda' %}">
                             {% else %}
-                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block mb-auto" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}" alt="{% trans 'Haqqımızda' %}">
+                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}" alt="{% trans 'Haqqımızda' %}">
                             {% endif %}
                         </div>
                         <div class="col-lg-5 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
@@ -348,8 +348,7 @@
                 <div class="container-xxl py-5">
                     <div class="container">
                         <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                            <p class="fs-5 fw-bold text-primary">{% trans "Qalereya" %}</p>
-                            <h1 class="display-5 mb-5">{% trans "Əlavə Şəkillər" %}</h1>
+                            <h1 class="display-5 mb-5">{% trans "Qaleryamız" %}</h1>
                         </div>
                         <div class="row g-3 service-gallery-thumbs">
                             {% with first_image=about_item.images.first %}
