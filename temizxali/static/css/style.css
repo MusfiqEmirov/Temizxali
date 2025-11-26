@@ -899,37 +899,6 @@ h6,
   border-radius: 8px !important;
 }
 
-/* Close button - daha səliqəli və yaşıl */
-.lb-close {
-  position: absolute !important;
-  top: 10px !important;
-  right: 10px !important;
-  width: 40px !important;
-  height: 40px !important;
-  background: var(--primary) !important;
-  border-radius: 50% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  cursor: pointer !important;
-  z-index: 100 !important;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 2px 8px rgba(52, 142, 56, 0.4) !important;
-  color: #fff !important;
-  border: 2px solid rgba(255, 255, 255, 0.3) !important;
-}
-
-.lb-close:hover {
-  background: #2d7a31 !important;
-  transform: scale(1.1) !important;
-  box-shadow: 0 4px 12px rgba(52, 142, 56, 0.6) !important;
-  border-color: rgba(255, 255, 255, 0.5) !important;
-}
-
-.lb-close img {
-  width: 20px !important;
-  height: 20px !important;
-}
 
 /* Navigation buttons - daha səliqəli və görünən */
 .lb-nav {
@@ -1027,8 +996,12 @@ a.lb-next:hover {
   display: none !important;
 }
 
-/* Data container (title, counter) - Gizlədirik */
+/* Data container - lazımsız elementləri gizlədirik */
 .lb-dataContainer {
+  display: none !important;
+}
+
+.lb-dataContainer .lb-details {
   display: none !important;
 }
 
@@ -1222,6 +1195,21 @@ a.lb-next:hover {
   transition: transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
   cursor: pointer;
   will-change: transform;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.service-gallery-thumbs .col-4,
+.service-gallery-thumbs .col-md-3 {
+  overflow: hidden;
+}
+
+.service-gallery-thumbs .col-4 a,
+.service-gallery-thumbs .col-md-3 a {
+  display: block;
+  width: 100%;
 }
 
 .service-gallery-thumb:hover {
@@ -1297,14 +1285,15 @@ a.lb-next:hover {
 
 /* Mobile Optimizations */
 @media (max-width: 768px) {
-  .service-main-image,
-  .service-gallery-thumb {
+  .service-main-image {
     max-width: 100%;
     height: auto;
   }
   
   .service-gallery-thumb {
-    min-height: 100px;
+    height: 150px;
+    width: 100%;
+    object-fit: cover;
   }
   
   .related-service-image {

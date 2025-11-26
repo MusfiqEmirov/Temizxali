@@ -250,8 +250,8 @@
     <!-- About Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            {% if about %}
-                {% with about_item=about.first translation=about.first.translations.first %}
+            {% if about_item %}
+                {% with translation=about_item.translations.first %}
                     <div class="row g-5 align-items-end">
                         <div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
                             {% if about_item.images.first %}
@@ -339,6 +339,55 @@
         </div>
     </div>
     <!-- About End -->
+
+
+    <!-- Additional Images Gallery Start -->
+    {% if about_item and about_item.images.all %}
+        {% with total_images=about_item.images.all|length %}
+            {% if total_images > 1 %}
+                <div class="container-xxl py-5">
+                    <div class="container">
+                        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                            <p class="fs-5 fw-bold text-primary">{% trans "Qalereya" %}</p>
+                            <h1 class="display-5 mb-5">{% trans "Əlavə Şəkillər" %}</h1>
+                        </div>
+                        <div class="row g-3 service-gallery-thumbs">
+                            {% with first_image=about_item.images.first %}
+                                {% if first_image %}
+                                    {% for image in about_item.images.all %}
+                                        {% if image.id != first_image.id %}
+                                            <div class="col-4 col-md-3">
+                                                <a href="{{ image.image.url }}" data-lightbox="about-gallery" data-title="{% trans 'Haqqımızda şəkli' %}">
+                                                    <img class="img-fluid rounded service-gallery-thumb" 
+                                                         src="{{ image.image.url }}" 
+                                                         alt="{% trans 'Haqqımızda şəkli' %}"
+                                                         loading="lazy"
+                                                         decoding="async">
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% for image in about_item.images.all %}
+                                        <div class="col-4 col-md-3">
+                                            <a href="{{ image.image.url }}" data-lightbox="about-gallery" data-title="{% trans 'Haqqımızda şəkli' %}">
+                                                <img class="img-fluid rounded service-gallery-thumb" 
+                                                     src="{{ image.image.url }}" 
+                                                     alt="{% trans 'Haqqımızda şəkli' %}"
+                                                     loading="lazy"
+                                                     decoding="async">
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endwith %}
+    {% endif %}
+    <!-- Additional Images Gallery End -->
 
 
     <!-- Facts Start -->
