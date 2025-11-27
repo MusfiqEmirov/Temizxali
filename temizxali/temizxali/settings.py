@@ -132,7 +132,7 @@ LANGUAGES = [
     ('ru', 'ru'),
 ]
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Baku'
 
 USE_I18N = True
 
