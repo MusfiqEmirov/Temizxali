@@ -1856,3 +1856,32 @@ a.lb-next:hover {
   margin-top: 0;
 }
 
+/* About Page - Align feature cards with experience section */
+/* Force both columns to start at the same vertical position */
+.container-xxl .row.align-items-start > .col-lg-5.wow.fadeInUp,
+.container-xxl .row.align-items-start > .col-lg-3.wow.fadeInUp {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Remove any default padding/margin from containers */
+.container-xxl .row.align-items-start .col-lg-3 .container-fluid.px-0 {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Ensure first card starts at the same position as experience number */
+.container-xxl .row.align-items-start .col-lg-3 .row.g-4 {
+  margin-top: 0 !important;
+}
+
+.container-xxl .row.align-items-start .col-lg-3 .row.g-4 > .col-12:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.container-xxl .row.align-items-start .col-lg-3 .row.g-4 > .col-12:first-child .border-start {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
