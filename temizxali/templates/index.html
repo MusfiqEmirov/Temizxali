@@ -468,14 +468,16 @@
                                                 </video>
                                             {% endif %}
                                         </div>
-                                        <div class="service-text rounded p-5">
+                                        <div class="service-text rounded p-5 d-flex flex-column">
                                             <h4 class="mb-3" style="margin-top: 90px;">{{ translation.name }}</h4>
-                                            <p class="mb-4">{{ translation.description|truncatewords:15 }}</p>
-                                            {% if translation.slug %}
-                                                <a class="btn btn-sm" href="{% url 'service-page' translation.slug %}"><i class="fa fa-plus text-primary me-2"></i>{% trans "etrafli" %}</a>
-                                            {% else %}
-                                                <a class="btn btn-sm" href="#"><i class="fa fa-plus text-primary me-2"></i>{% trans "etrafli" %}</a>
-                                            {% endif %}
+                                            <p class="mb-4 service-description-text">{{ translation.description|truncatewords:10 }}</p>
+                                            <div class="mt-auto">
+                                                {% if translation.slug %}
+                                                    <a class="btn btn-sm" href="{% url 'service-page' translation.slug %}"><i class="fa fa-plus text-primary me-2"></i>{% trans "etrafli" %}</a>
+                                                {% else %}
+                                                    <a class="btn btn-sm" href="#"><i class="fa fa-plus text-primary me-2"></i>{% trans "etrafli" %}</a>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

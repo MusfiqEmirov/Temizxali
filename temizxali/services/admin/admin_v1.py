@@ -55,12 +55,13 @@ class AboutImageInline(NestedTabularInline):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ('image_tag', 'created_at',)
-    readonly_fields = ('image_tag',)
+    list_display = ('image_tag', 'get_background_pages', 'created_at',)
+    readonly_fields = ('image_tag', 'get_background_pages')
     fields = (
         
         'image', 
         'image_tag', 
+        'get_background_pages',
         'is_home_page_background_image',
         'is_about_page_background_image',
         'is_calculator_page_background_image',
@@ -74,6 +75,36 @@ class ImageAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" width="100" />', obj.image.url)
         return "-"
     image_tag.short_description = "Preview"
+
+    def get_background_pages(self, obj):
+        """Hansı səhifələr üçün background image olduğunu göstərir"""
+        pages = []
+        
+        if obj.is_home_page_background_image:
+            pages.append(('Ana Səhifə', '#28a745'))
+        if obj.is_about_page_background_image:
+            pages.append(('Haqqımızda', '#007bff'))
+        if obj.is_calculator_page_background_image:
+            pages.append(('Calculator', '#17a2b8'))
+        if obj.is_review_page_background_image:
+            pages.append(('Rəy Əlavə Et', '#ffc107'))
+        if obj.is_testimonial_page_background_image:
+            pages.append(('Rəylər', '#6f42c1'))
+        if obj.is_projects_page_background_image:
+            pages.append(('Xüsusi Layihələr', '#dc3545'))
+        
+        if not pages:
+            return format_html('<span style="color: #6c757d; font-style: italic;">Background image deyil</span>')
+        
+        badges = []
+        for page_name, color in pages:
+            badges.append(
+                f'<span style="background-color: {color}; color: white; padding: 4px 10px; '
+                f'border-radius: 4px; margin: 2px; font-weight: bold; font-size: 12px; display: inline-block;">{page_name}</span>'
+            )
+        
+        return format_html(' '.join(badges))
+    get_background_pages.short_description = "Hansı Səhifə üçün"
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -355,7 +386,7 @@ class MottoAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('id', 'address', 'phone', 'email')
+    list_display = ('id', 'address', 'phone', 'phone_two', 'phone_three' 'email')
     search_fields = ('address', 'phone', 'email')
     list_display_links = ('id', 'address')
     fieldsets = (
