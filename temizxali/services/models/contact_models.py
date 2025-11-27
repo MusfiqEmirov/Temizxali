@@ -10,6 +10,18 @@ class Contact(models.Model):
         max_length=50,
         verbose_name='Telefon'
     )
+    whatsapp_number = models.CharField(
+        null=True,
+        blank=True,
+        max_length=50,
+        verbose_name='Whatsapp əlaqə nömrəsi'
+    )
+    phone_three = models.CharField(
+        null=True,
+        blank=True,
+        max_length=50,
+        verbose_name='Telefon'
+    )
     email = models.EmailField(
         null=True,
         blank=True,

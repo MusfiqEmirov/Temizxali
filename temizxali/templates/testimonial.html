@@ -256,6 +256,11 @@
                         {% if contact.phone %}
                             <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>{{ contact.phone }}</p>
                         {% endif %}
+                        {% if contact.whatsapp_number %}
+                            {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
+                            <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number }}</a></p>
+                            {% endwith %}
+                        {% endif %}
                         {% if contact.email %}
                             <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{ contact.email }}</p>
                         {% endif %}
@@ -320,15 +325,14 @@
     <!-- Footer End -->
 
     <!-- Copyright Start -->
-    <div class="container-fluid copyright py-4" style="background-color: darkgoldenrod !important;">
+    <div class="container-fluid  copyright py-4" style="background-color: darkgoldenrod !important;">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#">TƏMİZ XALI</a>, {% trans "Bütün hüquqlar qorunur." %}
+                <div class="col-md-6 text-center  mb-3 mb-md-0" style="margin: auto;">
+                   &copy; <a class="border-bottom" href="https://digiboom.az" target="_blank">Digiboom.az</a> {% trans "tərəfindən hazırlanıb. Bütün hüquqlar qorunur." %}
+
                 </div>
-                <div class="col-md-6 text-center text-md-end">
-                    {% trans "Dizayn edilib" %} <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> {% trans "tərəfindən" %}
-                </div>
+
             </div>
         </div>
     </div>

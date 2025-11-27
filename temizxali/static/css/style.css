@@ -375,8 +375,9 @@ h6,
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
     transition: .3s;
     width: 100%;
-    
-    
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .service-item:hover .service-text {
@@ -693,6 +694,17 @@ h6,
   word-wrap: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
+}
+
+/* Service Description Text Limit */
+.service-description-text {
+  max-height: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
@@ -1789,6 +1801,17 @@ a.lb-next:hover {
   font-weight: 600;
   line-height: 1.2;
   margin: 0;
+}
+
+/* WhatsApp Link Hover Effect */
+.whatsapp-link {
+  color: inherit !important;
+  text-decoration: none;
+  transition: text-decoration 0.3s ease;
+}
+
+.whatsapp-link:hover {
+  text-decoration: underline;
 }
 
 /* About Page - Cards Alignment */
