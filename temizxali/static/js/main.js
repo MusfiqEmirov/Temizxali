@@ -61,7 +61,14 @@
         navText : [
             '<i class="bi bi-chevron-left"></i>',
             '<i class="bi bi-chevron-right"></i>'
-        ]
+        ],
+        onInitialized: function() {
+            // Move nav buttons to custom container after carousel is initialized
+            var $nav = $(".testimonial-carousel").find('.owl-nav');
+            if ($nav.length && $('.testimonial-nav-container').length) {
+                $('.testimonial-nav-container').html($nav);
+            }
+        }
     });
 
     
