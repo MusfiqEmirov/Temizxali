@@ -386,12 +386,12 @@ class MottoAdmin(admin.ModelAdmin):
 
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
-    list_display = ('id', 'address', 'phone', 'phone_two', 'phone_three' 'email')
+    list_display = ('id', 'address', 'phone', 'whatsapp_number', 'email')
     search_fields = ('address', 'phone', 'email')
     list_display_links = ('id', 'address')
     fieldsets = (
         ('Əsas Məlumat', {
-            'fields': ('address', 'phone', 'email')
+            'fields': ('address', 'phone', 'whatsapp_number', 'email')
         }),
         ('Sosial Şəbəkələr', {
             'fields': ('instagram', 'facebook', 'youtube', 'linkedn', 'tiktok')

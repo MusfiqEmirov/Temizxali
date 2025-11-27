@@ -1803,6 +1803,17 @@ a.lb-next:hover {
   margin: 0;
 }
 
+/* WhatsApp Link Hover Effect */
+.whatsapp-link {
+  color: inherit !important;
+  text-decoration: none;
+  transition: text-decoration 0.3s ease;
+}
+
+.whatsapp-link:hover {
+  text-decoration: underline;
+}
+
 /* About Page - Cards Alignment */
 .container-xxl .row.align-items-start > .col-lg-3 {
   align-self: flex-start;
