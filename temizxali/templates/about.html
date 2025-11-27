@@ -260,7 +260,7 @@
                                 <img class="img-fluid object-fit-cover rounded  mx-auto d-block" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}" alt="{% trans 'Haqqımızda' %}">
                             {% endif %}
                         </div>
-                        <div class="col-lg-5 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
+                        <div class="col-lg-5 col-md-7 wow fadeInUp" data-wow-delay="0.3s" style="padding-top: 0;">
                             <div class="d-flex align-items-baseline gap-3 mb-4">
                                 {% if about_item.experience_years %}
                                     <h1 class="display-1 text-primary mb-0">{{ about_item.experience_years }}</h1>
@@ -279,20 +279,62 @@
                                 <p class="mb-4">{% trans "Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir." %}</p>
                             {% endif %}
                         </div>
-                        <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                            <div class="row g-5">
-                                <div class="col-12 col-sm-6 col-lg-12">
-                                    <div class="border-start ps-4">
-                                        <i class="fa fa-award fa-3x text-primary mb-3"></i>
-                                        <h4 class="mb-3">{% trans "Mükafat Qazanan" %}</h4>
-                                        <span>{% trans "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik" %}</span>
+                        <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s" style="padding-top: 0;">
+                            <div class="container-fluid px-0" style="padding-top: 0; margin-top: 0;">
+                                <!-- Feature Cards -->
+                                <div class="row g-4">
+                                    <div class="col-12 col-sm-6 col-lg-12">
+                                        <div class="border-start ps-4 h-100">
+                                            <i class="fa fa-award fa-3x text-primary mb-3"></i>
+                                            <h4 class="mb-3">{% trans "Mükafat Qazanan" %}</h4>
+                                            <span>{% trans "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik" %}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-sm-6 col-lg-12">
-                                    <div class="border-start ps-4">
-                                        <i class="fa fa-users fa-3x text-primary mb-3"></i>
-                                        <h4 class="mb-3">{% trans "Peşəkar Komanda" %}</h4>
-                                        <span>{% trans "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik" %}</span>
+                                    <div class="col-12 col-sm-6 col-lg-12">
+                                        <div class="border-start ps-4 h-100">
+                                            <i class="fa fa-users fa-3x text-primary mb-3"></i>
+                                            <h4 class="mb-3">{% trans "Peşəkar Komanda" %}</h4>
+                                            <span>{% trans "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik" %}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-12">
+                                        <div class="border-start ps-4 h-100">
+                                            <i class="fa fa-phone-alt fa-3x text-primary mb-3"></i>
+                                            <h4 class="mb-3">{% trans "Əlaqə" %}</h4>
+                                            {% if contact %}
+                                                {% if contact.address %}
+                                                    <p class="mb-2"><i class="fa fa-map-marker-alt me-2 text-primary"></i>{{ contact.address }}</p>
+                                                {% endif %}
+                                                {% if contact.phone %}
+                                                    <p class="mb-2"><i class="fa fa-phone-alt me-2 text-primary"></i>{{ contact.phone }}</p>
+                                                {% endif %}
+                                                {% if contact.whatsapp_number %}
+                                                    {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
+                                                    <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-2 text-primary"></i>{{ contact.whatsapp_number }}</a></p>
+                                                    {% endwith %}
+                                                {% endif %}
+                                                {% if contact.email %}
+                                                    <p class="mb-2"><i class="fa fa-envelope me-2 text-primary"></i>{{ contact.email }}</p>
+                                                {% endif %}
+                                                <div class="d-flex pt-2 gap-2">
+                                                    {% if contact.facebook %}
+                                                        <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                                    {% endif %}
+                                                    {% if contact.instagram %}
+                                                        <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                                                    {% endif %}
+                                                    {% if contact.youtube %}
+                                                        <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                                                    {% endif %}
+                                                    {% if contact.linkedn %}
+                                                        <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                                    {% endif %}
+                                                    {% if contact.tiktok %}
+                                                        <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -316,22 +358,64 @@
                         <h1 class="display-5 mb-4">{% trans "Biz Evinizi Bağ Kimi Edirik" %}</h1>
                         <p class="mb-4">{% trans "Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir." %}</p>
                     </div>
-                    <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="row g-5">
-                            <div class="col-12 col-sm-6 col-lg-12">
-                                <div class="border-start ps-4">
-                                    <i class="fa fa-award fa-3x text-primary mb-3"></i>
-                                    <h4 class="mb-3">{% trans "Mükafat Qazanan" %}</h4>
-                                    <span>{% trans "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik" %}</span>
+                    <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s" style="padding-top: 0;">
+                        <div class="container-fluid px-0" style="padding-top: 0; margin-top: 0;">
+                                <!-- Feature Cards and Contact -->
+                                <div class="row g-4">
+                                    <div class="col-12 col-sm-6 col-lg-12">
+                                        <div class="border-start ps-4 h-100">
+                                            <i class="fa fa-award fa-3x text-primary mb-3"></i>
+                                            <h4 class="mb-3">{% trans "Mükafat Qazanan" %}</h4>
+                                            <span>{% trans "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik" %}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-12">
+                                        <div class="border-start ps-4 h-100">
+                                            <i class="fa fa-users fa-3x text-primary mb-3"></i>
+                                            <h4 class="mb-3">{% trans "Peşəkar Komanda" %}</h4>
+                                            <span>{% trans "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik" %}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6 col-lg-12">
+                                        <div class="border-start ps-4 h-100">
+                                            <i class="fa fa-phone-alt fa-3x text-primary mb-3"></i>
+                                            <h4 class="mb-3">{% trans "Əlaqə" %}</h4>
+                                            {% if contact %}
+                                                {% if contact.address %}
+                                                    <p class="mb-2"><i class="fa fa-map-marker-alt me-2 text-primary"></i>{{ contact.address }}</p>
+                                                {% endif %}
+                                                {% if contact.phone %}
+                                                    <p class="mb-2"><i class="fa fa-phone-alt me-2 text-primary"></i>{{ contact.phone }}</p>
+                                                {% endif %}
+                                                {% if contact.whatsapp_number %}
+                                                    {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
+                                                    <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-2 text-primary"></i>{{ contact.whatsapp_number }}</a></p>
+                                                    {% endwith %}
+                                                {% endif %}
+                                                {% if contact.email %}
+                                                    <p class="mb-2"><i class="fa fa-envelope me-2 text-primary"></i>{{ contact.email }}</p>
+                                                {% endif %}
+                                                <div class="d-flex pt-2 gap-2">
+                                                    {% if contact.facebook %}
+                                                        <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                                    {% endif %}
+                                                    {% if contact.instagram %}
+                                                        <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                                                    {% endif %}
+                                                    {% if contact.youtube %}
+                                                        <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                                                    {% endif %}
+                                                    {% if contact.linkedn %}
+                                                        <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                                    {% endif %}
+                                                    {% if contact.tiktok %}
+                                                        <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-lg-12">
-                                <div class="border-start ps-4">
-                                    <i class="fa fa-users fa-3x text-primary mb-3"></i>
-                                    <h4 class="mb-3">{% trans "Peşəkar Komanda" %}</h4>
-                                    <span>{% trans "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik" %}</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
