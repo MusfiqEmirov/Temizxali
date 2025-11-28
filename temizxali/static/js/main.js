@@ -50,24 +50,29 @@
     });
 
 
-    // Testimonials carousel
-    $(".testimonial-carousel").owlCarousel({
-        autoplay: true,
-        smartSpeed: 1000,
-        items: 1,
-        dots: false,
-        loop: true,
-        nav: true,
-        navText : [
-            '<i class="bi bi-chevron-left"></i>',
-            '<i class="bi bi-chevron-right"></i>'
-        ],
-        onInitialized: function() {
-            // Move nav buttons to custom container after carousel is initialized
-            var $nav = $(".testimonial-carousel").find('.owl-nav');
-            if ($nav.length && $('.testimonial-nav-container').length) {
-                $('.testimonial-nav-container').html($nav);
+    // Testimonials carousel - Swiper.js
+    $(document).ready(function() {
+        if (document.querySelector('.testimonial-carousel')) {
+            // Create navigation buttons in custom container before initializing Swiper
+            var navContainer = document.querySelector('.testimonial-nav-container');
+            if (navContainer && !navContainer.querySelector('.swiper-button-prev')) {
+                navContainer.innerHTML = '<div class="swiper-button-prev"><i class="bi bi-chevron-left"></i></div><div class="swiper-button-next"><i class="bi bi-chevron-right"></i></div>';
             }
+            
+            var testimonialSwiper = new Swiper('.testimonial-carousel', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                speed: 1000,
+                navigation: {
+                    nextEl: '.testimonial-nav-container .swiper-button-next',
+                    prevEl: '.testimonial-nav-container .swiper-button-prev',
+                }
+            });
         }
     });
 
@@ -428,47 +433,122 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Lightbox X düyməsi üçün JavaScript - Xüsusi Layihələr
+// Lightbox X düyməsi üçün JavaScript - Bütün Lightbox-lar üçün (Projects, About, Services)
+// Düymənin ölçüsü və yeri şəklin ölçüsünə görə tənzimlənir
 $(document).ready(function() {
+    // Container ölçüsünə görə düymə ölçüsünü hesabla
+    function calculateButtonSize(containerWidth, containerHeight) {
+        // Container-ın orta ölçüsünü götür
+        var avgSize = (containerWidth + containerHeight) / 2;
+        
+        // Minimum və maksimum ölçülər
+        var minSize = 35;
+        var maxSize = 55;
+        
+        // Container ölçüsünə görə düymə ölçüsünü hesabla (container-ın 4%-i)
+        var buttonSize = Math.max(minSize, Math.min(maxSize, avgSize * 0.04));
+        
+        // Yuvarlaqlaşdır
+        return Math.round(buttonSize);
+    }
+    
     // Lightbox açıldıqda X düyməsi əlavə et
     function addCloseButton() {
         var $lightbox = $('#lightbox');
         var $imgContainer = $lightbox.find('.lb-container');
+        
         if ($lightbox.length > 0 && $lightbox.is(':visible') && $('#lightbox-custom-close').length === 0 && $imgContainer.length > 0) {
-            // X düyməsini şəklin sağ yuxarı küncünə yerləşdir
-            var closeBtn = $('<button id="lightbox-custom-close" style="position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; background: #6d021c; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.3); color: #fff; font-size: 18px; cursor: pointer; z-index: 10001; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(109, 2, 28, 0.4); transition: all 0.3s ease; margin: 0;"><i class="fas fa-times"></i></button>');
-            $imgContainer.css('position', 'relative');
-            $imgContainer.append(closeBtn);
+            // Container ölçüsünü oxu
+            var containerWidth = $imgContainer.width();
+            var containerHeight = $imgContainer.height();
             
-            // X düyməsinə klik edəndə lightbox-ı bağla
-            closeBtn.on('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (typeof lightbox !== 'undefined') {
-                    lightbox.end();
-                }
-                $(this).remove();
-            });
+            // Container hələ ölçülməyibsə, bir az gözlə
+            if (containerWidth === 0 || containerHeight === 0) {
+                setTimeout(function() {
+                    containerWidth = $imgContainer.width();
+                    containerHeight = $imgContainer.height();
+                    if (containerWidth > 0 && containerHeight > 0) {
+                        createCloseButton($imgContainer, containerWidth, containerHeight);
+                    }
+                }, 100);
+                return;
+            }
             
-            // Hover effekti
-            closeBtn.on('mouseenter', function() {
-                $(this).css({
-                    'background': '#890224',
-                    'transform': 'scale(1.1)',
-                    'box-shadow': '0 4px 12px rgba(109, 2, 28, 0.6)'
-                });
-            }).on('mouseleave', function() {
-                $(this).css({
-                    'background': '#6d021c',
-                    'transform': 'scale(1)',
-                    'box-shadow': '0 2px 8px rgba(109, 2, 28, 0.4)'
-                });
-            });
+            createCloseButton($imgContainer, containerWidth, containerHeight);
         }
     }
     
-    // Lightbox link-lərinə klik edəndə
-    $(document).on('click', 'a[data-lightbox^="project-"]', function() {
+    // Düyməni yarat və yerləşdir
+    function createCloseButton($imgContainer, containerWidth, containerHeight) {
+        // Düymə ölçüsünü container ölçüsünə görə hesabla
+        var buttonSize = calculateButtonSize(containerWidth, containerHeight);
+        var fontSize = Math.round(buttonSize * 0.45);
+        var iconSize = Math.round(buttonSize * 0.5);
+        var offset = 5; // Container küncündən sabit 5px məsafə
+        
+        // Düyməni yarat
+        var closeBtn = $('<button id="lightbox-custom-close"><i class="fas fa-times"></i></button>');
+        
+        // Şəklin ölçüsünə görə düyməni tənzimlə
+        closeBtn.css({
+            'position': 'absolute',
+            'top': offset + 'px',
+            'right': offset + 'px',
+            'width': buttonSize + 'px',
+            'height': buttonSize + 'px',
+            'background': 'var(--primary)',
+            'border-radius': '50%',
+            'border': '2px solid rgba(255, 255, 255, 0.3)',
+            'color': '#fff',
+            'font-size': fontSize + 'px',
+            'cursor': 'pointer',
+            'z-index': '10001',
+            'display': 'flex',
+            'align-items': 'center',
+            'justify-content': 'center',
+            'box-shadow': '0 2px 8px rgba(52, 142, 56, 0.4)',
+            'transition': 'all 0.3s ease',
+            'margin': '0',
+            'padding': '0',
+            'outline': 'none'
+        });
+        
+        closeBtn.find('i').css({
+            'font-size': iconSize + 'px',
+            'line-height': '1'
+        });
+        
+        $imgContainer.css('position', 'relative');
+        $imgContainer.append(closeBtn);
+        
+        // X düyməsinə klik edəndə lightbox-ı bağla
+        closeBtn.on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof lightbox !== 'undefined') {
+                lightbox.end();
+            }
+            $(this).remove();
+        });
+        
+        // Hover effekti
+        closeBtn.on('mouseenter', function() {
+            $(this).css({
+                'background': '#2d7a31',
+                'transform': 'scale(1.1)',
+                'box-shadow': '0 4px 12px rgba(52, 142, 56, 0.6)'
+            });
+        }).on('mouseleave', function() {
+            $(this).css({
+                'background': 'var(--primary)',
+                'transform': 'scale(1)',
+                'box-shadow': '0 2px 8px rgba(52, 142, 56, 0.4)'
+            });
+        });
+    }
+    
+    // Bütün lightbox link-lərinə klik edəndə (project-, about-gallery, service-gallery)
+    $(document).on('click', 'a[data-lightbox]', function() {
         var attempts = 0;
         var checkInterval = setInterval(function() {
             attempts++;
@@ -483,14 +563,18 @@ $(document).ready(function() {
         }, 50);
     });
     
-    // Lightbox DOM-a əlavə olunduqda (MutationObserver)
+    // Lightbox DOM-a əlavə olunduqda (MutationObserver) - bütün lightbox-lar üçün
     var observer = new MutationObserver(function(mutations) {
         var $lightbox = $('#lightbox');
         var $imgContainer = $lightbox.find('.lb-container');
+        
         if ($lightbox.length > 0 && $lightbox.is(':visible') && $imgContainer.length > 0) {
-            setTimeout(function() {
-                addCloseButton();
-            }, 200);
+            // Container ölçüsü dəyişibsə və ya düymə yoxdursa
+            if (!$('#lightbox-custom-close').length) {
+                setTimeout(function() {
+                    addCloseButton();
+                }, 200);
+            }
         } else if ($lightbox.length === 0 || !$lightbox.is(':visible')) {
             $('#lightbox-custom-close').remove();
         }
@@ -500,7 +584,20 @@ $(document).ready(function() {
         childList: true,
         subtree: true,
         attributes: true,
-        attributeFilter: ['style', 'class']
+        attributeFilter: ['style', 'class', 'src']
+    });
+    
+    // Container ölçüsü dəyişəndə düyməni yenilə
+    var resizeTimer;
+    $(window).on('resize', function() {
+        var $lightbox = $('#lightbox');
+        if ($lightbox.length > 0 && $lightbox.is(':visible')) {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                $('#lightbox-custom-close').remove();
+                addCloseButton();
+            }, 200);
+        }
     });
     
     // Lightbox bağlandıqda X düyməsini sil
