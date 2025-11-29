@@ -1,5 +1,9 @@
+import subprocess
+import os
 from django.db import models
 from django.core.validators import MaxLengthValidator
+from django.core.files import File
+from tempfile import NamedTemporaryFile
 
 from services.utils import SluggedModel, LANGUAGES, MEASURE_TYPE_CHOICES
 
@@ -74,6 +78,33 @@ class Service(models.Model):
     class Meta:
         verbose_name = 'Servis'
         verbose_name_plural = 'Servislər'
+    
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+
+    #     if self.video:
+    #         original_path = self.video.path
+    #         output_temp = NamedTemporaryFile(suffix='.mp4', delete=False)
+
+    #         cmd = [
+    #             'ffmpeg',
+    #             '-i', original_path,
+    #             '-vcodec', 'libx264',
+    #             '-crf', '28',     
+    #             '-preset', 'faster',
+    #             '-acodec', 'aac',
+    #             '-strict', 'experimental',
+    #             '-b:a', '128k',
+    #             output_temp.name
+    #         ]
+
+    #         subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    #         os.remove(original_path)
+    #         with open(output_temp.name, 'rb') as f:
+    #             self.video.save(f"compressed_{os.path.basename(original_path)}", File(f), save=False)
+
+    #         os.remove(output_temp.name)
+    #         super().save(update_fields=['video'])
     
     def __str__(self):
         translation = self.translations.first()

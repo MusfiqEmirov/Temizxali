@@ -308,7 +308,7 @@ h6,
 }
 
 .page-header {
-    background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url(../img/carousel-1.jpg) center center no-repeat;
+    background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url(../img/carousel-1.webp) center center no-repeat;
     background-size: cover;
 }
 
@@ -1995,5 +1995,469 @@ a.lb-next:hover {
 .container-xxl .row.align-items-start .col-lg-3 .row.g-4 > .col-12:first-child .border-start {
   padding-top: 0 !important;
   margin-top: 0 !important;
+}
+
+/* Grid-Based Pattern Background for All Pages */
+.pattern-background-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  /* Performance optimizations */
+  will-change: height;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  /* Contain layout and paint for better performance */
+  contain: layout style paint;
+}
+
+/* Parallax background should be in front of patterns - use very specific selector */
+body > .parallax-mirror,
+.parallax-mirror {
+  z-index: 0 !important;
+}
+
+/* Ensure facts section content is above patterns and parallax background */
+.container-fluid.facts {
+  position: relative;
+  z-index: 1;
+  background: transparent !important;
+}
+
+/* Facts container should be above patterns */
+.container-fluid.facts .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ensure footer and all content sections are above patterns */
+.footer,
+.copyright {
+  position: relative;
+  z-index: 1;
+}
+
+.pattern-layer {
+  position: absolute;
+  background-image: url('../img/pattern_page-0001.webp');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-clip: padding-box;
+  opacity: 0.22;
+  pointer-events: none;
+  width: 280px;
+  height: 280px;
+  /* Remove white edges - clip to pattern only */
+  overflow: hidden;
+  /* Remove white background using blend mode */
+  mix-blend-mode: multiply;
+  /* Ensure pattern fills the area without white borders */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  /* Performance optimizations */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* GPU acceleration */
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+}
+
+/* Grid Configuration - Fixed spacing: 400px horizontal, 20% vertical between rows */
+/* Row 1 - Top Row (5 patterns, centered) */
+.pattern-1 {
+  top: 8%;
+  left: calc(50% - 800px);
+  transform: translate3d(-50%, 0, 0) rotate(5deg);
+}
+
+.pattern-2 {
+  top: 8%;
+  left: calc(50% - 400px);
+  transform: translate3d(-50%, 0, 0) rotate(-8deg);
+}
+
+.pattern-3 {
+  top: 8%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0) rotate(12deg);
+}
+
+.pattern-4 {
+  top: 8%;
+  left: calc(50% + 400px);
+  transform: translate3d(-50%, 0, 0) rotate(-5deg);
+}
+
+.pattern-5 {
+  top: 8%;
+  left: calc(50% + 800px);
+  transform: translate3d(-50%, 0, 0) rotate(8deg);
+}
+
+/* Row 3 - Second Row (blank row 2 creates spacing) */
+.pattern-6 {
+  top: 28%;
+  left: calc(50% - 800px);
+  transform: translate3d(-50%, 0, 0) rotate(-10deg);
+}
+
+.pattern-7 {
+  top: 28%;
+  left: calc(50% - 400px);
+  transform: translate3d(-50%, 0, 0) rotate(15deg);
+}
+
+.pattern-8 {
+  top: 28%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0) rotate(-12deg);
+}
+
+.pattern-9 {
+  top: 28%;
+  left: calc(50% + 400px);
+  transform: translate3d(-50%, 0, 0) rotate(7deg);
+}
+
+.pattern-10 {
+  top: 28%;
+  left: calc(50% + 800px);
+  transform: translate3d(-50%, 0, 0) rotate(-15deg);
+}
+
+/* Row 5 - Third Row (blank row 4 creates spacing) */
+.pattern-11 {
+  top: 48%;
+  left: calc(50% - 800px);
+  transform: translate3d(-50%, 0, 0) rotate(10deg);
+}
+
+.pattern-12 {
+  top: 48%;
+  left: calc(50% - 400px);
+  transform: translate3d(-50%, 0, 0) rotate(-7deg);
+}
+
+.pattern-13 {
+  top: 48%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0) rotate(12deg);
+}
+
+.pattern-14 {
+  top: 48%;
+  left: calc(50% + 400px);
+  transform: translate3d(-50%, 0, 0) rotate(-10deg);
+}
+
+.pattern-15 {
+  top: 48%;
+  left: calc(50% + 800px);
+  transform: translate3d(-50%, 0, 0) rotate(8deg);
+}
+
+/* Row 7 - Fourth Row (blank row 6 creates spacing) */
+.pattern-16 {
+  top: 68%;
+  left: calc(50% - 800px);
+  transform: translate3d(-50%, 0, 0) rotate(-12deg);
+}
+
+.pattern-17 {
+  top: 68%;
+  left: calc(50% - 400px);
+  transform: translate3d(-50%, 0, 0) rotate(9deg);
+}
+
+.pattern-18 {
+  top: 68%;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0) rotate(-8deg);
+}
+
+.pattern-19 {
+  top: 68%;
+  left: calc(50% + 400px);
+  transform: translate3d(-50%, 0, 0) rotate(11deg);
+}
+
+.pattern-20 {
+  top: 68%;
+  left: calc(50% + 800px);
+  transform: translate3d(-50%, 0, 0) rotate(-9deg);
+}
+
+/* Ensure all content is above patterns - no need to modify body as wrapper has z-index: -1 */
+
+/* Responsive adjustments - improved spacing and breakpoints */
+@media (max-width: 1920px) {
+  .pattern-layer {
+    width: 260px;
+    height: 260px;
+  }
+  
+  /* Adjust horizontal spacing: 380px between patterns */
+  .pattern-1, .pattern-6, .pattern-11, .pattern-16 {
+    left: calc(50% - 760px);
+  }
+  
+  .pattern-2, .pattern-7, .pattern-12, .pattern-17 {
+    left: calc(50% - 380px);
+  }
+  
+  .pattern-4, .pattern-9, .pattern-14, .pattern-19 {
+    left: calc(50% + 380px);
+  }
+  
+  .pattern-5, .pattern-10, .pattern-15, .pattern-20 {
+    left: calc(50% + 760px);
+  }
+}
+
+@media (max-width: 1600px) {
+  .pattern-layer {
+    width: 240px;
+    height: 240px;
+  }
+  
+  /* Adjust horizontal spacing: 340px between patterns */
+  .pattern-1, .pattern-6, .pattern-11, .pattern-16 {
+    left: calc(50% - 680px);
+  }
+  
+  .pattern-2, .pattern-7, .pattern-12, .pattern-17 {
+    left: calc(50% - 340px);
+  }
+  
+  .pattern-4, .pattern-9, .pattern-14, .pattern-19 {
+    left: calc(50% + 340px);
+  }
+  
+  .pattern-5, .pattern-10, .pattern-15, .pattern-20 {
+    left: calc(50% + 680px);
+  }
+}
+
+@media (max-width: 1400px) {
+  .pattern-layer {
+    width: 220px;
+    height: 220px;
+  }
+  
+  /* Adjust horizontal spacing: 300px between patterns */
+  .pattern-1, .pattern-6, .pattern-11, .pattern-16 {
+    left: calc(50% - 600px);
+  }
+  
+  .pattern-2, .pattern-7, .pattern-12, .pattern-17 {
+    left: calc(50% - 300px);
+  }
+  
+  .pattern-4, .pattern-9, .pattern-14, .pattern-19 {
+    left: calc(50% + 300px);
+  }
+  
+  .pattern-5, .pattern-10, .pattern-15, .pattern-20 {
+    left: calc(50% + 600px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .pattern-layer {
+    width: 200px;
+    height: 200px;
+  }
+  
+  /* Adjust horizontal spacing: 260px between patterns */
+  .pattern-1, .pattern-6, .pattern-11, .pattern-16 {
+    left: calc(50% - 520px);
+  }
+  
+  .pattern-2, .pattern-7, .pattern-12, .pattern-17 {
+    left: calc(50% - 260px);
+  }
+  
+  .pattern-4, .pattern-9, .pattern-14, .pattern-19 {
+    left: calc(50% + 260px);
+  }
+  
+  .pattern-5, .pattern-10, .pattern-15, .pattern-20 {
+    left: calc(50% + 520px);
+  }
+}
+
+@media (max-width: 992px) {
+  .pattern-layer {
+    width: 170px;
+    height: 170px;
+  }
+  
+  /* Reduce to 4 patterns per row, spacing: 200px */
+  .pattern-5, .pattern-10, .pattern-15, .pattern-20 {
+    display: none;
+  }
+  
+  .pattern-1, .pattern-6, .pattern-11, .pattern-16 {
+    left: calc(50% - 300px);
+  }
+  
+  .pattern-2, .pattern-7, .pattern-12, .pattern-17 {
+    left: calc(50% - 100px);
+  }
+  
+  .pattern-4, .pattern-9, .pattern-14, .pattern-19 {
+    left: calc(50% + 100px);
+  }
+  
+  .pattern-3, .pattern-8, .pattern-13, .pattern-18 {
+    left: calc(50% + 300px);
+  }
+}
+
+@media (max-width: 768px) {
+  .pattern-layer {
+    opacity: 0.16;
+    width: 150px;
+    height: 150px;
+  }
+  
+  /* Reduce to 3 patterns per row, spacing: 160px */
+  .pattern-4, .pattern-9, .pattern-14, .pattern-19 {
+    display: none;
+  }
+  
+  .pattern-1, .pattern-6, .pattern-11, .pattern-16 {
+    left: calc(50% - 160px);
+    transform: translate3d(-50%, 0, 0) rotate(5deg);
+  }
+  
+  .pattern-2, .pattern-7, .pattern-12, .pattern-17 {
+    left: 50%;
+    transform: translate3d(-50%, 0, 0) rotate(-8deg);
+  }
+  
+  .pattern-3, .pattern-8, .pattern-13, .pattern-18 {
+    left: calc(50% + 160px);
+    transform: translate3d(-50%, 0, 0) rotate(12deg);
+  }
+  
+  /* Maintain vertical spacing */
+  .pattern-1, .pattern-2, .pattern-3 {
+    top: 6%;
+  }
+  
+  .pattern-6, .pattern-7, .pattern-8 {
+    top: 26%;
+  }
+  
+  .pattern-11, .pattern-12, .pattern-13 {
+    top: 46%;
+  }
+  
+  .pattern-16, .pattern-17, .pattern-18 {
+    top: 66%;
+  }
+}
+
+@media (max-width: 576px) {
+  .pattern-layer {
+    opacity: 0.15;
+    width: 130px;
+    height: 130px;
+  }
+  
+  /* Reduce to 2 patterns per row, spacing: 140px */
+  .pattern-3, .pattern-8, .pattern-13, .pattern-18 {
+    display: none;
+  }
+  
+  .pattern-1, .pattern-6, .pattern-11, .pattern-16 {
+    left: calc(50% - 70px);
+    transform: translate3d(-50%, 0, 0) rotate(5deg);
+  }
+  
+  .pattern-2, .pattern-7, .pattern-12, .pattern-17 {
+    left: calc(50% + 70px);
+    transform: translate3d(-50%, 0, 0) rotate(-8deg);
+  }
+  
+  /* Reduce vertical spacing on small screens */
+  .pattern-1, .pattern-2 {
+    top: 5%;
+  }
+  
+  .pattern-6, .pattern-7 {
+    top: 25%;
+  }
+  
+  .pattern-11, .pattern-12 {
+    top: 45%;
+  }
+  
+  .pattern-16, .pattern-17 {
+    top: 65%;
+  }
+}
+
+@media (max-width: 480px) {
+  .pattern-layer {
+    opacity: 0.14;
+    width: 110px;
+    height: 110px;
+  }
+  
+  /* Keep 2 patterns per row, spacing: 120px */
+  .pattern-1, .pattern-6, .pattern-11, .pattern-16 {
+    left: calc(50% - 60px);
+    transform: translate3d(-50%, 0, 0) rotate(5deg);
+  }
+  
+  .pattern-2, .pattern-7, .pattern-12, .pattern-17 {
+    left: calc(50% + 60px);
+    transform: translate3d(-50%, 0, 0) rotate(-8deg);
+  }
+  
+  /* Further reduce vertical spacing */
+  .pattern-1, .pattern-2 {
+    top: 4%;
+  }
+  
+  .pattern-6, .pattern-7 {
+    top: 24%;
+  }
+  
+  .pattern-11, .pattern-12 {
+    top: 44%;
+  }
+  
+  .pattern-16, .pattern-17 {
+    top: 64%;
+  }
+}
+
+@media (max-width: 360px) {
+  .pattern-layer {
+    opacity: 0.12;
+    width: 90px;
+    height: 90px;
+  }
+  
+  /* Keep 2 patterns per row, spacing: 100px */
+  .pattern-1, .pattern-6, .pattern-11, .pattern-16 {
+    left: calc(50% - 50px);
+  }
+  
+  .pattern-2, .pattern-7, .pattern-12, .pattern-17 {
+    left: calc(50% + 50px);
+  }
 }
 
