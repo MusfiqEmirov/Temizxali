@@ -228,7 +228,7 @@
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s" 
-         style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% if about_background_image %}{{ about_background_image.image.url }}{% elif about.first.image %}{{ about.first.image.url }}{% else %}{% static 'img/carousel-1.webp' %}{% endif %}') center center no-repeat; background-size: cover; background-attachment: fixed;">
+         style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% if about_background_image %}{{ about_background_image.webp_url }}{% elif about_item.images.first %}{{ about_item.images.first.webp_url }}{% else %}{% static 'img/carousel-1.webp' %}{% endif %}') center center no-repeat; background-size: cover; background-attachment: fixed;">
         <div class="container text-center py-5">
             <h1 class="display-3 text-white mb-4 animated slideInDown">{% trans "Haqqımızda" %}</h1>
             <nav aria-label="breadcrumb animated slideInDown">
@@ -250,9 +250,9 @@
                     <div class="row g-5 align-items-start">
                         <div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
                             {% if about_item.images.first %}
-                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block" data-wow-delay="0.1s" src="{{ about_item.images.first.image.url }}" alt="{% trans 'Haqqımızda' %}">
+                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block" data-wow-delay="0.1s" src="{{ about_item.images.first.webp_url }}" alt="{% trans 'Haqqımızda' %}" loading="lazy" decoding="async">
                             {% else %}
-                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}" alt="{% trans 'Haqqımızda' %}">
+                                <img class="img-fluid object-fit-cover rounded  mx-auto d-block" data-wow-delay="0.1s" src="{% static 'img/carousel-1.webp' %}" alt="{% trans 'Haqqımızda' %}" loading="lazy" decoding="async">
                             {% endif %}
                         </div>
                         <div class="col-lg-5 col-md-7 wow fadeInUp" data-wow-delay="0.3s" style="padding-top: 0;">

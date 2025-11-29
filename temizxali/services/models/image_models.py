@@ -77,6 +77,16 @@ class Image(models.Model):
         verbose_name = 'Şəkil'
         verbose_name_plural = 'Şəkillər'
 
+    @property
+    def webp_url(self):
+        try:
+            webp_name = self.image.name.rsplit(".", 1)[0] + ".webp"
+            if self.image.storage.exists(webp_name):
+                return self.image.storage.url(webp_name)
+        except Exception:
+            pass
+        return self.image.url
+
    
     # def save(self, *args, **kwargs):
     #     is_new = self.pk is None

@@ -18,7 +18,7 @@ def convert_to_webp(instance):
         if img.width > max_width:
             ratio = max_width / img.width
             height = int(img.height * ratio)
-            img = img.resize((max_width, height), Image.LANCZOS)
+            img = img.resize((max_width, height), PilImage.LANCZOS)
 
         # WebP output
         buffer = BytesIO()
@@ -26,6 +26,12 @@ def convert_to_webp(instance):
         buffer.seek(0)
 
         webp_name = instance.image.name.rsplit(".", 1)[0] + ".webp"
+        
+        try:
+            if instance.image.storage.exists(webp_name):
+                instance.image.storage.delete(webp_name)
+        except Exception:
+            pass
 
         instance.image.storage.save(webp_name, ContentFile(buffer.read()))
 
