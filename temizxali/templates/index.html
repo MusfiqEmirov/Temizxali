@@ -37,8 +37,6 @@
 </head>
 
 <body>
-    <!-- Large Pattern Background on Right Side -->
-    <div class="pattern-background-large"></div>
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
@@ -337,7 +335,7 @@
                                 <p class="experience-text text-primary mb-0">{% trans "İllik Təcrübə" %}</p>
                             </div>
                             {% if translation %}
-                                <h1 class="display-5 mb-4">{% trans "Biz Evinizi Bağ Kimi Edirik" %}</h1>
+                                <h1 class="display-5 mb-4">{% if translation.main_title %}{{ translation.main_title }}{% else %}{% trans "Biz Evinizi Bağ Kimi Edirik" %}{% endif %}</h1>
                                 <p class="mb-4">{{ translation.description|truncatewords:30|linebreaks }}</p>
                             {% else %}
                                 <h1 class="display-5 mb-4">{% trans "Biz Evinizi Bağ Kimi Edirik" %}</h1>
@@ -350,15 +348,31 @@
                                 <div class="col-12 col-sm-6 col-lg-12">
                                     <div class="border-start ps-4">
                                         <i class="fa fa-award fa-3x text-primary mb-3"></i>
-                                        <h4 class="mb-3">{% trans "Mükafat Qazanan" %}</h4>
-                                        <span>{% trans "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik" %}</span>
+                                        {% if translation and translation.highlight_title_one %}
+                                            <h4 class="mb-3">{{ translation.highlight_title_one }}</h4>
+                                        {% else %}
+                                            <h4 class="mb-3">{% trans "Mükafat Qazanan" %}</h4>
+                                        {% endif %}
+                                        {% if translation and translation.highlight_description_one %}
+                                            <span>{{ translation.highlight_description_one }}</span>
+                                        {% else %}
+                                            <span>{% trans "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik" %}</span>
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 col-lg-12">
                                     <div class="border-start ps-4">
                                         <i class="fa fa-users fa-3x text-primary mb-3"></i>
-                                        <h4 class="mb-3">{% trans "Peşəkar Komanda" %}</h4>
-                                        <span>{% trans "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik" %}</span>
+                                        {% if translation and translation.highlight_title_two %}
+                                            <h4 class="mb-3">{{ translation.highlight_title_two }}</h4>
+                                        {% else %}
+                                            <h4 class="mb-3">{% trans "Peşəkar Komanda" %}</h4>
+                                        {% endif %}
+                                        {% if translation and translation.highlight_description_two %}
+                                            <span>{{ translation.highlight_description_two }}</span>
+                                        {% else %}
+                                            <span>{% trans "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik" %}</span>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
