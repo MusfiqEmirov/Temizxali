@@ -79,33 +79,6 @@ class Service(models.Model):
         verbose_name = 'Servis'
         verbose_name_plural = 'Servislər'
     
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-
-    #     if self.video:
-    #         original_path = self.video.path
-    #         output_temp = NamedTemporaryFile(suffix='.mp4', delete=False)
-
-    #         cmd = [
-    #             'ffmpeg',
-    #             '-i', original_path,
-    #             '-vcodec', 'libx264',
-    #             '-crf', '28',     
-    #             '-preset', 'faster',
-    #             '-acodec', 'aac',
-    #             '-strict', 'experimental',
-    #             '-b:a', '128k',
-    #             output_temp.name
-    #         ]
-
-    #         subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    #         os.remove(original_path)
-    #         with open(output_temp.name, 'rb') as f:
-    #             self.video.save(f"compressed_{os.path.basename(original_path)}", File(f), save=False)
-
-    #         os.remove(output_temp.name)
-    #         super().save(update_fields=['video'])
-    
     def __str__(self):
         translation = self.translations.first()
         if translation:
@@ -170,7 +143,7 @@ class ServiceTranslation(SluggedModel):
         verbose_name='Ad'
     )
     description = models.TextField(
-        validators=[MaxLengthValidator(2000)],
+        validators=[MaxLengthValidator(4000)],
         verbose_name='Servis haqqında'
     )
 
