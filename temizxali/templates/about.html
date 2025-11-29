@@ -453,7 +453,7 @@
                                             <div class="col-4 col-md-3">
                                                 <a href="{{ image.image.url }}" data-lightbox="about-gallery" data-title="{% trans 'Haqqımızda şəkli' %}">
                                                     <img class="img-fluid rounded service-gallery-thumb" 
-                                                         src="{{ image.image.url }}" 
+                                                         src="{{ image.webp_url }}" 
                                                          alt="{% trans 'Haqqımızda şəkli' %}"
                                                          loading="lazy"
                                                          decoding="async">
@@ -466,7 +466,7 @@
                                         <div class="col-4 col-md-3">
                                             <a href="{{ image.image.url }}" data-lightbox="about-gallery" data-title="{% trans 'Haqqımızda şəkli' %}">
                                                 <img class="img-fluid rounded service-gallery-thumb" 
-                                                     src="{{ image.image.url }}" 
+                                                     src="{{ image.webp_url }}" 
                                                      alt="{% trans 'Haqqımızda şəkli' %}"
                                                      loading="lazy"
                                                      decoding="async">
@@ -487,7 +487,7 @@
     <!-- Facts Start -->
 {% if statistics %}
     {% if about_background_image %}
-        <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{{ about_background_image.image.url }}">
+        <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{{ about_background_image.webp_url }}">
     {% else %}
         <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{% static 'img/carousel-1.webp' %}">
     {% endif %}
