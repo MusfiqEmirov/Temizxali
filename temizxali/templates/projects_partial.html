@@ -9,9 +9,9 @@
           <div class="col-lg-4 col-md-6 portfolio-item">
             <div class="portfolio-inner rounded">
               {% if project.images.first %}
-                <img class="img-fluid" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
+                <img class="img-fluid" src="{{ project.images.first.webp_url }}" alt="{{ translation.description|truncatewords:5 }}" loading="lazy" decoding="async">
               {% else %}
-                <img class="img-fluid" src="{% static 'img/service-1.jpg' %}" alt="Default">
+                <img class="img-fluid" src="{% static 'img/carousel-1.webp' %}" alt="Default" loading="lazy" decoding="async">
               {% endif %}
               <div class="portfolio-text">
                 <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>

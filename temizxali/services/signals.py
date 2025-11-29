@@ -8,6 +8,15 @@ from services.models import (
     StatisticTranslation, AboutTranslation,
     ServiceVariant, ServiceVariantTranslation, SaleEvent, SaleEventTranslation,
 )
+from services.utils import convert_to_webp, run_async
+
+
+@receiver(post_save, sender=Image)
+def handle_webp(sender, instance, created, **kwargs):
+    # Həm yeni yaradılanda, həm də yenilənəndə WebP yarat
+    # Çünki şəkil dəyişəndə köhnə WebP-i silib yenisini yaratmaq lazımdır
+    if created or 'image' in kwargs.get('update_fields', []):
+        run_async(convert_to_webp, instance)
 
 
 @receiver([post_save, post_delete], sender=Image)

@@ -424,7 +424,7 @@
 
         <!-- Facts Start -->
     {% if background_images %}
-        <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{{ background_images.first.image.url }}">
+        <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{{ background_images.first.webp_url }}">
     {% else %}
         <div class="container-fluid facts my-5 py-5" data-parallax="scroll" data-image-src="{% static 'img/carousel-1.webp' %}">
     {% endif %}
@@ -470,7 +470,7 @@
                                                     Sənin brauzerin videonu dəstəkləmir.
                                                 </video>
                                             {% elif service.images.first %}
-                                                <img class="w-100 h-100" src="{{ service.images.first.image.url }}" alt="{{ translation.name }}" style="object-fit: cover;">
+                                                <img class="w-100 h-100" src="{{ service.images.first.webp_url }}" alt="{{ translation.name }}" style="object-fit: cover;" loading="lazy" decoding="async">
                                             {% else %}
                                                 <video autoplay muted loop playsinline class="video-bg">
                                                     <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
@@ -524,9 +524,9 @@
                 <div class="col-lg-4 col-md-6 portfolio-item wow fadeInUp" data-wow-delay="0.{% cycle '1' '3' '5' %}s">
                   <div class="portfolio-inner rounded">
                     {% if project.images.first %}
-                      <img class="img-fluid" src="{{ project.images.first.image.url }}" alt="{{ translation.description|truncatewords:5 }}">
+                      <img class="img-fluid" src="{{ project.images.first.webp_url }}" alt="{{ translation.description|truncatewords:5 }}" loading="lazy" decoding="async">
                     {% else %}
-                      <img class="img-fluid" src="{% static 'img/service-1.jpg' %}" alt="Default">
+                      <img class="img-fluid" src="{% static 'img/carousel-1.webp' %}" alt="Default" loading="lazy" decoding="async">
                     {% endif %}
                     <div class="portfolio-text">
                       <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>

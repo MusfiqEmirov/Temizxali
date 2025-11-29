@@ -77,52 +77,21 @@ class Image(models.Model):
         verbose_name = 'Şəkil'
         verbose_name_plural = 'Şəkillər'
 
+    @property
+    def webp_url(self):
+        try:
+            webp_name = self.image.name.rsplit(".", 1)[0] + ".webp"
+            if self.image.storage.exists(webp_name):
+                return self.image.storage.url(webp_name)
+        except Exception:
+            pass
+        return self.image.url
+
    
-    def save(self, *args, **kwargs):
-        is_new = self.pk is None
-
-        super().save(*args, **kwargs)  # 1 dəfə save
-        img = PilImage.open(self.image.path)
-
-        if img.mode != "RGB":
-            img = img.convert("RGB")
-
-        max_width = 1920
-        if img.width > max_width:
-            ratio = max_width / img.width
-            height = int(img.height * ratio)
-            img = img.resize((max_width, height), PilImage.LANCZOS)
-
-        buffer = BytesIO()
-        img.save(buffer, format='JPEG', quality=70, optimize=True)
-        buffer.seek(0)
-
-        self.image.save(self.image.name, ContentFile(buffer.read()), save=False)
-        super().save(update_fields=["image"])  # 1 dəfə daha DB yazırıq
-        buffer.close()
-
-        # WebP
-        webp_buffer = BytesIO()
-        img.save(webp_buffer, format='WebP', quality=70, optimize=True)
-        webp_buffer.seek(0)
-        self.image.storage.save(self.image.name.replace('.jpg', '.webp'), ContentFile(webp_buffer.read()))
-        webp_buffer.close()
-
     # def save(self, *args, **kwargs):
-    #     old_image = None
-    #     if self.pk:
-    #         try:
-    #             old_image = Image.objects.get(pk=self.pk).image
-    #         except Image.DoesNotExist:
-    #             pass
+    #     is_new = self.pk is None
 
-    #     if not self.pk or (old_image and old_image != self.image):
-    #         ext = os.path.splitext(self.image.name)[1]
-    #         new_name = f"{uuid.uuid4().hex}{ext}"
-    #         self.image.name = new_name
-
-    #     super().save(*args, **kwargs)
-
+    #     super().save(*args, **kwargs)  # 1 dəfə save
     #     img = PilImage.open(self.image.path)
 
     #     if img.mode != "RGB":
@@ -130,22 +99,21 @@ class Image(models.Model):
 
     #     max_width = 1920
     #     if img.width > max_width:
-    #         ratio = max_width / float(img.width)
-    #         height = int(float(img.height) * ratio)
+    #         ratio = max_width / img.width
+    #         height = int(img.height * ratio)
     #         img = img.resize((max_width, height), PilImage.LANCZOS)
 
     #     buffer = BytesIO()
     #     img.save(buffer, format='JPEG', quality=70, optimize=True)
     #     buffer.seek(0)
+
     #     self.image.save(self.image.name, ContentFile(buffer.read()), save=False)
+    #     super().save(update_fields=["image"])  # 1 dəfə daha DB yazırıq
     #     buffer.close()
 
-    #     webp_name = f"{os.path.splitext(self.image.name)[0]}.webp"
+    #     # WebP
     #     webp_buffer = BytesIO()
     #     img.save(webp_buffer, format='WebP', quality=70, optimize=True)
     #     webp_buffer.seek(0)
-    #     self.image.storage.save(webp_name, ContentFile(webp_buffer.read()))
+    #     self.image.storage.save(self.image.name.replace('.jpg', '.webp'), ContentFile(webp_buffer.read()))
     #     webp_buffer.close()
-
-    #     super().save(*args, **kwargs)
-
