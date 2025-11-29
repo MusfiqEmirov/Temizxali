@@ -8,6 +8,13 @@ from services.models import (
     StatisticTranslation, AboutTranslation,
     ServiceVariant, ServiceVariantTranslation, SaleEvent, SaleEventTranslation,
 )
+from services.utils import convert_to_webp, run_async
+
+
+@receiver(post_save, sender=Image)
+def handle_webp(sender, instance, created, **kwargs):
+    if created:
+        run_async(convert_to_webp, instance)
 
 
 @receiver([post_save, post_delete], sender=Image)
