@@ -565,3 +565,8 @@ msgstr "Следите за нами:"
 msgid "Bütün Layihələrə Bax"
 msgstr "Посмотреть все проекты"
 
+#: templates/testimonial.html
+#: templates/index.html
+msgid "Xidmət növü:"
+msgstr "Тип услуги:"
+

@@ -19,6 +19,13 @@
     });
 
 
+    // WOW.js animasiyaları söndürülüb - heç bir effekt yoxdur
+    // Bütün wow elementləri dərhal görünür
+    $(document).ready(function() {
+        $('.wow').css('visibility', 'visible');
+    });
+
+
     // Sticky Navbar
     $(window).scroll(function () {
         if ($(this).scrollTop() > 300) {

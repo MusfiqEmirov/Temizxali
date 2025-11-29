@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Gardener - Gardening Website Template</title>
+    <title>{% trans "Rəy Bildir" %} - Təmiz Xalı Bakı Fabriki</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
     <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
@@ -85,11 +86,11 @@
                                 {% if lang_code == CURRENT_LANGUAGE %}
                                     <button type="button" class="language-btn-current">
                                         {% if lang_code == 'az' %}
-                                            <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon">
+                                            <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon">
                                         {% elif lang_code == 'ru' %}
-                                            <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon">
+                                            <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon">
                                         {% else %}
-                                            <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon">
+                                            <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon">
                                         {% endif %}
                                         <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
                                         <i class="fa fa-chevron-down ms-1"></i>
@@ -104,11 +105,11 @@
                                         <input type="hidden" name="language" value="{{ lang_code }}">
                                         <button type="submit" class="language-btn-dropdown {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
                                             {% if lang_code == 'az' %}
-                                                <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon">
+                                                <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon">
                                             {% elif lang_code == 'ru' %}
-                                                <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon">
+                                                <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon">
                                             {% else %}
-                                                <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon">
+                                                <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon">
                                             {% endif %}
                                             <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
                                         </button>
@@ -147,7 +148,7 @@
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
         <a href="{% url 'home-page' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5" style="height: 80px;">
-            <img src="{% static 'img/logo.png' %}" alt="Təmizxali Logo" style="max-height: 140%; max-width: 140%; width: auto; height: auto; object-fit: contain; display: block;">
+            <img src="{% static 'img/logo.webp' %}" alt="Təmizxali Logo" style="max-height: 140%; max-width: 140%; width: auto; height: auto; object-fit: contain; display: block;">
         <!-- Language Switcher - Mobile Only -->
         <div class="d-lg-none ms-auto me-2">
             <div class="language-switcher-container-mobile">
@@ -158,11 +159,11 @@
                         {% if lang_code == CURRENT_LANGUAGE %}
                             <button type="button" class="language-btn-current-mobile">
                                 {% if lang_code == 'az' %}
-                                    <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon-mobile">
+                                    <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon-mobile">
                                 {% elif lang_code == 'ru' %}
-                                    <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon-mobile">
+                                    <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon-mobile">
                                 {% else %}
-                                    <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
+                                    <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
                                 {% endif %}
                                 <i class="fa fa-chevron-down ms-1"></i>
                             </button>
@@ -176,11 +177,11 @@
                                 <input type="hidden" name="language" value="{{ lang_code }}">
                                 <button type="submit" class="language-btn-dropdown-mobile {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
                                     {% if lang_code == 'az' %}
-                                        <img src="{% static 'img/azerbaijan.png' %}" alt="Azərbaycan" class="flag-icon-mobile">
+                                        <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon-mobile">
                                     {% elif lang_code == 'ru' %}
-                                        <img src="{% static 'img/russia.png' %}" alt="Русский" class="flag-icon-mobile">
+                                        <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon-mobile">
                                     {% else %}
-                                        <img src="{% static 'img/azerbaijan.png' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
+                                        <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
                                     {% endif %}
                                 </button>
                             </form>
@@ -225,7 +226,7 @@
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s" 
-         style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% if review_background_image %}{{ review_background_image.image.url }}{% else %}{% static 'img/carousel-1.jpg' %}{% endif %}') center center no-repeat; background-size: cover; background-attachment: fixed;">
+         style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% if review_background_image %}{{ review_background_image.image.url }}{% else %}{% static 'img/carousel-1.webp' %}{% endif %}') center center no-repeat; background-size: cover; background-attachment: fixed;">
         <div class="container text-center py-5">
             <h1 class="display-3 text-white mb-4 animated slideInDown">{% trans "Rəyinizi paylaşın" %}</h1>
             <nav aria-label="breadcrumb animated slideInDown">
@@ -420,7 +421,7 @@
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'lib/wow/wow.min.js' %}"></script>
     <script src="{% static 'lib/easing/easing.min.js' %}"></script>
     <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>

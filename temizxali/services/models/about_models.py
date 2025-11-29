@@ -24,6 +24,41 @@ class AboutTranslation(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Haqqımızda'
     )
+    languages = models.CharField(
+        max_length=12,
+        choices=LANGUAGES,
+        verbose_name='Dil'
+    )
+    main_title = models.CharField(
+        null=True,
+        blank=True,
+        max_length=120,
+        verbose_name='Əsas başlıq'
+    )
+    highlight_title_one = models.CharField(
+        null=True,
+        blank=True,
+        max_length=80,
+        verbose_name='Sol üst ilk başlıq'
+    )
+    highlight_title_two = models.CharField(
+        null=True,
+        blank=True,
+        max_length=80,
+        verbose_name='Sol üst ikinci başlıq'
+    )
+    highlight_description_one = models.TextField(
+        null=True,
+        blank=True,
+        validators=[MaxLengthValidator(200)],
+        verbose_name='Sol üst ilk açıqlama'
+    )
+    highlight_description_two = models.TextField(
+        null=True,
+        blank=True,
+        validators=[MaxLengthValidator(200)],
+        verbose_name='Sol üst ikinci açıqlama'
+    )
     description = models.TextField(
         validators=[MaxLengthValidator(2000)],
         verbose_name='Servis haqqında'

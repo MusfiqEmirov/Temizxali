@@ -1,5 +1,9 @@
+import subprocess
+import os
 from django.db import models
 from django.core.validators import MaxLengthValidator
+from django.core.files import File
+from tempfile import NamedTemporaryFile
 
 from services.utils import SluggedModel, LANGUAGES, MEASURE_TYPE_CHOICES
 
@@ -139,7 +143,7 @@ class ServiceTranslation(SluggedModel):
         verbose_name='Ad'
     )
     description = models.TextField(
-        validators=[MaxLengthValidator(2000)],
+        validators=[MaxLengthValidator(4000)],
         verbose_name='Servis haqqında'
     )
 
