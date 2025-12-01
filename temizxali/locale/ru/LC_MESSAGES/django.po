@@ -101,6 +101,30 @@ msgstr "Варианты"
 msgid "Dəyər"
 msgstr "Значение"
 
+#: templates/contact.html
+msgid "Qiymət"
+msgstr "Цена"
+
+#: templates/contact.html
+msgid "kq"
+msgstr "кг"
+
+#: templates/contact.html
+msgid "Dəyər daxil edin (kq)"
+msgstr "Введите значение (кг)"
+
+#: templates/contact.html
+msgid "Dəyər daxil edin (m²)"
+msgstr "Введите значение (m²)"
+
+#: templates/contact.html
+msgid "Dəyər daxil edin (m)"
+msgstr "Введите значение (m)"
+
+#: templates/contact.html
+msgid "Dəyər daxil edin (ədəd)"
+msgstr "Введите значение (шт)"
+
 #: templates/calculator.html
 msgid "ədəd"
 msgstr "шт"

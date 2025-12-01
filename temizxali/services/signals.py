@@ -1,5 +1,6 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
+from django.core.exceptions import ObjectDoesNotExist
 from services.utils.cache_invalidation import CacheInvalidation
 
 from services.models import (
@@ -13,9 +14,8 @@ from services.utils import convert_to_webp, run_async
 
 @receiver(post_save, sender=Image)
 def handle_webp(sender, instance, created, **kwargs):
-    # Həm yeni yaradılanda, həm də yenilənəndə WebP yarat
-    # Çünki şəkil dəyişəndə köhnə WebP-i silib yenisini yaratmaq lazımdır
-    if created or 'image' in kwargs.get('update_fields', []):
+    update_fields = kwargs.get('update_fields') or []
+    if created or 'image' in update_fields:
         run_async(convert_to_webp, instance)
 
 
@@ -25,11 +25,15 @@ def invalidate_cache_on_image_change(sender, instance, **kwargs):
     CacheInvalidation.clear_homepage_cache()
     CacheInvalidation.clear_about_cache()
     CacheInvalidation.clear_projects_cache()
-    if instance.service:
-        if instance.service.translations.exists():
-            slugs = instance.service.translations.values_list('slug', flat=True)
-            for slug in slugs:
-                CacheInvalidation.clear_service_detail_cache(service_slug=slug)
+    try:
+        service = instance.service
+    except ObjectDoesNotExist:
+        service = None
+    
+    if service and service.translations.exists():
+        slugs = service.translations.values_list('slug', flat=True)
+        for slug in slugs:
+            CacheInvalidation.clear_service_detail_cache(service_slug=slug)
 
 
 @receiver([post_save, post_delete], sender=Service)
@@ -56,8 +60,13 @@ def invalidate_cache_on_service_translation_change(sender, instance, **kwargs):
 @receiver([post_save, post_delete], sender=ServiceVariant)
 def invalidate_cache_on_service_variant_change(sender, instance, **kwargs):
     """Invalidate cache when ServiceVariant is changed or deleted"""
-    if instance.service and instance.service.translations.exists():
-        slugs = instance.service.translations.values_list('slug', flat=True)
+    try:
+        service = instance.service
+    except ObjectDoesNotExist:
+        service = None
+    
+    if service and service.translations.exists():
+        slugs = service.translations.values_list('slug', flat=True)
         for slug in slugs:
             CacheInvalidation.clear_service_detail_cache(service_slug=slug)
 
@@ -65,10 +74,21 @@ def invalidate_cache_on_service_variant_change(sender, instance, **kwargs):
 @receiver([post_save, post_delete], sender=ServiceVariantTranslation)
 def invalidate_cache_on_service_variant_translation_change(sender, instance, **kwargs):
     """Invalidate cache when ServiceVariantTranslation is changed or deleted"""
-    if instance.variant and instance.variant.service and instance.variant.service.translations.exists():
-        slugs = instance.variant.service.translations.values_list('slug', flat=True)
-        for slug in slugs:
-            CacheInvalidation.clear_service_detail_cache(service_slug=slug)
+    try:
+        variant = instance.variant
+    except ObjectDoesNotExist:
+        variant = None
+    
+    if variant:
+        try:
+            service = variant.service
+        except ObjectDoesNotExist:
+            service = None
+        
+        if service and service.translations.exists():
+            slugs = service.translations.values_list('slug', flat=True)
+            for slug in slugs:
+                CacheInvalidation.clear_service_detail_cache(service_slug=slug)
 
 
 @receiver([post_save, post_delete], sender=SaleEvent)
