@@ -227,14 +227,20 @@ class ServiceAdmin(NestedModelAdmin):
 
     def get_variant_prices_display(self, obj):
         """Variantlardan qiymətləri göstərir"""
-        variants = obj.variants.all()
-        if not variants.exists():
+        try:
+            variants = obj.variants.all()
+            if not variants.exists():
+                return format_html('<span style="color: #6c757d; font-style: italic;">⚠️ Variant yoxdur</span>')
+        except Exception:
             return format_html('<span style="color: #6c757d; font-style: italic;">⚠️ Variant yoxdur</span>')
         
         prices_info = []
         for variant in variants:
-            variant_name = variant.translations.first()
-            name = variant_name.name if variant_name else f"Variant #{variant.id}"
+            try:
+                variant_name = variant.translations.first()
+                name = variant_name.name if variant_name else f"Variant #{variant.id}"
+            except Exception:
+                name = f"Variant #{variant.id}"
             
             variant_prices = []
             if variant.price:
@@ -282,19 +288,25 @@ class ServiceAdmin(NestedModelAdmin):
         if not obj.pk:
             return format_html('<span style="color: #6c757d;">Yeni servis yaradılır - variantlar əlavə edildikdən sonra burada görünəcək</span>')
         
-        variants = obj.variants.all()
-        if not variants.exists():
-            return format_html(
-                '<div style="background-color: #fff3cd; padding: 15px; border-radius: 6px; border-left: 4px solid #ffc107;">'
-                '<strong>⚠️ XƏBƏRDARLIQ:</strong><br>'
-                'Bu servis üçün heç bir variant yoxdur. Lütfən aşağıdakı "Servis Növləri" bölməsində variant əlavə edin və qiymətləri təyin edin.'
-                '</div>'
-            )
+        try:
+            variants = obj.variants.all()
+            if not variants.exists():
+                return format_html(
+                    '<div style="background-color: #fff3cd; padding: 15px; border-radius: 6px; border-left: 4px solid #ffc107;">'
+                    '<strong>⚠️ XƏBƏRDARLIQ:</strong><br>'
+                    'Bu servis üçün heç bir variant yoxdur. Lütfən aşağıdakı "Servis Növləri" bölməsində variant əlavə edin və qiymətləri təyin edin.'
+                    '</div>'
+                )
+        except Exception:
+            return format_html('<span style="color: #6c757d;">⚠️ Variant məlumatları oxuna bilmədi</span>')
         
         info = []
         for variant in variants:
-            variant_name = variant.translations.first()
-            name = variant_name.name if variant_name else f"Variant #{variant.id}"
+            try:
+                variant_name = variant.translations.first()
+                name = variant_name.name if variant_name else f"Variant #{variant.id}"
+            except Exception:
+                name = f"Variant #{variant.id}"
             
             variant_info = [f"<strong>{name}</strong>"]
             if variant.price:
@@ -416,8 +428,11 @@ class ServiceAdmin(NestedModelAdmin):
         if obj.is_premium:
             summary.append("💎 Premium")
         
-        variants_count = obj.variants.count()
-        summary.append(f"📦 Variantlar: {variants_count}")
+        try:
+            variants_count = obj.variants.count()
+            summary.append(f"📦 Variantlar: {variants_count}")
+        except Exception:
+            summary.append("📦 Variantlar: 0")
         
         return format_html('<br>'.join(summary))
     get_status_summary.short_description = '📊 Status Xülasəsi'
@@ -667,14 +682,14 @@ class ReviewAdmin(admin.ModelAdmin):
     )
     list_display_links = ('id', 'get_fullname_display')
     list_filter = ('is_verified', 'created_at', 'service')
-    search_fields = ('fullname', 'phone_number', 'comment', 'service__translations__name')
+    search_fields = ('fullname', 'phone_number', 'text', 'service__translations__name')
     
     fieldsets = (
         ('👤 Müştəri Məlumatları', {
             'fields': ('fullname', 'phone_number', 'service')
         }),
         ('💬 Rəy Məzmunu', {
-            'fields': ('comment', 'text')
+            'fields': ('text',)
         }),
         ('✅ Təsdiq', {
             'fields': ('is_verified',)

@@ -1,5 +1,20 @@
 let addedServices = {};
 
+// Translation helper function
+function getTranslation(key) {
+    const element = document.getElementById(`trans-${key}`);
+    if (!element) {
+        console.warn(`Translation element not found: trans-${key}`);
+        return key;
+    }
+    const translation = element.textContent.trim();
+    if (!translation) {
+        console.warn(`Translation is empty for key: ${key}`);
+        return key;
+    }
+    return translation;
+}
+
 function addService() {
     const selector = document.getElementById('serviceSelector');
     const selectedOption = selector.options[selector.selectedIndex];
@@ -10,7 +25,7 @@ function addService() {
     
     // Əgər bu xidmət artıq əlavə olunubsa, yenidən yaratma
     if (addedServices[serviceId]) {
-        alert('Bu xidmət artıq əlavə edilib!');
+        alert(getTranslation('service-already-added'));
         selector.value = '';
         return;
     }
@@ -39,7 +54,7 @@ function createServiceCard(option) {
     const priceStr = option.getAttribute('data-price') || '0';
     const vipPriceStr = option.getAttribute('data-vip-price') || '0';
     const premiumPriceStr = option.getAttribute('data-premium-price') || '0';
-    const measureType = option.getAttribute('data-measure-type') || 'unit';
+    const measureType = option.getAttribute('data-measure-type') || 'ədəd';
     const salesJson = option.getAttribute('data-sales') || '[]';
     
     const price = parseFloat(priceStr.replace(',', '.')) || 0;
@@ -60,15 +75,15 @@ function createServiceCard(option) {
     // Endirim badge-i göstərilməsin - yalnız hesablamada istifadə olunacaq
     
     // Unit placeholder müəyyən et based on measure_type
-    let unitPlaceholder = 'Dəyər daxil edin';
+    let unitPlaceholder = getTranslation('value-placeholder');
     if (measureType === 'kg') {
-        unitPlaceholder = 'Dəyər daxil edin (kq)';
+        unitPlaceholder = getTranslation('value-placeholder-kg');
     } else if (measureType === 'm2') {
-        unitPlaceholder = 'Dəyər daxil edin (m²)';
+        unitPlaceholder = getTranslation('value-placeholder-m2');
     } else if (measureType === 'm') {
-        unitPlaceholder = 'Dəyər daxil edin (m)';
-    } else if (measureType === 'unit') {
-        unitPlaceholder = 'Dəyər daxil edin (ədəd)';
+        unitPlaceholder = getTranslation('value-placeholder-m');
+    } else if (measureType === 'ədəd') {
+        unitPlaceholder = getTranslation('value-placeholder-unit');
     }
 
     // Variantlar varsa - dinamik versiya
@@ -90,10 +105,10 @@ function createServiceCard(option) {
         // Variantlar üçün HTML yarat
         let variantsHtml = '';
         if (variants.length > 0) {
-            variantsHtml = '<div class="variant-container"><p class="fw-bold text-dark mb-3">Variantlar:</p>';
+            variantsHtml = `<div class="variant-container"><p class="fw-bold text-dark mb-3">${getTranslation('variants-label')}:</p>`;
             variants.forEach((variant, index) => {
                 const variantId = variant.id;
-                const variantName = variant.name || `Variant ${index + 1}`;
+                const variantName = variant.name || `${getTranslation('variant-default')} ${index + 1}`;
                 const variantPrice = parseFloat(String(variant.price || 0).replace(',', '.')) || 0;
                 const variantVipPrice = parseFloat(String(variant.vip_price || 0).replace(',', '.')) || 0;
                 const variantPremiumPrice = parseFloat(String(variant.premium_price || 0).replace(',', '.')) || 0;
@@ -109,9 +124,9 @@ function createServiceCard(option) {
                         </div>
                         <div class="col-auto">
                             <select class="form-select form-select-sm" id="${serviceId}_variant_${variantId}_type" disabled onchange="calculateServicePrice('${serviceId}')">
-                                <option value="normal">Normal</option>
-                                ${variantVipPrice > 0 ? '<option value="vip">VIP</option>' : ''}
-                                ${variantPremiumPrice > 0 ? '<option value="premium">Premium</option>' : ''}
+                                <option value="normal">${getTranslation('normal')}</option>
+                                ${variantVipPrice > 0 ? `<option value="vip">${getTranslation('vip')}</option>` : ''}
+                                ${variantPremiumPrice > 0 ? `<option value="premium">${getTranslation('premium')}</option>` : ''}
                             </select>
                         </div>
                         <div class="col">
@@ -132,14 +147,14 @@ function createServiceCard(option) {
                         ${serviceName}
                     </div>
                     <button class="btn-remove" onclick="removeService('${serviceId}')">
-                        <i class="fas fa-times"></i> Sil
+                        <i class="fas fa-times"></i> ${getTranslation('remove')}
                     </button>
                 </div>
 
                 ${variantsHtml}
                 
                 <div class="alert alert-info mt-3" id="${serviceId}_price_final" style="display: none;">
-                    <strong>Qiymət:</strong> <span id="${serviceId}_price_amount_final">0.00 ₼</span>
+                    <strong>${getTranslation('price')}:</strong> <span id="${serviceId}_price_amount_final">0.00 ₼</span>
                 </div>
             </div>
         `;
@@ -152,16 +167,16 @@ function createServiceCard(option) {
                         ${serviceName}
                     </div>
                     <button class="btn-remove" onclick="removeService('${serviceId}')">
-                        <i class="fas fa-times"></i> Sil
+                        <i class="fas fa-times"></i> ${getTranslation('remove')}
                     </button>
                 </div>
                 
                 <div class="row g-2">
                     <div class="col-auto">
                         <select class="form-select" id="${serviceId}_type" onchange="calculateServicePrice('${serviceId}')">
-                            <option value="normal">Normal</option>
-                            ${vipPrice > 0 ? '<option value="vip">VIP</option>' : ''}
-                            ${premiumPrice > 0 ? '<option value="premium">Premium</option>' : ''}
+                            <option value="normal">${getTranslation('normal')}</option>
+                            ${vipPrice > 0 ? `<option value="vip">${getTranslation('vip')}</option>` : ''}
+                            ${premiumPrice > 0 ? `<option value="premium">${getTranslation('premium')}</option>` : ''}
                         </select>
                     </div>
                     <div class="col">
@@ -172,7 +187,7 @@ function createServiceCard(option) {
                 </div>
                 
                 <div class="alert alert-info mt-3" id="${serviceId}_price" style="display: none;">
-                    <strong>Qiymət:</strong> <span id="${serviceId}_price_amount">0.00 ₼</span>
+                    <strong>${getTranslation('price')}:</strong> <span id="${serviceId}_price_amount">0.00 ₼</span>
                 </div>
             </div>
         `;
@@ -220,7 +235,7 @@ function calculateServicePrice(serviceId) {
     const priceStr = option.getAttribute('data-price') || '0';
     const vipPriceStr = option.getAttribute('data-vip-price') || '0';
     const premiumPriceStr = option.getAttribute('data-premium-price') || '0';
-    const measureType = option.getAttribute('data-measure-type') || 'unit';
+    const measureType = option.getAttribute('data-measure-type') || 'ədəd';
     const salesJson = option.getAttribute('data-sales') || '[]';
     
     const price = parseFloat(priceStr.replace(',', '.')) || 0;
@@ -288,7 +303,7 @@ function calculateServicePrice(serviceId) {
         
         if (value > 0 && basePrice > 0) {
             let calculated = 0;
-            if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'unit') {
+            if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'ədəd') {
                 calculated = basePrice * value;
             } else {
                 calculated = basePrice;
@@ -334,7 +349,7 @@ function calculateServicePrice(serviceId) {
                 
                 if (variantValue > 0 && variantBasePrice > 0) {
                     let variantCalculated = 0;
-                    if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'unit') {
+                    if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'ədəd') {
                         variantCalculated = variantBasePrice * variantValue;
                     } else {
                         variantCalculated = variantBasePrice;
@@ -402,7 +417,7 @@ function calculateTotal() {
         const priceStr = option.getAttribute('data-price') || '0';
         const vipPriceStr = option.getAttribute('data-vip-price') || '0';
         const premiumPriceStr = option.getAttribute('data-premium-price') || '0';
-        const measureType = option.getAttribute('data-measure-type') || 'unit';
+        const measureType = option.getAttribute('data-measure-type') || 'ədəd';
         const salesJson = option.getAttribute('data-sales') || '[]';
         
         const price = parseFloat(priceStr.replace(',', '.')) || 0;
@@ -468,7 +483,7 @@ function calculateTotal() {
             
             if (value > 0 && basePrice > 0) {
                 let calculated = 0;
-                if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'unit') {
+                if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'ədəd') {
                     calculated = basePrice * value;
                 } else {
                     calculated = basePrice;
@@ -514,7 +529,7 @@ function calculateTotal() {
                     
                     if (variantValue > 0 && variantBasePrice > 0) {
                         let variantCalculated = 0;
-                        if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'unit') {
+                        if (measureType === 'kg' || measureType === 'm2' || measureType === 'm' || measureType === 'ədəd') {
                             variantCalculated = variantBasePrice * variantValue;
                         } else {
                             variantCalculated = variantBasePrice;
