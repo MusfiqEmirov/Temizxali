@@ -20,7 +20,7 @@ class ServiceImageInline(NestedTabularInline):
 
     def image_preview(self, obj):
         if obj.image:
-            return format_html('<img src="{}" width="100" style="border-radius: 4px;" />', obj.image.url)
+            return format_html('<img src="{}" width="100" style="border-radius: 4px;" />', obj.webp_url)
         return format_html('<span style="color: #6c757d;">📷 Şəkil yoxdur</span>')
     image_preview.short_description = "🖼️ Önizləmə"
 
@@ -34,7 +34,7 @@ class SpecialProjectImageInline(NestedTabularInline):
 
     def image_preview(self, obj):
         if obj.image:
-            return format_html('<img src="{}" width="100" style="border-radius: 4px;" />', obj.image.url)
+            return format_html('<img src="{}" width="100" style="border-radius: 4px;" />', obj.webp_url)
         return format_html('<span style="color: #6c757d;">📷 Şəkil yoxdur</span>')
     image_preview.short_description = "🖼️ Önizləmə"
 
@@ -49,7 +49,7 @@ class AboutImageInline(NestedTabularInline):
 
     def image_preview(self, obj):
         if obj.image:
-            return format_html('<img src="{}" width="100" style="border-radius: 4px;" />', obj.image.url)
+            return format_html('<img src="{}" width="100" style="border-radius: 4px;" />', obj.webp_url)
         return format_html('<span style="color: #6c757d;">📷 Şəkil yoxdur</span>')
     image_preview.short_description = "🖼️ Önizləmə"
 
@@ -88,7 +88,7 @@ class ImageAdmin(admin.ModelAdmin):
 
     def image_tag(self, obj):
         if obj.image:
-            return format_html('<img src="{}" width="150" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" />', obj.image.url)
+            return format_html('<img src="{}" width="150" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" />', obj.webp_url)
         return format_html('<span style="color: #6c757d;">📷 Şəkil yoxdur</span>')
     image_tag.short_description = "🖼️ Önizləmə"
 

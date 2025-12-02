@@ -286,7 +286,7 @@
                         </div>
                     {% elif service.images.first %}
                         <div class="mb-4">
-                            <a href="{{ service.images.first.image.url }}" data-lightbox="service-gallery">
+                            <a href="{{ service.images.first.webp_url }}" data-lightbox="service-gallery">
                                 <img class="img-fluid rounded service-main-image" 
                                      src="{{ service.images.first.webp_url }}" 
                                      alt="{{ translation.name }}" 
@@ -312,7 +312,7 @@
                         <div class="row g-3 service-gallery-thumbs">
                             {% for image in service.images.all %}
                                 <div class="col-4 col-md-3">
-                                    <a href="{{ image.image.url }}" data-lightbox="service-gallery" data-title="{{ image.image_name }}">
+                                    <a href="{{ image.webp_url }}" data-lightbox="service-gallery" data-title="{{ image.image_name }}">
                                         <img class="img-fluid rounded service-gallery-thumb" 
                                              src="{{ image.webp_url }}" 
                                              alt="{{ image.image_name }}"
