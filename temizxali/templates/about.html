@@ -474,7 +474,7 @@
                                     {% for image in about_item.images.all %}
                                         {% if image.id != first_image.id %}
                                             <div class="col-4 col-md-3">
-                                                <a href="{{ image.image.url }}" data-lightbox="about-gallery" data-title="{% trans 'Haqqımızda şəkli' %}">
+                                                <a href="{{ image.webp_url }}" data-lightbox="about-gallery" data-title="{% trans 'Haqqımızda şəkli' %}">
                                                     <img class="img-fluid rounded service-gallery-thumb" 
                                                          src="{{ image.webp_url }}" 
                                                          alt="{% trans 'Haqqımızda şəkli' %}"
