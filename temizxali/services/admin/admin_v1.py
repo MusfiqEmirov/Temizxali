@@ -15,6 +15,7 @@ class ServiceImageInline(NestedTabularInline):
     model = Image
     fk_name = 'service'
     extra = 1
+    can_delete = True
     readonly_fields = ('image_preview',)
     fields = ('image', 'image_preview')
 
@@ -28,7 +29,8 @@ class ServiceImageInline(NestedTabularInline):
 class SpecialProjectImageInline(NestedTabularInline):
     model = Image
     fk_name = 'special_project'
-    extra = 6
+    extra = 1
+    can_delete = True
     readonly_fields = ('image_preview',)
     fields = ('image', 'image_preview')
 
@@ -42,8 +44,8 @@ class SpecialProjectImageInline(NestedTabularInline):
 class AboutImageInline(NestedTabularInline):
     model = Image
     fk_name = 'about'
-    extra = 9
-    max_num = 9
+    extra = 1
+    can_delete = True
     readonly_fields = ('image_preview',)
     fields = ('image', 'image_preview')
 
@@ -122,17 +124,6 @@ class ImageAdmin(admin.ModelAdmin):
         
         return format_html(' '.join(badges))
     get_background_pages.short_description = "📄 Hansı Səhifə üçün"
-
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        return qs.filter(
-            Q(is_home_page_background_image=True) |
-            Q(is_about_page_background_image=True) |
-            Q(is_calculator_page_background_image=True) |
-            Q(is_review_page_background_image=True) |
-            Q(is_testimonial_page_background_image=True) |
-            Q(is_projects_page_background_image=True)
-        )
 
 
 

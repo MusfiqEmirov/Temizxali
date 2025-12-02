@@ -89,6 +89,17 @@ class Image(models.Model):
         
         if image_changed and self.image and hasattr(self.image, 'path'):
             try:
+                image_name_lower = self.image.name.lower()
+                is_webp = image_name_lower.endswith('.webp')
+                
+                if is_webp:
+                    try:
+                        img = PilImage.open(self.image.path)
+                        if img.format == 'WEBP':
+                            return
+                    except Exception:
+                        pass
+                
                 img = PilImage.open(self.image.path)
 
                 if img.mode != "RGB":

@@ -102,6 +102,10 @@ msgid "Dəyər"
 msgstr "Значение"
 
 #: templates/contact.html
+msgid "Sil"
+msgstr "Удалить"
+
+#: templates/contact.html
 msgid "Qiymət"
 msgstr "Цена"
 
