@@ -9,6 +9,8 @@ from services.models import (
     StatisticTranslation, AboutTranslation,
     ServiceVariant, ServiceVariantTranslation, SaleEvent, SaleEventTranslation,
 )
+
+
 @receiver([post_save, post_delete], sender=Image)
 def invalidate_cache_on_image_change(sender, instance, **kwargs):
     """Invalidate cache when Image is changed or deleted"""

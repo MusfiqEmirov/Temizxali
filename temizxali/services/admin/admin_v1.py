@@ -28,7 +28,7 @@ class ServiceImageInline(NestedTabularInline):
 class SpecialProjectImageInline(NestedTabularInline):
     model = Image
     fk_name = 'special_project'
-    extra = 6
+    extra = 1
     readonly_fields = ('image_preview',)
     fields = ('image', 'image_preview')
 
@@ -42,8 +42,7 @@ class SpecialProjectImageInline(NestedTabularInline):
 class AboutImageInline(NestedTabularInline):
     model = Image
     fk_name = 'about'
-    extra = 9
-    max_num = 9
+    extra = 1
     readonly_fields = ('image_preview',)
     fields = ('image', 'image_preview')
 
