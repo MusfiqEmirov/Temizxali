@@ -9,16 +9,6 @@ from services.models import (
     StatisticTranslation, AboutTranslation,
     ServiceVariant, ServiceVariantTranslation, SaleEvent, SaleEventTranslation,
 )
-from services.utils import run_async
-
-
-@receiver(post_save, sender=Image)
-def handle_webp(sender, instance, created, **kwargs):
-    update_fields = kwargs.get('update_fields') or []
-    if created or 'image' in update_fields:
-        run_async(instance)
-
-
 @receiver([post_save, post_delete], sender=Image)
 def invalidate_cache_on_image_change(sender, instance, **kwargs):
     """Invalidate cache when Image is changed or deleted"""
