@@ -2,8 +2,7 @@ from django.db import models
 from PIL import Image as PilImage
 from io import BytesIO
 from django.core.files.base import ContentFile
-import uuid
-import os
+from django.core.files.storage import default_storage
 
 from .service_models import Service
 from .special_project_models import SpecialProject
@@ -39,10 +38,6 @@ class Image(models.Model):
         upload_to='images/',  
         verbose_name='Şəkil'
     )
-    # image_name = models.CharField(
-    #     max_length=50,
-    #     verbose_name='Şəkil adı'
-    # )
     is_home_page_background_image = models.BooleanField(
         default=False,
         verbose_name='Ana sehifesi üçün arxa plan şəkli'
@@ -79,41 +74,43 @@ class Image(models.Model):
 
     @property
     def webp_url(self):
-        try:
-            webp_name = self.image.name.rsplit(".", 1)[0] + ".webp"
-            if self.image.storage.exists(webp_name):
-                return self.image.storage.url(webp_name)
-        except Exception:
-            pass
         return self.image.url
 
-   
-    # def save(self, *args, **kwargs):
-    #     is_new = self.pk is None
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        update_fields = kwargs.get('update_fields', [])
+        image_changed = is_new or 'image' in update_fields or not update_fields
+        
+        original_image_name = None
+        if image_changed and self.image:
+            original_image_name = self.image.name
+        
+        super().save(*args, **kwargs)
+        
+        if image_changed and self.image and hasattr(self.image, 'path'):
+            try:
+                img = PilImage.open(self.image.path)
 
-    #     super().save(*args, **kwargs)  # 1 dəfə save
-    #     img = PilImage.open(self.image.path)
+                if img.mode != "RGB":
+                    img = img.convert("RGB")
 
-    #     if img.mode != "RGB":
-    #         img = img.convert("RGB")
+                buffer = BytesIO()
+                img.save(buffer, format="WEBP")
+                buffer.seek(0)
 
-    #     max_width = 1920
-    #     if img.width > max_width:
-    #         ratio = max_width / img.width
-    #         height = int(img.height * ratio)
-    #         img = img.resize((max_width, height), PilImage.LANCZOS)
-
-    #     buffer = BytesIO()
-    #     img.save(buffer, format='JPEG', quality=70, optimize=True)
-    #     buffer.seek(0)
-
-    #     self.image.save(self.image.name, ContentFile(buffer.read()), save=False)
-    #     super().save(update_fields=["image"])  # 1 dəfə daha DB yazırıq
-    #     buffer.close()
-
-    #     # WebP
-    #     webp_buffer = BytesIO()
-    #     img.save(webp_buffer, format='WebP', quality=70, optimize=True)
-    #     webp_buffer.seek(0)
-    #     self.image.storage.save(self.image.name.replace('.jpg', '.webp'), ContentFile(webp_buffer.read()))
-    #     webp_buffer.close()
+                webp_name = self.image.name.rsplit(".", 1)[0] + ".webp"
+                
+                self.image.save(webp_name, ContentFile(buffer.read()), save=False)
+                buffer.close()
+                
+                if original_image_name and original_image_name != webp_name:
+                    try:
+                        storage = default_storage
+                        if storage.exists(original_image_name):
+                            storage.delete(original_image_name)
+                    except Exception:
+                        pass
+                
+                super().save(update_fields=['image'])
+            except Exception:
+                pass
