@@ -3,9 +3,13 @@ import os
 from django.db import models
 from django.core.validators import MaxLengthValidator
 from django.core.files import File
+from django.core.files.storage import default_storage
 from tempfile import NamedTemporaryFile
+import logging
 
 from services.utils import SluggedModel, LANGUAGES, MEASURE_TYPE_CHOICES
+
+logger = logging.getLogger(__name__)
 
 
 class Service(models.Model):
@@ -84,6 +88,97 @@ class Service(models.Model):
         if translation:
             return translation.name
         return f'Service #{self.id}'
+
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None
+        update_fields = kwargs.get('update_fields', [])
+        video_changed = is_new or 'video' in update_fields or not update_fields
+
+        old_video_name = None
+        if not is_new and self.pk and video_changed:
+            try:
+                old_instance = Service.objects.get(pk=self.pk)
+                if old_instance.video:
+                    old_video_name = old_instance.video.name
+                    logger.info(f"[SERVICE SAVE] Old video found: {old_video_name} (Service ID: {self.pk})")
+            except Service.DoesNotExist:
+                pass
+
+        if video_changed:
+            if self.video:
+                logger.info(f"[SERVICE SAVE] New video uploading (Service ID: {self.pk if not is_new else 'NEW'})")
+            elif old_video_name:
+                logger.info(f"[SERVICE SAVE] Video being removed (Service ID: {self.pk})")
+
+        super().save(*args, **kwargs)
+
+        if video_changed:
+            try:
+                storage = default_storage
+
+                if self.video:
+                    current_video_name = self.video.name
+                    logger.info(f"[SERVICE SAVE] Uploaded video: {current_video_name}")
+                    logger.info(f"[SERVICE SAVE] Video path: {self.video.path if hasattr(self.video, 'path') else 'N/A'}")
+
+                    if old_video_name and old_video_name != current_video_name:
+                        try:
+                            logger.info(f"[SERVICE SAVE] Checking old video: {old_video_name}")
+                            logger.info(f"[SERVICE SAVE] Storage exists check for: {old_video_name}")
+                            exists = storage.exists(old_video_name)
+                            logger.info(f"[SERVICE SAVE] File exists: {exists}")
+                            if exists:
+                                storage.delete(old_video_name)
+                                logger.info(f"[SERVICE SAVE] ✓ Old video deleted: {old_video_name}")
+                            else:
+                                logger.warning(f"[SERVICE SAVE] ✗ Old video not found: {old_video_name}")
+                        except Exception as e:
+                            logger.error(f"[SERVICE SAVE] Error deleting old video: {e}", exc_info=True)
+                elif old_video_name:
+                    try:
+                        logger.info(f"[SERVICE SAVE] Video removed, deleting old file: {old_video_name}")
+                        logger.info(f"[SERVICE SAVE] Storage exists check for: {old_video_name}")
+                        exists = storage.exists(old_video_name)
+                        logger.info(f"[SERVICE SAVE] File exists: {exists}")
+                        if exists:
+                            storage.delete(old_video_name)
+                            logger.info(f"[SERVICE SAVE] ✓ Old video deleted: {old_video_name}")
+                        else:
+                            logger.warning(f"[SERVICE SAVE] ✗ Old video not found: {old_video_name}")
+                    except Exception as e:
+                        logger.error(f"[SERVICE SAVE] Error deleting old video: {e}", exc_info=True)
+
+                logger.info(f"[SERVICE SAVE] Service successfully saved (Service ID: {self.pk})")
+            except Exception as e:
+                logger.error(f"[SERVICE SAVE] Error occurred: {e}")
+
+    def delete(self, *args, **kwargs):
+        service_id = self.pk
+        logger.info(f"[SERVICE DELETE] Deleting service (Service ID: {service_id})")
+
+        video_name = None
+        if self.video:
+            video_name = self.video.name
+            logger.info(f"[SERVICE DELETE] Video file to delete: {video_name}")
+
+        super().delete(*args, **kwargs)
+
+        if video_name:
+            try:
+                logger.info(f"[SERVICE DELETE] Deleting video file from disk: {video_name}")
+                storage = default_storage
+                logger.info(f"[SERVICE DELETE] Storage exists check for: {video_name}")
+                exists = storage.exists(video_name)
+                logger.info(f"[SERVICE DELETE] File exists: {exists}")
+                if exists:
+                    storage.delete(video_name)
+                    logger.info(f"[SERVICE DELETE] ✓ Video file deleted: {video_name}")
+                else:
+                    logger.warning(f"[SERVICE DELETE] ✗ Video file not found: {video_name}")
+            except Exception as e:
+                logger.error(f"[SERVICE DELETE] Error deleting video file: {e}", exc_info=True)
+
+        logger.info(f"[SERVICE DELETE] Service successfully deleted (Service ID: {service_id})")
 
 
 class ServiceVariant(models.Model):

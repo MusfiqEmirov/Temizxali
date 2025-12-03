@@ -216,6 +216,17 @@ class ServiceAdmin(NestedModelAdmin):
         qs = super().get_queryset(request)
         return qs.prefetch_related('translations', 'images', 'variants', 'variants__translations')
 
+    def delete_queryset(self, request, queryset):
+        import logging
+        logger = logging.getLogger(__name__)
+        count = queryset.count()
+        logger.info(f"[ADMIN BULK DELETE] Deleting {count} services...")
+        
+        for obj in queryset:
+            obj.delete()
+        
+        logger.info(f"[ADMIN BULK DELETE] {count} services successfully deleted")
+
     def get_service_name(self, obj):
         translation = obj.translations.first()
         if translation:
