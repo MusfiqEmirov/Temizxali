@@ -1,6 +1,7 @@
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_delete
 from django.dispatch import receiver
 from django.core.exceptions import ObjectDoesNotExist
+import logging
 from services.utils.cache_invalidation import CacheInvalidation
 
 from services.models import (
@@ -9,6 +10,8 @@ from services.models import (
     StatisticTranslation, AboutTranslation,
     ServiceVariant, ServiceVariantTranslation, SaleEvent, SaleEventTranslation,
 )
+
+logger = logging.getLogger(__name__)
 
 
 @receiver([post_save, post_delete], sender=Image)
@@ -26,6 +29,48 @@ def invalidate_cache_on_image_change(sender, instance, **kwargs):
         slugs = service.translations.values_list('slug', flat=True)
         for slug in slugs:
             CacheInvalidation.clear_service_detail_cache(service_slug=slug)
+
+
+@receiver(pre_delete, sender=Service)
+def delete_service_images(sender, instance, **kwargs):
+    try:
+        images = list(instance.images.all())
+        count = len(images)
+        if count > 0:
+            logger.info(f"[SERVICE DELETE] {count} images found, deleting files... (Service ID: {instance.id})")
+            for image in images:
+                image.delete_files()
+            logger.info(f"[SERVICE DELETE] {count} image files successfully deleted (Service ID: {instance.id})")
+    except Exception as e:
+        logger.error(f"[SERVICE DELETE] Error occurred (Service ID: {instance.id}): {e}")
+
+
+@receiver(pre_delete, sender=SpecialProject)
+def delete_special_project_images(sender, instance, **kwargs):
+    try:
+        images = list(instance.images.all())
+        count = len(images)
+        if count > 0:
+            logger.info(f"[SPECIAL_PROJECT DELETE] {count} images found, deleting files... (SpecialProject ID: {instance.id})")
+            for image in images:
+                image.delete_files()
+            logger.info(f"[SPECIAL_PROJECT DELETE] {count} image files successfully deleted (SpecialProject ID: {instance.id})")
+    except Exception as e:
+        logger.error(f"[SPECIAL_PROJECT DELETE] Error occurred (SpecialProject ID: {instance.id}): {e}")
+
+
+@receiver(pre_delete, sender=About)
+def delete_about_images(sender, instance, **kwargs):
+    try:
+        images = list(instance.images.all())
+        count = len(images)
+        if count > 0:
+            logger.info(f"[ABOUT DELETE] {count} images found, deleting files... (About ID: {instance.id})")
+            for image in images:
+                image.delete_files()
+            logger.info(f"[ABOUT DELETE] {count} image files successfully deleted (About ID: {instance.id})")
+    except Exception as e:
+        logger.error(f"[ABOUT DELETE] Error occurred (About ID: {instance.id}): {e}")
 
 
 @receiver([post_save, post_delete], sender=Service)
