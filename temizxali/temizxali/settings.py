@@ -21,8 +21,8 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
 # CSRF Settings
 CSRF_TRUSTED_ORIGINS = [
-    'http://44.222.65.54:8080',
-    'http://44.222.65.54',
+    'http://3.209.80.232:8080',
+    'http://3.209.80.232',
     'http://temizxali.az',
     'https://temizxali.az',
     'http://localhost:8080',
@@ -30,12 +30,12 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # CSRF Cookie Settings
-CSRF_COOKIE_SECURE = False  # Development üçün False, production-da True olmalıdır
+CSRF_COOKIE_SECURE = False  
 CSRF_COOKIE_HTTPONLY = False
 CSRF_USE_SESSIONS = False
 
 # Session Cookie Settings
-SESSION_COOKIE_SECURE = False  # Development üçün False, production-da True olmalıdır
+SESSION_COOKIE_SECURE = False  
 SESSION_COOKIE_HTTPONLY = True
 
 # Admin URL - secret path (required)
