@@ -88,6 +88,17 @@ class ImageAdmin(admin.ModelAdmin):
         }),
     )
 
+    def delete_queryset(self, request, queryset):
+        import logging
+        logger = logging.getLogger(__name__)
+        count = queryset.count()
+        logger.info(f"[ADMIN BULK DELETE] Deleting {count} images...")
+        
+        for obj in queryset:
+            obj.delete()
+        
+        logger.info(f"[ADMIN BULK DELETE] {count} images successfully deleted")
+
     def image_tag(self, obj):
         if obj.image:
             return format_html('<img src="{}" width="150" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" />', obj.webp_url)
@@ -204,6 +215,17 @@ class ServiceAdmin(NestedModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         return qs.prefetch_related('translations', 'images', 'variants', 'variants__translations')
+
+    def delete_queryset(self, request, queryset):
+        import logging
+        logger = logging.getLogger(__name__)
+        count = queryset.count()
+        logger.info(f"[ADMIN BULK DELETE] Deleting {count} services...")
+        
+        for obj in queryset:
+            obj.delete()
+        
+        logger.info(f"[ADMIN BULK DELETE] {count} services successfully deleted")
 
     def get_service_name(self, obj):
         translation = obj.translations.first()
