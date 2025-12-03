@@ -16,6 +16,7 @@ class ServiceImageInline(NestedTabularInline):
     fk_name = 'service'
     extra = 1
     can_delete = True
+    max_num = 30
     readonly_fields = ('image_preview',)
     fields = ('image', 'image_preview')
 
@@ -159,15 +160,6 @@ class ServiceVariantTranslationInline(NestedTabularInline):
     fields = ('languages', 'name')
 
 
-class ServiceVariantInline(NestedTabularInline):
-    model = ServiceVariant
-    extra = 1
-    verbose_name = '📦 Servis Növü'
-    verbose_name_plural = '📦 Servis Növləri'
-    inlines = [ServiceVariantTranslationInline]
-    fields = ('price', 'vip_price', 'premium_price')
-
-
 @admin.register(Service)
 class ServiceAdmin(NestedModelAdmin):
     list_display = (
@@ -208,7 +200,6 @@ class ServiceAdmin(NestedModelAdmin):
 
     inlines = [
         ServiceTranslationInline,
-        ServiceVariantInline,
         ServiceImageInline
     ]
 
@@ -466,6 +457,140 @@ class ServiceAdmin(NestedModelAdmin):
         return format_html('<span style="color: #6c757d; font-style: italic;">📭 Video yoxdur</span>')
     video_preview.short_description = '🎬 Video Önizləmə'
 
+
+@admin.register(ServiceVariant)
+class ServiceVariantAdmin(NestedModelAdmin):
+    list_display = (
+        'id',
+        'get_service_name',
+        'get_variant_name',
+        'get_prices_display',
+    )
+    list_display_links = ('id', 'get_variant_name')
+    list_filter = ('service', 'service__is_active')
+    search_fields = ('translations__name', 'service__translations__name')
+    readonly_fields = ('get_service_info', 'get_prices_summary')
+    
+    fieldsets = (
+        ('📋 Əsas Məlumat', {
+            'fields': ('service', 'get_service_info')
+        }),
+        ('💰 Qiymət Məlumatları', {
+            'fields': ('price', 'vip_price', 'premium_price', 'get_prices_summary')
+        }),
+    )
+
+    inlines = [ServiceVariantTranslationInline]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.select_related('service').prefetch_related('service__translations', 'translations')
+
+    def get_service_name(self, obj):
+        if obj.service:
+            translation = obj.service.translations.first()
+            if translation:
+                return format_html(
+                    '<strong style="font-size: 14px; color: #007bff;">🛠️ {}</strong>',
+                    translation.name
+                )
+        return format_html('<span style="color: #6c757d;">❌ Servis yoxdur</span>')
+    get_service_name.short_description = '🛠️ Servis'
+    get_service_name.admin_order_field = 'service__translations__name'
+
+    def get_variant_name(self, obj):
+        translation = obj.translations.first()
+        if translation:
+            return format_html(
+                '<strong style="font-size: 15px; color: #28a745;">📦 {}</strong>',
+                translation.name
+            )
+        return format_html('<span style="color: #6c757d;">Variant #{}</span>', obj.id)
+    get_variant_name.short_description = '📦 Növ Adı'
+    get_variant_name.admin_order_field = 'translations__name'
+
+    def get_prices_display(self, obj):
+        """Qiymətləri göstərir"""
+        prices = []
+        if obj.price:
+            prices.append(
+                format_html(
+                    '<span style="background-color: #28a745; color: white; padding: 3px 8px; '
+                    'border-radius: 4px; font-size: 11px; margin-right: 2px;">Standart: {} AZN</span>',
+                    obj.price
+                )
+            )
+        if obj.vip_price:
+            prices.append(
+                format_html(
+                    '<span style="background-color: #ffc107; color: #000; padding: 3px 8px; '
+                    'border-radius: 4px; font-size: 11px; margin-right: 2px;">VIP: {} AZN</span>',
+                    obj.vip_price
+                )
+            )
+        if obj.premium_price:
+            prices.append(
+                format_html(
+                    '<span style="background-color: #6f42c1; color: white; padding: 3px 8px; '
+                    'border-radius: 4px; font-size: 11px; margin-right: 2px;">Premium: {} AZN</span>',
+                    obj.premium_price
+                )
+            )
+        
+        if not prices:
+            return format_html('<span style="color: #6c757d; font-style: italic;">💰 Qiymət yoxdur</span>')
+        
+        return format_html(' '.join(prices))
+    get_prices_display.short_description = '💰 Qiymətlər'
+
+    def get_service_info(self, obj):
+        """Servis məlumatlarını göstərir"""
+        if not obj.service:
+            return format_html('<span style="color: #6c757d;">⚠️ Servis seçilməyib</span>')
+        
+        service = obj.service
+        info = []
+        info.append(f"🆔 Servis ID: {service.id}")
+        
+        translation = service.translations.first()
+        if translation:
+            info.append(f"📝 Servis Adı: {translation.name}")
+        
+        if service.is_active:
+            info.append("✅ Status: Aktiv")
+        else:
+            info.append("❌ Status: Deaktiv")
+        
+        return format_html('<br>'.join(info))
+    get_service_info.short_description = '📋 Servis Məlumatları'
+
+    def get_prices_summary(self, obj):
+        """Qiymət xülasəsini göstərir"""
+        if not obj.pk:
+            return format_html('<span style="color: #6c757d;">Yeni variant yaradılır - qiymətləri təyin edin</span>')
+        
+        summary = []
+        summary.append(f"🆔 Variant ID: {obj.id}")
+        
+        translation = obj.translations.first()
+        if translation:
+            summary.append(f"📝 Növ Adı: {translation.name}")
+        
+        prices_info = []
+        if obj.price:
+            prices_info.append(f"Standart: {obj.price} AZN")
+        if obj.vip_price:
+            prices_info.append(f"VIP: {obj.vip_price} AZN")
+        if obj.premium_price:
+            prices_info.append(f"Premium: {obj.premium_price} AZN")
+        
+        if prices_info:
+            summary.append("💰 Qiymətlər: " + " | ".join(prices_info))
+        else:
+            summary.append("💰 Qiymətlər: Təyin edilməyib")
+        
+        return format_html('<br>'.join(summary))
+    get_prices_summary.short_description = '📊 Qiymət Xülasəsi'
 
 
 class SaleEventTranslationInline(admin.TabularInline):
