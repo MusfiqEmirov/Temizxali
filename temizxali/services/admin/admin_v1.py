@@ -120,6 +120,18 @@ class ImageAdmin(admin.ModelAdmin):
         }),
     )
 
+    def get_queryset(self, request):
+        """Yalnız background şəkilləri göstərir"""
+        qs = super().get_queryset(request)
+        return qs.filter(
+            Q(is_home_page_background_image=True) |
+            Q(is_about_page_background_image=True) |
+            Q(is_calculator_page_background_image=True) |
+            Q(is_review_page_background_image=True) |
+            Q(is_testimonial_page_background_image=True) |
+            Q(is_projects_page_background_image=True)
+        )
+
     def delete_queryset(self, request, queryset):
         import logging
         logger = logging.getLogger(__name__)
