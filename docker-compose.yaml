@@ -17,7 +17,7 @@ services:
   web:
     build: .
     container_name: temizxali_web
-    command: gunicorn --bind 0.0.0.0:8000 --workers 3 --timeout 120 --chdir temizxali temizxali.wsgi:application
+    command: gunicorn --bind 0.0.0.0:8000 --workers 1 --timeout 120 --chdir temizxali temizxali.wsgi:application
     volumes:
       - .:/app                                  # entire project mount
       - ./temizxali/staticfiles:/app/temizxali/staticfiles  # collectstatic mount

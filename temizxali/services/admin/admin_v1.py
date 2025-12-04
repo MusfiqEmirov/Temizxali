@@ -2,6 +2,8 @@ from django.contrib import admin
 from nested_admin.nested import NestedModelAdmin, NestedTabularInline
 from django.utils.html import format_html
 from django.db.models import Q
+from django import forms
+from django.core.exceptions import ValidationError
 
 from services.utils import LANGUAGES
 from services.models import *
@@ -9,6 +11,23 @@ from services.models import *
 
 admin.site.site_header = "🏠 Təmizxali Admin Panel"
 
+
+class ServiceAdminForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = '__all__'
+    
+    def clean_video(self):
+        video = self.cleaned_data.get('video')
+        if video:
+            if hasattr(video, 'size'):
+                max_size = 120 * 1024 * 1024  # 120 MB
+                if video.size > max_size:
+                    raise ValidationError(
+                        f'Video ölçüsü 120 MB-dan böyük ola bilməz. '
+                        f'Cari ölçü: {(video.size / 1024 / 1024):.2f} MB'
+                    )
+        return video
 
 
 class ServiceImageInline(NestedTabularInline):
@@ -19,6 +38,9 @@ class ServiceImageInline(NestedTabularInline):
     max_num = 30
     readonly_fields = ('image_preview',)
     fields = ('image', 'image_preview')
+    
+    class Media:
+        js = ('js/admin_image_compress.js',)
 
     def image_preview(self, obj):
         if obj.image:
@@ -34,6 +56,9 @@ class SpecialProjectImageInline(NestedTabularInline):
     can_delete = True
     readonly_fields = ('image_preview',)
     fields = ('image', 'image_preview')
+    
+    class Media:
+        js = ('js/admin_image_compress.js',)
 
     def image_preview(self, obj):
         if obj.image:
@@ -49,6 +74,9 @@ class AboutImageInline(NestedTabularInline):
     can_delete = True
     readonly_fields = ('image_preview',)
     fields = ('image', 'image_preview')
+    
+    class Media:
+        js = ('js/admin_image_compress.js',)
 
     def image_preview(self, obj):
         if obj.image:
@@ -61,6 +89,9 @@ class AboutImageInline(NestedTabularInline):
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('image_tag', 'get_background_pages', 'created_at')
     readonly_fields = ('image_tag', 'get_background_pages')
+    
+    class Media:
+        js = ('js/admin_image_compress.js',)
     list_filter = (
         'is_home_page_background_image',
         'is_about_page_background_image',
@@ -162,6 +193,7 @@ class ServiceVariantTranslationInline(NestedTabularInline):
 
 @admin.register(Service)
 class ServiceAdmin(NestedModelAdmin):
+    form = ServiceAdminForm
     list_display = (
         'id',
         'get_service_name',
@@ -190,7 +222,7 @@ class ServiceAdmin(NestedModelAdmin):
         }),
         ('🎬 Media', {
             'fields': ('video', 'video_preview', 'url'),
-            'description': 'Servis üçün video və ya xarici link əlavə edə bilərsiniz.'
+            'description': 'Servis üçün video və ya xarici link əlavə edə bilərsiniz. ⚠️ Video ölçüsü maksimum 120 MB ola bilər.'
         }),
         ('📅 Sistem Məlumatları', {
             'fields': ('created_at',),

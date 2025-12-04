@@ -1,7 +1,4 @@
 from django.db import models
-from PIL import Image as PilImage
-from io import BytesIO
-from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 import logging
 
@@ -129,88 +126,88 @@ class Image(models.Model):
         except Exception as e:
             logger.error(f"[IMAGE DELETE FILES] Error occurred (Image ID: {image_id}): {e}")
 
-    def save(self, *args, **kwargs):
-        is_new = self.pk is None
-        update_fields = kwargs.get('update_fields', [])
-        image_changed = is_new or 'image' in update_fields or not update_fields
+    # def save(self, *args, **kwargs):
+    #     is_new = self.pk is None
+    #     update_fields = kwargs.get('update_fields', [])
+    #     image_changed = is_new or 'image' in update_fields or not update_fields
 
-        old_image_name = None
-        if not is_new and self.pk and image_changed:
-            try:
-                old_instance = Image.objects.get(pk=self.pk)
-                if old_instance.image:
-                    old_image_name = old_instance.image.name
-                    logger.info(f"[IMAGE SAVE] Old file found: {old_image_name} (Image ID: {self.pk})")
-            except Image.DoesNotExist:
-                pass
+    #     old_image_name = None
+    #     if not is_new and self.pk and image_changed:
+    #         try:
+    #             old_instance = Image.objects.get(pk=self.pk)
+    #             if old_instance.image:
+    #                 old_image_name = old_instance.image.name
+    #                 logger.info(f"[IMAGE SAVE] Old file found: {old_image_name} (Image ID: {self.pk})")
+    #         except Image.DoesNotExist:
+    #             pass
 
-        if image_changed and self.image:
-            logger.info(f"[IMAGE SAVE] New image uploading (Image ID: {self.pk if not is_new else 'NEW'})")
+    #     if image_changed and self.image:
+    #         logger.info(f"[IMAGE SAVE] New image uploading (Image ID: {self.pk if not is_new else 'NEW'})")
 
-        super().save(*args, **kwargs)
+    #     super().save(*args, **kwargs)
 
-        if image_changed and self.image and hasattr(self.image, 'path'):
-            try:
-                original_image_name = self.image.name
-                logger.info(f"[IMAGE SAVE] Uploaded file: {original_image_name}")
-                logger.info(f"[IMAGE SAVE] Converting image to WebP: {self.image.path}")
+    #     if image_changed and self.image and hasattr(self.image, 'path'):
+    #         try:
+    #             original_image_name = self.image.name
+    #             logger.info(f"[IMAGE SAVE] Uploaded file: {original_image_name}")
+    #             logger.info(f"[IMAGE SAVE] Converting image to WebP: {self.image.path}")
                 
-                img = PilImage.open(self.image.path)
-                if img.mode != "RGB":
-                    img = img.convert("RGB")
+    #             img = PilImage.open(self.image.path)
+    #             if img.mode != "RGB":
+    #                 img = img.convert("RGB")
 
-                buffer = BytesIO()
-                img.save(buffer, format="WEBP", quality=80)
-                buffer.seek(0)
+    #             buffer = BytesIO()
+    #             img.save(buffer, format="WEBP", quality=80)
+    #             buffer.seek(0)
 
-                webp_name = self.image.name.rsplit(".", 1)[0] + ".webp"
-                logger.info(f"[IMAGE SAVE] WebP file name: {webp_name}")
+    #             webp_name = self.image.name.rsplit(".", 1)[0] + ".webp"
+    #             logger.info(f"[IMAGE SAVE] WebP file name: {webp_name}")
                 
-                old_webp_name = None
-                if old_image_name and old_image_name.lower().endswith('.webp'):
-                    old_webp_name = old_image_name
-                    logger.info(f"[IMAGE SAVE] Old WebP file: {old_webp_name}")
-                elif old_image_name:
-                    old_webp_name = old_image_name.rsplit(".", 1)[0] + ".webp"
-                    logger.info(f"[IMAGE SAVE] Old WebP file (estimated): {old_webp_name}")
+    #             old_webp_name = None
+    #             if old_image_name and old_image_name.lower().endswith('.webp'):
+    #                 old_webp_name = old_image_name
+    #                 logger.info(f"[IMAGE SAVE] Old WebP file: {old_webp_name}")
+    #             elif old_image_name:
+    #                 old_webp_name = old_image_name.rsplit(".", 1)[0] + ".webp"
+    #                 logger.info(f"[IMAGE SAVE] Old WebP file (estimated): {old_webp_name}")
                 
-                self.image.save(webp_name, ContentFile(buffer.read()), save=False)
-                buffer.close()
-                logger.info(f"[IMAGE SAVE] WebP file created: {webp_name}")
+    #             self.image.save(webp_name, ContentFile(buffer.read()), save=False)
+    #             buffer.close()
+    #             logger.info(f"[IMAGE SAVE] WebP file created: {webp_name}")
                 
-                storage = default_storage
+    #             storage = default_storage
                 
-                if original_image_name and original_image_name != webp_name:
-                    try:
-                        logger.info(f"[IMAGE SAVE] Checking original file: {original_image_name}")
-                        if storage.exists(original_image_name):
-                            storage.delete(original_image_name)
-                            logger.info(f"[IMAGE SAVE] Original file deleted: {original_image_name}")
-                        else:
-                            logger.warning(f"[IMAGE SAVE] Original file not found: {original_image_name}")
-                    except Exception as e:
-                        logger.error(f"[IMAGE SAVE] Error deleting original file: {e}")
+    #             if original_image_name and original_image_name != webp_name:
+    #                 try:
+    #                     logger.info(f"[IMAGE SAVE] Checking original file: {original_image_name}")
+    #                     if storage.exists(original_image_name):
+    #                         storage.delete(original_image_name)
+    #                         logger.info(f"[IMAGE SAVE] Original file deleted: {original_image_name}")
+    #                     else:
+    #                         logger.warning(f"[IMAGE SAVE] Original file not found: {original_image_name}")
+    #                 except Exception as e:
+    #                     logger.error(f"[IMAGE SAVE] Error deleting original file: {e}")
 
-                if old_webp_name and old_webp_name != webp_name:
-                    try:
-                        if storage.exists(old_webp_name):
-                            storage.delete(old_webp_name)
-                            logger.info(f"[IMAGE SAVE] Old WebP file deleted: {old_webp_name}")
-                    except Exception as e:
-                        logger.error(f"[IMAGE SAVE] Error deleting old WebP file: {e}")
+    #             if old_webp_name and old_webp_name != webp_name:
+    #                 try:
+    #                     if storage.exists(old_webp_name):
+    #                         storage.delete(old_webp_name)
+    #                         logger.info(f"[IMAGE SAVE] Old WebP file deleted: {old_webp_name}")
+    #                 except Exception as e:
+    #                     logger.error(f"[IMAGE SAVE] Error deleting old WebP file: {e}")
 
-                if old_image_name and old_image_name != webp_name and not old_image_name.lower().endswith('.webp'):
-                    try:
-                        if storage.exists(old_image_name):
-                            storage.delete(old_image_name)
-                            logger.info(f"[IMAGE SAVE] Old original file deleted: {old_image_name}")
-                    except Exception as e:
-                        logger.error(f"[IMAGE SAVE] Error deleting old original file: {e}")
+    #             if old_image_name and old_image_name != webp_name and not old_image_name.lower().endswith('.webp'):
+    #                 try:
+    #                     if storage.exists(old_image_name):
+    #                         storage.delete(old_image_name)
+    #                         logger.info(f"[IMAGE SAVE] Old original file deleted: {old_image_name}")
+    #                 except Exception as e:
+    #                     logger.error(f"[IMAGE SAVE] Error deleting old original file: {e}")
 
-                super().save(update_fields=['image'])
-                logger.info(f"[IMAGE SAVE] Image successfully saved (Image ID: {self.pk})")
-            except Exception as e:
-                logger.error(f"[IMAGE SAVE] Error occurred: {e}")
+    #             super().save(update_fields=['image'])
+    #             logger.info(f"[IMAGE SAVE] Image successfully saved (Image ID: {self.pk})")
+    #         except Exception as e:
+    #             logger.error(f"[IMAGE SAVE] Error occurred: {e}")
 
 
     def delete(self, *args, **kwargs):
