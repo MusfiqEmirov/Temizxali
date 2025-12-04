@@ -149,7 +149,7 @@ def invalidate_cache_on_sale_event_change(sender, instance, **kwargs):
 def invalidate_cache_on_sale_event_translation_change(sender, instance, **kwargs):
     """Invalidate cache when SaleEventTranslation is changed or deleted"""
     try:
-        sale_event = instance.sale_event
+        sale_event = instance.sale
         if sale_event:
             service = sale_event.service
             if service:
