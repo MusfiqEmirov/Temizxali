@@ -29,6 +29,18 @@ def invalidate_cache_on_image_change(sender, instance, **kwargs):
                     CacheInvalidation.clear_service_detail_cache(service_slug=translation.slug)
     except ObjectDoesNotExist:
         pass
+    
+    # Service variant image dəyişəndə də cache-i clear et
+    try:
+        service_variant = instance.service_variant
+        if service_variant and service_variant.service:
+            service = service_variant.service
+            translations = service.translations.all()
+            for translation in translations:
+                if translation.slug:
+                    CacheInvalidation.clear_service_detail_cache(service_slug=translation.slug)
+    except ObjectDoesNotExist:
+        pass
 
 
 @receiver(pre_delete, sender=Service)

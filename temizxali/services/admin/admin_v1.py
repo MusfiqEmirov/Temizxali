@@ -85,6 +85,25 @@ class AboutImageInline(NestedTabularInline):
     image_preview.short_description = "🖼️ Önizləmə"
 
 
+class ServiceVariantImageInline(NestedTabularInline):
+    model = Image
+    fk_name = 'service_variant'
+    extra = 1
+    can_delete = True
+    max_num = 1
+    readonly_fields = ('image_preview',)
+    fields = ('image', 'image_preview')
+    
+    class Media:
+        js = ('js/admin_image_compress.js',)
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="100" style="border-radius: 4px;" />', obj.webp_url)
+        return format_html('<span style="color: #6c757d;">📷 Şəkil yoxdur</span>')
+    image_preview.short_description = "🖼️ Önizləmə"
+
+
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('image_tag', 'get_background_pages', 'created_at')
@@ -524,7 +543,7 @@ class ServiceVariantAdmin(NestedModelAdmin):
         }),
     )
 
-    inlines = [ServiceVariantTranslationInline]
+    inlines = [ServiceVariantTranslationInline, ServiceVariantImageInline]
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

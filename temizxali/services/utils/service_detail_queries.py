@@ -39,7 +39,8 @@ class ServiceDetailQueries:
             )),
             'images',
             Prefetch('variants', queryset=ServiceVariant.objects.all().prefetch_related(
-                Prefetch('translations', queryset=ServiceVariantTranslation.objects.filter(languages=lang))
+                Prefetch('translations', queryset=ServiceVariantTranslation.objects.filter(languages=lang)),
+                'images'
             )),
             Prefetch('sales', queryset=SaleEvent.objects.filter(active=True).prefetch_related(
                 Prefetch('translations', queryset=SaleEventTranslation.objects.filter(languages=lang))

@@ -378,6 +378,8 @@ h6,
     min-height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 1;
 }
 
 .service-item:hover .service-text {
@@ -386,8 +388,9 @@ h6,
 }
 
 .service-item .service-text h4,
-.service-item .service-text p {
-    transition: .3;
+.service-item .service-text p,
+.service-item .service-text div {
+    transition: .3s;
 }
 
 .service-item:hover .service-text h4 {
@@ -396,6 +399,15 @@ h6,
 
 .service-item:hover .service-text p {
     color: var(--light);
+}
+
+.service-item:hover .service-text div,
+.service-item:hover .service-text span {
+    color: var(--light) !important;
+}
+
+.service-item:hover .service-text strong {
+    color: #FFFFFF;
 }
 
 .service-item .service-text .btn-square {
@@ -1504,6 +1516,27 @@ a.lb-next:hover {
   max-width: 100%;
   display: inline-flex;
   align-items: center;
+}
+
+/* Service Variant Cards - Larger Size with Background Image */
+.service-detail-page .service-item {
+  min-height: 280px;
+}
+
+@media (min-width: 992px) {
+  .service-detail-page .service-item {
+    min-height: 300px;
+  }
+}
+
+.service-detail-page .service-item .service-text {
+  min-height: 280px;
+}
+
+@media (min-width: 992px) {
+  .service-detail-page .service-item .service-text {
+    min-height: 300px;
+  }
 }
 
 /*** Pagination - Sayt rənglərinə uyğun ***/
