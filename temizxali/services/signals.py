@@ -22,13 +22,13 @@ def invalidate_cache_on_image_change(sender, instance, **kwargs):
     CacheInvalidation.clear_projects_cache()
     try:
         service = instance.service
+        if service:
+            translations = service.translations.all()
+            for translation in translations:
+                if translation.slug:
+                    CacheInvalidation.clear_service_detail_cache(service_slug=translation.slug)
     except ObjectDoesNotExist:
-        service = None
-    
-    if service and service.translations.exists():
-        slugs = service.translations.values_list('slug', flat=True)
-        for slug in slugs:
-            CacheInvalidation.clear_service_detail_cache(service_slug=slug)
+        pass
 
 
 @receiver(pre_delete, sender=Service)
@@ -79,10 +79,12 @@ def invalidate_cache_on_service_change(sender, instance, **kwargs):
     CacheInvalidation.clear_homepage_cache()
     CacheInvalidation.clear_about_cache()
     CacheInvalidation.clear_projects_cache()
-    if instance.translations.exists():
-        slugs = instance.translations.values_list('slug', flat=True)
-        for slug in slugs:
-            CacheInvalidation.clear_service_detail_cache(service_slug=slug)
+    # Service detail cache-i clear et
+    if instance:
+        translations = instance.translations.all()
+        for translation in translations:
+            if translation.slug:
+                CacheInvalidation.clear_service_detail_cache(service_slug=translation.slug)
 
 
 @receiver([post_save, post_delete], sender=ServiceTranslation)
@@ -91,7 +93,9 @@ def invalidate_cache_on_service_translation_change(sender, instance, **kwargs):
     CacheInvalidation.clear_homepage_cache()
     CacheInvalidation.clear_about_cache()
     CacheInvalidation.clear_projects_cache()
-    CacheInvalidation.clear_service_detail_cache(service_slug=instance.slug)
+    # Service detail cache-i clear et
+    if instance and instance.slug:
+        CacheInvalidation.clear_service_detail_cache(service_slug=instance.slug)
 
 
 @receiver([post_save, post_delete], sender=ServiceVariant)
@@ -99,13 +103,13 @@ def invalidate_cache_on_service_variant_change(sender, instance, **kwargs):
     """Invalidate cache when ServiceVariant is changed or deleted"""
     try:
         service = instance.service
+        if service:
+            translations = service.translations.all()
+            for translation in translations:
+                if translation.slug:
+                    CacheInvalidation.clear_service_detail_cache(service_slug=translation.slug)
     except ObjectDoesNotExist:
-        service = None
-    
-    if service and service.translations.exists():
-        slugs = service.translations.values_list('slug', flat=True)
-        for slug in slugs:
-            CacheInvalidation.clear_service_detail_cache(service_slug=slug)
+        pass
 
 
 @receiver([post_save, post_delete], sender=ServiceVariantTranslation)
@@ -113,31 +117,48 @@ def invalidate_cache_on_service_variant_translation_change(sender, instance, **k
     """Invalidate cache when ServiceVariantTranslation is changed or deleted"""
     try:
         variant = instance.variant
+        if variant:
+            try:
+                service = variant.service
+                if service:
+                    translations = service.translations.all()
+                    for translation in translations:
+                        if translation.slug:
+                            CacheInvalidation.clear_service_detail_cache(service_slug=translation.slug)
+            except ObjectDoesNotExist:
+                pass
     except ObjectDoesNotExist:
-        variant = None
-    
-    if variant:
-        try:
-            service = variant.service
-        except ObjectDoesNotExist:
-            service = None
-        
-        if service and service.translations.exists():
-            slugs = service.translations.values_list('slug', flat=True)
-            for slug in slugs:
-                CacheInvalidation.clear_service_detail_cache(service_slug=slug)
+        pass
 
 
 @receiver([post_save, post_delete], sender=SaleEvent)
 def invalidate_cache_on_sale_event_change(sender, instance, **kwargs):
     """Invalidate cache when SaleEvent is changed or deleted"""
-    CacheInvalidation.clear_service_detail_cache()
+    try:
+        service = instance.service
+        if service:
+            translations = service.translations.all()
+            for translation in translations:
+                if translation.slug:
+                    CacheInvalidation.clear_service_detail_cache(service_slug=translation.slug)
+    except ObjectDoesNotExist:
+        pass
 
 
 @receiver([post_save, post_delete], sender=SaleEventTranslation)
 def invalidate_cache_on_sale_event_translation_change(sender, instance, **kwargs):
     """Invalidate cache when SaleEventTranslation is changed or deleted"""
-    CacheInvalidation.clear_service_detail_cache()
+    try:
+        sale_event = instance.sale_event
+        if sale_event:
+            service = sale_event.service
+            if service:
+                translations = service.translations.all()
+                for translation in translations:
+                    if translation.slug:
+                        CacheInvalidation.clear_service_detail_cache(service_slug=translation.slug)
+    except ObjectDoesNotExist:
+        pass
 
 
 @receiver([post_save, post_delete], sender=SpecialProject)
@@ -206,5 +227,4 @@ def invalidate_cache_on_contact_change(sender, instance, **kwargs):
     CacheInvalidation.clear_homepage_cache()
     CacheInvalidation.clear_about_cache()
     CacheInvalidation.clear_projects_cache()
-    CacheInvalidation.clear_service_detail_cache()
 

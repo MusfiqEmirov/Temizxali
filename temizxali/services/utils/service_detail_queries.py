@@ -1,7 +1,7 @@
 from django.utils import translation
-from django.core.cache import cache
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404
+from django.core.cache import cache
 
 
 class ServiceDetailQueries:
@@ -9,16 +9,16 @@ class ServiceDetailQueries:
     @staticmethod
     def get_service_detail_data(lang, service_slug):
         
+        cache_key = f'service_detail_data_{lang}_{service_slug}'
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            return cached_data
+        
         from services.models import (
             Service, ServiceTranslation, ServiceVariant,
             ServiceVariantTranslation, SaleEvent, SaleEventTranslation,
             Contact, Image
         )
-        
-        cache_key = f'service_detail_data_{lang}_{service_slug}'
-        cached_data = cache.get(cache_key)
-        if cached_data:
-            return cached_data
         
         translation_obj = get_object_or_404(
             ServiceTranslation,
