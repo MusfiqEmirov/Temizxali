@@ -21,8 +21,8 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
 # CSRF Settings
 CSRF_TRUSTED_ORIGINS = [
-    'http://34.238.192.164:8080',
-    'http://34.238.192.164',
+    'http://3.236.6.6:8080',
+    'http://3.236.6.6',
     'http://temizxali.az',
     'https://temizxali.az',
     'http://localhost:8080',
