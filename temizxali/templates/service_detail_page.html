@@ -307,20 +307,29 @@
                         </div>
                     {% endif %}
 
-                    <!-- Image Gallery -->
-                    {% if service.images.count > 1 %}
-                        <div class="row g-3 service-gallery-thumbs">
-                            {% for image in service.images.all %}
-                                <div class="col-4 col-md-3">
-                                    <a href="{{ image.webp_url }}" data-lightbox="service-gallery" data-title="{{ image.image_name }}">
-                                        <img class="img-fluid rounded service-gallery-thumb" 
-                                             src="{{ image.webp_url }}" 
-                                             alt="{{ image.image_name }}"
-                                             loading="lazy"
-                                             decoding="async">
-                                    </a>
+                    <!-- Image Gallery Carousel -->
+                    {% if service.images.count > 0 %}
+                        <div class="service-images-carousel-wrapper mt-4 position-relative">
+                            {% if service.images.count > 3 %}
+                                <div class="service-images-nav-container"></div>
+                            {% endif %}
+                            <div class="swiper service-images-carousel">
+                                <div class="swiper-wrapper">
+                                    {% for image in service.images.all %}
+                                        <div class="swiper-slide">
+                                            <div class="service-image-card">
+                                                <a href="{{ image.webp_url }}" data-lightbox="service-gallery" data-title="{{ image.image_name|default:service.translations.first.name }}">
+                                                    <img class="img-fluid rounded" 
+                                                         src="{{ image.webp_url }}" 
+                                                         alt="{{ image.image_name|default:service.translations.first.name }}"
+                                                         loading="lazy"
+                                                         decoding="async">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
-                            {% endfor %}
+                            </div>
                         </div>
                     {% endif %}
                 </div>

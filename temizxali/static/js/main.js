@@ -81,6 +81,44 @@
                 }
             });
         }
+        
+        // Service Images Carousel - Swiper.js
+        if (document.querySelector('.service-images-carousel')) {
+            // Create navigation buttons in custom container before initializing Swiper
+            var serviceNavContainer = document.querySelector('.service-images-nav-container');
+            if (serviceNavContainer && !serviceNavContainer.querySelector('.swiper-button-prev')) {
+                serviceNavContainer.innerHTML = '<div class="swiper-button-prev"><i class="bi bi-chevron-left"></i></div><div class="swiper-button-next"><i class="bi bi-chevron-right"></i></div>';
+            }
+            
+            var serviceImagesSwiper = new Swiper('.service-images-carousel', {
+                slidesPerView: 1,
+                spaceBetween: 15,
+                loop: false,
+                speed: 600,
+                breakpoints: {
+                    576: {
+                        slidesPerView: 2,
+                        spaceBetween: 15,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    992: {
+                        slidesPerView: 2,
+                        spaceBetween: 20,
+                    },
+                    1200: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                    }
+                },
+                navigation: {
+                    nextEl: '.service-images-nav-container .swiper-button-next',
+                    prevEl: '.service-images-nav-container .swiper-button-prev',
+                }
+            });
+        }
     });
 
     
