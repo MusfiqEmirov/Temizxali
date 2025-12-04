@@ -2,7 +2,7 @@ from django.db import models
 from django.core.files.storage import default_storage
 import logging
 
-from .service_models import Service
+from .service_models import Service, ServiceVariant
 from .special_project_models import SpecialProject
 from .about_models import About
 
@@ -33,6 +33,14 @@ class Image(models.Model):
         null=True,
         blank=True,
         verbose_name='Xüsusi lahiyə'
+    )
+    service_variant = models.ForeignKey(
+        ServiceVariant,
+        related_name='images',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='Servis növü'
     )
     image = models.ImageField(
         upload_to='images/',  
