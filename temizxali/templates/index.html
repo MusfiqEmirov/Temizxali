@@ -508,11 +508,6 @@
                                                 </video>
                                             {% elif service.images.first %}
                                                 <img class="w-100 h-100" src="{{ service.images.first.webp_url }}" alt="{{ translation.name }}" style="object-fit: cover;" loading="lazy" decoding="async">
-                                            {% else %}
-                                                <video autoplay muted loop playsinline class="video-bg">
-                                                    <source src="{% static 'videos/video1.mp4' %}" type="video/mp4">
-                                                    Sənin brauzerin videonu dəstəkləmir.
-                                                </video>
                                             {% endif %}
                                         </div>
                                         <div class="service-text rounded p-5 d-flex flex-column">

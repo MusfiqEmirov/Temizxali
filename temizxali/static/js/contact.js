@@ -105,7 +105,7 @@ function createServiceCard(option) {
         // Variantlar üçün HTML yarat
         let variantsHtml = '';
         if (variants.length > 0) {
-            variantsHtml = `<div class="variant-container"><p class="fw-bold text-dark mb-3">${getTranslation('variants-label')}:</p>`;
+            variantsHtml = `<div class="variant-container"><p class="fw-bold text-dark mb-2">${getTranslation('variants-label')}:</p>`;
             variants.forEach((variant, index) => {
                 const variantId = variant.id;
                 const variantName = variant.name || `${getTranslation('variant-default')} ${index + 1}`;
@@ -114,25 +114,25 @@ function createServiceCard(option) {
                 const variantPremiumPrice = parseFloat(String(variant.premium_price || 0).replace(',', '.')) || 0;
                 
                 variantsHtml += `
-                    <div class="row g-2 mb-2 align-items-center">
-                        <div class="col-auto">
-                            <input class="form-check-input" type="checkbox" id="${serviceId}_variant_${variantId}_check"
+                    <div class="variant-row mb-2">
+                        <div class="d-flex align-items-start gap-2 mb-1">
+                            <input class="form-check-input mt-1 flex-shrink-0" type="checkbox" id="${serviceId}_variant_${variantId}_check"
                                 onchange="toggleVariant('${serviceId}_variant_${variantId}')">
+                            <label class="form-check-label fw-medium flex-grow-1" for="${serviceId}_variant_${variantId}_check" style="word-break: break-word;">${variantName}</label>
                         </div>
-                        <div class="col-auto">
-                            <label class="form-check-label fw-medium" for="${serviceId}_variant_${variantId}_check">${variantName}</label>
-                        </div>
-                        <div class="col-auto">
-                            <select class="form-select form-select-sm" id="${serviceId}_variant_${variantId}_type" disabled onchange="calculateServicePrice('${serviceId}')">
-                                <option value="normal">${getTranslation('normal')}</option>
-                                ${variantVipPrice > 0 ? `<option value="vip">${getTranslation('vip')}</option>` : ''}
-                                ${variantPremiumPrice > 0 ? `<option value="premium">${getTranslation('premium')}</option>` : ''}
-                            </select>
-                        </div>
-                        <div class="col">
-                            <input type="text" class="form-control form-control-sm" id="${serviceId}_variant_${variantId}_value"
-                                placeholder="${unitPlaceholder}" disabled
-                                oninput="this.value = this.value.replace(/[^0-9.]/g, ''); calculateServicePrice('${serviceId}')">
+                        <div class="row g-2 align-items-center">
+                            <div class="col-md-4 col-sm-5">
+                                <select class="form-select form-select-sm" id="${serviceId}_variant_${variantId}_type" disabled onchange="calculateServicePrice('${serviceId}')">
+                                    <option value="normal">${getTranslation('normal')}</option>
+                                    ${variantVipPrice > 0 ? `<option value="vip">${getTranslation('vip')}</option>` : ''}
+                                    ${variantPremiumPrice > 0 ? `<option value="premium">${getTranslation('premium')}</option>` : ''}
+                                </select>
+                            </div>
+                            <div class="col-md-8 col-sm-7">
+                                <input type="text" class="form-control form-control-sm" id="${serviceId}_variant_${variantId}_value"
+                                    placeholder="${unitPlaceholder}" disabled
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, ''); calculateServicePrice('${serviceId}')">
+                            </div>
                         </div>
                     </div>
                 `;
@@ -142,18 +142,18 @@ function createServiceCard(option) {
         
         return `
             <div class="service-card" id="${serviceId}" data-service-id="${serviceId}">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
                     <div class="service-title">
                         ${serviceName}
                     </div>
-                    <button class="btn-remove" onclick="removeService('${serviceId}')">
+                    <button class="btn-remove flex-shrink-0" onclick="removeService('${serviceId}')">
                         <i class="fas fa-times"></i> ${getTranslation('remove')}
                     </button>
                 </div>
 
                 ${variantsHtml}
                 
-                <div class="alert alert-info mt-3" id="${serviceId}_price_final" style="display: none;">
+                <div class="alert alert-info mt-2" id="${serviceId}_price_final" style="display: none;">
                     <strong>${getTranslation('price')}:</strong> <span id="${serviceId}_price_amount_final">0.00 ₼</span>
                 </div>
             </div>
@@ -162,11 +162,11 @@ function createServiceCard(option) {
         // Variantlar yoxdursa
         return `
             <div class="service-card" id="${serviceId}" data-service-id="${serviceId}">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="d-flex justify-content-between align-items-start mb-2 gap-2">
                     <div class="service-title">
                         ${serviceName}
                     </div>
-                    <button class="btn-remove" onclick="removeService('${serviceId}')">
+                    <button class="btn-remove flex-shrink-0" onclick="removeService('${serviceId}')">
                         <i class="fas fa-times"></i> ${getTranslation('remove')}
                     </button>
                 </div>
@@ -186,7 +186,7 @@ function createServiceCard(option) {
                     </div>
                 </div>
                 
-                <div class="alert alert-info mt-3" id="${serviceId}_price" style="display: none;">
+                <div class="alert alert-info mt-2" id="${serviceId}_price" style="display: none;">
                     <strong>${getTranslation('price')}:</strong> <span id="${serviceId}_price_amount">0.00 ₼</span>
                 </div>
             </div>

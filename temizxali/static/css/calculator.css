@@ -43,8 +43,8 @@ body {
   background: #f0f2f5;
   border-radius: 1rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  margin-bottom: 1rem;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
   transition: all 0.3s ease;
 }
 
@@ -57,10 +57,13 @@ body {
   font-size: 1.25rem;
   font-weight: 600;
   color: #757575;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  word-break: break-word;
+  flex: 1;
+  min-width: 0;
 }
 
 .service-icon {
@@ -77,8 +80,19 @@ body {
   border: 2px dashed #66bb6a;
   border-radius: 0.5rem;
   background-color: #ffffff;
-  padding: 1rem;
-  margin-top: 1rem;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.variant-row {
+  padding: 0.5rem;
+  background-color: #fafafa;
+  border-radius: 0.5rem;
+  border: 1px solid #e0e0e0;
+}
+
+.variant-row:last-child {
+  margin-bottom: 0 !important;
 }
 
 .form-select,
