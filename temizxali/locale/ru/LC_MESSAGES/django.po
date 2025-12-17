@@ -611,3 +611,7 @@ msgstr "Тип услуги:"
 msgid "endirim tətbiq edildi"
 msgstr "скидка применена"
 
+#: templates/contact.html
+msgid "Bu xidmət artıq əlavə edilib!"
+msgstr "Эта услуга уже добавлена!"
+
