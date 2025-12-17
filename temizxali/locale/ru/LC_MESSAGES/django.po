@@ -264,6 +264,10 @@ msgid "etrafli"
 msgstr "Далее"
 
 #: templates/index.html
+msgid "ətraflı məlumat"
+msgstr "Подробная информация"
+
+#: templates/index.html
 msgid "Hazırda xidmət mövcud deyil."
 msgstr "В настоящее время услуга недоступна."
 
@@ -503,6 +507,11 @@ msgstr ""
 #: templates/index.html
 msgid "İllik Təcrübə"
 msgstr "Годовой опыт"
+
+#: templates/about.html
+#: templates/index.html
+msgid "İl Təcrübə"
+msgstr "Год опыта"
 
 #: templates/about.html
 #: templates/index.html

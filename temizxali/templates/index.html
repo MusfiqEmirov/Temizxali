@@ -364,7 +364,7 @@
                                 <h1 class="display-5 mb-4">{% trans "Biz Evinizi Bağ Kimi Edirik" %}</h1>
                                 <p class="mb-4">{% trans "Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir." %}</p>
                             {% endif %}
-                            <a class="btn btn-primary py-3 px-4" href="{% url 'about-page' %}">{% trans "Ətraflı" %}</a>
+                            <a class="btn btn-primary py-3 px-4" href="{% url 'about-page' %}">{% trans "Ətraflı Məlumat" %}</a>
                         </div>
                         <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
                             <div class="row g-5">
@@ -418,7 +418,7 @@
                         </div>
                         <h1 class="display-5 mb-4">{% trans "Biz Evinizi Bağ Kimi Edirik" %}</h1>
                         <p class="mb-4">{% trans "Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir." %}</p>
-                        <a class="btn btn-primary py-3 px-4" href="{% url 'about-page' %}">{% trans "Ətraflı" %}</a>
+                        <a class="btn btn-primary py-3 px-4" href="{% url 'about-page' %}">{% trans "Ətraflı Məlumat" %}</a>
                     </div>
                     <div class="col-lg-3 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
                         <div class="row g-5">
@@ -506,9 +506,9 @@
                                             <p class="mb-4 service-description-text">{{ translation.description|truncatewords:10 }}</p>
                                             <div class="mt-auto">
                                                 {% if translation.slug %}
-                                                    <a class="btn btn-sm" href="{% url 'service-page' translation.slug %}"><i class="fa fa-plus text-primary me-2"></i>{% trans "etrafli" %}</a>
+                                                    <a class="btn btn-sm" href="{% url 'service-page' translation.slug %}"><i class="fa fa-plus text-primary me-2"></i>{% trans "Ətraflı" %}</a>
                                                 {% else %}
-                                                    <a class="btn btn-sm" href="#"><i class="fa fa-plus text-primary me-2"></i>{% trans "etrafli" %}</a>
+                                                    <a class="btn btn-sm" href="#"><i class="fa fa-plus text-primary me-2"></i>{% trans "Ətraflı" %}</a>
                                                 {% endif %}
                                             </div>
                                         </div>
@@ -610,7 +610,7 @@
                                 {% for review in reviews %}
                                     <div class="swiper-slide">
                                         <div class="testimonial-item">
-                                            <h4>{{ review.fullname }}</h4>
+                                            <h4><i class="fas fa-user-circle me-2"></i>{{ review.fullname }}</h4>
                                             {% if review.service %}
                                                 {% with translation=review.service.translations.first %}
                                                     {% if translation %}
