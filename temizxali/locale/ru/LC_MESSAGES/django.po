@@ -607,3 +607,7 @@ msgstr "Посмотреть все проекты"
 msgid "Xidmət növü:"
 msgstr "Тип услуги:"
 
+#: templates/contact.html
+msgid "endirim tətbiq edildi"
+msgstr "скидка применена"
+

@@ -378,7 +378,8 @@ function calculateServicePrice(serviceId) {
                 if (value > 0) {
                     const discountPercent = getApplicableDiscount(value);
                     if (discountPercent > 0) {
-                        discountInfo = ` <span class="text-success small">(-${discountPercent.toFixed(0)}%)</span>`;
+                        const discountAppliedText = document.getElementById('trans-discount-applied')?.textContent || 'endirim tətbiq edildi';
+                        discountInfo = ` <span class="text-success small">(-${discountPercent.toFixed(0)}% ${discountAppliedText})</span>`;
                     }
                 }
             } else {
@@ -395,7 +396,8 @@ function calculateServicePrice(serviceId) {
                 if (totalVariantValue > 0) {
                     const discountPercent = getApplicableDiscount(totalVariantValue);
                     if (discountPercent > 0) {
-                        discountInfo = ` <span class="text-success small">(-${discountPercent.toFixed(0)}%)</span>`;
+                        const discountAppliedText = document.getElementById('trans-discount-applied')?.textContent || 'endirim tətbiq edildi';
+                        discountInfo = ` <span class="text-success small">(-${discountPercent.toFixed(0)}% ${discountAppliedText})</span>`;
                     }
                 }
             }
