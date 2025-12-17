@@ -235,7 +235,7 @@
                                 {% for review in reviews %}
                                     <div class="swiper-slide">
                                         <div class="testimonial-item">
-                                            <h4>{{ review.fullname }}</h4>
+                                            <h4><i class="fas fa-user-circle me-2"></i>{{ review.fullname }}</h4>
                                             {% if review.service %}
                                                 {% with translation=review.service.translations.first %}
                                                     {% if translation %}
