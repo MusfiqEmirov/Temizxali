@@ -16,6 +16,12 @@ class Contact(models.Model):
         max_length=50,
         verbose_name='Whatsapp əlaqə nömrəsi'
     )
+    whatsapp_number_2 = models.CharField(
+        null=True,
+        blank=True,
+        max_length=50,
+        verbose_name='Whatsapp əlaqə nömrəsi 2'
+    )
     phone_three = models.CharField(
         null=True,
         blank=True,

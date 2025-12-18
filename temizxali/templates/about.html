@@ -347,6 +347,11 @@
                                                     <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-2 text-primary"></i>{{ contact.whatsapp_number }}</a></p>
                                                     {% endwith %}
                                                 {% endif %}
+                                                {% if contact.whatsapp_number_2 %}
+                                                    {% with contact.whatsapp_number_2|cut:"+"|cut:" " as pure_number %}
+                                                    <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-2 text-primary"></i>{{ contact.whatsapp_number_2 }}</a></p>
+                                                    {% endwith %}
+                                                {% endif %}
                                                 {% if contact.email %}
                                                     <p class="mb-2"><i class="fa fa-envelope me-2 text-primary"></i>{{ contact.email }}</p>
                                                 {% endif %}
@@ -424,6 +429,11 @@
                                                 {% if contact.whatsapp_number %}
                                                     {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
                                                     <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-2 text-primary"></i>{{ contact.whatsapp_number }}</a></p>
+                                                    {% endwith %}
+                                                {% endif %}
+                                                {% if contact.whatsapp_number_2 %}
+                                                    {% with contact.whatsapp_number_2|cut:"+"|cut:" " as pure_number %}
+                                                    <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-2 text-primary"></i>{{ contact.whatsapp_number_2 }}</a></p>
                                                     {% endwith %}
                                                 {% endif %}
                                                 {% if contact.email %}
@@ -552,6 +562,11 @@
                         {% if contact.whatsapp_number %}
                             {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
                             <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number }}</a></p>
+                            {% endwith %}
+                        {% endif %}
+                        {% if contact.whatsapp_number_2 %}
+                            {% with contact.whatsapp_number_2|cut:"+"|cut:" " as pure_number %}
+                            <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number_2 }}</a></p>
                             {% endwith %}
                         {% endif %}
                         {% if contact.email %}

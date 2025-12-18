@@ -1,6 +1,7 @@
 from django.contrib import admin
 from nested_admin.nested import NestedModelAdmin, NestedTabularInline
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 from django.db.models import Q
 from django import forms
 from django.core.exceptions import ValidationError
@@ -1101,11 +1102,11 @@ class ContactAdmin(admin.ModelAdmin):
         'get_social_count'
     )
     list_display_links = ('id', 'get_address_display')
-    search_fields = ('address', 'phone', 'email', 'whatsapp_number')
+    search_fields = ('address', 'phone', 'email', 'whatsapp_number', 'whatsapp_number_2')
     
     fieldsets = (
         ('📍 Əsas Məlumat', {
-            'fields': ('address', 'phone', 'whatsapp_number', 'email')
+            'fields': ('address', 'phone', 'whatsapp_number', 'whatsapp_number_2', 'email')
         }),
         ('🌐 Sosial Şəbəkələr', {
             'fields': ('instagram', 'facebook', 'youtube', 'linkedn', 'tiktok'),
@@ -1132,13 +1133,29 @@ class ContactAdmin(admin.ModelAdmin):
     get_phone_display.short_description = '📞 Telefon'
 
     def get_whatsapp_display(self, obj):
+        links = []
         if obj.whatsapp_number:
-            return format_html(
-                '<a href="https://wa.me/994{}" target="_blank" style="color: #25D366; font-weight: bold; text-decoration: none;">'
-                '📱 {}</a>',
-                obj.whatsapp_number.replace('+', '').replace(' ', ''),
+            pure_num1 = obj.whatsapp_number.replace('+', '').replace(' ', '')
+            link1 = format_html(
+                '<a href="https://wa.me/{}" target="_blank" style="color: #25D366; font-weight: bold; text-decoration: none;">📱 {}</a>',
+                pure_num1,
                 obj.whatsapp_number
             )
+            links.append(link1)
+        if obj.whatsapp_number_2:
+            pure_num2 = obj.whatsapp_number_2.replace('+', '').replace(' ', '')
+            link2 = format_html(
+                '<a href="https://wa.me/{}" target="_blank" style="color: #25D366; font-weight: bold; text-decoration: none;">📱 {}</a>',
+                pure_num2,
+                obj.whatsapp_number_2
+            )
+            links.append(link2)
+        if links:
+            # format_html obyektlərini birləşdirmək
+            if len(links) == 1:
+                return links[0]
+            else:
+                return format_html('{} | {}', links[0], links[1])
         return format_html('<span style="color: #6c757d;">❌ WhatsApp yoxdur</span>')
     get_whatsapp_display.short_description = '📱 WhatsApp'
 
