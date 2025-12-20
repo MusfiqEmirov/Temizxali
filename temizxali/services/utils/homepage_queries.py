@@ -78,9 +78,12 @@ class HomePageQueries:
         
         mottos_list = list(mottos)
         mottos_with_bg = []
+        used_image_ids = set()
         if mottos_list and background_images:
             for i, m in enumerate(mottos_list):
                 bg_img = background_images[i % len(background_images)] if background_images else None
+                if bg_img:
+                    used_image_ids.add(bg_img.id)
                 mottos_with_bg.append({
                     'motto': m,
                     'background_image': bg_img
@@ -91,6 +94,9 @@ class HomePageQueries:
                     'motto': m,
                     'background_image': None
                 })
+        
+        # İstifadə olunmayan şəkilləri tap
+        unused_background_images = [img for img in background_images if img.id not in used_image_ids]
         
         statistics = Statistic.objects.all()
         
@@ -110,10 +116,12 @@ class HomePageQueries:
         contact = Contact.objects.first()
         
         bg_images_wrapper = BackgroundImagesQuerySet(background_images)
+        unused_bg_images_wrapper = BackgroundImagesQuerySet(unused_background_images)
         
         result = {
             'languages': lang,
             'background_images': bg_images_wrapper,
+            'unused_background_images': unused_bg_images_wrapper,
             'background_image': background_image,
             'mottos_with_bg': mottos_with_bg,
             'services': services,

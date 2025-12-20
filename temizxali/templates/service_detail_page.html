@@ -77,13 +77,13 @@
                     {% if contact.phone %}
                         <div class="h-100 d-inline-flex align-items-center me-4">
                             <span class="fa fa-phone-alt me-2"></span>
-                            <span>{{ contact.phone }}</span>
+                            <a href="tel:{{ contact.phone }}" class="text-light text-decoration-none">{{ contact.phone }}</a>
                         </div>
                     {% endif %}
                     {% if contact.email %}
                         <div class="h-100 d-inline-flex align-items-center">
                             <span class="far fa-envelope me-2"></span>
-                            <span>{{ contact.email }}</span>
+                            <a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a>
                         </div>
                     {% endif %}
                 {% else %}
@@ -529,10 +529,10 @@
                     <h4 class="text-white mb-4">{% trans "Ünvan və Əlaqə:" %}</h4>
                     {% if contact %}
                         {% if contact.address %}
-                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ contact.address }}</p>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><a href="https://www.google.com/maps/place/xalcalarin+yuyulmasi,/@40.3847779,49.9136553,16.36z/data=!4m6!3m5!1s0x40306332c6cbff81:0x3a32e96f1096012d!8m2!3d40.3850641!4d49.916934!16s%2Fg%2F11c6t7k5bb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-light text-decoration-none">{{ contact.address }}</a></p>
                         {% endif %}
                         {% if contact.phone %}
-                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>{{ contact.phone }}</p>
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone }}" class="text-light text-decoration-none">{{ contact.phone }}</a></p>
                         {% endif %}
                         {% if contact.whatsapp_number %}
                             {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
@@ -545,7 +545,7 @@
                             {% endwith %}
                         {% endif %}
                         {% if contact.email %}
-                            <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{ contact.email }}</p>
+                            <p class="mb-2"><i class="fa fa-envelope me-3"></i><a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a></p>
                         {% endif %}
                         <div class="d-flex pt-2">
                             {% if contact.facebook %}

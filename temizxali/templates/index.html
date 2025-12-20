@@ -89,13 +89,13 @@
                     {% if contact.phone %}
                         <div class="h-100 d-inline-flex align-items-center me-4">
                             <span class="fa fa-phone-alt me-2"></span>
-                            <span>{{ contact.phone }}</span>
+                            <a href="tel:{{ contact.phone }}" class="text-light text-decoration-none">{{ contact.phone }}</a>
                         </div>
                     {% endif %}
                     {% if contact.email %}
                         <div class="h-100 d-inline-flex align-items-center">
                             <span class="far fa-envelope me-2"></span>
-                            <span>{{ contact.email }}</span>
+                            <a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a>
                         </div>
                     {% endif %}
                 {% else %}
@@ -298,37 +298,26 @@
                             {% endif %}
                         {% endwith %}
                     {% endfor %}
-                {% elif background_images %}
+                {% endif %}
+                {% if unused_background_images %}
+                    {% for bg_image in unused_background_images %}
+                        <div class="carousel-item {% if not mottos_with_bg and forloop.first %}active{% endif %}">
+                            <img class="w-100" src="{{ bg_image.webp_url }}" alt="Image" loading="lazy" decoding="async">
+                        </div>
+                    {% endfor %}
+                {% elif background_images and not mottos_with_bg %}
                     {% for bg_image in background_images %}
                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
                             <img class="w-100" src="{{ bg_image.webp_url }}" alt="Image" loading="lazy" decoding="async">
-                            <div class="carousel-caption">
-                                <div class="container">
-                                    <div class="row justify-content-center">
-                                        <div class="col-lg-8">
-                                            <h1 class="display-1 text-white mb-5 animated slideInDown">{% trans "Xoş gəlmisiniz" %}</h1>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     {% endfor %}
-                {% else %}
+                {% elif not mottos_with_bg %}
                     <div class="carousel-item active">
                         <img class="w-100" src="{% static 'img/carousel-1.webp' %}" alt="Image">
-                        <div class="carousel-caption">
-                            <div class="container">
-                                <div class="row justify-content-center">
-                                    <div class="col-lg-8">
-                                        <h1 class="display-1 text-white mb-5 animated slideInDown">{% trans "Xoş gəlmisiniz" %}</h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 {% endif %}
             </div>
-            {% if mottos_with_bg|length > 1 or background_images|length > 1 %}
+            {% if mottos_with_bg|length > 1 or unused_background_images|length > 0 or background_images|length > 1 %}
                 <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
                     data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -355,7 +344,7 @@
                     <div class="row g-5 align-items-start mt-5">
                         <div class="col-lg-4 col-md-5 wow fadeInUp" data-wow-delay="0.1s">
                             {% if about_item.images.first %}
-                                <img style="" class="img-fluid  object-fit-cover rounded  mx-auto d-block mb-auto" data-wow-delay="0.1s" src="{{ about_item.images.first.webp_url }}" alt="{% trans 'Haqqımızda' %}" loading="lazy" decoding="async">
+                                <img class="img-fluid  object-fit-cover rounded  mx-auto d-block mb-auto" data-wow-delay="0.1s" src="{{ about_item.images.first.webp_url }}" alt="{% trans 'Haqqımızda' %}" loading="lazy" decoding="async">
                             {% else %}
                                 <img class="img-fluid rounded  object-fit-cover mx-auto d-block mb-auto" data-wow-delay="0.1s" src="{% static 'img/carousel-1.webp' %}" alt="{% trans 'Haqqımızda' %}" loading="lazy" decoding="async">
                             {% endif %}
@@ -606,7 +595,7 @@
     <!-- Testimonial Start -->
     <div id="testimonials" class="container-xxl py-5">
         <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-            <h3 class="display-6 mb-1 text-primary">{% trans "Sizdən gələn rəylər" %}</h3>
+            <h3 class="display-6 mb-1 text-primary">{% trans "Sizdən gələn rəy və şikayətlər" %}</h3>
             <p class="mb-4">{% trans "Rəyləri yalnız xidmətimizdən istifadə edən müştərilər yaza bilər" %}</p>
         </div>
 
@@ -644,7 +633,7 @@
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-4">
                         <div class="testimonial-nav-container"></div>
-                        <a class="btn btn-primary py-3 px-4" href="{% url 'create-review' %}">{% trans "Rəy bildir" %}</a>
+                        <a class="btn btn-primary py-3 px-4" href="{% url 'create-review' %}">{% trans "Rəy və ya şikayətinizi bildirin" %}</a>
                     </div>
                 </div>
             </div>
@@ -661,10 +650,10 @@
                     <h4 class="text-white mb-4">{% trans "Ünvan və Əlaqə:" %}</h4>
                     {% if contact %}
                         {% if contact.address %}
-                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>{{ contact.address }}</p>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><a href="https://www.google.com/maps/place/xalcalarin+yuyulmasi,/@40.3847779,49.9136553,16.36z/data=!4m6!3m5!1s0x40306332c6cbff81:0x3a32e96f1096012d!8m2!3d40.3850641!4d49.916934!16s%2Fg%2F11c6t7k5bb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-light text-decoration-none">{{ contact.address }}</a></p>
                         {% endif %}
                         {% if contact.phone %}
-                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>{{ contact.phone }}</p>
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone }}" class="text-light text-decoration-none">{{ contact.phone }}</a></p>
                         {% endif %}
                         {% if contact.whatsapp_number %}
                             {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
@@ -678,7 +667,7 @@
                         {% endif %}
         
                         {% if contact.email %}
-                            <p class="mb-2"><i class="fa fa-envelope me-3"></i>{{ contact.email }}</p>
+                            <p class="mb-2"><i class="fa fa-envelope me-3"></i><a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a></p>
                         {% endif %}
                         <div class="d-flex pt-2">
                             {% if contact.facebook %}

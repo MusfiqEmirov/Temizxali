@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"POT-Creation-Date: 2025-12-20 22:52+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,603 +15,673 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14) ? 2 : 3);\n"
 
-#: services/forms.py:34
+#: temizxali/services/forms.py:33
 msgid "Servislər"
 msgstr "Услуги"
 
-#: services/forms.py:35
+#: temizxali/services/forms.py:34 temizxali/services/forms.py:100
 msgid "Ad Soyad"
 msgstr "Имя Фамилия"
 
-#: services/forms.py:36
+#: temizxali/services/forms.py:35 temizxali/services/forms.py:101
 msgid "Mobil nömrə"
 msgstr "Мобильный номер"
 
-#: services/forms.py:37
+#: temizxali/services/forms.py:36
 msgid "Mesaj"
 msgstr "Сообщение"
 
-#: services/forms.py:19
+#: temizxali/services/forms.py:42 temizxali/services/forms.py:108
 msgid "Ad və soyadınızı daxil edin"
 msgstr "Введите ваше имя и фамилию"
 
-#: services/forms.py:23
+#: temizxali/services/forms.py:43
 msgid "Nömrənizi daxil edin (məs: 501234567)"
 msgstr "Введите ваш номер (например: 501234567)"
 
-#: services/forms.py:29
+#: temizxali/services/forms.py:44
 msgid "Sifariş və ya mesajınızı buraya yazın..."
 msgstr "Напишите ваш заказ или сообщение здесь..."
 
-#: services/forms.py:52
-msgid "Mobil nömrənizi daxil edin (məs: 501234567)"
-msgstr "Введите ваш мобильный номер (например: 501234567)"
-
-#: services/forms.py:61
-msgid "Rəyinizi yazın..."
-msgstr "Напишите ваш отзыв..."
-
-#: services/views/views_v1.py:74
-msgid "Sifarişiniz uğurla göndərildi"
-msgstr "Ваш заказ успешно отправлен"
-
-#: services/views/views_v1.py:77
-msgid "Zəhmət olmasa formu düzgün doldurun"
-msgstr "Пожалуйста, заполните форму правильно"
-
-#: services/views/calculator_view.py:50
-msgid "Heç bir servis seçilməyib."
-msgstr "Не выбрана ни одна услуга."
-
-#: services/views/calculator_view.py:77
-msgid "Servis tapılmadı: ID %(service_id)s"
-msgstr "Услуга не найдена: ID %(service_id)s"
-
-#: services/views/calculator_view.py:109
-msgid "%(service_name)s üçün dəyər daxil edilməyib."
-msgstr "Значение не введено для %(service_name)s."
-
-#: services/views/calculator_view.py:118
-msgid "%(service_name)s üçün dəyər müsbət olmalıdır."
-msgstr "Значение для %(service_name)s должно быть положительным."
-
-#: services/views/calculator_view.py:123
-msgid "%(service_name)s üçün keçərsiz dəyər."
-msgstr "Неверное значение для %(service_name)s."
-
-#: templates/calculator.html
-msgid "Servis Kalkulyatoru"
-msgstr "Калькулятор услуг"
-
-#: templates/calculator.html
-msgid "Normal"
-msgstr "Обычный"
-
-#: templates/calculator.html
-msgid "Premium"
-msgstr "Премиум"
-
-#: templates/calculator.html
-msgid "Variantlar"
-msgstr "Варианты"
-
-#: templates/calculator.html
-msgid "Dəyər"
-msgstr "Значение"
-
-#: templates/contact.html
-msgid "Sil"
-msgstr "Удалить"
-
-#: templates/contact.html
-msgid "Qiymət"
-msgstr "Цена"
-
-#: templates/contact.html
-msgid "kq"
-msgstr "кг"
-
-#: templates/contact.html
-msgid "Dəyər daxil edin (kq)"
-msgstr "Введите значение (кг)"
-
-#: templates/contact.html
-msgid "Dəyər daxil edin (m²)"
-msgstr "Введите значение (m²)"
-
-#: templates/contact.html
-msgid "Dəyər daxil edin (m)"
-msgstr "Введите значение (m)"
-
-#: templates/contact.html
-msgid "Dəyər daxil edin (ədəd)"
-msgstr "Введите значение (шт)"
-
-#: templates/calculator.html
-msgid "ədəd"
-msgstr "шт"
-
-#: templates/calculator.html
-msgid "Dəyər daxil edin"
-msgstr "Введите значение"
-
-#: templates/calculator.html
-msgid "Hesabla"
-msgstr "Рассчитать"
-
-#: templates/calculator.html
-msgid "Hesablanma Nəticələri"
-msgstr "Результаты расчета"
-
-#: templates/calculator.html
-msgid "Servis"
-msgstr "Услуга"
-
-#: templates/calculator.html
-msgid "Variant"
-msgstr "Вариант"
-
-#: templates/calculator.html
-msgid "Növ"
-msgstr "Тип"
-
-#: templates/calculator.html
-msgid "Əsas Qiymət"
-msgstr "Базовая цена"
-
-#: templates/calculator.html
-msgid "Endirimsiz"
-msgstr "Без скидки"
-
-#: templates/calculator.html
-msgid "Endirim"
-msgstr "Скидка"
-
-#: templates/calculator.html
-msgid "Yekun"
-msgstr "Итого"
-
-#: templates/calculator.html
-msgid "Vahid"
-msgstr "Ед."
-
-#: templates/calculator.html
-msgid "Yekun məbləğ"
-msgstr "Итоговая сумма"
-
-#: templates/calculator.html
-msgid "Dil"
-msgstr "Язык"
-
-#: templates/calculator.html
-msgid "Ana Səhifə"
-msgstr "Главная"
-
-#: templates/calculator.html
-msgid "Kalkulyator"
-msgstr "Калькулятор"
-
-#: templates/calculator.html
-msgid "Qiymət Növü"
-msgstr "Тип цены"
-
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Ana səhifə"
-msgstr "Главная"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Haqqımızda"
-msgstr "О нас"
-
-#: templates/index.html
-msgid "Xidmetler"
-msgstr "Услуги"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Xidmət tapılmadı"
-msgstr "Услуга не найдена"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Layihələr"
-msgstr "Проекты"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Rəylər"
-msgstr "Отзывы"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-#: templates/testimonial.html
-msgid "Hesabla və Sifariş et"
-msgstr "Рассчитать и Заказать"
-
-#: templates/index.html
-msgid "Xoş gəlmisiniz"
-msgstr "Добро пожаловать"
-
-#: templates/index.html
-msgid "Xidmətlərimiz"
-msgstr "Наши услуги"
-
-#: templates/index.html
-msgid "etrafli"
-msgstr "Далее"
-
-#: templates/index.html
-msgid "ətraflı məlumat"
-msgstr "Подробная информация"
-
-#: templates/index.html
-msgid "Hazırda xidmət mövcud deyil."
-msgstr "В настоящее время услуга недоступна."
-
-#: templates/index.html
-#: templates/projects.html
-msgid "Layihələrimiz"
-msgstr "Наши проекты"
-
-#: templates/index.html
-msgid "Sizdən gələn rəylər"
-msgstr "Отзывы от вас"
-
-#: templates/index.html
-msgid "Rəyləri yalnız xidmətimizdən istifadə edən müştərilər yaza bilər"
-msgstr "Отзывы могут оставлять только клиенты, которые использовали наши услуги"
-
-#: templates/index.html
-msgid "Rəy bildir"
-msgstr "Оставить отзыв"
-
-#: templates/index.html
-msgid "Hazırda rəy mövcud deyil."
-msgstr "В настоящее время отзывов нет."
-
-#: templates/index.html
-msgid "Məmnun Müştərilər"
-msgstr "Довольные клиенты"
-
-#: templates/index.html
-msgid "Tamamlanmış İşlər"
-msgstr "Завершенные работы"
-
-#: templates/index.html
-msgid "Peşəkar Komanda"
-msgstr "Профессиональная команда"
-
-#: templates/index.html
-msgid "Nailiyyətlər"
-msgstr "Достижения"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Ünvan və Əlaqə:"
-msgstr "Адрес и Контакты:"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Xidmətlər"
-msgstr "Услуги"
-
-
-#: templates/about.html
-msgid "Qaleryamız"
-msgstr "Наша галерея"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Digər"
-msgstr "Другое"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Sifariş"
-msgstr "Заказ"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Bütün Xidmətlər"
-msgstr "Все услуги"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "Əlaqə"
-msgstr "Контакты"
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-msgid "tərəfindən hazırlanıb. Bütün hüquqlar qorunur."
-msgstr "разработано. Все права защищены."
-
-#: templates/contact.html
-msgid "Bizimlə əlaqə saxlayın"
-msgstr "Свяжитесь с нами"
-
-#: templates/contact.html
-msgid "Sifariş Verin"
-msgstr "Сделать заказ"
-
-#: templates/contact.html
-msgid "Məlumatlarınızı doldurun və sifarişinizi göndərin"
-msgstr "Заполните ваши данные и отправьте заказ"
-
-#: templates/contact.html
-msgid "Xidmət növü seçin"
-msgstr "Выберите тип услуги"
-
-#: templates/contact.html
-msgid "Sifarişi Göndər"
-msgstr "Отправить заказ"
-
-#: templates/contact.html
-msgid "Xidmətləri seçin və qiyməti hesablayın"
-msgstr "Выберите услуги и рассчитайте цену"
-
-#: templates/contact.html
-msgid "Xidmət əlavə edin:"
-msgstr "Добавить услугу:"
-
-#: templates/contact.html
-msgid "Xidmət seçin..."
-msgstr "Выберите услугу..."
-
-#: templates/contact.html
-msgid "Ümumi məbləğ:"
-msgstr "Общая сумма:"
-
-#: templates/comment_add.html
-msgid "Rəyinizi paylaşın"
-msgstr "Поделитесь своим отзывом"
-
-#: templates/comment_add.html
-msgid "Rəyinizi Paylaşın"
-msgstr "Поделитесь своим отзывом"
-
-#: templates/comment_add.html
-msgid "Xidmətimizdən istifadə etdikdən sonra rəyinizi bizimlə və digərləri ilə paylaşın. Sizin fikriniz çox dəyərlidir."
-msgstr "После использования наших услуг поделитесь своим отзывом с нами и другими. Ваше мнение очень ценно."
-
-#: templates/comment_add.html
-msgid "Rəyi Göndər"
-msgstr "Отправить отзыв"
-
-#: templates/service_detail_page.html
-msgid "Xidmət Detalları"
-msgstr "Детали услуги"
-
-#: templates/service_detail_page.html
-msgid "Sənin brauzerin videonu dəstəkləmir."
-msgstr "Ваш браузер не поддерживает видео."
-
-#: templates/service_detail_page.html
-msgid "Qiymətlər"
-msgstr "Цены"
-
-#: templates/service_detail_page.html
-msgid "Standart:"
-msgstr "Стандарт:"
-
-#: templates/service_detail_page.html
-msgid "VIP:"
-msgstr "VIP:"
-
-#: templates/service_detail_page.html
-msgid "Premium:"
-msgstr "Премиум:"
-
-#: templates/service_detail_page.html
-msgid "Sifariş Ver"
-msgstr "Сделать заказ"
-
-#: templates/service_detail_page.html
-msgid "Ətraflı Məlumat"
-msgstr "Подробная информация"
-
-#: templates/service_detail_page.html
-msgid "Xidmət Növləri"
-msgstr "Типы услуг"
-
-#: templates/service_detail_page.html
-msgid "Müxtəlif paket seçimləri"
-msgstr "Различные варианты пакетов"
-
-#: templates/service_detail_page.html
-msgid "Digər Xidmətlər"
-msgstr "Другие услуги"
-
-#: templates/service_detail_page.html
-msgid "Bütün Xidmətlərə Bax"
-msgstr "Посмотреть все услуги"
-
-#: templates/service_detail_page.html
-msgid "Əhməd Rəcəbli Business Center"
-msgstr "Бизнес-центр Ахмеда Раджабли"
-
-#: services/views/views_v1.py
-msgid "Rəyiniz uğurla göndərildi ✅"
-msgstr "Ваш отзыв успешно отправлен ✅"
-
-#: services/views/views_v1.py
-msgid "Melumatlari duzgun daxil edin"
-msgstr "Введите данные правильно"
-
-#: templates/service_detail_page.html
-msgid "Aktiv Endirim Kampaniyaları"
-msgstr "Активные акции"
-
-#: services/forms.py
+#: temizxali/services/forms.py:50 temizxali/services/forms.py:116
 msgid "Mobil nömrə daxil edin."
 msgstr "Введите мобильный номер."
 
-#: services/forms.py
-msgid "Düzgün nömrə daxil edin!\n"
+#: temizxali/services/forms.py:56 temizxali/services/forms.py:122
+msgid ""
+"Düzgün nömrə daxil edin!\n"
 "Nümunələr: 50 123 45 67 | 0501234567 | +994501234567"
-msgstr "Введите правильный номер!\n"
+msgstr ""
+"Введите правильный номер!\n"
 "Примеры: 50 123 45 67 | 0501234567 | +994501234567"
 
-#: services/forms.py
+#: temizxali/services/forms.py:64 temizxali/services/forms.py:130
+#, fuzzy
+#| msgid ""
+#| "Bu nömrə üzrə sifarişiniz hələ təsdiqlənməyib. Rəy yazmaq üçün əvvəlcə "
+#| "sifarişin təsdiqlənməsini gözləməyiniz xahiş olunur."
 msgid ""
-"Bu nömrə üzrə sifarişiniz hələ təsdiqlənməyib. "
-"Rəy yazmaq üçün əvvəlcə sifarişin təsdiqlənməsini gözləməyiniz xahiş olunur."
+"Bu nömrə ilə heç bir sifariş tapılmadı. Rəy yazmaq üçün əvvəlcə sifariş "
+"verməlisiniz"
 msgstr ""
-"Ваш заказ по этому номеру ещё не подтверждён. "
-"Чтобы оставить отзыв, дождитесь, пожалуйста, подтверждения заказа."
+"Ваш заказ по этому номеру ещё не подтверждён. Чтобы оставить отзыв, "
+"дождитесь, пожалуйста, подтверждения заказа."
 
-#: templates/about.html
-#: templates/index.html
-msgid "İllik Təcrübə"
-msgstr "Годовой опыт"
+#: temizxali/services/forms.py:99
+#, fuzzy
+#| msgid "Xidmətlər"
+msgid "Xidmət"
+msgstr "Услуги"
 
-#: templates/about.html
-#: templates/index.html
-msgid "İl Təcrübə"
-msgstr "Год опыта"
+#: temizxali/services/forms.py:102
+#, fuzzy
+#| msgid "Rəylər"
+msgid "Rəy"
+msgstr "Отзывы"
 
-#: templates/about.html
-#: templates/index.html
-msgid "Biz Evinizi Bağ Kimi Edirik"
-msgstr "Мы делаем ваш дом как сад"
+#: temizxali/services/forms.py:109
+msgid "Mobil nömrənizi daxil edin (məs: 501234567)"
+msgstr "Введите ваш мобильный номер (например: 501234567)"
 
-#: templates/about.html
-#: templates/index.html
-msgid "Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir."
-msgstr "Мы предоставляем высококачественные услуги с нашей профессиональной командой. Удовлетворенность наших клиентов является для нас самым важным."
+#: temizxali/services/forms.py:110
+msgid "Rəyinizi yazın..."
+msgstr "Напишите ваш отзыв..."
 
-#: templates/about.html
-#: templates/index.html
-msgid "Ətraflı"
-msgstr "Подробнее"
+#: temizxali/services/forms.py:135
+msgid ""
+"Bu nömrə üzrə sifarişiniz hələ təsdiqlənməyib. Rəy yazmaq üçün əvvəlcə "
+"sifarişin təsdiqlənməsini gözləməyiniz xahiş olunur."
+msgstr ""
+"Ваш заказ по этому номеру ещё не подтверждён. Чтобы оставить отзыв, "
+"дождитесь, пожалуйста, подтверждения заказа."
 
-#: templates/about.html
-#: templates/index.html
-msgid "Mükafat Qazanan"
-msgstr "Награжденный"
+#: temizxali/services/views/views_v1.py:96
+msgid "Sifarişiniz uğurla göndərildi"
+msgstr "Ваш заказ успешно отправлен"
 
-#: templates/about.html
-#: templates/index.html
-msgid "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik"
-msgstr "Мы предоставляем высококачественные услуги с нашей профессиональной командой"
+#: temizxali/services/views/views_v1.py:99
+#, python-format
+msgid "Xəta baş verdi: %s"
+msgstr ""
 
-#: templates/about.html
-#: templates/index.html
-msgid "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik"
-msgstr "Мы обеспечиваем ваше обслуживание с нашими опытными и профессиональными сотрудниками"
+#: temizxali/services/views/views_v1.py:109
+msgid "Zəhmət olmasa formu düzgün doldurun"
+msgstr "Пожалуйста, заполните форму правильно"
 
-#: templates/index.html
-msgid "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin."
-msgstr "Произошла ошибка. Пожалуйста, попробуйте снова."
+#: temizxali/services/views/views_v1.py:159
+msgid "Rəyiniz uğurla göndərildi ✅"
+msgstr "Ваш отзыв успешно отправлен ✅"
 
-#: templates/projects_partial.html
-msgid "Hazırda layihə mövcud deyil."
-msgstr "В настоящее время проекты недоступны."
+#: temizxali/services/views/views_v1.py:161
+msgid "Melumatlari duzgun daxil edin"
+msgstr "Введите данные правильно"
 
-#: templates/testimonial.html
-msgid "Müştərilərimizin bizim haqqımızda dedikləri!"
-msgstr "Что говорят о нас наши клиенты!"
+#: temizxali/templates/about.html:8 temizxali/templates/about.html:245
+#: temizxali/templates/about.html:257 temizxali/templates/about.html:261
+#: temizxali/templates/about.html:277 temizxali/templates/about.html:279
+#: temizxali/templates/about.html:387 temizxali/templates/about.html:612
+#: temizxali/templates/comment_add.html:242
+#: temizxali/templates/comment_add.html:418
+#: temizxali/templates/contact.html:250 temizxali/templates/contact.html:583
+#: temizxali/templates/index.html:257 temizxali/templates/index.html:348
+#: temizxali/templates/index.html:350 temizxali/templates/index.html:412
+#: temizxali/templates/index.html:712 temizxali/templates/projects.html:275
+#: temizxali/templates/projects.html:454
+#: temizxali/templates/service_detail_page.html:243
+#: temizxali/templates/service_detail_page.html:590
+#: temizxali/templates/testimonial.html:201
+#: temizxali/templates/testimonial.html:344
+msgid "Haqqımızda"
+msgstr "О нас"
 
-#: templates/testimonial.html
-msgid "Müştəri"
-msgstr "Клиент"
-
-#: templates/testimonial.html
-msgid "Bütün hüquqlar qorunur."
-msgstr "Все права защищены."
-
-#: templates/testimonial.html
-msgid "Dizayn edilib"
-msgstr "Разработано"
-
-#: templates/testimonial.html
-msgid "tərəfindən"
-msgstr "от"
-
-#: templates/projects.html
-msgid "Xüsusi Layihələr"
-msgstr "Специальные проекты"
-
-#: templates/projects.html
-msgid "Bəzi Gözəl Layihələrimiz"
-msgstr "Некоторые из наших замечательных проектов"
-
-#: templates/projects.html
-msgid "Hazırda layihə mövcud deyil"
-msgstr "В настоящее время проекты недоступны"
-
-#: templates/projects.html
-msgid "Bütün hüquqlar qorunur"
-msgstr "Все права защищены"
-
-
-#: templates/index.html
-#: templates/about.html
-#: templates/service_detail_page.html
-#: templates/contact.html
-#: templates/comment_add.html
-#: templates/projects.html
-#: templates/index.html
+#: temizxali/templates/about.html:147 temizxali/templates/comment_add.html:146
+#: temizxali/templates/contact.html:153 temizxali/templates/index.html:158
+#: temizxali/templates/projects.html:181
+#: temizxali/templates/service_detail_page.html:146
+#: temizxali/templates/testimonial.html:146
+#: temizxali/templates/testimonial.html:164
 msgid "Bizi izləyin:"
 msgstr "Следите за нами:"
 
-#: templates/index.html
-msgid "Bütün Layihələrə Bax"
-msgstr "Посмотреть все проекты"
+#: temizxali/templates/about.html:224 temizxali/templates/about.html:260
+#: temizxali/templates/about.html:611 temizxali/templates/comment_add.html:221
+#: temizxali/templates/comment_add.html:257
+#: temizxali/templates/comment_add.html:417
+#: temizxali/templates/contact.html:228 temizxali/templates/contact.html:275
+#: temizxali/templates/contact.html:582 temizxali/templates/index.html:235
+#: temizxali/templates/index.html:711 temizxali/templates/projects.html:256
+#: temizxali/templates/projects.html:289 temizxali/templates/projects.html:453
+#: temizxali/templates/service_detail_page.html:222
+#: temizxali/templates/service_detail_page.html:258
+#: temizxali/templates/service_detail_page.html:589
+#: temizxali/templates/testimonial.html:186
+#: temizxali/templates/testimonial.html:215
+#: temizxali/templates/testimonial.html:343
+msgid "Ana səhifə"
+msgstr "Главная"
 
-#: templates/testimonial.html
-#: templates/index.html
-msgid "Xidmət növü:"
-msgstr "Тип услуги:"
+#: temizxali/templates/about.html:227 temizxali/templates/about.html:596
+#: temizxali/templates/comment_add.html:224
+#: temizxali/templates/comment_add.html:402
+#: temizxali/templates/contact.html:231 temizxali/templates/contact.html:567
+#: temizxali/templates/index.html:238 temizxali/templates/index.html:696
+#: temizxali/templates/projects.html:258 temizxali/templates/projects.html:438
+#: temizxali/templates/service_detail_page.html:225
+#: temizxali/templates/service_detail_page.html:259
+#: temizxali/templates/service_detail_page.html:575
+#: temizxali/templates/testimonial.html:188
+#: temizxali/templates/testimonial.html:328
+msgid "Xidmətlər"
+msgstr "Услуги"
 
-#: templates/contact.html
-msgid "endirim tətbiq edildi"
-msgstr "скидка применена"
+#: temizxali/templates/about.html:238 temizxali/templates/about.html:606
+#: temizxali/templates/comment_add.html:235
+#: temizxali/templates/comment_add.html:412
+#: temizxali/templates/contact.html:242 temizxali/templates/contact.html:365
+#: temizxali/templates/contact.html:458 temizxali/templates/contact.html:577
+#: temizxali/templates/index.html:249 temizxali/templates/index.html:706
+#: temizxali/templates/projects.html:269 temizxali/templates/projects.html:448
+#: temizxali/templates/service_detail_page.html:236
+#: temizxali/templates/testimonial.html:338
+msgid "Xidmət tapılmadı"
+msgstr "Услуга не найдена"
 
-#: templates/contact.html
+#: temizxali/templates/about.html:243 temizxali/templates/comment_add.html:240
+#: temizxali/templates/contact.html:248 temizxali/templates/index.html:255
+#: temizxali/templates/projects.html:8 temizxali/templates/projects.html:273
+#: temizxali/templates/projects.html:286 temizxali/templates/projects.html:290
+#: temizxali/templates/projects.html:456
+#: temizxali/templates/service_detail_page.html:241
+#: temizxali/templates/testimonial.html:199
+msgid "Xüsusi Layihələr"
+msgstr "Специальные проекты"
+
+#: temizxali/templates/about.html:244 temizxali/templates/about.html:613
+#: temizxali/templates/comment_add.html:241
+#: temizxali/templates/comment_add.html:419
+#: temizxali/templates/contact.html:249 temizxali/templates/contact.html:584
+#: temizxali/templates/index.html:256 temizxali/templates/index.html:713
+#: temizxali/templates/projects.html:274 temizxali/templates/projects.html:455
+#: temizxali/templates/service_detail_page.html:242
+#: temizxali/templates/service_detail_page.html:592
+#: temizxali/templates/testimonial.html:8
+#: temizxali/templates/testimonial.html:200
+#: temizxali/templates/testimonial.html:212
+#: temizxali/templates/testimonial.html:216
+#: temizxali/templates/testimonial.html:345
+msgid "Rəylər"
+msgstr "Отзывы"
+
+#: temizxali/templates/about.html:246 temizxali/templates/comment_add.html:244
+#: temizxali/templates/contact.html:262 temizxali/templates/index.html:269
+#: temizxali/templates/projects.html:276
+#: temizxali/templates/service_detail_page.html:244
+#: temizxali/templates/testimonial.html:203
+msgid "Hesabla və Sifariş et"
+msgstr "Рассчитать и Заказать"
+
+#: temizxali/templates/about.html:291 temizxali/templates/index.html:362
+msgid "İllik Təcrübə"
+msgstr "Годовой опыт"
+
+#: temizxali/templates/about.html:294 temizxali/templates/about.html:297
+#: temizxali/templates/about.html:398 temizxali/templates/index.html:365
+#: temizxali/templates/index.html:368 temizxali/templates/index.html:423
+msgid "Biz Evinizi Bağ Kimi Edirik"
+msgstr "Мы делаем ваш дом как сад"
+
+#: temizxali/templates/about.html:298 temizxali/templates/about.html:399
+#: temizxali/templates/index.html:369 temizxali/templates/index.html:424
+msgid ""
+"Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. "
+"Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir."
+msgstr ""
+"Мы предоставляем высококачественные услуги с нашей профессиональной "
+"командой. Удовлетворенность наших клиентов является для нас самым важным."
+
+#: temizxali/templates/about.html:311 temizxali/templates/about.html:408
+#: temizxali/templates/index.html:381 temizxali/templates/index.html:432
+msgid "Mükafat Qazanan"
+msgstr "Награжденный"
+
+#: temizxali/templates/about.html:316 temizxali/templates/about.html:409
+#: temizxali/templates/index.html:386 temizxali/templates/index.html:433
+msgid "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik"
+msgstr ""
+"Мы предоставляем высококачественные услуги с нашей профессиональной командой"
+
+#: temizxali/templates/about.html:326 temizxali/templates/about.html:415
+#: temizxali/templates/index.html:396 temizxali/templates/index.html:439
+msgid "Peşəkar Komanda"
+msgstr "Профессиональная команда"
+
+#: temizxali/templates/about.html:331 temizxali/templates/about.html:416
+#: temizxali/templates/index.html:401 temizxali/templates/index.html:440
+msgid "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik"
+msgstr ""
+"Мы обеспечиваем ваше обслуживание с нашими опытными и профессиональными "
+"сотрудниками"
+
+#: temizxali/templates/about.html:338 temizxali/templates/about.html:422
+#: temizxali/templates/about.html:618 temizxali/templates/comment_add.html:424
+#: temizxali/templates/contact.html:8 temizxali/templates/contact.html:276
+#: temizxali/templates/contact.html:589 temizxali/templates/index.html:718
+#: temizxali/templates/projects.html:458
+#: temizxali/templates/service_detail_page.html:593
+#: temizxali/templates/testimonial.html:350
+msgid "Əlaqə"
+msgstr "Контакты"
+
+#: temizxali/templates/about.html:396 temizxali/templates/index.html:421
+msgid "İl Təcrübə"
+msgstr "Год опыта"
+
+#: temizxali/templates/about.html:480
+msgid "Qaleryamız"
+msgstr "Наша галерея"
+
+#: temizxali/templates/about.html:488 temizxali/templates/about.html:491
+#: temizxali/templates/about.html:501 temizxali/templates/about.html:504
+#, fuzzy
+#| msgid "Haqqımızda"
+msgid "Haqqımızda şəkli"
+msgstr "О нас"
+
+#: temizxali/templates/about.html:555 temizxali/templates/comment_add.html:361
+#: temizxali/templates/contact.html:526 temizxali/templates/index.html:651
+#: temizxali/templates/projects.html:397
+#: temizxali/templates/service_detail_page.html:530
+#: temizxali/templates/testimonial.html:279
+msgid "Ünvan və Əlaqə:"
+msgstr "Адрес и Контакты:"
+
+#: temizxali/templates/about.html:610 temizxali/templates/comment_add.html:416
+#: temizxali/templates/contact.html:581 temizxali/templates/index.html:710
+#: temizxali/templates/projects.html:452
+#: temizxali/templates/service_detail_page.html:588
+#: temizxali/templates/testimonial.html:342
+msgid "Digər"
+msgstr "Другое"
+
+#: temizxali/templates/about.html:614 temizxali/templates/comment_add.html:420
+#: temizxali/templates/contact.html:585 temizxali/templates/index.html:714
+#: temizxali/templates/projects.html:457
+#: temizxali/templates/service_detail_page.html:591
+#: temizxali/templates/testimonial.html:346
+msgid "Sifariş"
+msgstr "Заказ"
+
+#: temizxali/templates/about.html:616 temizxali/templates/comment_add.html:422
+#: temizxali/templates/contact.html:587 temizxali/templates/index.html:716
+#: temizxali/templates/service_detail_page.html:585
+#: temizxali/templates/testimonial.html:348
+msgid "Bütün Xidmətlər"
+msgstr "Все услуги"
+
+#: temizxali/templates/about.html:631 temizxali/templates/comment_add.html:437
+#: temizxali/templates/contact.html:602 temizxali/templates/index.html:731
+#: temizxali/templates/projects.html:470
+#: temizxali/templates/service_detail_page.html:605
+#: temizxali/templates/testimonial.html:362
+msgid "tərəfindən hazırlanıb. Bütün hüquqlar qorunur."
+msgstr "разработано. Все права защищены."
+
+#: temizxali/templates/comment_add.html:8
+#, fuzzy
+#| msgid "Rəy bildir"
+msgid "Rəy Bildir"
+msgstr "Оставить отзыв"
+
+#: temizxali/templates/comment_add.html:254
+#: temizxali/templates/comment_add.html:258
+msgid "Rəyinizi paylaşın"
+msgstr "Поделитесь своим отзывом"
+
+#: temizxali/templates/comment_add.html:269
+msgid "Rəyinizi və ya Şikayətinizi paylaşın"
+msgstr "Поделитесь своим отзывом или жалобой"
+
+#: temizxali/templates/comment_add.html:271
+msgid ""
+"Xidmətimizdən istifadə etdikdən sonra rəyinizi bizimlə və digərləri ilə "
+"paylaşın. Sizin fikriniz çox dəyərlidir."
+msgstr ""
+"После использования наших услуг поделитесь своим отзывом с нами и другими. "
+"Ваше мнение очень ценно."
+
+#: temizxali/templates/comment_add.html:312
+#: temizxali/templates/contact.html:419
+msgid "Xidmət seçin..."
+msgstr "Выберите услугу..."
+
+#: temizxali/templates/comment_add.html:342
+msgid "Göndər"
+msgstr "Отправить"
+
+#: temizxali/templates/contact.html:272
+msgid "Bizimlə əlaqə saxlayın"
+msgstr "Свяжитесь с нами"
+
+#: temizxali/templates/contact.html:295
+msgid "Sifariş Verin"
+msgstr "Сделать заказ"
+
+#: temizxali/templates/contact.html:297
+msgid "Məlumatlarınızı doldurun və sifarişinizi göndərin"
+msgstr "Заполните ваши данные и отправьте заказ"
+
+#: temizxali/templates/contact.html:341 temizxali/templates/contact.html:343
+msgid "Xidmət növü seçin"
+msgstr "Выберите тип услуги"
+
+#: temizxali/templates/contact.html:387
+msgid "Sifarişi Göndər"
+msgstr "Отправить заказ"
+
+#: temizxali/templates/contact.html:406
+msgid "Servis Kalkulyatoru"
+msgstr "Калькулятор услуг"
+
+#: temizxali/templates/contact.html:408
+msgid "Xidmətləri seçin və qiyməti hesablayın"
+msgstr "Выберите услуги и рассчитайте цену"
+
+#: temizxali/templates/contact.html:415
+msgid "Xidmət əlavə edin:"
+msgstr "Добавить услугу:"
+
+#: temizxali/templates/contact.html:468
+msgid "Dəyər daxil edin"
+msgstr "Введите значение"
+
+#: temizxali/templates/contact.html:469
+msgid "Dəyər daxil edin (kq)"
+msgstr "Введите значение (кг)"
+
+#: temizxali/templates/contact.html:470
+msgid "Dəyər daxil edin (m²)"
+msgstr "Введите значение (m²)"
+
+#: temizxali/templates/contact.html:471
+msgid "Dəyər daxil edin (m)"
+msgstr "Введите значение (m)"
+
+#: temizxali/templates/contact.html:472
+msgid "Dəyər daxil edin (ədəd)"
+msgstr "Введите значение (шт)"
+
+#: temizxali/templates/contact.html:473
+msgid "Variantlar"
+msgstr "Варианты"
+
+#: temizxali/templates/contact.html:474
+msgid "Variant"
+msgstr "Вариант"
+
+#: temizxali/templates/contact.html:475
+msgid "Normal"
+msgstr "Обычный"
+
+#: temizxali/templates/contact.html:476
+#, fuzzy
+#| msgid "VIP:"
+msgid "VIP"
+msgstr "VIP:"
+
+#: temizxali/templates/contact.html:477
+msgid "Premium"
+msgstr "Премиум"
+
+#: temizxali/templates/contact.html:478
+msgid "Sil"
+msgstr "Удалить"
+
+#: temizxali/templates/contact.html:479
+msgid "Qiymət"
+msgstr "Цена"
+
+#: temizxali/templates/contact.html:480
+msgid "Bu qiymət təxminidir"
+msgstr "Эта цена является приблизительной"
+
+#: temizxali/templates/contact.html:481
 msgid "Bu xidmət artıq əlavə edilib!"
 msgstr "Эта услуга уже добавлена!"
 
+#: temizxali/templates/contact.html:482
+msgid "endirim tətbiq edildi"
+msgstr "скидка применена"
+
+#: temizxali/templates/contact.html:489
+msgid "Hesabla"
+msgstr "Рассчитать"
+
+#: temizxali/templates/contact.html:498
+msgid "Ümumi məbləğ:"
+msgstr "Общая сумма:"
+
+#: temizxali/templates/index.html:371 temizxali/templates/index.html:425
+#: temizxali/templates/service_detail_page.html:450
+msgid "Ətraflı Məlumat"
+msgstr "Подробная информация"
+
+#: temizxali/templates/index.html:484
+msgid "Xidmətlərimiz"
+msgstr "Наши услуги"
+
+#: temizxali/templates/index.html:508 temizxali/templates/index.html:510
+msgid "Ətraflı"
+msgstr "Подробнее"
+
+#: temizxali/templates/index.html:521
+msgid "Hazırda xidmət mövcud deyil."
+msgstr "В настоящее время услуга недоступна."
+
+#: temizxali/templates/index.html:535 temizxali/templates/projects.html:301
+msgid "Layihələrimiz"
+msgstr "Наши проекты"
+
+#: temizxali/templates/index.html:580
+msgid "Bütün Layihələrə Bax"
+msgstr "Посмотреть все проекты"
+
+#: temizxali/templates/index.html:585
+#: temizxali/templates/projects_partial.html:41
+msgid "Hazırda layihə mövcud deyil."
+msgstr "В настоящее время проекты недоступны."
+
+#: temizxali/templates/index.html:598 temizxali/templates/testimonial.html:225
+msgid "Sizdən gələn rəy və şikayətlər"
+msgstr "Отзывы и жалобы от вас"
+
+#: temizxali/templates/index.html:600 temizxali/templates/testimonial.html:227
+msgid "Rəyləri yalnız xidmətimizdən istifadə edən müştərilər yaza bilər"
+msgstr ""
+"Отзывы могут оставлять только клиенты, которые использовали наши услуги"
+
+#: temizxali/templates/index.html:616 temizxali/templates/testimonial.html:243
+msgid "Xidmət növü:"
+msgstr "Тип услуги:"
+
+#: temizxali/templates/index.html:627 temizxali/templates/testimonial.html:256
+msgid "Hazırda rəy mövcud deyil."
+msgstr "В настоящее время отзывов нет."
+
+#: temizxali/templates/index.html:636 temizxali/templates/testimonial.html:265
+msgid "Rəy və ya şikayətinizi bildirin"
+msgstr "Оставьте отзыв или жалобу"
+
+#: temizxali/templates/projects.html:302
+msgid "Bəzi Gözəl Layihələrimiz"
+msgstr "Некоторые из наших замечательных проектов"
+
+#: temizxali/templates/projects.html:341
+msgid "Hazırda layihə mövcud deyil"
+msgstr "В настоящее время проекты недоступны"
+
+#: temizxali/templates/service_detail_page.html:8
+msgid "Xidmət Detalları"
+msgstr "Детали услуги"
+
+#: temizxali/templates/service_detail_page.html:285
+msgid "Sənin brauzerin videonu dəstəkləmir."
+msgstr "Ваш браузер не поддерживает видео."
+
+#: temizxali/templates/service_detail_page.html:355
+msgid "Aktiv Endirim Kampaniyaları"
+msgstr "Активные акции"
+
+#: temizxali/templates/service_detail_page.html:392
+msgid "Qiymətlər"
+msgstr "Цены"
+
+#: temizxali/templates/service_detail_page.html:396
+#: temizxali/templates/service_detail_page.html:484
+msgid "Standart:"
+msgstr "Стандарт:"
+
+#: temizxali/templates/service_detail_page.html:411
+#: temizxali/templates/service_detail_page.html:490
+msgid "VIP:"
+msgstr "VIP:"
+
+#: temizxali/templates/service_detail_page.html:427
+#: temizxali/templates/service_detail_page.html:496
+msgid "Premium:"
+msgstr "Премиум:"
+
+#: temizxali/templates/service_detail_page.html:446
+msgid "Sifariş Ver"
+msgstr "Сделать заказ"
+
+#: temizxali/templates/service_detail_page.html:462
+msgid "Xidmət Növləri"
+msgstr "Типы услуг"
+
+#: temizxali/templates/service_detail_page.html:463
+msgid "Müxtəlif paket seçimləri"
+msgstr "Различные варианты пакетов"
+
+#: temizxali/templates/service_detail_page.html:518
+msgid "Bütün Xidmətlərə Bax"
+msgstr "Посмотреть все услуги"
+
+#: temizxali/templates/service_detail_page.html:569
+msgid "Əhməd Rəcəbli Business Center"
+msgstr "Бизнес-центр Ахмеда Раджабли"
+
+#: temizxali/templates/testimonial.html:247
+msgid "Müştəri"
+msgstr "Клиент"
+
+#~ msgid "Heç bir servis seçilməyib."
+#~ msgstr "Не выбрана ни одна услуга."
+
+#~ msgid "Servis tapılmadı: ID %(service_id)s"
+#~ msgstr "Услуга не найдена: ID %(service_id)s"
+
+#~ msgid "%(service_name)s üçün dəyər daxil edilməyib."
+#~ msgstr "Значение не введено для %(service_name)s."
+
+#~ msgid "%(service_name)s üçün dəyər müsbət olmalıdır."
+#~ msgstr "Значение для %(service_name)s должно быть положительным."
+
+#~ msgid "%(service_name)s üçün keçərsiz dəyər."
+#~ msgstr "Неверное значение для %(service_name)s."
+
+#~ msgid "Dəyər"
+#~ msgstr "Значение"
+
+#~ msgid "kq"
+#~ msgstr "кг"
+
+#~ msgid "ədəd"
+#~ msgstr "шт"
+
+#~ msgid "Hesablanma Nəticələri"
+#~ msgstr "Результаты расчета"
+
+#~ msgid "Servis"
+#~ msgstr "Услуга"
+
+#~ msgid "Növ"
+#~ msgstr "Тип"
+
+#~ msgid "Əsas Qiymət"
+#~ msgstr "Базовая цена"
+
+#~ msgid "Endirimsiz"
+#~ msgstr "Без скидки"
+
+#~ msgid "Endirim"
+#~ msgstr "Скидка"
+
+#~ msgid "Yekun"
+#~ msgstr "Итого"
+
+#~ msgid "Vahid"
+#~ msgstr "Ед."
+
+#~ msgid "Yekun məbləğ"
+#~ msgstr "Итоговая сумма"
+
+#~ msgid "Dil"
+#~ msgstr "Язык"
+
+#~ msgid "Ana Səhifə"
+#~ msgstr "Главная"
+
+#~ msgid "Kalkulyator"
+#~ msgstr "Калькулятор"
+
+#~ msgid "Qiymət Növü"
+#~ msgstr "Тип цены"
+
+#~ msgid "Xidmetler"
+#~ msgstr "Услуги"
+
+#~ msgid "Layihələr"
+#~ msgstr "Проекты"
+
+#~ msgid "Xoş gəlmisiniz"
+#~ msgstr "Добро пожаловать"
+
+#~ msgid "etrafli"
+#~ msgstr "Далее"
+
+#~ msgid "ətraflı məlumat"
+#~ msgstr "Подробная информация"
+
+#~ msgid "Məmnun Müştərilər"
+#~ msgstr "Довольные клиенты"
+
+#~ msgid "Tamamlanmış İşlər"
+#~ msgstr "Завершенные работы"
+
+#~ msgid "Nailiyyətlər"
+#~ msgstr "Достижения"
+
+#~ msgid "Digər Xidmətlər"
+#~ msgstr "Другие услуги"
+
+#~ msgid "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin."
+#~ msgstr "Произошла ошибка. Пожалуйста, попробуйте снова."
+
+#~ msgid "Müştərilərimizin bizim haqqımızda dedikləri!"
+#~ msgstr "Что говорят о нас наши клиенты!"
+
+#~ msgid "Bütün hüquqlar qorunur."
+#~ msgstr "Все права защищены."
+
+#~ msgid "Dizayn edilib"
+#~ msgstr "Разработано"
+
+#~ msgid "tərəfindən"
+#~ msgstr "от"
+
+#~ msgid "Bütün hüquqlar qorunur"
+#~ msgstr "Все права защищены"
