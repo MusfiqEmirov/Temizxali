@@ -154,7 +154,10 @@ function createServiceCard(option) {
                 ${variantsHtml}
                 
                 <div class="alert alert-info mt-2" id="${serviceId}_price_final" style="display: none;">
-                    <strong>${getTranslation('price')}:</strong> <span id="${serviceId}_price_amount_final">0.00 ₼</span>
+                    <div>
+                        <strong>${getTranslation('price')}:</strong> <span id="${serviceId}_price_amount_final">0.00 ₼</span>
+                    </div>
+                    <div class="small mt-1">${getTranslation('price-estimate')}</div>
                 </div>
             </div>
         `;
@@ -187,7 +190,10 @@ function createServiceCard(option) {
                 </div>
                 
                 <div class="alert alert-info mt-2" id="${serviceId}_price" style="display: none;">
-                    <strong>${getTranslation('price')}:</strong> <span id="${serviceId}_price_amount">0.00 ₼</span>
+                    <div>
+                        <strong>${getTranslation('price')}:</strong> <span id="${serviceId}_price_amount">0.00 ₼</span>
+                    </div>
+                    <div class="small mt-1">${getTranslation('price-estimate')}</div>
                 </div>
             </div>
         `;
