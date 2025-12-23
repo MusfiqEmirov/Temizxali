@@ -2237,4 +2237,275 @@ a.lb-next:hover {
   margin-top: 0 !important;
 }
 
+/* Social Buttons Styles */
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.app-btn {
+  width: 45%;
+  max-width: 160px;
+  color: #000000;
+  margin: 20px 10px;
+  text-align: left;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: "Lucida Grande", sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* Topbar üçün kiçik ölçülər */
+.bg-dark .social-btns {
+  gap: 5px;
+  margin-left: 10px;
+}
+
+.bg-dark .social-btns .app-btn {
+  width: auto;
+  max-width: 130px;
+  min-width: 110px;
+  margin: 0;
+  padding: 6px 8px;
+  font-size: 7px;
+}
+
+.bg-dark .social-btns .app-btn i {
+  font-size: 16px;
+  margin-bottom: 0;
+  height: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.bg-dark .social-btns .app-btn .big-txt {
+  font-size: 11px;
+}
+
+.bg-dark .social-btns .app-btn p {
+  font-size: 7px;
+  line-height: 1.1;
+}
+
+/* Mobile topbar üçün daha kiçik */
+.d-lg-none .social-btns .app-btn {
+  max-width: 100px;
+  min-width: 85px;
+  padding: 4px 6px;
+  font-size: 6px;
+}
+
+.d-lg-none .social-btns .app-btn i {
+  font-size: 14px;
+  margin-bottom: 0;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Play Store ikonu üçün xüsusi düzəliş */
+.d-lg-none .social-btns .app-btn .fa-google-play {
+  font-size: 14px;
+  height: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-lg-none .social-btns .app-btn .fa-apple {
+  font-size: 14px;
+  height: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-lg-none .social-btns .app-btn .big-txt {
+  font-size: 10px;
+}
+
+.d-lg-none .social-btns .app-btn p {
+  font-size: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0;
+}
+
+/* Footer üçün xüsusi stillər - footer qara arxa fonda olduğu üçün */
+.footer .social-btns {
+  justify-content: flex-start !important;
+  padding-left: 0;
+  gap: 5px;
+}
+
+.footer .social-btns .app-btn.blu {
+  background-color: #ffffff;
+  color: #000000;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.footer .social-btns .app-btn.blu i {
+  color: #000000;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+}
+
+.footer .social-btns .app-btn.blu:hover {
+  background-color: #000000;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+.footer .social-btns .app-btn.blu:hover i {
+  color: #ffffff;
+}
+
+/* Navbar üçün xüsusi stillər */
+.navbar .social-btns {
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.navbar .social-btns .app-btn.blu {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #e0e0e0;
+}
+
+.navbar .social-btns .app-btn.blu i {
+  color: #000000;
+}
+
+.navbar .social-btns .app-btn.blu:hover {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
+}
+
+.navbar .social-btns .app-btn.blu:hover i {
+  color: #ffffff;
+}
+
+.navbar .social-btns .app-btn {
+  max-width: 140px;
+  min-width: 120px;
+  padding: 8px 10px;
+  font-size: 8px;
+}
+
+.navbar .social-btns .app-btn i {
+  font-size: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar .social-btns .app-btn .fa-google-play,
+.navbar .social-btns .app-btn .fa-apple {
+  font-size: 18px;
+  height: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar .social-btns .app-btn .big-txt {
+  font-size: 13px;
+}
+
+.navbar .social-btns .app-btn p {
+  font-size: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0;
+}
+
+.app-btn.blu {
+  background-color: #ffffff;
+  color: #000000;
+  transition: all 0.25s linear;
+}
+
+.app-btn.blu:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.app-btn i {
+  width: 20%;
+  text-align: center;
+  font-size: 28px;
+  margin-right: 7px;
+}
+
+/* İkonlar qara */
+.app-btn i {
+  color: #000000;
+  transition: color 0.25s linear;
+}
+
+/* Hover zamanı ikonlar ağ olsun */
+.app-btn.blu:hover i {
+  color: #ffffff;
+}
+
+.app-btn .big-txt {
+  font-size: 17px;
+  text-transform: capitalize;
+  color: inherit;
+}
+
+.app-btn.vert {
+  flex-direction: row;
+  text-align: left;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-btn.vert i {
+  width: auto;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-left: -2mm;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+.app-btn.vert p {
+  margin: 0;
+  line-height: 1.3;
+  display: inline-block;
+}
+
+.app-btn.vert p .big-txt {
+  display: block;
+  margin-top: 2px;
+}
+
 
