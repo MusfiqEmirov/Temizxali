@@ -336,7 +336,7 @@
                 {% endif %}
             </div>
             <div class="col-lg-5 px-5 text-end">
-                <div class="h-100 d-inline-flex align-items-center mx-n2">
+                <div class="h-100 d-inline-flex align-items-center mx-n2 social-media-container-white">
                     <!-- Language Switcher -->
                     <div class="language-switcher-container me-3">
                         {% get_current_language as CURRENT_LANGUAGE %}
@@ -380,21 +380,20 @@
                     </div>
                     {% if contact %}
                         {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
-                            <span>{% trans "Bizi izləyin:" %}</span>
                             {% if contact.facebook %}
-                                <a class="btn btn-link text-light" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                <a class="social-icon-link social-icon-facebook me-2" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                             {% endif %}
                             {% if contact.instagram %}
-                                <a class="btn btn-link text-light" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                                <a class="social-icon-link social-icon-instagram me-2" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
                             {% endif %}
                             {% if contact.youtube %}
-                                <a class="btn btn-link text-light" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                                <a class="social-icon-link social-icon-youtube me-2" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
                             {% endif %}
                             {% if contact.linkedn %}
-                                <a class="btn btn-link text-light" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                <a class="social-icon-link social-icon-linkedin me-2" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                             {% endif %}
                             {% if contact.tiktok %}
-                                <a class="btn btn-link text-light" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                                <a class="social-icon-link social-icon-tiktok me-2" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
                             {% endif %}
                         {% endif %}
                     {% endif %}

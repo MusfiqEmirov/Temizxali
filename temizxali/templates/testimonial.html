@@ -299,7 +299,7 @@
                 {% endif %}
             </div>
             <div class="col-lg-5 px-5 text-end">
-                <div class="h-100 d-inline-flex align-items-center mx-n2">
+                <div class="h-100 d-inline-flex align-items-center mx-n2 social-media-container-white">
                     <!-- Language Switcher -->
                     <div class="language-switcher-container me-3">
                         {% get_current_language as CURRENT_LANGUAGE %}
@@ -343,29 +343,22 @@
                     </div>
                     {% if contact %}
                         {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
-                            <span>{% trans "Bizi izləyin:" %}</span>
                             {% if contact.facebook %}
-                                <a class="btn btn-link text-light" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                <a class="social-icon-link social-icon-facebook me-2" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                             {% endif %}
                             {% if contact.instagram %}
-                                <a class="btn btn-link text-light" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                                <a class="social-icon-link social-icon-instagram me-2" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
                             {% endif %}
                             {% if contact.youtube %}
-                                <a class="btn btn-link text-light" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                                <a class="social-icon-link social-icon-youtube me-2" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
                             {% endif %}
                             {% if contact.linkedn %}
-                                <a class="btn btn-link text-light" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                <a class="social-icon-link social-icon-linkedin me-2" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                             {% endif %}
                             {% if contact.tiktok %}
-                                <a class="btn btn-link text-light" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                                <a class="social-icon-link social-icon-tiktok me-2" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
                             {% endif %}
                         {% endif %}
-                    {% else %}
-                        <span>{% trans "Bizi izləyin:" %}</span>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-linkedin-in"></i></a>
-                        <a class="btn btn-link text-light" href=""><i class="fab fa-instagram"></i></a>
                     {% endif %}
                 </div>
             </div>
@@ -422,23 +415,53 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="{% url 'home-page' %}" class="nav-item nav-link">{% trans "Ana səhifə" %}</a>
+
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{% trans "Xidmətlər" %}</a>
                     <div class="dropdown-menu bg-light m-0">
-                        {% for service in services %}
-                            {% with translation=service.translations.first %}
-                                {% if translation %}
-                                    <a href="{% url 'service-page' translation.slug %}" class="dropdown-item">{{ translation.name }}</a>
-                                {% endif %}
-                            {% endwith %}
-                        {% endfor %}
+                        {% if services %}
+                            {% for service in services|slice:":10" %}
+                                {% with translation=service.translations.first %}
+                                    {% if translation and translation.slug %}
+                                        <a href="{% url 'service-page' translation.slug %}" class="dropdown-item">{{ translation.name }}</a>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endfor %}
+                        {% else %}
+                            <a href="#" class="dropdown-item">{% trans "Xidmət tapılmadı" %}</a>
+                        {% endif %}
                     </div>
                 </div>
+
+                <!-- <a href="service.html" class="nav-item nav-link">Xidmətlər</a> -->
                 <a href="{% url 'projects-page' %}" class="nav-item nav-link">{% trans "Xüsusi Layihələr" %}</a>
                 <a href="{% url 'testimonial-page' %}" class="nav-item nav-link active">{% trans "Rəylər" %}</a>
                 <a href="{% url 'about-page' %}" class="nav-item nav-link">{% trans "Haqqımızda" %}</a>
+
+                <!-- <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu bg-light m-0">
+                        <a href="feature.html" class="dropdown-item">Features</a>
+                        <a href="quote.html" class="dropdown-item">Free Quote</a>
+                        <a href="team.html" class="dropdown-item">Our Team</a>
+                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="404.html" class="dropdown-item">404 Page</a>
+                    </div>
+                </div> -->
+            <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">{% trans "Hesabla və Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
+            <!-- Mobile App Links in Navbar -->
+            <div class="d-lg-none mt-3 px-4">
+                <div class="social-btns">
+                    <a class="app-btn blu flex vert" href="https://apps.apple.com/vn/app/temiz-xali/id6443763819?platform=iphone" target="_blank">
+                        <i class="fab fa-apple"></i>
+                        <p><span class="big-txt">App Store</span></p>
+                    </a>
+                    <a class="app-btn blu flex vert" href="https://play.google.com/store/apps/details?id=com.javids.mobweb" target="_blank">
+                        <i class="fab fa-google-play"></i>
+                        <p><span class="big-txt">Google Play</span></p>
+                    </a>
+                </div>
             </div>
-            <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-4 rounded-0 d-none d-lg-block">{% trans "Hesabla və Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
