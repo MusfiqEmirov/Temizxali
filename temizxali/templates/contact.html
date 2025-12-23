@@ -260,8 +260,8 @@
 
 
     <!-- Topbar Start -->
-    <div class="container-fluid bg-dark text-light px-0 py-2">
-        <div class="row gx-0 d-none d-lg-flex">
+    <div class="container-fluid bg-dark text-light px-0 py-2 d-none d-lg-block">
+        <div class="row gx-0">
             <div class="col-lg-7 px-5 text-start">
                 {% if contact %}
                     {% if contact.phone %}
@@ -376,7 +376,7 @@
     <!-- Topbar End -->
 
     <!-- Mobile Topbar Start -->
-    <div class="container-fluid bg-dark text-light px-0 py-2 d-lg-none">
+    <div class="container-fluid bg-dark text-light px-0 py-2 d-none">
         <div class="container">
             <div class="row gx-0">
                 <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-2" style="font-size: 0.85rem;">
@@ -498,8 +498,46 @@
                         <a href="404.html" class="dropdown-item">404 Page</a>
                     </div>
                 </div> -->
-                <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">{% trans "Hesabla və Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">{% trans "Hesabla və Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
+            <!-- Mobile Social Media Icons and App Links in Navbar -->
+            <div class="d-lg-none mt-3 px-4">
+                <div class="d-flex flex-column gap-3">
+                    <!-- Social Media Icons -->
+                    {% if contact %}
+                        {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
+                            <div class="d-flex align-items-center gap-3">
+                                {% if contact.facebook %}
+                                    <a class="social-icon-link social-icon-facebook" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                {% endif %}
+                                {% if contact.instagram %}
+                                    <a class="social-icon-link social-icon-instagram" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                                {% endif %}
+                                {% if contact.youtube %}
+                                    <a class="social-icon-link social-icon-youtube" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                                {% endif %}
+                                {% if contact.linkedn %}
+                                    <a class="social-icon-link social-icon-linkedin" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                {% endif %}
+                                {% if contact.tiktok %}
+                                    <a class="social-icon-link social-icon-tiktok" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <!-- App Store Links -->
+                    <div class="social-btns">
+                        <a class="app-btn blu flex vert" href="https://apps.apple.com/vn/app/temiz-xali/id6443763819?platform=iphone" target="_blank">
+                            <i class="fab fa-apple"></i>
+                            <p><span class="big-txt">App Store</span></p>
+                        </a>
+                        <a class="app-btn blu flex vert" href="https://play.google.com/store/apps/details?id=com.javids.mobweb" target="_blank">
+                            <i class="fab fa-google-play"></i>
+                            <p><span class="big-txt">Google Play</span></p>
+                        </a>
+                    </div>
+                </div>
             </div>
+        </div>
     </nav>
     <!-- Navbar End -->
 
