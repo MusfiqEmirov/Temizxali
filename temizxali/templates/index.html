@@ -58,201 +58,6 @@
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
-    <!-- Mobile Styles for Carousel Caption -->
-    <style>
-        @media (max-width: 768px) {
-            .carousel-caption h1.display-1 {
-                font-size: 2.5rem !important;
-            }
-        }
-        @media (max-width: 576px) {
-            .carousel-caption h1.display-1 {
-                font-size: 2rem !important;
-            }
-        }
-    </style>
-
-    <!-- Floating Buttons Styles -->
-    <style>
-        .floating-buttons {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .floating-btn-wrapper {
-            position: relative;
-        }
-
-        .floating-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .floating-btn-whatsapp {
-            background-color: #25D366;
-            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-        }
-
-        .floating-btn-whatsapp:hover {
-            background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
-            color: white;
-        }
-
-        .floating-btn-call {
-            background-color: #6d021c;
-            background: linear-gradient(135deg, #6d021c 0%, #890224 100%);
-        }
-
-        .floating-btn-call:hover {
-            background: linear-gradient(135deg, #890224 0%, #6d021c 100%);
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(109, 2, 28, 0.5);
-            color: white;
-        }
-
-        /* WhatsApp Dropdown Menu */
-        .whatsapp-dropdown {
-            position: absolute;
-            right: 70px;
-            bottom: 0;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateX(10px);
-            transition: all 0.3s ease;
-            z-index: 1001;
-            overflow: hidden;
-        }
-
-        .whatsapp-dropdown.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
-        }
-
-        .whatsapp-option {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            color: #333;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .whatsapp-option:last-child {
-            border-bottom: none;
-        }
-
-        .whatsapp-option:hover {
-            background-color: #f8f9fa;
-            color: #25D366;
-        }
-
-        .whatsapp-option i {
-            color: #25D366;
-            font-size: 18px;
-        }
-
-        .whatsapp-option span {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .floating-buttons {
-                right: 15px;
-                bottom: 15px;
-                gap: 12px;
-            }
-
-            .floating-btn {
-                width: 55px;
-                height: 55px;
-                font-size: 22px;
-            }
-
-            .whatsapp-dropdown {
-                right: 65px;
-                min-width: 180px;
-            }
-
-            .whatsapp-option {
-                padding: 10px 14px;
-            }
-
-            .whatsapp-option span {
-                font-size: 13px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .floating-buttons {
-                right: 10px;
-                bottom: 10px;
-                gap: 10px;
-            }
-
-            .floating-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
-
-            .whatsapp-dropdown {
-                right: 60px;
-                min-width: 160px;
-            }
-
-            .whatsapp-option {
-                padding: 8px 12px;
-            }
-
-            .whatsapp-option span {
-                font-size: 12px;
-            }
-        }
-
-        /* Ensure buttons don't overlap with back-to-top button */
-        @media (min-width: 992px) {
-            .back-to-top {
-                left: 30px;
-                bottom: 30px;
-            }
-        }
-    </style>
 
 </head>
 
@@ -265,8 +70,8 @@
 
 
     <!-- Topbar Start -->
-    <div class="container-fluid bg-dark text-light px-0 py-2">
-        <div class="row gx-0 d-none d-lg-flex">
+    <div class="container-fluid bg-dark text-light px-0 py-2 d-none d-lg-block">
+        <div class="row gx-0">
             <div class="col-lg-7 px-5 text-start">
                 {% if contact %}
                     {% if contact.phone %}
@@ -313,7 +118,7 @@
                 {% endif %}
             </div>
             <div class="col-lg-5 px-5 text-end">
-                <div class="h-100 d-inline-flex align-items-center mx-n2">
+                <div class="h-100 d-inline-flex align-items-center mx-n2 social-media-container-white">
                     <!-- Language Switcher -->
                     <div class="language-switcher-container me-3">
                         {% get_current_language as CURRENT_LANGUAGE %}
@@ -357,21 +162,20 @@
                     </div>
                     {% if contact %}
                         {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
-                            <span>{% trans "Bizi izləyin:" %}</span>
                             {% if contact.facebook %}
-                                <a class="btn btn-link text-light" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                <a class="social-icon-link social-icon-facebook me-2" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                             {% endif %}
                             {% if contact.instagram %}
-                                <a class="btn btn-link text-light" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                                <a class="social-icon-link social-icon-instagram me-2" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
                             {% endif %}
                             {% if contact.youtube %}
-                                <a class="btn btn-link text-light" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                                <a class="social-icon-link social-icon-youtube me-2" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
                             {% endif %}
                             {% if contact.linkedn %}
-                                <a class="btn btn-link text-light" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                <a class="social-icon-link social-icon-linkedin me-2" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                             {% endif %}
                             {% if contact.tiktok %}
-                                <a class="btn btn-link text-light" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                                <a class="social-icon-link social-icon-tiktok me-2" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
                             {% endif %}
                         {% endif %}
                     {% endif %}
@@ -383,7 +187,7 @@
     <!-- Topbar End -->
 
     <!-- Mobile Topbar Start -->
-    <div class="container-fluid bg-dark text-light px-0 py-2 d-lg-none">
+    <div class="container-fluid bg-dark text-light px-0 py-2 d-none">
         <div class="container">
             <div class="row gx-0">
                 <div class="col-12 d-flex justify-content-between align-items-center flex-wrap gap-2" style="font-size: 0.85rem;">
@@ -508,17 +312,42 @@
                     </div>
                 </div> -->
             <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">{% trans "Hesabla və Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
-            <!-- Mobile App Links in Navbar -->
+            <!-- Mobile Social Media Icons and App Links in Navbar -->
             <div class="d-lg-none mt-3 px-4">
-                <div class="social-btns">
-                    <a class="app-btn blu flex vert" href="https://apps.apple.com/vn/app/temiz-xali/id6443763819?platform=iphone" target="_blank">
-                        <i class="fab fa-apple"></i>
-                        <p><span class="big-txt">App Store</span></p>
-                    </a>
-                    <a class="app-btn blu flex vert" href="https://play.google.com/store/apps/details?id=com.javids.mobweb" target="_blank">
-                        <i class="fab fa-google-play"></i>
-                        <p><span class="big-txt">Google Play</span></p>
-                    </a>
+                <div class="d-flex flex-column gap-3">
+                    <!-- Social Media Icons -->
+                    {% if contact %}
+                        {% if contact.facebook or contact.instagram or contact.youtube or contact.linkedn or contact.tiktok %}
+                            <div class="d-flex align-items-center gap-3">
+                                {% if contact.facebook %}
+                                    <a class="social-icon-link social-icon-facebook" href="{{ contact.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                {% endif %}
+                                {% if contact.instagram %}
+                                    <a class="social-icon-link social-icon-instagram" href="{{ contact.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                                {% endif %}
+                                {% if contact.youtube %}
+                                    <a class="social-icon-link social-icon-youtube" href="{{ contact.youtube }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                                {% endif %}
+                                {% if contact.linkedn %}
+                                    <a class="social-icon-link social-icon-linkedin" href="{{ contact.linkedn }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                                {% endif %}
+                                {% if contact.tiktok %}
+                                    <a class="social-icon-link social-icon-tiktok" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <!-- App Store Links -->
+                    <div class="social-btns">
+                        <a class="app-btn blu flex vert" href="https://apps.apple.com/vn/app/temiz-xali/id6443763819?platform=iphone" target="_blank">
+                            <i class="fab fa-apple"></i>
+                            <p><span class="big-txt">App Store</span></p>
+                        </a>
+                        <a class="app-btn blu flex vert" href="https://play.google.com/store/apps/details?id=com.javids.mobweb" target="_blank">
+                            <i class="fab fa-google-play"></i>
+                            <p><span class="big-txt">Google Play</span></p>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1080,37 +909,6 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
-
-    <!-- Floating Buttons JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const whatsappBtn = document.getElementById('whatsappBtn');
-            const whatsappDropdown = document.getElementById('whatsappDropdown');
-            
-            if (whatsappBtn && whatsappDropdown) {
-                // Toggle dropdown on button click
-                whatsappBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    whatsappDropdown.classList.toggle('show');
-                });
-
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!whatsappBtn.contains(e.target) && !whatsappDropdown.contains(e.target)) {
-                        whatsappDropdown.classList.remove('show');
-                    }
-                });
-
-                // Close dropdown when clicking on an option
-                const whatsappOptions = whatsappDropdown.querySelectorAll('.whatsapp-option');
-                whatsappOptions.forEach(function(option) {
-                    option.addEventListener('click', function() {
-                        whatsappDropdown.classList.remove('show');
-                    });
-                });
-            }
-        });
-    </script>
 
 </body>
 
