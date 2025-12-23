@@ -869,6 +869,17 @@ h6,
     background: #072A19;
 }
 
+.copyright .container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.copyright .row {
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .copyright a {
     color: #FFFFFF;
 }
@@ -2267,6 +2278,8 @@ a.lb-next:hover {
   align-items: center;
   justify-content: center;
   padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
 }
 
 /* Topbar üçün kiçik ölçülər */
@@ -2361,6 +2374,8 @@ a.lb-next:hover {
   color: #000000;
   margin-left: 0;
   margin-right: 0;
+  border: 1px solid transparent;
+  box-sizing: border-box;
 }
 
 .footer .social-btns .app-btn.blu i {
@@ -2369,6 +2384,11 @@ a.lb-next:hover {
   display: flex;
   align-items: center;
   font-size: 18px;
+}
+
+.footer .social-btns .app-btn.blu {
+  border: 1px solid transparent;
+  box-sizing: border-box;
 }
 
 .footer .social-btns .app-btn.blu:hover {
