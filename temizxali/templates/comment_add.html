@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% load contact_filters %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:'az' }}">
 
@@ -56,6 +57,188 @@
 
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!-- Floating Buttons Styles -->
+    <style>
+        .floating-buttons {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .floating-btn-wrapper {
+            position: relative;
+        }
+
+        .floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-btn-whatsapp {
+            background-color: #25D366;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        }
+
+        .floating-btn-whatsapp:hover {
+            background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+            color: white;
+        }
+
+        .floating-btn-call {
+            background-color: #6d021c;
+            background: linear-gradient(135deg, #6d021c 0%, #890224 100%);
+        }
+
+        .floating-btn-call:hover {
+            background: linear-gradient(135deg, #890224 0%, #6d021c 100%);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(109, 2, 28, 0.5);
+            color: white;
+        }
+
+        /* WhatsApp Dropdown Menu */
+        .whatsapp-dropdown {
+            position: absolute;
+            right: 70px;
+            bottom: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .whatsapp-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .whatsapp-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .whatsapp-option:last-child {
+            border-bottom: none;
+        }
+
+        .whatsapp-option:hover {
+            background-color: #f8f9fa;
+            color: #25D366;
+        }
+
+        .whatsapp-option i {
+            color: #25D366;
+            font-size: 18px;
+        }
+
+        .whatsapp-option span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .floating-buttons {
+                right: 15px;
+                bottom: 15px;
+                gap: 12px;
+            }
+
+            .floating-btn {
+                width: 55px;
+                height: 55px;
+                font-size: 22px;
+            }
+
+            .whatsapp-dropdown {
+                right: 65px;
+                min-width: 180px;
+            }
+
+            .whatsapp-option {
+                padding: 10px 14px;
+            }
+
+            .whatsapp-option span {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .floating-buttons {
+                right: 10px;
+                bottom: 10px;
+                gap: 10px;
+            }
+
+            .floating-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .whatsapp-dropdown {
+                right: 60px;
+                min-width: 160px;
+            }
+
+            .whatsapp-option {
+                padding: 8px 12px;
+            }
+
+            .whatsapp-option span {
+                font-size: 12px;
+            }
+        }
+
+        /* Ensure buttons don't overlap with back-to-top button */
+        @media (min-width: 992px) {
+            .back-to-top {
+                left: 30px;
+                bottom: 30px;
+            }
+        }
+    </style>
 
     
 
@@ -529,6 +712,94 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Floating Action Buttons (WhatsApp & Call) -->
+    <div class="floating-buttons">
+        {% if contact %}
+            <!-- WhatsApp Button with Dropdown (if 2 numbers) or Direct Link (if 1 number) -->
+            {% if contact.whatsapp_number or contact.whatsapp_number_2 %}
+                {% if contact.whatsapp_number and contact.whatsapp_number_2 %}
+                    <!-- Two WhatsApp numbers - Show dropdown -->
+                    <div class="floating-btn-wrapper">
+                        <button class="floating-btn floating-btn-whatsapp" id="whatsappBtn" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <div class="whatsapp-dropdown" id="whatsappDropdown">
+                            {% if contact.whatsapp_number %}
+                                {% with contact.whatsapp_number|clean_phone_number as pure_whatsapp_1 %}
+                                <a href="https://wa.me/{{ pure_whatsapp_1 }}" target="_blank" class="whatsapp-option">
+                                    <i class="fab fa-whatsapp me-2"></i>
+                                    <span>{{ contact.whatsapp_number }}</span>
+                                </a>
+                                {% endwith %}
+                            {% endif %}
+                            {% if contact.whatsapp_number_2 %}
+                                {% with contact.whatsapp_number_2|clean_phone_number as pure_whatsapp_2 %}
+                                <a href="https://wa.me/{{ pure_whatsapp_2 }}" target="_blank" class="whatsapp-option">
+                                    <i class="fab fa-whatsapp me-2"></i>
+                                    <span>{{ contact.whatsapp_number_2 }}</span>
+                                </a>
+                                {% endwith %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- Single WhatsApp number - Direct link -->
+                    {% if contact.whatsapp_number %}
+                        {% with contact.whatsapp_number|clean_phone_number as pure_whatsapp %}
+                        <a href="https://wa.me/{{ pure_whatsapp }}" target="_blank" class="floating-btn floating-btn-whatsapp" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        {% endwith %}
+                    {% elif contact.whatsapp_number_2 %}
+                        {% with contact.whatsapp_number_2|clean_phone_number as pure_whatsapp %}
+                        <a href="https://wa.me/{{ pure_whatsapp }}" target="_blank" class="floating-btn floating-btn-whatsapp" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        {% endwith %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            
+            <!-- Call Button -->
+            {% if contact.phone %}
+                <a href="tel:{{ contact.phone }}" class="floating-btn floating-btn-call" title="Zəng et">
+                    <i class="fas fa-phone-volume"></i>
+                </a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <!-- Floating Buttons JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const whatsappBtn = document.getElementById('whatsappBtn');
+            const whatsappDropdown = document.getElementById('whatsappDropdown');
+            
+            if (whatsappBtn && whatsappDropdown) {
+                // Toggle dropdown on button click
+                whatsappBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    whatsappDropdown.classList.toggle('show');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!whatsappBtn.contains(e.target) && !whatsappDropdown.contains(e.target)) {
+                        whatsappDropdown.classList.remove('show');
+                    }
+                });
+
+                // Close dropdown when clicking on an option
+                const whatsappOptions = whatsappDropdown.querySelectorAll('.whatsapp-option');
+                whatsappOptions.forEach(function(option) {
+                    option.addEventListener('click', function() {
+                        whatsappDropdown.classList.remove('show');
+                    });
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
