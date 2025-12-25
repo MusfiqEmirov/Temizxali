@@ -3084,7 +3084,7 @@ a.lb-next:hover {
 @media (max-width: 768px) {
     .floating-buttons {
         right: 15px;
-        bottom: 15px;
+        bottom: 90px;
         gap: 12px;
     }
 
@@ -3111,7 +3111,7 @@ a.lb-next:hover {
 @media (max-width: 576px) {
     .floating-buttons {
         right: 10px;
-        bottom: 10px;
+        bottom: 90px;
         gap: 10px;
     }
 
