@@ -61,188 +61,6 @@
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
 
-    <!-- Floating Buttons Styles -->
-    <style>
-        .floating-buttons {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .floating-btn-wrapper {
-            position: relative;
-        }
-
-        .floating-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .floating-btn-whatsapp {
-            background-color: #25D366;
-            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-        }
-
-        .floating-btn-whatsapp:hover {
-            background: linear-gradient(135deg, #128C7E 0%, #25D366 100%);
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
-            color: white;
-        }
-
-        .floating-btn-call {
-            background-color: #6d021c;
-            background: linear-gradient(135deg, #6d021c 0%, #890224 100%);
-        }
-
-        .floating-btn-call:hover {
-            background: linear-gradient(135deg, #890224 0%, #6d021c 100%);
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(109, 2, 28, 0.5);
-            color: white;
-        }
-
-        /* WhatsApp Dropdown Menu */
-        .whatsapp-dropdown {
-            position: absolute;
-            right: 70px;
-            bottom: 0;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            min-width: 200px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateX(10px);
-            transition: all 0.3s ease;
-            z-index: 1001;
-            overflow: hidden;
-        }
-
-        .whatsapp-dropdown.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(0);
-        }
-
-        .whatsapp-option {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            color: #333;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .whatsapp-option:last-child {
-            border-bottom: none;
-        }
-
-        .whatsapp-option:hover {
-            background-color: #f8f9fa;
-            color: #25D366;
-        }
-
-        .whatsapp-option i {
-            color: #25D366;
-            font-size: 18px;
-        }
-
-        .whatsapp-option span {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .floating-buttons {
-                right: 15px;
-                bottom: 15px;
-                gap: 12px;
-            }
-
-            .floating-btn {
-                width: 55px;
-                height: 55px;
-                font-size: 22px;
-            }
-
-            .whatsapp-dropdown {
-                right: 65px;
-                min-width: 180px;
-            }
-
-            .whatsapp-option {
-                padding: 10px 14px;
-            }
-
-            .whatsapp-option span {
-                font-size: 13px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .floating-buttons {
-                right: 10px;
-                bottom: 10px;
-                gap: 10px;
-            }
-
-            .floating-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
-
-            .whatsapp-dropdown {
-                right: 60px;
-                min-width: 160px;
-            }
-
-            .whatsapp-option {
-                padding: 8px 12px;
-            }
-
-            .whatsapp-option span {
-                font-size: 12px;
-            }
-        }
-
-        /* Ensure buttons don't overlap with back-to-top button */
-        @media (min-width: 992px) {
-            .back-to-top {
-                left: 30px;
-                bottom: 30px;
-            }
-        }
-    </style>
-
 </head>
 
 <body>
@@ -648,6 +466,30 @@
                                                         <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
                                                     {% endif %}
                                                 </div>
+                                                <!-- Google Map -->
+                                                {% if contact.address %}
+                                                <div class="mt-3 position-relative" style="height: 180px; max-width: 280px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                                                    <iframe 
+                                                        id="smallMap"
+                                                        width="100%" 
+                                                        height="100%" 
+                                                        style="border:0; border-radius: 8px;" 
+                                                        loading="lazy" 
+                                                        allowfullscreen
+                                                        referrerpolicy="no-referrer-when-downgrade"
+                                                        src="https://www.google.com/maps?q={{ contact.address|urlencode }}&output=embed&zoom=15">
+                                                    </iframe>
+                                                    <!-- Zoom Icon Button -->
+                                                    <button 
+                                                        type="button" 
+                                                        class="btn btn-primary btn-sm position-absolute" 
+                                                        style="top: 8px; right: 8px; z-index: 10; border-radius: 50%; width: 35px; height: 35px; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"
+                                                        onclick="openFullMap()"
+                                                        title="{% trans 'Xəritəni böyüt' %}">
+                                                        <i class="fas fa-expand" style="font-size: 14px;"></i>
+                                                    </button>
+                                                </div>
+                                                {% endif %}
                                             {% endif %}
                                         </div>
                                     </div>
@@ -732,6 +574,30 @@
                                                         <a class="btn btn-square btn-outline-primary rounded-circle" href="{{ contact.tiktok }}" target="_blank"><i class="fab fa-tiktok"></i></a>
                                                     {% endif %}
                                                 </div>
+                                                <!-- Google Map -->
+                                                {% if contact.address %}
+                                                <div class="mt-3 position-relative" style="height: 180px; max-width: 280px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                                                    <iframe 
+                                                        id="smallMap2"
+                                                        width="100%" 
+                                                        height="100%" 
+                                                        style="border:0; border-radius: 8px;" 
+                                                        loading="lazy" 
+                                                        allowfullscreen
+                                                        referrerpolicy="no-referrer-when-downgrade"
+                                                        src="https://www.google.com/maps?q={{ contact.address|urlencode }}&output=embed&zoom=15">
+                                                    </iframe>
+                                                    <!-- Zoom Icon Button -->
+                                                    <button 
+                                                        type="button" 
+                                                        class="btn btn-primary btn-sm position-absolute" 
+                                                        style="top: 8px; right: 8px; z-index: 10; border-radius: 50%; width: 35px; height: 35px; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"
+                                                        onclick="openFullMap()"
+                                                        title="{% trans 'Xəritəni böyüt' %}">
+                                                        <i class="fas fa-expand" style="font-size: 14px;"></i>
+                                                    </button>
+                                                </div>
+                                                {% endif %}
                                             {% endif %}
                                         </div>
                                     </div>
@@ -743,6 +609,34 @@
         </div>
     </div>
     <!-- About End -->
+
+
+    <!-- Full Map Modal Start -->
+    {% if contact and contact.address %}
+    <div class="modal fade" id="fullMapModal" tabindex="-1" aria-labelledby="fullMapModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fullMapModalLabel">{% trans "Xəritə" %}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe 
+                        id="fullMap"
+                        width="100%" 
+                        height="100%" 
+                        style="border:0; min-height: 80vh;" 
+                        loading="lazy" 
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps?q={{ contact.address|urlencode }}&output=embed&zoom=16">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- Full Map Modal End -->
 
 
     <!-- Additional Images Gallery Start -->
@@ -1030,6 +924,12 @@
                 });
             }
         });
+
+        // Function to open full map modal
+        function openFullMap() {
+            const fullMapModal = new bootstrap.Modal(document.getElementById('fullMapModal'));
+            fullMapModal.show();
+        }
     </script>
 </body>
 
