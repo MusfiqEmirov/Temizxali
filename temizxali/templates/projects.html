@@ -838,36 +838,6 @@
         {% endif %}
     </div>
 
-    <!-- Floating Buttons JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const whatsappBtn = document.getElementById('whatsappBtn');
-            const whatsappDropdown = document.getElementById('whatsappDropdown');
-            
-            if (whatsappBtn && whatsappDropdown) {
-                // Toggle dropdown on button click
-                whatsappBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    whatsappDropdown.classList.toggle('show');
-                });
-
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!whatsappBtn.contains(e.target) && !whatsappDropdown.contains(e.target)) {
-                        whatsappDropdown.classList.remove('show');
-                    }
-                });
-
-                // Close dropdown when clicking on an option
-                const whatsappOptions = whatsappDropdown.querySelectorAll('.whatsapp-option');
-                whatsappOptions.forEach(function(option) {
-                    option.addEventListener('click', function() {
-                        whatsappDropdown.classList.remove('show');
-                    });
-                });
-            }
-        });
-    </script>
 </body>
 
 </html>
