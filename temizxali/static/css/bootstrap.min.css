@@ -178,6 +178,10 @@ small,
 .small {
     font-size: 0.875em;
 }
+small_2,
+.small_2 {
+    font-size: 9px;
+}
 mark,
 .mark {
     padding: 0.2em;
