@@ -558,6 +558,9 @@ msgstr "Премиум:"
 msgid "Sifariş Ver"
 msgstr "Сделать заказ"
 
+msgid "Sifariş et"
+msgstr "Заказать"
+
 #: temizxali/templates/service_detail_page.html:462
 msgid "Xidmət Növləri"
 msgstr "Типы услуг"

@@ -96,6 +96,19 @@ h6,
     color: var(--light) !important;
 }
 
+.btn-order {
+    background-color: #25D366 !important;
+    border-color: #25D366 !important;
+    color: #ffffff !important;
+}
+
+.btn-order:hover {
+    background-color: #128C7E !important;
+    border-color: #128C7E !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+}
+
 .btn-square {
     width: 38px;
     height: 38px;
