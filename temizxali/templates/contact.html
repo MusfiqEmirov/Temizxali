@@ -317,7 +317,8 @@
                         <a href="404.html" class="dropdown-item">404 Page</a>
                     </div>
                 </div> -->
-            <a href="{% url 'order-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0  d-lg-block">{% trans "Hesabla və Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{% url 'calculator-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Hesabla" %}<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{% url 'order-page' %}" class="btn btn-order py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
             <!-- Mobile Social Media Icons and App Links in Navbar -->
             <div class="d-lg-none mt-3 px-4">
                 <div class="d-flex flex-column gap-3">
@@ -380,9 +381,8 @@
     <!-- Contact Start -->
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="row g-5">
-
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+            <div class="row g-5 justify-content-center">
+                <div class="col-lg-8 wow fadeIn" data-wow-delay="0.1s">
                     <div class="calculator-container">
                         <!-- Header -->
                         <div class="header-card">
@@ -486,126 +486,6 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 450px;">
-                    <div class="position-relative rounded overflow-hidden h-100">
-                        <!-- start -->
-                        <div class="">
-                            <div class="calculator-container">
-                                <!-- Header -->
-                                <div class="header-card">
-                                    <div class="d-flex align-items-center justify-content-center gap-3 mb-2">
-                                        <i class="fas fa-calculator fa-2x text-primary"></i>
-                                        <h1 class="header-title">{% trans "Servis Kalkulyatoru" %}</h1>
-                                    </div>
-                                    <p class="text-muted mb-0">{% trans "Xidmətləri seçin və qiyməti hesablayın" %}</p>
-                                </div>
-
-                                <!-- Service Selector -->
-                                <div class="service-selector-card">
-                                    <label class="form-label fw-semibold mb-3">
-                                        <i class="fas fa-plus-circle text-primary me-2"></i>
-                                        {% trans "Xidmət əlavə edin:" %}
-                                    </label>
-                                    <select class="form-select form-select-lg" id="serviceSelector"
-                                        onchange="addService()">
-                                        <option value="">{% trans "Xidmət seçin..." %}</option>
-                                        {% for service in services %}
-                                            <option value="{{ service.id }}" 
-                                                data-service-id="{{ service.id }}"
-                                                data-service-name="{% with translation=service.translations.first %}{% if translation %}{{ translation.name }}{% else %}Service #{{ service.id }}{% endif %}{% endwith %}"
-                                                data-has-variants="{% if service.variants.exists %}true{% else %}false{% endif %}"
-                                                data-price="{% if service.price %}{{ service.price }}{% else %}0{% endif %}"
-                                                data-vip-price="{% if service.vip_price %}{{ service.vip_price }}{% else %}0{% endif %}"
-                                                data-premium-price="{% if service.premium_price %}{{ service.premium_price }}{% else %}0{% endif %}"
-                                                data-measure-type="{{ service.measure_type }}"
-                                                data-sales="[
-                                                    {% for sale_event in service.sales.all %}
-                                                        {
-                                                            &quot;sale&quot;: {% if sale_event.sale %}{{ sale_event.sale }}{% else %}0{% endif %},
-                                                            &quot;min_quantity&quot;: {% if sale_event.min_quantity %}{{ sale_event.min_quantity }}{% else %}0{% endif %},
-                                                            &quot;active&quot;: {% if sale_event.active %}true{% else %}false{% endif %}
-                                                        }{% if not forloop.last %},{% endif %}
-                                                    {% endfor %}
-                                                ]"
-                                                data-variants="[
-                                                    {% for variant in service.variants.all %}
-                                                        {
-                                                            &quot;id&quot;: {{ variant.id }},
-                                                            &quot;name&quot;: &quot;{% with translation=variant.translations.first %}{% if translation %}{{ translation.name|escapejs }}{% else %}Variant {{ variant.id }}{% endif %}{% endwith %}&quot;,
-                                                            &quot;price&quot;: {% if variant.price %}{{ variant.price }}{% else %}0{% endif %},
-                                                            &quot;vip_price&quot;: {% if variant.vip_price %}{{ variant.vip_price }}{% else %}0{% endif %},
-                                                            &quot;premium_price&quot;: {% if variant.premium_price %}{{ variant.premium_price }}{% else %}0{% endif %}
-                                                        }{% if not forloop.last %},{% endif %}
-                                                    {% endfor %}
-                                                ]">
-                                                {% with translation=service.translations.first %}
-                                                    {% if translation %}
-                                                        {{ translation.name }}
-                                                    {% else %}
-                                                        Service #{{ service.id }}
-                                                    {% endif %}
-                                                {% endwith %}
-                                            </option>
-                                        {% empty %}
-                                            <option value="">{% trans "Xidmət tapılmadı" %}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-
-                                <!-- Services Container -->
-                                <div id="servicesContainer"></div>
-
-                                <!-- Translation strings for calculator (hidden) -->
-                                <div id="calculator-translations" style="display: none;">
-                                    <span id="trans-value-placeholder">{% trans 'Dəyər daxil edin' %}</span>
-                                    <span id="trans-value-placeholder-kg">{% trans 'Dəyər daxil edin (kq)' %}</span>
-                                    <span id="trans-value-placeholder-m2">{% trans 'Dəyər daxil edin (m²)' %}</span>
-                                    <span id="trans-value-placeholder-m">{% trans 'Dəyər daxil edin (m)' %}</span>
-                                    <span id="trans-value-placeholder-unit">{% trans 'Dəyər daxil edin (ədəd)' %}</span>
-                                    <span id="trans-variants-label">{% trans 'Variantlar' %}</span>
-                                    <span id="trans-variant-default">{% trans 'Variant' %}</span>
-                                    <span id="trans-normal">{% trans 'Normal' %}</span>
-                                    <span id="trans-vip">{% trans 'VIP' %}</span>
-                                    <span id="trans-premium">{% trans 'Premium' %}</span>
-                                    <span id="trans-remove">{% trans 'Sil' %}</span>
-                                    <span id="trans-price">{% trans 'Qiymət' %}</span>
-                                    <span id="trans-price-estimate">{% trans 'Bu qiymət təxminidir' %}</span>
-                                    <span id="trans-service-already-added">{% trans 'Bu xidmət artıq əlavə edilib!' %}</span>
-                                    <span id="trans-discount-applied">{% trans 'endirim tətbiq edildi' %}</span>
-                                </div>
-
-                                <!-- Calculate Button -->
-                                <div class="mt-4">
-                                    <button class="btn btn-calculate w-100" onclick="calculateTotal()">
-                                        <i class="fas fa-calculator me-2"></i>
-                                        {% trans "Hesabla" %}
-                                    </button>
-                                </div>
-
-                                <!-- Result -->
-                                <div id="resultCard" class="result-card" style="display: none;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <i class="fas fa-percent fa-2x text-success"></i>
-                                            <span class="fs-5 fw-medium text-secondary">{% trans "Ümumi məbləğ:" %}</span>
-                                        </div>
-                                        <div class="result-amount" id="totalAmount">0.00 ₼</div>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-                        </div>
-
-
-                        <!-- end -->
-
-
                     </div>
                 </div>
             </div>

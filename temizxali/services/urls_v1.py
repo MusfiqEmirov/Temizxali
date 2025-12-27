@@ -35,6 +35,11 @@ urlpatterns = [
         OrderPageView.as_view(),
         name='order-page'
     ),
+    path(
+        'calculator/',
+        CalculatorPageView.as_view(),
+        name='calculator-page'
+    ),
 
     # Review
     path(

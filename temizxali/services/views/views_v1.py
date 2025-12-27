@@ -18,6 +18,7 @@ __all__ = [
     'HomePageView',
     'AboutPageView',
     'OrderPageView',
+    'CalculatorPageView',
     'ServiceDetailPage',
     'ReviewCreateView',
     'ProjectsPaginationView',
@@ -116,6 +117,24 @@ class OrderPageView(View):
                 'calculator_background_image': calculator_background_image,
             })
     
+
+class CalculatorPageView(View):
+    template_name = 'calculator.html'
+    
+    def get(self, request):
+        services = ServiceQuery.load_services()
+        current_language = translation.get_language()
+        contact = Contact.objects.first()
+        calculator_background_image = Image.objects.filter(
+            is_calculator_page_background_image=True
+        ).first()
+        return render(request, self.template_name, {
+            'services': services,
+            'current_language': current_language,
+            'contact': contact,
+            'calculator_background_image': calculator_background_image,
+        })
+
 
 class ReviewCreateView(View):
     template_name = 'comment_add.html'
