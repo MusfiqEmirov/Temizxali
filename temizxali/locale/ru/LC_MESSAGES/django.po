@@ -519,6 +519,10 @@ msgstr "Оставьте отзыв или жалобу"
 msgid "Bəzi Gözəl Layihələrimiz"
 msgstr "Некоторые из наших замечательных проектов"
 
+#: temizxali/templates/about.html:618
+msgid "Əməkdaşlarımız"
+msgstr "Наши партнеры"
+
 #: temizxali/templates/projects.html:341
 msgid "Hazırda layihə mövcud deyil"
 msgstr "В настоящее время проекты недоступны"

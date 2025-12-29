@@ -364,7 +364,7 @@
 
     <!-- Page Header Start -->
     <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s" 
-         style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% if calculator_background_image %}{{ calculator_background_image.webp_url }}{% else %}{% static 'img/carousel-1.webp' %}{% endif %}') center center no-repeat; background-size: cover; background-attachment: fixed;">
+         style="background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url('{% if view_type == 'order' and order_background_image %}{{ order_background_image.webp_url }}{% elif calculator_background_image %}{{ calculator_background_image.webp_url }}{% else %}{% static 'img/carousel-1.webp' %}{% endif %}') center center no-repeat; background-size: cover; background-attachment: fixed;">
         <div class="container text-center py-5">
             <h1 class="display-3 text-white mb-4 animated slideInDown">{% trans "Bizimlə əlaqə saxlayın" %}</h1>
             <nav aria-label="breadcrumb animated slideInDown">

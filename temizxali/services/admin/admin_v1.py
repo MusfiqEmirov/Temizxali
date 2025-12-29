@@ -119,6 +119,7 @@ class ImageAdmin(admin.ModelAdmin):
         'is_review_page_background_image',
         'is_testimonial_page_background_image',
         'is_projects_page_background_image',
+        'is_order_page_background_image',
         'created_at'
     )
     
@@ -135,6 +136,7 @@ class ImageAdmin(admin.ModelAdmin):
                 'is_review_page_background_image',
                 'is_testimonial_page_background_image',
                 'is_projects_page_background_image',
+                'is_order_page_background_image',
             ),
             'description': 'Hansı səhifələr üçün background image istifadə olunacaq'
         }),
@@ -149,7 +151,8 @@ class ImageAdmin(admin.ModelAdmin):
             Q(is_calculator_page_background_image=True) |
             Q(is_review_page_background_image=True) |
             Q(is_testimonial_page_background_image=True) |
-            Q(is_projects_page_background_image=True)
+            Q(is_projects_page_background_image=True) |
+            Q(is_order_page_background_image=True)
         )
 
     def delete_queryset(self, request, queryset):
@@ -185,6 +188,8 @@ class ImageAdmin(admin.ModelAdmin):
             pages.append(('💬 Rəylər', '#6f42c1'))
         if obj.is_projects_page_background_image:
             pages.append(('🎯 Xüsusi Layihələr', '#dc3545'))
+        if obj.is_order_page_background_image:
+            pages.append(('📦 Sifariş', '#fd7e14'))
         
         if not pages:
             return format_html('<span style="color: #6c757d; font-style: italic;">❌ Background image deyil</span>')

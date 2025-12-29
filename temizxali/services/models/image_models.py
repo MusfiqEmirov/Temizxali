@@ -70,6 +70,10 @@ class Image(models.Model):
         default=False,
         verbose_name='Xüsusi Layihələr sehifesi üçün arxa plan şəkli'
     )
+    is_order_page_background_image = models.BooleanField(
+        default=False,
+        verbose_name='Sifariş sehifesi üçün arxa plan şəkli'
+    )
 
     created_at = models.DateTimeField(
         auto_now_add=True,

@@ -72,8 +72,8 @@ class OrderPageView(View):
         services = ServiceQuery.load_services()
         current_language = translation.get_language()
         contact = Contact.objects.first()
-        calculator_background_image = Image.objects.filter(
-            is_calculator_page_background_image=True
+        order_background_image = Image.objects.filter(
+            is_order_page_background_image=True
         ).first()
         return render(request, self.template_name, {
             'form': form,
@@ -81,7 +81,7 @@ class OrderPageView(View):
             'current_language': current_language,
             'view_type': 'order',
             'contact': contact,
-            'calculator_background_image': calculator_background_image,
+            'order_background_image': order_background_image,
         })
     
     def post(self, request):
@@ -89,8 +89,8 @@ class OrderPageView(View):
         services = ServiceQuery.load_services()
         current_language = translation.get_language()
         contact = Contact.objects.first()
-        calculator_background_image = Image.objects.filter(
-            is_calculator_page_background_image=True
+        order_background_image = Image.objects.filter(
+            is_order_page_background_image=True
         ).first()
         if form.is_valid():
             try:
@@ -105,7 +105,7 @@ class OrderPageView(View):
                     'current_language': current_language,
                     'view_type': 'order',
                     'contact': contact,
-                    'calculator_background_image': calculator_background_image,
+                    'order_background_image': order_background_image,
                 })
         else:
             messages.error(request, _('Zəhmət olmasa formu düzgün doldurun'))
@@ -115,7 +115,7 @@ class OrderPageView(View):
                 'current_language': current_language,
                 'view_type': 'order',
                 'contact': contact,
-                'calculator_background_image': calculator_background_image,
+                'order_background_image': order_background_image,
             })
     
 
