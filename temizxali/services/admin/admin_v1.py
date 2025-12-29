@@ -86,6 +86,25 @@ class AboutImageInline(NestedTabularInline):
     image_preview.short_description = "🖼️ Önizləmə"
 
 
+class BloqImageInline(NestedTabularInline):
+    model = Image
+    fk_name = 'bloq'
+    extra = 1
+    can_delete = True
+    max_num = 1
+    readonly_fields = ('image_preview',)
+    fields = ('image', 'image_preview')  # 'is_bloq_background_image' removed for blog detail
+    
+    class Media:
+        js = ('js/admin_image_compress.js',)
+
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="100" style="border-radius: 4px;" />', obj.webp_url)
+        return format_html('<span style="color: #6c757d;">📷 Şəkil yoxdur</span>')
+    image_preview.short_description = "🖼️ Önizləmə"
+
+
 class ServiceVariantImageInline(NestedTabularInline):
     model = Image
     fk_name = 'service_variant'
@@ -119,6 +138,8 @@ class ImageAdmin(admin.ModelAdmin):
         'is_review_page_background_image',
         'is_testimonial_page_background_image',
         'is_projects_page_background_image',
+        'is_order_page_background_image',
+        'is_bloq_background_image',
         'created_at'
     )
     
@@ -135,6 +156,8 @@ class ImageAdmin(admin.ModelAdmin):
                 'is_review_page_background_image',
                 'is_testimonial_page_background_image',
                 'is_projects_page_background_image',
+                'is_order_page_background_image',
+                'is_bloq_background_image',
             ),
             'description': 'Hansı səhifələr üçün background image istifadə olunacaq'
         }),
@@ -149,7 +172,9 @@ class ImageAdmin(admin.ModelAdmin):
             Q(is_calculator_page_background_image=True) |
             Q(is_review_page_background_image=True) |
             Q(is_testimonial_page_background_image=True) |
-            Q(is_projects_page_background_image=True)
+            Q(is_projects_page_background_image=True) |
+            Q(is_order_page_background_image=True) |
+            Q(is_bloq_background_image=True)
         )
 
     def delete_queryset(self, request, queryset):
@@ -185,6 +210,10 @@ class ImageAdmin(admin.ModelAdmin):
             pages.append(('💬 Rəylər', '#6f42c1'))
         if obj.is_projects_page_background_image:
             pages.append(('🎯 Xüsusi Layihələr', '#dc3545'))
+        if obj.is_order_page_background_image:
+            pages.append(('📦 Sifariş', '#fd7e14'))
+        if obj.is_bloq_background_image:
+            pages.append(('📝 Bloq', '#6d021c'))
         
         if not pages:
             return format_html('<span style="color: #6c757d; font-style: italic;">❌ Background image deyil</span>')
@@ -1089,6 +1118,76 @@ class MottoAdmin(admin.ModelAdmin):
         return format_html('<span style="color: #6c757d;">-</span>')
     get_motto_display.short_description = '💭 Deviz'
 
+
+
+class BloqTranslationInline(admin.TabularInline):
+    model = BloqTranslation
+    extra = len(LANGUAGES)
+    min_num = len(LANGUAGES)
+    max_num = len(LANGUAGES)
+    verbose_name = '🌐 Bloq Tərcüməsi'
+    verbose_name_plural = '🌐 Bloq Tərcümələri'
+    fields = ('languages', 'name', 'description', 'content')
+
+
+@admin.register(Bloq)
+class BloqAdmin(admin.ModelAdmin):
+    list_display = ('id', 'get_bloq_description', 'get_active_badge', 'get_images_count', 'created_at')  # 'get_url_display' commented out
+    list_display_links = ('id', 'get_bloq_description')
+    list_filter = ('is_active', 'created_at')
+    search_fields = ('translations__description', 'translations__name',)  # 'url' commented out
+    inlines = [BloqTranslationInline, BloqImageInline]
+    
+    fieldsets = (
+        ('📋 Əsas Məlumat', {
+            'fields': ('is_active',)  # 'url' commented out
+        }),
+    )
+    readonly_fields = ('created_at',)
+
+    def get_bloq_description(self, obj):
+        translation = obj.translations.first()
+        if translation:
+            text = translation.description or translation.description or translation.name
+            if text:
+                return format_html(
+                    '<strong style="color: #007bff;">📝 {}</strong>',
+                    text[:50] + '...' if len(text) > 50 else text
+                )
+        return format_html('<span style="color: #6c757d;">-</span>')
+    get_bloq_description.short_description = '📝 Bloq'
+
+    # def get_url_display(self, obj):
+    #     if obj.url:
+    #         return format_html(
+    #             '<a href="{}" target="_blank" style="color: #007bff;">🔗 Link</a>',
+    #             obj.url
+    #         )
+    #     return format_html('<span style="color: #6c757d;">❌ Link yoxdur</span>')
+    # get_url_display.short_description = '🔗 URL'
+
+    def get_active_badge(self, obj):
+        if obj.is_active:
+            return format_html(
+                '<span style="background-color: #28a745; color: white; padding: 4px 10px; '
+                'border-radius: 4px; font-weight: bold;">✓ Aktiv</span>'
+            )
+        return format_html(
+            '<span style="background-color: #6c757d; color: white; padding: 4px 10px; '
+            'border-radius: 4px; font-weight: bold;">✗ Deaktiv</span>'
+        )
+    get_active_badge.short_description = '📊 Status'
+
+    def get_images_count(self, obj):
+        count = obj.images.count()
+        if count > 0:
+            return format_html(
+                '<span style="background-color: #28a745; color: white; padding: 4px 10px; '
+                'border-radius: 4px; font-weight: bold;">📷 {} şəkil</span>',
+                count
+            )
+        return format_html('<span style="color: #6c757d;">📷 Şəkil yoxdur</span>')
+    get_images_count.short_description = '📷 Şəkillər'
 
 
 @admin.register(Contact)

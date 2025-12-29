@@ -42,6 +42,14 @@ class Image(models.Model):
         blank=True,
         verbose_name='Servis növü'
     )
+    bloq = models.ForeignKey(
+        'Bloq',
+        related_name='images',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='Bloq'
+    )
     image = models.ImageField(
         upload_to='images/',  
         verbose_name='Şəkil'
@@ -69,6 +77,14 @@ class Image(models.Model):
     is_projects_page_background_image = models.BooleanField(
         default=False,
         verbose_name='Xüsusi Layihələr sehifesi üçün arxa plan şəkli'
+    )
+    is_order_page_background_image = models.BooleanField(
+        default=False,
+        verbose_name='Sifariş sehifesi üçün arxa plan şəkli'
+    )
+    is_bloq_background_image = models.BooleanField(
+        default=False,
+        verbose_name='Bloq səhifəsi üçün arxa plan şəkli'
     )
 
     created_at = models.DateTimeField(

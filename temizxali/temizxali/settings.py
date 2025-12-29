@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Third party apps
     'nested_admin',
+    'ckeditor',
+    'ckeditor_uploader',
     # Apps
     'services'
 ]
@@ -150,6 +152,8 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
 
 # Static files directories
 STATICFILES_DIRS = [

@@ -296,8 +296,8 @@
                     </div>
                 </div>
 
-                <a href="{% url 'projects-page' %}" class="nav-item nav-link">{% trans "Xüsusi Layihələr" %}</a>
                 <a href="{% url 'testimonial-page' %}" class="nav-item nav-link">{% trans "Rəylər" %}</a>
+                <a href="{% url 'blog-page' %}" class="nav-item nav-link">{% trans "Bloq" %}</a>
                 <a href="{% url 'about-page' %}" class="nav-item nav-link active">{% trans "Haqqımızda" %}</a>
             <a href="{% url 'calculator-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Hesabla" %}<i class="fa fa-arrow-right ms-3"></i></a>
             <a href="{% url 'order-page' %}" class="btn btn-order py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
@@ -611,6 +611,100 @@
     </div>
     <!-- About End -->
 
+    <!-- Special Projects Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+                <h1 class="display-5 mb-5">{% trans "Əməkdaşlarımız" %}</h1>
+            </div>
+
+            <div class="row g-4 portfolio-container">
+                {% if special_projects %}
+                    {% for project in special_projects %}
+                        {% with translation=project.translations.first %}
+                            {% if translation %}
+                                <div class="col-lg-4 col-md-6 portfolio-item wow fadeInUp" data-wow-delay="0.{% cycle '1' '3' '5' %}s">
+                                    <div class="portfolio-inner rounded">
+                                        {% if project.images.first %}
+                                            <img class="img-fluid" src="{{ project.images.first.webp_url }}" alt="{{ translation.description|truncatewords:5 }}" loading="lazy" decoding="async">
+                                        {% else %}
+                                            <img class="img-fluid" src="{% static 'img/carousel-1.webp' %}" alt="Default" loading="lazy" decoding="async">
+                                        {% endif %}
+                                        <div class="portfolio-text">
+                                            <h4 class="text-white mb-4">{{ translation.description|truncatewords:10 }}</h4>
+                                            <div class="d-flex">
+                                                {% if project.images.all %}
+                                                    <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.images.first.webp_url }}" data-lightbox="project-{{ project.id }}"><i class="fa fa-eye"></i></a>
+                                                    <!-- Hər layihənin bütün şəkillərini gizli link-lər kimi əlavə et -->
+                                                    {% for image in project.images.all %}
+                                                        {% if not forloop.first %}
+                                                            <a href="{{ image.webp_url }}" data-lightbox="project-{{ project.id }}" style="display: none;"></a>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                                {% if project.url %}
+                                                    <a class="btn btn-lg-square rounded-circle mx-2" href="{{ project.url }}" target="_blank"><i class="fa fa-link"></i></a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p class="text-muted">{% trans "Hazırda layihə mövcud deyil" %}</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if special_projects.has_other_pages %}
+                <nav aria-label="Page navigation" class="mt-5">
+                    <ul class="pagination justify-content-center">
+                        {% if special_projects.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ special_projects.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">&laquo;</span>
+                            </li>
+                        {% endif %}
+
+                        {% for num in special_projects.paginator.page_range %}
+                            {% if special_projects.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > special_projects.number|add:'-3' and num < special_projects.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if special_projects.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ special_projects.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link">&raquo;</span>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+    <!-- Special Projects End -->
+
 
     <!-- Full Map Modal Start -->
     {% if contact and contact.address %}
@@ -638,54 +732,6 @@
     </div>
     {% endif %}
     <!-- Full Map Modal End -->
-
-
-    <!-- Additional Images Gallery Start -->
-    {% if about_item and about_item.images.all %}
-        {% with total_images=about_item.images.all|length %}
-            {% if total_images > 1 %}
-                <div class="container-xxl py-5">
-                    <div class="container">
-                        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
-                            <h1 class="display-5 mb-5">{% trans "Qaleryamız" %}</h1>
-                        </div>
-                        <div class="row g-3 service-gallery-thumbs">
-                            {% with first_image=about_item.images.first %}
-                                {% if first_image %}
-                                    {% for image in about_item.images.all %}
-                                        {% if image.id != first_image.id %}
-                                            <div class="col-4 col-md-3">
-                                                <a href="{{ image.webp_url }}" data-lightbox="about-gallery" data-title="{% trans 'Haqqımızda şəkli' %}">
-                                                    <img class="img-fluid rounded service-gallery-thumb" 
-                                                         src="{{ image.webp_url }}" 
-                                                         alt="{% trans 'Haqqımızda şəkli' %}"
-                                                         loading="lazy"
-                                                         decoding="async">
-                                                </a>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% else %}
-                                    {% for image in about_item.images.all %}
-                                        <div class="col-4 col-md-3">
-                                            <a href="{{ image.image.url }}" data-lightbox="about-gallery" data-title="{% trans 'Haqqımızda şəkli' %}">
-                                                <img class="img-fluid rounded service-gallery-thumb" 
-                                                     src="{{ image.webp_url }}" 
-                                                     alt="{% trans 'Haqqımızda şəkli' %}"
-                                                     loading="lazy"
-                                                     decoding="async">
-                                            </a>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endwith %}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        {% endwith %}
-    {% endif %}
-    <!-- Additional Images Gallery End -->
 
 
     <!-- Facts Start -->
@@ -791,6 +837,7 @@
                     <h4 class="text-white mb-4">{% trans "Digər" %}</h4>
                     <a class="btn btn-link" href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
                     <a class="btn btn-link" href="{% url 'about-page' %}">{% trans "Haqqımızda" %}</a>
+                    <a class="btn btn-link" href="{% url 'blog-page' %}">{% trans "Bloq" %}</a>
                     <a class="btn btn-link" href="{% url 'testimonial-page' %}">{% trans "Rəylər" %}</a>
                     <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Sifariş" %}</a>
                     {% if services %}
@@ -903,6 +950,7 @@
             fullMapModal.show();
         }
     </script>
+
 </body>
 
 </html>

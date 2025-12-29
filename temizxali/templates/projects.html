@@ -291,6 +291,7 @@
                 </div>
                 <a href="{% url 'projects-page' %}" class="nav-item nav-link active">{% trans "Xüsusi Layihələr" %}</a>
                 <a href="{% url 'testimonial-page' %}" class="nav-item nav-link">{% trans "Rəylər" %}</a>
+                <a href="{% url 'blog-page' %}" class="nav-item nav-link">{% trans "Bloq" %}</a>
                 <a href="{% url 'about-page' %}" class="nav-item nav-link">{% trans "Haqqımızda" %}</a>
             <a href="{% url 'calculator-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Hesabla" %}<i class="fa fa-arrow-right ms-3"></i></a>
             <a href="{% url 'order-page' %}" class="btn btn-order py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
@@ -520,8 +521,8 @@
                     <h4 class="text-white mb-4">{% trans "Digər" %}</h4>
                     <a class="btn btn-link" href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
                     <a class="btn btn-link" href="{% url 'about-page' %}">{% trans "Haqqımızda" %}</a>
+                    <a class="btn btn-link" href="{% url 'blog-page' %}">{% trans "Bloq" %}</a>
                     <a class="btn btn-link" href="{% url 'testimonial-page' %}">{% trans "Rəylər" %}</a>
-                    <a class="btn btn-link" href="{% url 'projects-page' %}">{% trans "Xüsusi Layihələr" %}</a>
                     <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Sifariş" %}</a>
                     <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Əlaqə" %}</a>
                 </div>

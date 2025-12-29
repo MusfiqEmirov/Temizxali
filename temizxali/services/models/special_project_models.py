@@ -14,16 +14,16 @@ class SpecialProject(models.Model):
         default=False,
         null=True,
         blank=True,
-        verbose_name='Lahiyə aktivliyi'
+        verbose_name='Əməkdaş aktivliyi'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name='Lahiyə yaradılma tarixi'
+        verbose_name='Yaradılma tarixi'
     )
 
     class Meta:
-        verbose_name = 'Xüsusi Lahiyə'
-        verbose_name_plural = 'Xüsusi Lahiyələr'
+        verbose_name = 'Əməkdaş'
+        verbose_name_plural = 'Əməkdaşlar'
         ordering = ('-created_at',)
 
     def __str__(self):
@@ -36,7 +36,7 @@ class SpecialProjectTranslation(models.Model):
         SpecialProject,
         related_name='translations',
         on_delete=models.CASCADE,
-        verbose_name='Xüsusi layihə'
+        verbose_name='Əməkdaş'
     )
     languages = models.CharField(
         max_length=12,
@@ -46,12 +46,12 @@ class SpecialProjectTranslation(models.Model):
     description = models.CharField(
         max_length=350,
         validators=[MaxLengthValidator(2000)],
-        verbose_name='Xüsusi layihə haqqında məlumat'
+        verbose_name='Əməkdaş haqqında məlumat'
     )
 
     class Meta:
-        verbose_name = 'Xüsusi layihə tərcüməsi'
-        verbose_name_plural = 'Xüsusi layihə tərcümələri'
+        verbose_name = 'Əməkdaş tərcüməsi'
+        verbose_name_plural = 'Əməkdaş  tərcümələri'
 
     def __str__(self):
         return f'{self.description[:20]} ({self.languages})'
