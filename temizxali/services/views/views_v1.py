@@ -46,7 +46,8 @@ class AboutPageView(View):
         from services.utils.about_queries import AboutPageQueries
         
         lang = translation.get_language()
-        data = AboutPageQueries.get_all_about_data(lang)
+        page = request.GET.get('page', 1)
+        data = AboutPageQueries.get_all_about_data(lang, page=page)
         
         return render(request, self.template_name, data)
 

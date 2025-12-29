@@ -1,19 +1,21 @@
 from django.utils import translation
 from django.core.cache import cache
 from django.db.models import Prefetch
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class AboutPageQueries:
     
     @staticmethod
-    def get_all_about_data(lang):
+    def get_all_about_data(lang, page=1, per_page=6):
         
         from services.models import (
             Image, Service, Statistic, About, Contact,
-            AboutTranslation, ServiceTranslation
+            AboutTranslation, ServiceTranslation, SpecialProject,
+            SpecialProjectTranslation
         )
         
-        cache_key = f'about_data_{lang}'
+        cache_key = f'about_data_{lang}_page_{page}'
         cached_data = cache.get(cache_key)
         if cached_data:
             return cached_data
@@ -39,6 +41,23 @@ class AboutPageQueries:
             is_about_page_background_image=True
         ).first()
         
+        # Special Projects with pagination
+        special_projects = SpecialProject.objects.filter(
+            is_active=True,
+            translations__languages=lang
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=SpecialProjectTranslation.objects.filter(languages=lang)),
+            'images'
+        ).order_by('-created_at')
+        
+        paginator = Paginator(special_projects, per_page)
+        try:
+            projects_page = paginator.page(page)
+        except PageNotAnInteger:
+            projects_page = paginator.page(1)
+        except EmptyPage:
+            projects_page = paginator.page(paginator.num_pages)
+        
         result = {
             'about': about,
             'about_item': about_item,
@@ -47,6 +66,7 @@ class AboutPageQueries:
             'contact': contact,
             'services': services,
             'about_background_image': about_background_image,
+            'special_projects': projects_page,
         }
         
         cache.set(cache_key, result, 3600)
