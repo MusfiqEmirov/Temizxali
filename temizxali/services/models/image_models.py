@@ -42,6 +42,14 @@ class Image(models.Model):
         blank=True,
         verbose_name='Servis növü'
     )
+    bloq = models.ForeignKey(
+        'Bloq',
+        related_name='images',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name='Bloq'
+    )
     image = models.ImageField(
         upload_to='images/',  
         verbose_name='Şəkil'

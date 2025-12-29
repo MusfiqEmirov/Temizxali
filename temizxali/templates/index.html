@@ -297,8 +297,8 @@
                 </div>
 
                 <!-- <a href="service.html" class="nav-item nav-link">Xidmətlər</a> -->
-                <a href="{% url 'projects-page' %}" class="nav-item nav-link">{% trans "Xüsusi Layihələr" %}</a>
                 <a href="{% url 'testimonial-page' %}" class="nav-item nav-link">{% trans "Rəylər" %}</a>
+                <a href="{% url 'blog-page' %}" class="nav-item nav-link">{% trans "Bloq" %}</a>
                 <a href="{% url 'about-page' %}" class="nav-item nav-link">{% trans "Haqqımızda" %}</a>
 
                 <!-- <div class="nav-item dropdown">
@@ -659,12 +659,6 @@
           {% endfor %}
         </div>
         
-        <!-- Bütün Layihələrə Bax Button -->
-        <div class="text-center mt-5 wow fadeInUp" data-wow-delay="0.5s">
-          <a href="{% url 'projects-page' %}" class="btn btn-primary py-3 px-5">
-            {% trans "Bütün Layihələrə Bax" %} <i class="fa fa-arrow-right ms-2"></i>
-          </a>
-        </div>
       {% else %}
         <div class="row g-4 text-center">
           <p class="text-muted">{% trans "Hazırda layihə mövcud deyil." %}</p>

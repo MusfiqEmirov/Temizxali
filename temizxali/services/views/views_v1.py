@@ -24,6 +24,7 @@ __all__ = [
     'ProjectsPaginationView',
     'ProjectsPageView',
     'TestimonialPageView',
+    'BlogPageView',
 ]
 
 
@@ -262,5 +263,45 @@ class TestimonialPageView(View):
             'contact': contact,
             'current_language': languages,
             'testimonial_background_image': testimonial_background_image,
+        })
+
+
+class BlogPageView(View):
+    template_name = 'blog.html'
+    
+    def get(self, request):
+        languages = translation.get_language()
+        
+        bloqs = Bloq.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=BloqTranslation.objects.filter(languages=languages)),
+            'images'
+        ).order_by('-created_at')
+        
+        paginator = Paginator(bloqs, 9)  # 3 sütun x 3 sıra = 9 kart
+        page = request.GET.get('page', 1)
+        try:
+            bloqs_page = paginator.page(page)
+        except PageNotAnInteger:
+            bloqs_page = paginator.page(1)
+        except EmptyPage:
+            bloqs_page = paginator.page(paginator.num_pages)
+        
+        contact = Contact.objects.first()
+        
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')[:10]
+        
+        return render(request, self.template_name, {
+            'bloqs': bloqs_page,
+            'contact': contact,
+            'current_language': languages,
+            'services': services,
         })
 

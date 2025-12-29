@@ -4,7 +4,7 @@ from django.core.validators import MaxLengthValidator
 from services.utils import LANGUAGES
 
 
-class SpecialProject(models.Model):
+class Bloq(models.Model):
     url = models.URLField(
         null=True,
         blank=True,
@@ -14,16 +14,16 @@ class SpecialProject(models.Model):
         default=False,
         null=True,
         blank=True,
-        verbose_name='Əməkdaş aktivliyi'
+        verbose_name='Bloq aktivliyi'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name='Yaradılma tarixi'
+        verbose_name='Bloq yaradılma tarixi'
     )
 
     class Meta:
-        verbose_name = 'Əməkdaş'
-        verbose_name_plural = 'Əməkdaşlar'
+        verbose_name = 'Bloq'
+        verbose_name_plural = 'Bloqlar'
         ordering = ('-created_at',)
 
     def __str__(self):
@@ -31,12 +31,16 @@ class SpecialProject(models.Model):
         return translation.description[:20] if translation else "No description"
 
 
-class SpecialProjectTranslation(models.Model):
-    project = models.ForeignKey(
-        SpecialProject,
+class BloqTranslation(models.Model):
+    bloq = models.ForeignKey(
+        Bloq,
         related_name='translations',
         on_delete=models.CASCADE,
-        verbose_name='Əməkdaş'
+        verbose_name='Bloq'
+    )
+    name = models.CharField(
+        max_length=80,
+        verbose_name='Bloq növ adı'
     )
     languages = models.CharField(
         max_length=12,
@@ -46,12 +50,12 @@ class SpecialProjectTranslation(models.Model):
     description = models.CharField(
         max_length=350,
         validators=[MaxLengthValidator(2000)],
-        verbose_name='Əməkdaş haqqında məlumat'
+        verbose_name='Bloq haqqında başlanqıç cümləsi'
     )
 
     class Meta:
-        verbose_name = 'Əməkdaş tərcüməsi'
-        verbose_name_plural = 'Əməkdaş  tərcümələri'
+        verbose_name = 'Bloq'
+        verbose_name_plural = 'Bloq tərcümələri'
 
     def __str__(self):
         return f'{self.description[:20]} ({self.languages})'
