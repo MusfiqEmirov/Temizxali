@@ -68,7 +68,7 @@
             gap: 8px;
         }
         .blog-card-meta .category {
-            color: #007bff;
+            color: #6c757d;
             font-weight: 500;
         }
         .blog-card-title {
@@ -84,7 +84,7 @@
         }
         .blog-card-description {
             font-size: 15px;
-            color: #555;
+            color: #007bff;
             line-height: 1.6;
             flex-grow: 1;
         }
@@ -370,8 +370,7 @@
     <div class="blog-section">
         <div class="container">
             <div class="blog-header">
-                <h1>{% trans "Bloq yazıları" %}</h1>
-                <p>{% trans "Ən son məqalələrimiz və xəbərlər" %}</p>
+                <h1>{% trans "Ən son məqalələrimiz və xəbərlər" %}</h1>
             </div>
 
             <div class="row g-4">
@@ -539,6 +538,7 @@
                     <h4 class="text-white mb-4">{% trans "Digər" %}</h4>
                     <a class="btn btn-link" href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
                     <a class="btn btn-link" href="{% url 'about-page' %}">{% trans "Haqqımızda" %}</a>
+                    <a class="btn btn-link" href="{% url 'blog-page' %}">{% trans "Bloq" %}</a>
                     <a class="btn btn-link" href="{% url 'testimonial-page' %}">{% trans "Rəylər" %}</a>
                     <a class="btn btn-link" href="{% url 'order-page' %}">{% trans "Sifariş" %}</a>
                     {% if services %}

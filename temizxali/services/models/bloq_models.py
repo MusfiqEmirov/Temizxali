@@ -47,10 +47,20 @@ class BloqTranslation(models.Model):
         choices=LANGUAGES,
         verbose_name='Dil'
     )
+    header = models.CharField(
+        max_length=250,
+        validators=[MaxLengthValidator(250)],
+        null=True,
+        blank=True,
+        verbose_name='Bloq haqqında başlanğıc cümləsi'
+    )
+
     description = models.CharField(
-        max_length=350,
-        validators=[MaxLengthValidator(2000)],
-        verbose_name='Bloq haqqında başlanqıç cümləsi'
+        max_length=5000,
+        validators=[MaxLengthValidator(5000)],
+        null=True,
+        blank=True,
+        verbose_name='Bloq haqqında'
     )
 
     class Meta:

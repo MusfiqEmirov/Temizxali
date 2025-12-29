@@ -1126,8 +1126,8 @@ class BloqTranslationInline(admin.TabularInline):
 
 @admin.register(Bloq)
 class BloqAdmin(admin.ModelAdmin):
-    list_display = ('id', 'get_bloq_description', 'get_url_display', 'get_active_badge', 'get_images_count', 'created_at')
-    list_display_links = ('id', 'get_bloq_description')
+    list_display = ('id', 'get_bloq_header', 'get_url_display', 'get_active_badge', 'get_images_count', 'created_at')
+    list_display_links = ('id', 'get_bloq_header')
     list_filter = ('is_active', 'created_at')
     search_fields = ('translations__description', 'translations__name', 'url')
     inlines = [BloqTranslationInline, BloqImageInline]
@@ -1139,7 +1139,7 @@ class BloqAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('created_at',)
 
-    def get_bloq_description(self, obj):
+    def get_bloq_header(self, obj):
         translation = obj.translations.first()
         if translation:
             return format_html(
@@ -1147,7 +1147,7 @@ class BloqAdmin(admin.ModelAdmin):
                 translation.description[:50] + '...' if len(translation.description) > 50 else translation.description
             )
         return format_html('<span style="color: #6c757d;">-</span>')
-    get_bloq_description.short_description = '📝 Bloq'
+    get_bloq_header.short_description = '📝 Bloq'
 
     def get_url_display(self, obj):
         if obj.url:

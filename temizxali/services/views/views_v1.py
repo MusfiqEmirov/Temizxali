@@ -280,7 +280,7 @@ class BlogPageView(View):
             'images'
         ).order_by('-created_at')
         
-        paginator = Paginator(bloqs, 9)  # 3 sütun x 3 sıra = 9 kart
+        paginator = Paginator(bloqs, 6)  # 3 sütun x 2 sıra = 6 kart
         page = request.GET.get('page', 1)
         try:
             bloqs_page = paginator.page(page)

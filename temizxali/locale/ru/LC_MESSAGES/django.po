@@ -307,6 +307,16 @@ msgstr "Адрес и Контакты:"
 msgid "Digər"
 msgstr "Другое"
 
+#: temizxali/templates/blog.html:9 temizxali/templates/blog.html:297
+#: temizxali/templates/blog.html:358 temizxali/templates/blog.html:362
+#: temizxali/templates/index.html:301
+msgid "Bloq"
+msgstr "Блог"
+
+#: temizxali/templates/blog.html:373
+msgid "Ən son məqalələrimiz və xəbərlər"
+msgstr "Наши последние статьи и новости"
+
 #: temizxali/templates/about.html:614 temizxali/templates/comment_add.html:420
 #: temizxali/templates/contact.html:585 temizxali/templates/index.html:714
 #: temizxali/templates/projects.html:457
