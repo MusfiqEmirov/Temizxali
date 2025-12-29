@@ -9,10 +9,12 @@ urlpatterns = [
     path(f'{settings.ADMIN_URL}', admin.site.urls),
     path(f'{settings.ADMIN_URL}_nested_admin/', include('nested_admin.urls')),
     path('i18n/setlang/', set_language, name='set_language'),
-    path('', include('services.urls_v1'))
+    path('', include('services.urls_v1')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 if settings.DEBUG:
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
     urlpatterns += staticfiles_urlpatterns()
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-20 22:52+0400\n"
+"POT-Creation-Date: 2025-12-29 23:20+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,143 +99,168 @@ msgstr ""
 "Ваш заказ по этому номеру ещё не подтверждён. Чтобы оставить отзыв, "
 "дождитесь, пожалуйста, подтверждения заказа."
 
-#: temizxali/services/views/views_v1.py:96
+#: temizxali/services/views/views_v1.py:103
 msgid "Sifarişiniz uğurla göndərildi"
 msgstr "Ваш заказ успешно отправлен"
 
-#: temizxali/services/views/views_v1.py:99
+#: temizxali/services/views/views_v1.py:106
 #, python-format
 msgid "Xəta baş verdi: %s"
 msgstr ""
 
-#: temizxali/services/views/views_v1.py:109
+#: temizxali/services/views/views_v1.py:116
 msgid "Zəhmət olmasa formu düzgün doldurun"
 msgstr "Пожалуйста, заполните форму правильно"
 
-#: temizxali/services/views/views_v1.py:159
+#: temizxali/services/views/views_v1.py:184
 msgid "Rəyiniz uğurla göndərildi ✅"
 msgstr "Ваш отзыв успешно отправлен ✅"
 
-#: temizxali/services/views/views_v1.py:161
+#: temizxali/services/views/views_v1.py:186
 msgid "Melumatlari duzgun daxil edin"
 msgstr "Введите данные правильно"
 
-#: temizxali/templates/about.html:8 temizxali/templates/about.html:245
-#: temizxali/templates/about.html:257 temizxali/templates/about.html:261
-#: temizxali/templates/about.html:277 temizxali/templates/about.html:279
-#: temizxali/templates/about.html:387 temizxali/templates/about.html:612
-#: temizxali/templates/comment_add.html:242
-#: temizxali/templates/comment_add.html:418
-#: temizxali/templates/contact.html:250 temizxali/templates/contact.html:583
-#: temizxali/templates/index.html:257 temizxali/templates/index.html:348
-#: temizxali/templates/index.html:350 temizxali/templates/index.html:412
-#: temizxali/templates/index.html:712 temizxali/templates/projects.html:275
-#: temizxali/templates/projects.html:454
-#: temizxali/templates/service_detail_page.html:243
-#: temizxali/templates/service_detail_page.html:590
-#: temizxali/templates/testimonial.html:201
-#: temizxali/templates/testimonial.html:344
+#: temizxali/templates/about.html:9 temizxali/templates/about.html:301
+#: temizxali/templates/about.html:351 temizxali/templates/about.html:355
+#: temizxali/templates/about.html:371 temizxali/templates/about.html:373
+#: temizxali/templates/about.html:505 temizxali/templates/about.html:839
+#: temizxali/templates/blog.html:299 temizxali/templates/blog.html:541
+#: temizxali/templates/blog_detail.html:436
+#: temizxali/templates/blog_detail.html:645
+#: temizxali/templates/calculator.html:235
+#: temizxali/templates/calculator.html:446
+#: temizxali/templates/comment_add.html:301
+#: temizxali/templates/comment_add.html:526
+#: temizxali/templates/contact.html:308 temizxali/templates/contact.html:570
+#: temizxali/templates/index.html:303 temizxali/templates/index.html:433
+#: temizxali/templates/index.html:435 temizxali/templates/index.html:497
+#: temizxali/templates/index.html:807 temizxali/templates/projects.html:295
+#: temizxali/templates/projects.html:523
+#: temizxali/templates/service_detail_page.html:301
+#: temizxali/templates/service_detail_page.html:697
+#: temizxali/templates/testimonial.html:259
+#: temizxali/templates/testimonial.html:462
 msgid "Haqqımızda"
 msgstr "О нас"
 
-#: temizxali/templates/about.html:147 temizxali/templates/comment_add.html:146
-#: temizxali/templates/contact.html:153 temizxali/templates/index.html:158
-#: temizxali/templates/projects.html:181
-#: temizxali/templates/service_detail_page.html:146
-#: temizxali/templates/testimonial.html:146
-#: temizxali/templates/testimonial.html:164
-msgid "Bizi izləyin:"
-msgstr "Следите за нами:"
-
-#: temizxali/templates/about.html:224 temizxali/templates/about.html:260
-#: temizxali/templates/about.html:611 temizxali/templates/comment_add.html:221
-#: temizxali/templates/comment_add.html:257
-#: temizxali/templates/comment_add.html:417
-#: temizxali/templates/contact.html:228 temizxali/templates/contact.html:275
-#: temizxali/templates/contact.html:582 temizxali/templates/index.html:235
-#: temizxali/templates/index.html:711 temizxali/templates/projects.html:256
-#: temizxali/templates/projects.html:289 temizxali/templates/projects.html:453
-#: temizxali/templates/service_detail_page.html:222
-#: temizxali/templates/service_detail_page.html:258
-#: temizxali/templates/service_detail_page.html:589
-#: temizxali/templates/testimonial.html:186
-#: temizxali/templates/testimonial.html:215
-#: temizxali/templates/testimonial.html:343
+#: temizxali/templates/about.html:281 temizxali/templates/about.html:354
+#: temizxali/templates/about.html:838 temizxali/templates/blog.html:277
+#: temizxali/templates/blog.html:362 temizxali/templates/blog.html:540
+#: temizxali/templates/blog_detail.html:415
+#: temizxali/templates/blog_detail.html:644
+#: temizxali/templates/calculator.html:215
+#: temizxali/templates/calculator.html:251
+#: temizxali/templates/calculator.html:445
+#: temizxali/templates/comment_add.html:281
+#: temizxali/templates/comment_add.html:354
+#: temizxali/templates/comment_add.html:525
+#: temizxali/templates/contact.html:287 temizxali/templates/contact.html:372
+#: temizxali/templates/contact.html:569 temizxali/templates/index.html:281
+#: temizxali/templates/index.html:806 temizxali/templates/projects.html:276
+#: temizxali/templates/projects.html:347 temizxali/templates/projects.html:522
+#: temizxali/templates/service_detail_page.html:281
+#: temizxali/templates/service_detail_page.html:354
+#: temizxali/templates/service_detail_page.html:696
+#: temizxali/templates/testimonial.html:238
+#: temizxali/templates/testimonial.html:322
+#: temizxali/templates/testimonial.html:461
 msgid "Ana səhifə"
 msgstr "Главная"
 
-#: temizxali/templates/about.html:227 temizxali/templates/about.html:596
-#: temizxali/templates/comment_add.html:224
-#: temizxali/templates/comment_add.html:402
-#: temizxali/templates/contact.html:231 temizxali/templates/contact.html:567
-#: temizxali/templates/index.html:238 temizxali/templates/index.html:696
-#: temizxali/templates/projects.html:258 temizxali/templates/projects.html:438
-#: temizxali/templates/service_detail_page.html:225
-#: temizxali/templates/service_detail_page.html:259
-#: temizxali/templates/service_detail_page.html:575
-#: temizxali/templates/testimonial.html:188
-#: temizxali/templates/testimonial.html:328
+#: temizxali/templates/about.html:284 temizxali/templates/about.html:823
+#: temizxali/templates/blog.html:280 temizxali/templates/blog.html:525
+#: temizxali/templates/blog_detail.html:418
+#: temizxali/templates/blog_detail.html:629
+#: temizxali/templates/calculator.html:218
+#: temizxali/templates/calculator.html:430
+#: temizxali/templates/comment_add.html:284
+#: temizxali/templates/comment_add.html:510
+#: temizxali/templates/contact.html:290 temizxali/templates/contact.html:554
+#: temizxali/templates/index.html:284 temizxali/templates/index.html:791
+#: temizxali/templates/projects.html:278 temizxali/templates/projects.html:507
+#: temizxali/templates/service_detail_page.html:284
+#: temizxali/templates/service_detail_page.html:355
+#: temizxali/templates/service_detail_page.html:682
+#: temizxali/templates/testimonial.html:241
+#: temizxali/templates/testimonial.html:446
 msgid "Xidmətlər"
 msgstr "Услуги"
 
-#: temizxali/templates/about.html:238 temizxali/templates/about.html:606
-#: temizxali/templates/comment_add.html:235
-#: temizxali/templates/comment_add.html:412
-#: temizxali/templates/contact.html:242 temizxali/templates/contact.html:365
-#: temizxali/templates/contact.html:458 temizxali/templates/contact.html:577
-#: temizxali/templates/index.html:249 temizxali/templates/index.html:706
-#: temizxali/templates/projects.html:269 temizxali/templates/projects.html:448
-#: temizxali/templates/service_detail_page.html:236
-#: temizxali/templates/testimonial.html:338
+#: temizxali/templates/about.html:295 temizxali/templates/about.html:833
+#: temizxali/templates/blog.html:291 temizxali/templates/blog.html:535
+#: temizxali/templates/blog_detail.html:429
+#: temizxali/templates/blog_detail.html:639
+#: temizxali/templates/calculator.html:229
+#: temizxali/templates/calculator.html:321
+#: temizxali/templates/calculator.html:440
+#: temizxali/templates/comment_add.html:295
+#: temizxali/templates/comment_add.html:520
+#: temizxali/templates/contact.html:301 temizxali/templates/contact.html:461
+#: temizxali/templates/contact.html:564 temizxali/templates/index.html:295
+#: temizxali/templates/index.html:801 temizxali/templates/projects.html:289
+#: temizxali/templates/projects.html:517
+#: temizxali/templates/service_detail_page.html:295
+#: temizxali/templates/testimonial.html:252
+#: temizxali/templates/testimonial.html:456
 msgid "Xidmət tapılmadı"
 msgstr "Услуга не найдена"
 
-#: temizxali/templates/about.html:243 temizxali/templates/comment_add.html:240
-#: temizxali/templates/contact.html:248 temizxali/templates/index.html:255
-#: temizxali/templates/projects.html:8 temizxali/templates/projects.html:273
-#: temizxali/templates/projects.html:286 temizxali/templates/projects.html:290
-#: temizxali/templates/projects.html:456
-#: temizxali/templates/service_detail_page.html:241
-#: temizxali/templates/testimonial.html:199
-msgid "Xüsusi Layihələr"
-msgstr "Специальные проекты"
-
-#: temizxali/templates/about.html:244 temizxali/templates/about.html:613
-#: temizxali/templates/comment_add.html:241
-#: temizxali/templates/comment_add.html:419
-#: temizxali/templates/contact.html:249 temizxali/templates/contact.html:584
-#: temizxali/templates/index.html:256 temizxali/templates/index.html:713
-#: temizxali/templates/projects.html:274 temizxali/templates/projects.html:455
-#: temizxali/templates/service_detail_page.html:242
-#: temizxali/templates/service_detail_page.html:592
-#: temizxali/templates/testimonial.html:8
-#: temizxali/templates/testimonial.html:200
-#: temizxali/templates/testimonial.html:212
-#: temizxali/templates/testimonial.html:216
-#: temizxali/templates/testimonial.html:345
+#: temizxali/templates/about.html:300 temizxali/templates/about.html:840
+#: temizxali/templates/blog.html:297 temizxali/templates/blog.html:543
+#: temizxali/templates/blog_detail.html:434
+#: temizxali/templates/blog_detail.html:647
+#: temizxali/templates/calculator.html:234
+#: temizxali/templates/calculator.html:447
+#: temizxali/templates/comment_add.html:300
+#: temizxali/templates/comment_add.html:527
+#: temizxali/templates/contact.html:307 temizxali/templates/contact.html:571
+#: temizxali/templates/index.html:301 temizxali/templates/index.html:809
+#: temizxali/templates/projects.html:294 temizxali/templates/projects.html:524
+#: temizxali/templates/service_detail_page.html:300
+#: temizxali/templates/service_detail_page.html:699
+#: temizxali/templates/testimonial.html:9
+#: temizxali/templates/testimonial.html:258
+#: temizxali/templates/testimonial.html:319
+#: temizxali/templates/testimonial.html:323
+#: temizxali/templates/testimonial.html:463
 msgid "Rəylər"
 msgstr "Отзывы"
 
-#: temizxali/templates/about.html:246 temizxali/templates/comment_add.html:244
-#: temizxali/templates/contact.html:262 temizxali/templates/index.html:269
-#: temizxali/templates/projects.html:276
-#: temizxali/templates/service_detail_page.html:244
-#: temizxali/templates/testimonial.html:203
-msgid "Hesabla və Sifariş et"
-msgstr "Рассчитать и Заказать"
+#: temizxali/templates/about.html:302 temizxali/templates/blog.html:311
+#: temizxali/templates/blog_detail.html:438
+#: temizxali/templates/calculator.html:237
+#: temizxali/templates/calculator.html:352
+#: temizxali/templates/comment_add.html:302
+#: temizxali/templates/contact.html:320 temizxali/templates/index.html:315
+#: temizxali/templates/projects.html:296
+#: temizxali/templates/service_detail_page.html:302
+#: temizxali/templates/testimonial.html:271
+msgid "Hesabla"
+msgstr "Рассчитать"
 
-#: temizxali/templates/about.html:291 temizxali/templates/index.html:362
+#: temizxali/templates/about.html:303 temizxali/templates/blog.html:312
+#: temizxali/templates/blog_detail.html:439
+#: temizxali/templates/calculator.html:238
+#: temizxali/templates/comment_add.html:303
+#: temizxali/templates/contact.html:321 temizxali/templates/index.html:316
+#: temizxali/templates/projects.html:297
+#: temizxali/templates/service_detail_page.html:303
+#: temizxali/templates/testimonial.html:272
+msgid "Sifariş et"
+msgstr "Заказать"
+
+#: temizxali/templates/about.html:385 temizxali/templates/index.html:447
 msgid "İllik Təcrübə"
 msgstr "Годовой опыт"
 
-#: temizxali/templates/about.html:294 temizxali/templates/about.html:297
-#: temizxali/templates/about.html:398 temizxali/templates/index.html:365
-#: temizxali/templates/index.html:368 temizxali/templates/index.html:423
+#: temizxali/templates/about.html:388 temizxali/templates/about.html:391
+#: temizxali/templates/about.html:516 temizxali/templates/index.html:450
+#: temizxali/templates/index.html:453 temizxali/templates/index.html:508
 msgid "Biz Evinizi Bağ Kimi Edirik"
 msgstr "Мы делаем ваш дом как сад"
 
-#: temizxali/templates/about.html:298 temizxali/templates/about.html:399
-#: temizxali/templates/index.html:369 temizxali/templates/index.html:424
+#: temizxali/templates/about.html:392 temizxali/templates/about.html:517
+#: temizxali/templates/index.html:454 temizxali/templates/index.html:509
 msgid ""
 "Biz peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik. "
 "Müştərilərimizin məmnuniyyəti bizim üçün ən vacibdir."
@@ -243,119 +268,260 @@ msgstr ""
 "Мы предоставляем высококачественные услуги с нашей профессиональной "
 "командой. Удовлетворенность наших клиентов является для нас самым важным."
 
-#: temizxali/templates/about.html:311 temizxali/templates/about.html:408
-#: temizxali/templates/index.html:381 temizxali/templates/index.html:432
+#: temizxali/templates/about.html:405 temizxali/templates/about.html:526
+#: temizxali/templates/index.html:466 temizxali/templates/index.html:517
 msgid "Mükafat Qazanan"
 msgstr "Награжденный"
 
-#: temizxali/templates/about.html:316 temizxali/templates/about.html:409
-#: temizxali/templates/index.html:386 temizxali/templates/index.html:433
+#: temizxali/templates/about.html:410 temizxali/templates/about.html:527
+#: temizxali/templates/index.html:471 temizxali/templates/index.html:518
 msgid "Peşəkar komandamızla yüksək keyfiyyətli xidmət təqdim edirik"
 msgstr ""
 "Мы предоставляем высококачественные услуги с нашей профессиональной командой"
 
-#: temizxali/templates/about.html:326 temizxali/templates/about.html:415
-#: temizxali/templates/index.html:396 temizxali/templates/index.html:439
+#: temizxali/templates/about.html:420 temizxali/templates/about.html:533
+#: temizxali/templates/index.html:481 temizxali/templates/index.html:524
 msgid "Peşəkar Komanda"
 msgstr "Профессиональная команда"
 
-#: temizxali/templates/about.html:331 temizxali/templates/about.html:416
-#: temizxali/templates/index.html:401 temizxali/templates/index.html:440
+#: temizxali/templates/about.html:425 temizxali/templates/about.html:534
+#: temizxali/templates/index.html:486 temizxali/templates/index.html:525
 msgid "Təcrübəli və peşəkar işçilərimizlə xidmətinizi təmin edirik"
 msgstr ""
 "Мы обеспечиваем ваше обслуживание с нашими опытными и профессиональными "
 "сотрудниками"
 
-#: temizxali/templates/about.html:338 temizxali/templates/about.html:422
-#: temizxali/templates/about.html:618 temizxali/templates/comment_add.html:424
-#: temizxali/templates/contact.html:8 temizxali/templates/contact.html:276
-#: temizxali/templates/contact.html:589 temizxali/templates/index.html:718
-#: temizxali/templates/projects.html:458
-#: temizxali/templates/service_detail_page.html:593
-#: temizxali/templates/testimonial.html:350
+#: temizxali/templates/about.html:432 temizxali/templates/about.html:540
+#: temizxali/templates/about.html:845 temizxali/templates/blog.html:548
+#: temizxali/templates/blog_detail.html:652
+#: temizxali/templates/calculator.html:452
+#: temizxali/templates/comment_add.html:532 temizxali/templates/contact.html:9
+#: temizxali/templates/contact.html:373 temizxali/templates/contact.html:576
+#: temizxali/templates/index.html:814 temizxali/templates/projects.html:526
+#: temizxali/templates/service_detail_page.html:700
+#: temizxali/templates/testimonial.html:468
 msgid "Əlaqə"
 msgstr "Контакты"
 
-#: temizxali/templates/about.html:396 temizxali/templates/index.html:421
+#: temizxali/templates/about.html:489 temizxali/templates/about.html:597
+msgid "Xəritəni böyüt"
+msgstr ""
+
+#: temizxali/templates/about.html:514 temizxali/templates/index.html:506
 msgid "İl Təcrübə"
 msgstr "Год опыта"
 
-#: temizxali/templates/about.html:480
-msgid "Qaleryamız"
-msgstr "Наша галерея"
+#: temizxali/templates/about.html:618
+msgid "Əməkdaşlarımız"
+msgstr "Наши партнеры"
 
-#: temizxali/templates/about.html:488 temizxali/templates/about.html:491
-#: temizxali/templates/about.html:501 temizxali/templates/about.html:504
-#, fuzzy
-#| msgid "Haqqımızda"
-msgid "Haqqımızda şəkli"
-msgstr "О нас"
+#: temizxali/templates/about.html:657 temizxali/templates/projects.html:399
+msgid "Hazırda layihə mövcud deyil"
+msgstr "В настоящее время проекты недоступны"
 
-#: temizxali/templates/about.html:555 temizxali/templates/comment_add.html:361
-#: temizxali/templates/contact.html:526 temizxali/templates/index.html:651
-#: temizxali/templates/projects.html:397
-#: temizxali/templates/service_detail_page.html:530
-#: temizxali/templates/testimonial.html:279
+#: temizxali/templates/about.html:715
+msgid "Xəritə"
+msgstr ""
+
+#: temizxali/templates/about.html:771 temizxali/templates/blog.html:469
+#: temizxali/templates/blog_detail.html:574
+#: temizxali/templates/calculator.html:378
+#: temizxali/templates/comment_add.html:458
+#: temizxali/templates/contact.html:502 temizxali/templates/index.html:735
+#: temizxali/templates/projects.html:455
+#: temizxali/templates/service_detail_page.html:626
+#: temizxali/templates/testimonial.html:386
 msgid "Ünvan və Əlaqə:"
 msgstr "Адрес и Контакты:"
 
-#: temizxali/templates/about.html:610 temizxali/templates/comment_add.html:416
-#: temizxali/templates/contact.html:581 temizxali/templates/index.html:710
-#: temizxali/templates/projects.html:452
-#: temizxali/templates/service_detail_page.html:588
-#: temizxali/templates/testimonial.html:342
+#: temizxali/templates/about.html:837 temizxali/templates/blog.html:539
+#: temizxali/templates/blog_detail.html:643
+#: temizxali/templates/calculator.html:444
+#: temizxali/templates/comment_add.html:524
+#: temizxali/templates/contact.html:568 temizxali/templates/index.html:805
+#: temizxali/templates/projects.html:521
+#: temizxali/templates/service_detail_page.html:695
+#: temizxali/templates/testimonial.html:460
 msgid "Digər"
 msgstr "Другое"
 
-#: temizxali/templates/blog.html:9 temizxali/templates/blog.html:297
-#: temizxali/templates/blog.html:358 temizxali/templates/blog.html:362
-#: temizxali/templates/index.html:301
-msgid "Bloq"
-msgstr "Блог"
-
-#: temizxali/templates/blog.html:373
-msgid "Ən son məqalələrimiz və xəbərlər"
-msgstr "Наши последние статьи и новости"
-
-#: temizxali/templates/about.html:614 temizxali/templates/comment_add.html:420
-#: temizxali/templates/contact.html:585 temizxali/templates/index.html:714
-#: temizxali/templates/projects.html:457
-#: temizxali/templates/service_detail_page.html:591
-#: temizxali/templates/testimonial.html:346
+#: temizxali/templates/about.html:841 temizxali/templates/blog.html:544
+#: temizxali/templates/blog_detail.html:648
+#: temizxali/templates/calculator.html:448
+#: temizxali/templates/comment_add.html:528
+#: temizxali/templates/contact.html:572 temizxali/templates/index.html:810
+#: temizxali/templates/projects.html:525
+#: temizxali/templates/service_detail_page.html:698
+#: temizxali/templates/testimonial.html:464
 msgid "Sifariş"
 msgstr "Заказ"
 
-#: temizxali/templates/about.html:616 temizxali/templates/comment_add.html:422
-#: temizxali/templates/contact.html:587 temizxali/templates/index.html:716
-#: temizxali/templates/service_detail_page.html:585
-#: temizxali/templates/testimonial.html:348
+#: temizxali/templates/about.html:843 temizxali/templates/blog.html:546
+#: temizxali/templates/blog_detail.html:650
+#: temizxali/templates/calculator.html:450
+#: temizxali/templates/comment_add.html:530
+#: temizxali/templates/contact.html:574 temizxali/templates/index.html:812
+#: temizxali/templates/service_detail_page.html:692
+#: temizxali/templates/testimonial.html:466
 msgid "Bütün Xidmətlər"
 msgstr "Все услуги"
 
-#: temizxali/templates/about.html:631 temizxali/templates/comment_add.html:437
-#: temizxali/templates/contact.html:602 temizxali/templates/index.html:731
-#: temizxali/templates/projects.html:470
-#: temizxali/templates/service_detail_page.html:605
-#: temizxali/templates/testimonial.html:362
+#: temizxali/templates/about.html:858 temizxali/templates/blog.html:561
+#: temizxali/templates/blog_detail.html:665
+#: temizxali/templates/calculator.html:464
+#: temizxali/templates/comment_add.html:545
+#: temizxali/templates/contact.html:589 temizxali/templates/index.html:827
+#: temizxali/templates/projects.html:538
+#: temizxali/templates/service_detail_page.html:712
+#: temizxali/templates/testimonial.html:480
 msgid "tərəfindən hazırlanıb. Bütün hüquqlar qorunur."
 msgstr "разработано. Все права защищены."
 
-#: temizxali/templates/comment_add.html:8
+#: temizxali/templates/blog.html:9 temizxali/templates/blog.html:298
+#: temizxali/templates/blog.html:359 temizxali/templates/blog.html:363
+#: temizxali/templates/blog.html:542 temizxali/templates/blog_detail.html:9
+#: temizxali/templates/blog_detail.html:435
+#: temizxali/templates/blog_detail.html:646 temizxali/templates/index.html:302
+#: temizxali/templates/index.html:808
+msgid "Bloq"
+msgstr "Блог"
+
+#: temizxali/templates/blog.html:374
+msgid "Ən son məqalələrimiz və xəbərlər"
+msgstr "Наши последние статьи и новости"
+
+#: temizxali/templates/blog.html:412
+#, fuzzy
+#| msgid "Hazırda layihə mövcud deyil"
+msgid "Hazırda bloq yazısı mövcud deyil"
+msgstr "В настоящее время проекты недоступны"
+
+#: temizxali/templates/blog_detail.html:498
+msgid "Baxış sayı:"
+msgstr "Количество просмотров:"
+
+#: temizxali/templates/blog_detail.html:522
+msgid "Son Bloqlar"
+msgstr "Последние блоги"
+
+#: temizxali/templates/blog_detail.html:525
+msgid "Bütün Bloqlar"
+msgstr "Все блоги"
+
+#: temizxali/templates/blog_detail.html:537
+msgid "Şəkil yoxdur"
+msgstr "Изображение отсутствует"
+
+#: temizxali/templates/blog_detail.html:558
+msgid "Hazırda başqa bloq yazısı yoxdur"
+msgstr "В настоящее время других записей блога нет"
+
+#: temizxali/templates/blog_detail.html:719
+msgid "Zəng et"
+msgstr "Позвонить"
+
+#: temizxali/templates/calculator.html:9
+#: temizxali/templates/calculator.html:248
+#: temizxali/templates/calculator.html:252
+#: temizxali/templates/calculator.html:269
+msgid "Servis Kalkulyatoru"
+msgstr "Калькулятор услуг"
+
+#: temizxali/templates/calculator.html:271
+msgid "Xidmətləri seçin və qiyməti hesablayın"
+msgstr "Выберите услуги и рассчитайте цену"
+
+#: temizxali/templates/calculator.html:278
+msgid "Xidmət əlavə edin:"
+msgstr "Добавить услугу:"
+
+#: temizxali/templates/calculator.html:282
+#: temizxali/templates/comment_add.html:409
+msgid "Xidmət seçin..."
+msgstr "Выберите услугу..."
+
+#: temizxali/templates/calculator.html:331
+msgid "Dəyər daxil edin"
+msgstr "Введите значение"
+
+#: temizxali/templates/calculator.html:332
+msgid "Dəyər daxil edin (kq)"
+msgstr "Введите значение (кг)"
+
+#: temizxali/templates/calculator.html:333
+msgid "Dəyər daxil edin (m²)"
+msgstr "Введите значение (m²)"
+
+#: temizxali/templates/calculator.html:334
+msgid "Dəyər daxil edin (m)"
+msgstr "Введите значение (m)"
+
+#: temizxali/templates/calculator.html:335
+msgid "Dəyər daxil edin (ədəd)"
+msgstr "Введите значение (шт)"
+
+#: temizxali/templates/calculator.html:336
+msgid "Variantlar"
+msgstr "Варианты"
+
+#: temizxali/templates/calculator.html:337
+msgid "Variant"
+msgstr "Вариант"
+
+#: temizxali/templates/calculator.html:338
+msgid "Normal"
+msgstr "Обычный"
+
+#: temizxali/templates/calculator.html:339
+#, fuzzy
+#| msgid "VIP:"
+msgid "VIP"
+msgstr "VIP:"
+
+#: temizxali/templates/calculator.html:340
+msgid "Premium"
+msgstr "Премиум"
+
+#: temizxali/templates/calculator.html:341
+msgid "Sil"
+msgstr "Удалить"
+
+#: temizxali/templates/calculator.html:342
+msgid "Qiymət"
+msgstr "Цена"
+
+#: temizxali/templates/calculator.html:343
+msgid "Bu qiymət təxminidir"
+msgstr "Эта цена является приблизительной"
+
+#: temizxali/templates/calculator.html:344
+msgid "Bu xidmət artıq əlavə edilib!"
+msgstr "Эта услуга уже добавлена!"
+
+#: temizxali/templates/calculator.html:345
+msgid "endirim tətbiq edildi"
+msgstr "скидка применена"
+
+#: temizxali/templates/calculator.html:361
+msgid "Ümumi məbləğ:"
+msgstr "Общая сумма:"
+
+#: temizxali/templates/comment_add.html:9
 #, fuzzy
 #| msgid "Rəy bildir"
 msgid "Rəy Bildir"
 msgstr "Оставить отзыв"
 
-#: temizxali/templates/comment_add.html:254
-#: temizxali/templates/comment_add.html:258
+#: temizxali/templates/comment_add.html:351
+#: temizxali/templates/comment_add.html:355
 msgid "Rəyinizi paylaşın"
 msgstr "Поделитесь своим отзывом"
 
-#: temizxali/templates/comment_add.html:269
+#: temizxali/templates/comment_add.html:367
 msgid "Rəyinizi və ya Şikayətinizi paylaşın"
 msgstr "Поделитесь своим отзывом или жалобой"
 
-#: temizxali/templates/comment_add.html:271
+#: temizxali/templates/comment_add.html:368
 msgid ""
 "Xidmətimizdən istifadə etdikdən sonra rəyinizi bizimlə və digərləri ilə "
 "paylaşın. Sizin fikriniz çox dəyərlidir."
@@ -363,237 +529,156 @@ msgstr ""
 "После использования наших услуг поделитесь своим отзывом с нами и другими. "
 "Ваше мнение очень ценно."
 
-#: temizxali/templates/comment_add.html:312
-#: temizxali/templates/contact.html:419
-msgid "Xidmət seçin..."
-msgstr "Выберите услугу..."
-
-#: temizxali/templates/comment_add.html:342
+#: temizxali/templates/comment_add.html:440
 msgid "Göndər"
 msgstr "Отправить"
 
-#: temizxali/templates/contact.html:272
+#: temizxali/templates/contact.html:369
 msgid "Bizimlə əlaqə saxlayın"
 msgstr "Свяжитесь с нами"
 
-#: temizxali/templates/contact.html:295
+#: temizxali/templates/contact.html:391
 msgid "Sifariş Verin"
 msgstr "Сделать заказ"
 
-#: temizxali/templates/contact.html:297
+#: temizxali/templates/contact.html:393
 msgid "Məlumatlarınızı doldurun və sifarişinizi göndərin"
 msgstr "Заполните ваши данные и отправьте заказ"
 
-#: temizxali/templates/contact.html:341 temizxali/templates/contact.html:343
+#: temizxali/templates/contact.html:437 temizxali/templates/contact.html:439
 msgid "Xidmət növü seçin"
 msgstr "Выберите тип услуги"
 
-#: temizxali/templates/contact.html:387
+#: temizxali/templates/contact.html:483
 msgid "Sifarişi Göndər"
 msgstr "Отправить заказ"
 
-#: temizxali/templates/contact.html:406
-msgid "Servis Kalkulyatoru"
-msgstr "Калькулятор услуг"
-
-#: temizxali/templates/contact.html:408
-msgid "Xidmətləri seçin və qiyməti hesablayın"
-msgstr "Выберите услуги и рассчитайте цену"
-
-#: temizxali/templates/contact.html:415
-msgid "Xidmət əlavə edin:"
-msgstr "Добавить услугу:"
-
-#: temizxali/templates/contact.html:468
-msgid "Dəyər daxil edin"
-msgstr "Введите значение"
-
-#: temizxali/templates/contact.html:469
-msgid "Dəyər daxil edin (kq)"
-msgstr "Введите значение (кг)"
-
-#: temizxali/templates/contact.html:470
-msgid "Dəyər daxil edin (m²)"
-msgstr "Введите значение (m²)"
-
-#: temizxali/templates/contact.html:471
-msgid "Dəyər daxil edin (m)"
-msgstr "Введите значение (m)"
-
-#: temizxali/templates/contact.html:472
-msgid "Dəyər daxil edin (ədəd)"
-msgstr "Введите значение (шт)"
-
-#: temizxali/templates/contact.html:473
-msgid "Variantlar"
-msgstr "Варианты"
-
-#: temizxali/templates/contact.html:474
-msgid "Variant"
-msgstr "Вариант"
-
-#: temizxali/templates/contact.html:475
-msgid "Normal"
-msgstr "Обычный"
-
-#: temizxali/templates/contact.html:476
-#, fuzzy
-#| msgid "VIP:"
-msgid "VIP"
-msgstr "VIP:"
-
-#: temizxali/templates/contact.html:477
-msgid "Premium"
-msgstr "Премиум"
-
-#: temizxali/templates/contact.html:478
-msgid "Sil"
-msgstr "Удалить"
-
-#: temizxali/templates/contact.html:479
-msgid "Qiymət"
-msgstr "Цена"
-
-#: temizxali/templates/contact.html:480
-msgid "Bu qiymət təxminidir"
-msgstr "Эта цена является приблизительной"
-
-#: temizxali/templates/contact.html:481
-msgid "Bu xidmət artıq əlavə edilib!"
-msgstr "Эта услуга уже добавлена!"
-
-#: temizxali/templates/contact.html:482
-msgid "endirim tətbiq edildi"
-msgstr "скидка применена"
-
-#: temizxali/templates/contact.html:489
-msgid "Hesabla"
-msgstr "Рассчитать"
-
-#: temizxali/templates/contact.html:498
-msgid "Ümumi məbləğ:"
-msgstr "Общая сумма:"
-
-#: temizxali/templates/index.html:371 temizxali/templates/index.html:425
-#: temizxali/templates/service_detail_page.html:450
+#: temizxali/templates/index.html:456 temizxali/templates/index.html:510
+#: temizxali/templates/service_detail_page.html:546
 msgid "Ətraflı Məlumat"
 msgstr "Подробная информация"
 
-#: temizxali/templates/index.html:484
+#: temizxali/templates/index.html:569
 msgid "Xidmətlərimiz"
 msgstr "Наши услуги"
 
-#: temizxali/templates/index.html:508 temizxali/templates/index.html:510
+#: temizxali/templates/index.html:593 temizxali/templates/index.html:595
 msgid "Ətraflı"
 msgstr "Подробнее"
 
-#: temizxali/templates/index.html:521
+#: temizxali/templates/index.html:606
 msgid "Hazırda xidmət mövcud deyil."
 msgstr "В настоящее время услуга недоступна."
 
-#: temizxali/templates/index.html:535 temizxali/templates/projects.html:301
+#: temizxali/templates/projects.html:9 temizxali/templates/projects.html:293
+#: temizxali/templates/projects.html:344 temizxali/templates/projects.html:348
+msgid "Xüsusi Layihələr"
+msgstr "Специальные проекты"
+
+#: temizxali/templates/projects.html:359
 msgid "Layihələrimiz"
 msgstr "Наши проекты"
 
-#: temizxali/templates/index.html:580
-msgid "Bütün Layihələrə Bax"
-msgstr "Посмотреть все проекты"
+#: temizxali/templates/projects.html:360
+msgid "Bəzi Gözəl Layihələrimiz"
+msgstr "Некоторые из наших замечательных проектов"
 
-#: temizxali/templates/index.html:585
 #: temizxali/templates/projects_partial.html:41
 msgid "Hazırda layihə mövcud deyil."
 msgstr "В настоящее время проекты недоступны."
 
-#: temizxali/templates/index.html:598 temizxali/templates/testimonial.html:225
+#: temizxali/templates/service_detail_page.html:9
+msgid "Xidmət Detalları"
+msgstr "Детали услуги"
+
+#: temizxali/templates/service_detail_page.html:381
+msgid "Sənin brauzerin videonu dəstəkləmir."
+msgstr "Ваш браузер не поддерживает видео."
+
+#: temizxali/templates/service_detail_page.html:451
+msgid "Aktiv Endirim Kampaniyaları"
+msgstr "Активные акции"
+
+#: temizxali/templates/service_detail_page.html:488
+msgid "Qiymətlər"
+msgstr "Цены"
+
+#: temizxali/templates/service_detail_page.html:492
+#: temizxali/templates/service_detail_page.html:580
+msgid "Standart:"
+msgstr "Стандарт:"
+
+#: temizxali/templates/service_detail_page.html:507
+#: temizxali/templates/service_detail_page.html:586
+msgid "VIP:"
+msgstr "VIP:"
+
+#: temizxali/templates/service_detail_page.html:523
+#: temizxali/templates/service_detail_page.html:592
+msgid "Premium:"
+msgstr "Премиум:"
+
+#: temizxali/templates/service_detail_page.html:542
+msgid "Sifariş Ver"
+msgstr "Сделать заказ"
+
+#: temizxali/templates/service_detail_page.html:558
+msgid "Xidmət Növləri"
+msgstr "Типы услуг"
+
+#: temizxali/templates/service_detail_page.html:559
+msgid "Müxtəlif paket seçimləri"
+msgstr "Различные варианты пакетов"
+
+#: temizxali/templates/service_detail_page.html:614
+msgid "Bütün Xidmətlərə Bax"
+msgstr "Посмотреть все услуги"
+
+#: temizxali/templates/service_detail_page.html:676
+msgid "Əhməd Rəcəbli Business Center"
+msgstr "Бизнес-центр Ахмеда Раджабли"
+
+#: temizxali/templates/testimonial.html:333
 msgid "Sizdən gələn rəy və şikayətlər"
 msgstr "Отзывы и жалобы от вас"
 
-#: temizxali/templates/index.html:600 temizxali/templates/testimonial.html:227
+#: temizxali/templates/testimonial.html:334
 msgid "Rəyləri yalnız xidmətimizdən istifadə edən müştərilər yaza bilər"
 msgstr ""
 "Отзывы могут оставлять только клиенты, которые использовали наши услуги"
 
-#: temizxali/templates/index.html:616 temizxali/templates/testimonial.html:243
+#: temizxali/templates/testimonial.html:350
 msgid "Xidmət növü:"
 msgstr "Тип услуги:"
 
-#: temizxali/templates/index.html:627 temizxali/templates/testimonial.html:256
+#: temizxali/templates/testimonial.html:354
+msgid "Müştəri"
+msgstr "Клиент"
+
+#: temizxali/templates/testimonial.html:363
 msgid "Hazırda rəy mövcud deyil."
 msgstr "В настоящее время отзывов нет."
 
-#: temizxali/templates/index.html:636 temizxali/templates/testimonial.html:265
+#: temizxali/templates/testimonial.html:373
 msgid "Rəy və ya şikayətinizi bildirin"
 msgstr "Оставьте отзыв или жалобу"
 
-#: temizxali/templates/projects.html:302
-msgid "Bəzi Gözəl Layihələrimiz"
-msgstr "Некоторые из наших замечательных проектов"
+#~ msgid "Bizi izləyin:"
+#~ msgstr "Следите за нами:"
 
-#: temizxali/templates/about.html:618
-msgid "Əməkdaşlarımız"
-msgstr "Наши партнеры"
+#~ msgid "Hesabla və Sifariş et"
+#~ msgstr "Рассчитать и Заказать"
 
-#: temizxali/templates/projects.html:341
-msgid "Hazırda layihə mövcud deyil"
-msgstr "В настоящее время проекты недоступны"
+#~ msgid "Qaleryamız"
+#~ msgstr "Наша галерея"
 
-#: temizxali/templates/service_detail_page.html:8
-msgid "Xidmət Detalları"
-msgstr "Детали услуги"
+#, fuzzy
+#~| msgid "Haqqımızda"
+#~ msgid "Haqqımızda şəkli"
+#~ msgstr "О нас"
 
-#: temizxali/templates/service_detail_page.html:285
-msgid "Sənin brauzerin videonu dəstəkləmir."
-msgstr "Ваш браузер не поддерживает видео."
-
-#: temizxali/templates/service_detail_page.html:355
-msgid "Aktiv Endirim Kampaniyaları"
-msgstr "Активные акции"
-
-#: temizxali/templates/service_detail_page.html:392
-msgid "Qiymətlər"
-msgstr "Цены"
-
-#: temizxali/templates/service_detail_page.html:396
-#: temizxali/templates/service_detail_page.html:484
-msgid "Standart:"
-msgstr "Стандарт:"
-
-#: temizxali/templates/service_detail_page.html:411
-#: temizxali/templates/service_detail_page.html:490
-msgid "VIP:"
-msgstr "VIP:"
-
-#: temizxali/templates/service_detail_page.html:427
-#: temizxali/templates/service_detail_page.html:496
-msgid "Premium:"
-msgstr "Премиум:"
-
-#: temizxali/templates/service_detail_page.html:446
-msgid "Sifariş Ver"
-msgstr "Сделать заказ"
-
-msgid "Sifariş et"
-msgstr "Заказать"
-
-#: temizxali/templates/service_detail_page.html:462
-msgid "Xidmət Növləri"
-msgstr "Типы услуг"
-
-#: temizxali/templates/service_detail_page.html:463
-msgid "Müxtəlif paket seçimləri"
-msgstr "Различные варианты пакетов"
-
-#: temizxali/templates/service_detail_page.html:518
-msgid "Bütün Xidmətlərə Bax"
-msgstr "Посмотреть все услуги"
-
-#: temizxali/templates/service_detail_page.html:569
-msgid "Əhməd Rəcəbli Business Center"
-msgstr "Бизнес-центр Ахмеда Раджабли"
-
-#: temizxali/templates/testimonial.html:247
-msgid "Müştəri"
-msgstr "Клиент"
+#~ msgid "Bütün Layihələrə Bax"
+#~ msgstr "Посмотреть все проекты"
 
 #~ msgid "Heç bir servis seçilməyib."
 #~ msgstr "Не выбрана ни одна услуга."
@@ -699,6 +784,3 @@ msgstr "Клиент"
 
 #~ msgid "tərəfindən"
 #~ msgstr "от"
-
-#~ msgid "Bütün hüquqlar qorunur"
-#~ msgstr "Все права защищены"

@@ -82,6 +82,10 @@ class Image(models.Model):
         default=False,
         verbose_name='Sifariş sehifesi üçün arxa plan şəkli'
     )
+    is_bloq_background_image = models.BooleanField(
+        default=False,
+        verbose_name='Bloq səhifəsi üçün arxa plan şəkli'
+    )
 
     created_at = models.DateTimeField(
         auto_now_add=True,

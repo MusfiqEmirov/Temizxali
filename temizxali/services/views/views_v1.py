@@ -1,5 +1,5 @@
 from django.views import View
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
 from django.utils import translation
@@ -7,6 +7,8 @@ from django.utils.translation import gettext_lazy as _
 from django.db.models import Prefetch
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 from services.models import *
 from services.forms import OrderForm
@@ -25,6 +27,8 @@ __all__ = [
     'ProjectsPageView',
     'TestimonialPageView',
     'BlogPageView',
+    'BlogDetailPageView',
+    'BlogViewCountView',
 ]
 
 
@@ -298,10 +302,87 @@ class BlogPageView(View):
             Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
         ).order_by('-created_at')[:10]
         
+        # Get blog page background image
+        blog_page_background_image = Image.objects.filter(
+            is_bloq_background_image=True
+        ).first()
+        
         return render(request, self.template_name, {
             'bloqs': bloqs_page,
             'contact': contact,
             'current_language': languages,
             'services': services,
+            'blog_page_background_image': blog_page_background_image,
         })
+
+
+class BlogDetailPageView(View):
+    template_name = 'blog_detail.html'
+    
+    def get(self, request, blog_slug):
+        languages = translation.get_language()
+        
+        translation_obj = get_object_or_404(
+            BloqTranslation,
+            slug=blog_slug,
+            bloq__is_active=True
+        )
+        bloq = translation_obj.bloq
+        
+        current_lang_translation = bloq.translations.filter(
+            languages=languages
+        ).first()
+        display_translation = current_lang_translation if current_lang_translation else translation_obj
+        
+        bloq = Bloq.objects.filter(
+            id=bloq.id
+        ).prefetch_related(
+            Prefetch('translations', queryset=BloqTranslation.objects.filter(languages=languages)),
+            'images'
+        ).first()
+        
+        contact = Contact.objects.first()
+        
+        services = Service.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).distinct().prefetch_related(
+            Prefetch('translations', queryset=ServiceTranslation.objects.filter(languages=languages))
+        ).order_by('-created_at')[:10]
+        
+        # Get recent blogs
+        recent_bloqs = Bloq.objects.filter(
+            is_active=True,
+            translations__languages=languages
+        ).exclude(id=bloq.id).distinct().prefetch_related(
+            Prefetch('translations', queryset=BloqTranslation.objects.filter(languages=languages)),
+            'images'
+        ).order_by('-created_at')[:3]
+        
+        return render(request, self.template_name, {
+            'bloq': bloq,
+            'translation': display_translation,
+            'contact': contact,
+            'current_language': languages,
+            'services': services,
+            'recent_bloqs': recent_bloqs,
+        })
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class BlogViewCountView(View):
+    def post(self, request, blog_id):
+        try:
+            bloq = get_object_or_404(Bloq, id=blog_id, is_active=True)
+            bloq.view_count += 1
+            bloq.save(update_fields=['view_count'])
+            return JsonResponse({
+                'success': True,
+                'view_count': bloq.view_count
+            })
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            }, status=400)
 

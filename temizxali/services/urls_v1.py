@@ -31,6 +31,16 @@ urlpatterns = [
         name='blog-page'
     ),
     path(
+        'blog/<slug:blog_slug>/',
+        BlogDetailPageView.as_view(),
+        name='blog-detail-page'
+    ),
+    path(
+        'blog/<int:blog_id>/view-count/',
+        BlogViewCountView.as_view(),
+        name='blog-view-count'
+    ),
+    path(
         'service/<slug:service_slug>/', 
         ServiceDetailPage.as_view(), 
         name='service-page'

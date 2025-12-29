@@ -1,7 +1,8 @@
 from django.db import models
 from django.core.validators import MaxLengthValidator
+from ckeditor.fields import RichTextField
 
-from services.utils import LANGUAGES
+from services.utils import LANGUAGES, SluggedModel
 
 
 class Bloq(models.Model):
@@ -15,6 +16,10 @@ class Bloq(models.Model):
         null=True,
         blank=True,
         verbose_name='Bloq aktivliyi'
+    )
+    view_count = models.PositiveIntegerField(
+        default=0,
+        verbose_name='Baxış sayı'
     )
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -31,7 +36,7 @@ class Bloq(models.Model):
         return translation.description[:20] if translation else "No description"
 
 
-class BloqTranslation(models.Model):
+class BloqTranslation(SluggedModel):
     bloq = models.ForeignKey(
         Bloq,
         related_name='translations',
@@ -47,25 +52,30 @@ class BloqTranslation(models.Model):
         choices=LANGUAGES,
         verbose_name='Dil'
     )
-    header = models.CharField(
+    description = models.CharField(
         max_length=250,
         validators=[MaxLengthValidator(250)],
         null=True,
         blank=True,
         verbose_name='Bloq haqqında başlanğıc cümləsi'
     )
-
-    description = models.CharField(
-        max_length=5000,
-        validators=[MaxLengthValidator(5000)],
+    content = RichTextField(
+        max_length=10000,
+        validators=[MaxLengthValidator(10000)],
         null=True,
         blank=True,
         verbose_name='Bloq haqqında'
     )
-
+  
     class Meta:
         verbose_name = 'Bloq'
         verbose_name_plural = 'Bloq tərcümələri'
 
+    def get_slug_source(self) -> str:
+        return self.name
+
     def __str__(self):
-        return f'{self.description[:20]} ({self.languages})'
+        if self.description:
+            return f'{self.description[:20]} ({self.languages})'
+        else:
+            return f'{self.name} ({self.languages})'
