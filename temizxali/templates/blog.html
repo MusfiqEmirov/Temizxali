@@ -294,26 +294,24 @@
                         {% with translation=bloq.translations.first %}
                             {% if translation %}
                                 <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="blog-card">
+                                    {% if translation.slug %}
+                                        <div class="blog-card" onclick="window.location.href='{% url 'blog-detail-page' translation.slug %}';" style="cursor: pointer;">
+                                    {% else %}
+                                        <div class="blog-card">
+                                    {% endif %}
                                         {% if bloq.images.first %}
                                             <img src="{{ bloq.images.first.webp_url }}" alt="{{ translation.name }}" class="blog-card-image" loading="lazy">
                                         {% else %}
                                             <img src="{% static 'img/carousel-1.webp' %}" alt="Default" class="blog-card-image" loading="lazy">
                                         {% endif %}
                                         <div class="blog-card-body">
-                                            <div class="blog-card-meta">
+                                            <div class="blog-card-meta" onclick="event.stopPropagation();">
                                                 <span class="category">{{ translation.name }}</span>
                                                 <span>·</span>
                                                 <span>{{ bloq.created_at|date:"d.m" }}</span>
                                             </div>
                                             <div class="blog-card-description">
-                                                {% if translation.slug %}
-                                                    <a href="{% url 'blog-detail-page' translation.slug %}" style="text-decoration: none; color: inherit; cursor: pointer;">
-                                                        {{ translation.description|safe }}
-                                                    </a>
-                                                {% else %}
-                                                    {{ translation.description|safe }}
-                                                {% endif %}
+                                                {{ translation.description|safe }}
                                             </div>
                                         </div>
                                     </div>
