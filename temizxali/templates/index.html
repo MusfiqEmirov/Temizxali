@@ -77,7 +77,7 @@
                     {% if contact.phone %}
                         <div class="h-100 d-inline-flex align-items-center me-4">
                             <span class="fa fa-phone-alt me-2"></span>
-                            <a href="tel:{{ contact.phone }}" class="text-light text-decoration-none">{{ contact.phone }}</a>
+                            <a href="tel:{{ contact.phone|format_phone_az }}" class="text-light text-decoration-none">{{ contact.phone|format_phone_az }}</a>
                         </div>
                     {% endif %}
                     {% if contact.email %}
@@ -194,8 +194,8 @@
                     <div class="d-flex align-items-center flex-wrap gap-2">
                         {% if contact %}
                             {% if contact.phone %}
-                                <a href="tel:{{ contact.phone }}" class="text-light text-decoration-none">
-                                    <span class="fa fa-phone-alt me-1"></span>{{ contact.phone }}
+                                <a href="tel:{{ contact.phone|format_phone_az }}" class="text-light text-decoration-none">
+                                    <span class="fa fa-phone-alt me-1"></span>{{ contact.phone|format_phone_az }}
                                 </a>
                             {% endif %}
                             {% if contact.email %}
@@ -736,16 +736,16 @@
                             <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><a href="https://www.google.com/maps/place/xalcalarin+yuyulmasi,/@40.3847779,49.9136553,16.36z/data=!4m6!3m5!1s0x40306332c6cbff81:0x3a32e96f1096012d!8m2!3d40.3850641!4d49.916934!16s%2Fg%2F11c6t7k5bb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-light text-decoration-none">{{ contact.address }}</a></p>
                         {% endif %}
                         {% if contact.phone %}
-                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone }}" class="text-light text-decoration-none">{{ contact.phone }}</a></p>
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone|format_phone_az }}" class="text-light text-decoration-none">{{ contact.phone|format_phone_az }}</a></p>
                         {% endif %}
                         {% if contact.whatsapp_number %}
-                            {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
-                            <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number }}</a></p>
+                            {% with contact.whatsapp_number|format_phone_az|clean_phone_number as pure_number %}
+                            <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number|format_phone_az }}</a></p>
                             {% endwith %}
                         {% endif %}
                         {% if contact.whatsapp_number_2 %}
-                            {% with contact.whatsapp_number_2|cut:"+"|cut:" " as pure_number %}
-                            <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number_2 }}</a></p>
+                            {% with contact.whatsapp_number_2|format_phone_az|clean_phone_number as pure_number %}
+                            <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number_2|format_phone_az }}</a></p>
                             {% endwith %}
                         {% endif %}
         
@@ -847,18 +847,18 @@
                         </button>
                         <div class="whatsapp-dropdown" id="whatsappDropdown">
                             {% if contact.whatsapp_number %}
-                                {% with contact.whatsapp_number|clean_phone_number as pure_whatsapp_1 %}
+                                {% with contact.whatsapp_number|format_phone_az|clean_phone_number as pure_whatsapp_1 %}
                                 <a href="https://wa.me/{{ pure_whatsapp_1 }}" target="_blank" class="whatsapp-option">
                                     <i class="fab fa-whatsapp me-2"></i>
-                                    <span>{{ contact.whatsapp_number }}</span>
+                                    <span>{{ contact.whatsapp_number|format_phone_az }}</span>
                                 </a>
                                 {% endwith %}
                             {% endif %}
                             {% if contact.whatsapp_number_2 %}
-                                {% with contact.whatsapp_number_2|clean_phone_number as pure_whatsapp_2 %}
+                                {% with contact.whatsapp_number_2|format_phone_az|clean_phone_number as pure_whatsapp_2 %}
                                 <a href="https://wa.me/{{ pure_whatsapp_2 }}" target="_blank" class="whatsapp-option">
                                     <i class="fab fa-whatsapp me-2"></i>
-                                    <span>{{ contact.whatsapp_number_2 }}</span>
+                                    <span>{{ contact.whatsapp_number_2|format_phone_az }}</span>
                                 </a>
                                 {% endwith %}
                             {% endif %}
@@ -867,13 +867,13 @@
                 {% else %}
                     <!-- Single WhatsApp number - Direct link -->
                     {% if contact.whatsapp_number %}
-                        {% with contact.whatsapp_number|clean_phone_number as pure_whatsapp %}
+                        {% with contact.whatsapp_number|format_phone_az|clean_phone_number as pure_whatsapp %}
                         <a href="https://wa.me/{{ pure_whatsapp }}" target="_blank" class="floating-btn floating-btn-whatsapp" title="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                         {% endwith %}
                     {% elif contact.whatsapp_number_2 %}
-                        {% with contact.whatsapp_number_2|clean_phone_number as pure_whatsapp %}
+                        {% with contact.whatsapp_number_2|format_phone_az|clean_phone_number as pure_whatsapp %}
                         <a href="https://wa.me/{{ pure_whatsapp }}" target="_blank" class="floating-btn floating-btn-whatsapp" title="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
@@ -884,7 +884,7 @@
             
             <!-- Call Button -->
             {% if contact.phone %}
-                <a href="tel:{{ contact.phone }}" class="floating-btn floating-btn-call" title="Zəng et">
+                <a href="tel:{{ contact.phone|format_phone_az }}" class="floating-btn floating-btn-call" title="Zəng et">
                     <i class="fas fa-phone-volume"></i>
                 </a>
             {% endif %}

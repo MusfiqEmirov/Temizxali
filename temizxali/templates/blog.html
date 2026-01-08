@@ -48,7 +48,7 @@
                     {% if contact.phone %}
                         <div class="h-100 d-inline-flex align-items-center me-4">
                             <span class="fa fa-phone-alt me-2"></span>
-                            <a href="tel:{{ contact.phone }}" class="text-light text-decoration-none">{{ contact.phone }}</a>
+                            <a href="tel:{{ contact.phone|format_phone_az }}" class="text-light text-decoration-none">{{ contact.phone|format_phone_az }}</a>
                         </div>
                     {% endif %}
                     {% if contact.email %}
@@ -386,7 +386,7 @@
                             <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><a href="https://www.google.com/maps/place/xalcalarin+yuyulmasi,/@40.3847779,49.9136553,16.36z/data=!4m6!3m5!1s0x40306332c6cbff81:0x3a32e96f1096012d!8m2!3d40.3850641!4d49.916934!16s%2Fg%2F11c6t7k5bb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-light text-decoration-none">{{ contact.address }}</a></p>
                         {% endif %}
                         {% if contact.phone %}
-                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone }}" class="text-light text-decoration-none">{{ contact.phone }}</a></p>
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone|format_phone_az }}" class="text-light text-decoration-none">{{ contact.phone|format_phone_az }}</a></p>
                         {% endif %}
                         {% if contact.whatsapp_number %}
                             {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
@@ -526,7 +526,7 @@
                 {% endif %}
             {% endif %}
             {% if contact.phone %}
-                <a href="tel:{{ contact.phone }}" class="floating-btn floating-btn-call" title="Zəng et">
+                <a href="tel:{{ contact.phone|format_phone_az }}" class="floating-btn floating-btn-call" title="Zəng et">
                     <i class="fas fa-phone-volume"></i>
                 </a>
             {% endif %}
