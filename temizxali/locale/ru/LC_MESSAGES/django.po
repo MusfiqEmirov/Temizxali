@@ -391,10 +391,8 @@ msgid "Ən son məqalələrimiz və xəbərlər"
 msgstr "Наши последние статьи и новости"
 
 #: temizxali/templates/blog.html:412
-#, fuzzy
-#| msgid "Hazırda layihə mövcud deyil"
 msgid "Hazırda bloq yazısı mövcud deyil"
-msgstr "В настоящее время проекты недоступны"
+msgstr "В настоящее время записи блога недоступны"
 
 #: temizxali/templates/blog_detail.html:498
 msgid "Baxış sayı:"
