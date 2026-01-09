@@ -127,13 +127,6 @@
                             {% for lang_code, lang_name in LANGUAGES %}
                                 {% if lang_code == CURRENT_LANGUAGE %}
                                     <button type="button" class="language-btn-current">
-                                        {% if lang_code == 'az' %}
-                                            <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon">
-                                        {% elif lang_code == 'ru' %}
-                                            <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon">
-                                        {% else %}
-                                            <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon">
-                                        {% endif %}
                                         <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
                                         <i class="fa fa-chevron-down ms-1"></i>
                                     </button>
@@ -146,13 +139,6 @@
                                         <input type="hidden" name="next" value="{{ request.path }}">
                                         <input type="hidden" name="language" value="{{ lang_code }}">
                                         <button type="submit" class="language-btn-dropdown {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
-                                            {% if lang_code == 'az' %}
-                                                <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon">
-                                            {% elif lang_code == 'ru' %}
-                                                <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon">
-                                            {% else %}
-                                                <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon">
-                                            {% endif %}
                                             <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
                                         </button>
                                     </form>
@@ -240,13 +226,7 @@
                     {% for lang_code, lang_name in LANGUAGES %}
                         {% if lang_code == CURRENT_LANGUAGE %}
                             <button type="button" class="language-btn-current-mobile">
-                                {% if lang_code == 'az' %}
-                                    <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon-mobile">
-                                {% elif lang_code == 'ru' %}
-                                    <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon-mobile">
-                                {% else %}
-                                    <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
-                                {% endif %}
+                                <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
                                 <i class="fa fa-chevron-down ms-1"></i>
                             </button>
                         {% endif %}
@@ -258,13 +238,7 @@
                                 <input type="hidden" name="next" value="{{ request.path }}">
                                 <input type="hidden" name="language" value="{{ lang_code }}">
                                 <button type="submit" class="language-btn-dropdown-mobile {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
-                                    {% if lang_code == 'az' %}
-                                        <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon-mobile">
-                                    {% elif lang_code == 'ru' %}
-                                        <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon-mobile">
-                                    {% else %}
-                                        <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
-                                    {% endif %}
+                                    <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
                                 </button>
                             </form>
                         {% endfor %}
@@ -435,7 +409,7 @@
                             {% endif %}
                         </div>
                         <div class="col-lg-5 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="d-flex align-items-baseline gap-3 mb-4">
+                            <div class="d-flex align-items-baseline gap-3 mb-0">
                                 {% if about_item.experience_years %}
                                     <h1 class="display-1 text-primary mb-0">{{ about_item.experience_years }}</h1>
                                 {% elif statistics and statistics.work_done_count %}
@@ -496,7 +470,7 @@
                         <img class="img-fluid rounded" data-wow-delay="0.1s" src="{% static 'img/about.jpg' %}" alt="{% trans 'Haqqımızda' %}">
                     </div>
                     <div class="col-lg-6 col-md-7 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="d-flex align-items-baseline gap-3 mb-4">
+                        <div class="d-flex align-items-baseline gap-3 mb-0">
                             {% if statistics and statistics.work_done_count %}
                                 <h1 class="display-1 text-primary mb-0">{{ statistics.work_done_count|floatformat:0 }}</h1>
                             {% else %}
