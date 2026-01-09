@@ -269,7 +269,7 @@
                     </div>
                 </div> -->
             <a href="{% url 'calculator-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Hesabla" %}<i class="fa fa-arrow-right ms-3"></i></a>
-            <a href="{% url 'order-page' %}" class="btn btn-order py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{% url 'order-page' %}" class="btn btn-order py-4 px-lg-5 rounded-0 d-lg-block" style="background-color: darkgoldenrod !important;">{% trans "Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
             <!-- Mobile Social Media Icons and App Links in Navbar -->
             <div class="d-lg-none mt-3 px-4">
                 <div class="d-flex flex-column gap-3">
@@ -382,29 +382,28 @@
     <div class="container-fluid bg-dark text-light footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 contact-list">
                     <h4 class="text-white mb-4">{% trans "Ünvan və Əlaqə:" %}</h4>
                     {% if contact %}
                         {% if contact.address %}
-                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><a href="https://www.google.com/maps/place/xalcalarin+yuyulmasi,/@40.3847779,49.9136553,16.36z/data=!4m6!3m5!1s0x40306332c6cbff81:0x3a32e96f1096012d!8m2!3d40.3850641!4d49.916934!16s%2Fg%2F11c6t7k5bb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-light text-decoration-none">{{ contact.address }}</a></p>
+                            <p class="mb-2 d-flex align-items-start"><i class="fa fa-map-marker-alt me-3"></i><a href="https://www.google.com/maps/place/xalcalarin+yuyulmasi,/@40.3847779,49.9136553,16.36z/data=!4m6!3m5!1s0x40306332c6cbff81:0x3a32e96f1096012d!8m2!3d40.3850641!4d49.916934!16s%2Fg%2F11c6t7k5bb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-light text-decoration-none">{{ contact.address }}</a></p>
                         {% endif %}
                         {% if contact.phone %}
-                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone|format_phone_az }}" class="text-light text-decoration-none">{{ contact.phone|format_phone_az }}</a></p>
+                            <p class="mb-2 d-flex align-items-center"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone|format_phone_az }}" class="text-light text-decoration-none">{{ contact.phone|format_phone_az }}</a></p>
                         {% endif %}
                         {% if contact.whatsapp_number %}
                             {% with contact.whatsapp_number|format_phone_az|clean_phone_number as pure_number %}
-                            <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number|format_phone_az }}</a></p>
+                                <p class="mb-2 d-flex align-items-center"><i class="fa-brands fa-whatsapp me-3"></i><a href="https://wa.me/{{ pure_number }}" target="_blank" class="text-light text-decoration-none">{{ contact.whatsapp_number|format_phone_az }}</a></p>
                             {% endwith %}
                         {% endif %}
                         {% if contact.whatsapp_number_2 %}
                             {% with contact.whatsapp_number_2|format_phone_az|clean_phone_number as pure_number %}
-                            <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number_2|format_phone_az }}</a></p>
+                                <p class="mb-2 d-flex align-items-center"><i class="fa-brands fa-whatsapp me-3"></i><a href="https://wa.me/{{ pure_number }}" target="_blank" class="text-light text-decoration-none">{{ contact.whatsapp_number_2|format_phone_az }}</a></p>
                             {% endwith %}
                         {% endif %}
                         {% if contact.email %}
-                            <p class="mb-2"><i class="fa fa-envelope me-3"></i><a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a></p>
+                            <p class="mb-2 d-flex align-items-center"><i class="fa fa-envelope me-3"></i><a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a></p>
                         {% endif %}
-                  
                     {% endif %}
                     <div class="d-flex pt-2">
                         {% if contact %}
@@ -431,7 +430,7 @@
                         {% endif %}
                     </div>
                         <!-- Mobile App Links -->
-                        <div class="social-btns pt-3" style="justify-content: flex-start;">
+                        <div class="social-btns pt-3" style="justify-content: flex-start; margin-left: 1px;">
                             <a class="app-btn blu flex vert" href="https://apps.apple.com/vn/app/temiz-xali/id6443763819?platform=iphone" target="_blank">
                                 <i class="fab fa-apple"></i>
                                 <p><span class="big-txt">App Store</span></p>
@@ -486,9 +485,6 @@
         </div>
     </div>
     <!-- Copyright End -->
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -560,6 +556,11 @@
                 </a>
             {% endif %}
         {% endif %}
+        
+        <!-- Back to Top Button -->
+        <a href="#" class="floating-btn floating-btn-back-top back-to-top" title="Yuxarı">
+            <i class="bi bi-arrow-up"></i>
+        </a>
     </div>
 
 </body>

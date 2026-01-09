@@ -18,12 +18,17 @@ body {
     font-family: inherit !important;
 } */
 
-.back-to-top {
-    position: fixed;
-    display: none;
-    left: 30px;
-    bottom: 30px;
-    z-index: 99;
+.back-to-top.floating-btn {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: visibility 0.3s ease, opacity 0.3s ease;
+}
+
+.back-to-top.floating-btn.show {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 h1,
@@ -79,10 +84,10 @@ h6,
 }
 
 .btn-primary:hover {
-    background-color: #6d021c !important;
-    border-color: #6d021c !important;
+    background-color: #5a0117 !important;
+    border-color: #5a0117 !important;
     color: var(--light) !important;
-    box-shadow: 0 4px 12px rgba(52, 142, 56, 0.4);
+    box-shadow: 0 4px 12px rgba(109, 2, 28, 0.4);
 }
 
 .btn-outline-primary {
@@ -97,16 +102,16 @@ h6,
 }
 
 .btn-order {
-    background-color: #25D366 !important;
-    border-color: #25D366 !important;
+    background: linear-gradient(135deg, darkgoldenrod 0%, #8a9a3a 100%) !important;
+    border-color: darkgoldenrod !important;
     color: #ffffff !important;
 }
 
 .btn-order:hover {
-    background-color: #128C7E !important;
-    border-color: #128C7E !important;
+    background: linear-gradient(135deg, #9a7a0a 0%, darkgoldenrod 100%) !important;
+    border-color: #b8860b !important;
     color: #ffffff !important;
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.4);
 }
 
 .btn-square {
@@ -192,6 +197,20 @@ h6,
     border-color: #6d021c;
     color: white;
     box-shadow: 0 4px 12px rgba(52, 142, 56, 0.4);
+}
+
+.navbar .btn-order {
+    background: linear-gradient(135deg, darkgoldenrod 0%, #8a9a3a 100%);
+    border-color: darkgoldenrod;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.navbar .btn-order:hover {
+    background: linear-gradient(135deg, #9a7a0a 0%, darkgoldenrod 100%);
+    border-color: #b8860b;
+    color: white;
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.4);
 }
 
 .navbar .dropdown-toggle::after {
@@ -2224,6 +2243,23 @@ a.lb-next:hover {
   text-decoration: underline;
 }
 
+/* Contact List - İkonlar üçün sabit en */
+.contact-list i {
+    width: 24px;
+    text-align: center;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* Contact List - Link hover effekti */
+.contact-list a {
+    transition: text-decoration 0.3s ease;
+}
+
+.contact-list a:hover {
+    text-decoration: underline;
+}
+
 /* About Page - Cards Alignment */
 .container-xxl .row.align-items-start > .col-lg-3 {
   align-self: flex-start;
@@ -2615,6 +2651,18 @@ a.lb-next:hover {
   color: white;
 }
 
+.floating-btn-back-top {
+  background-color: darkgoldenrod;
+  background: linear-gradient(135deg, darkgoldenrod 0%, #b8860b 100%);
+}
+
+.floating-btn-back-top:hover {
+  background: linear-gradient(135deg, #b8860b 0%, darkgoldenrod 100%);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(184, 134, 11, 0.5);
+  color: white;
+}
+
 /* WhatsApp Dropdown Menu */
 .whatsapp-dropdown {
   position: absolute;
@@ -2731,13 +2779,6 @@ a.lb-next:hover {
   }
 }
 
-/* Ensure buttons don't overlap with back-to-top button */
-@media (min-width: 992px) {
-  .back-to-top {
-    left: 30px;
-    bottom: 30px;
-  }
-}
 
 /* Social Media Icons - Real Colors */
 .social-icon-link {
@@ -3148,13 +3189,6 @@ a.lb-next:hover {
     }
 }
 
-/* Ensure buttons don't overlap with back-to-top button */
-@media (min-width: 992px) {
-    .back-to-top {
-        left: 30px;
-        bottom: 30px;
-    }
-}
 
 /* ============================================
    Blog Page Styles
