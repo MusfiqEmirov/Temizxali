@@ -164,3 +164,24 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ 
+# CKEDITOR CONFIGS
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+        'language': 'az',
+        'font_defaultLabel': 'Arial',
+        'font_names': (
+            'Arial/Arial, Helvetica, sans-serif;'
+            'Verdana/Verdana, Geneva, sans-serif;'
+            'Times New Roman/Times New Roman, Times, serif;'
+        ),
+        'contentsCss': [
+            'body { font-family: Arial, Helvetica, sans-serif; }',
+            'h1, h2, h3, h4, h5, h6 { font-family: Arial, Helvetica, sans-serif; }'
+        ],
+    }
+}
