@@ -102,13 +102,6 @@
                             {% for lang_code, lang_name in LANGUAGES %}
                                 {% if lang_code == CURRENT_LANGUAGE %}
                                     <button type="button" class="language-btn-current">
-                                        {% if lang_code == 'az' %}
-                                            <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon">
-                                        {% elif lang_code == 'ru' %}
-                                            <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon">
-                                        {% else %}
-                                            <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon">
-                                        {% endif %}
                                         <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
                                         <i class="fa fa-chevron-down ms-1"></i>
                                     </button>
@@ -121,13 +114,6 @@
                                         <input type="hidden" name="next" value="{{ request.path }}">
                                         <input type="hidden" name="language" value="{{ lang_code }}">
                                         <button type="submit" class="language-btn-dropdown {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
-                                            {% if lang_code == 'az' %}
-                                                <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon">
-                                            {% elif lang_code == 'ru' %}
-                                                <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon">
-                                            {% else %}
-                                                <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon">
-                                            {% endif %}
                                             <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
                                         </button>
                                     </form>
@@ -174,13 +160,7 @@
                     {% for lang_code, lang_name in LANGUAGES %}
                         {% if lang_code == CURRENT_LANGUAGE %}
                             <button type="button" class="language-btn-current-mobile">
-                                {% if lang_code == 'az' %}
-                                    <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon-mobile">
-                                {% elif lang_code == 'ru' %}
-                                    <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon-mobile">
-                                {% else %}
-                                    <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
-                                {% endif %}
+                                <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
                                 <i class="fa fa-chevron-down ms-1"></i>
                             </button>
                         {% endif %}
@@ -192,13 +172,7 @@
                                 <input type="hidden" name="next" value="{{ request.path }}">
                                 <input type="hidden" name="language" value="{{ lang_code }}">
                                 <button type="submit" class="language-btn-dropdown-mobile {% if lang_code == CURRENT_LANGUAGE %}active{% endif %}">
-                                    {% if lang_code == 'az' %}
-                                        <img src="{% static 'img/azerbaijan.webp' %}" alt="Azərbaycan" class="flag-icon-mobile">
-                                    {% elif lang_code == 'ru' %}
-                                        <img src="{% static 'img/russia.webp' %}" alt="Русский" class="flag-icon-mobile">
-                                    {% else %}
-                                        <img src="{% static 'img/azerbaijan.webp' %}" alt="{{ lang_name }}" class="flag-icon-mobile">
-                                    {% endif %}
+                                    <span class="language-text">{% if lang_code == 'az' %}Az{% elif lang_code == 'ru' %}Ru{% else %}{{ lang_name|slice:':2' }}{% endif %}</span>
                                 </button>
                             </form>
                         {% endfor %}
@@ -235,7 +209,7 @@
                 <a href="{% url 'about-page' %}" class="nav-item nav-link">{% trans "Haqqımızda" %}</a>
 
             <a href="{% url 'calculator-page' %}" class="btn btn-primary py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Hesabla" %}<i class="fa fa-arrow-right ms-3"></i></a>
-            <a href="{% url 'order-page' %}" class="btn btn-order py-4 px-lg-5 rounded-0 d-lg-block">{% trans "Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
+            <a href="{% url 'order-page' %}" class="btn btn-order py-4 px-lg-5 rounded-0 d-lg-block" style="background-color: darkgoldenrod !important;">{% trans "Sifariş et" %}<i class="fa fa-arrow-right ms-3"></i></a>
             </div>
         </div>
     </nav>
@@ -374,27 +348,27 @@
     <div class="container-fluid bg-dark text-light footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container ">
             <div class="row g-5">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 contact-list">
                     <h4 class="text-white mb-4">{% trans "Ünvan və Əlaqə:" %}</h4>
                     {% if contact %}
                         {% if contact.address %}
-                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i><a href="https://www.google.com/maps/place/xalcalarin+yuyulmasi,/@40.3847779,49.9136553,16.36z/data=!4m6!3m5!1s0x40306332c6cbff81:0x3a32e96f1096012d!8m2!3d40.3850641!4d49.916934!16s%2Fg%2F11c6t7k5bb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-light text-decoration-none">{{ contact.address }}</a></p>
+                            <p class="mb-2 d-flex align-items-start"><i class="fa fa-map-marker-alt me-3"></i><a href="https://www.google.com/maps/place/xalcalarin+yuyulmasi,/@40.3847779,49.9136553,16.36z/data=!4m6!3m5!1s0x40306332c6cbff81:0x3a32e96f1096012d!8m2!3d40.3850641!4d49.916934!16s%2Fg%2F11c6t7k5bb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-light text-decoration-none">{{ contact.address }}</a></p>
                         {% endif %}
                         {% if contact.phone %}
-                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone|format_phone_az }}" class="text-light text-decoration-none">{{ contact.phone|format_phone_az }}</a></p>
+                            <p class="mb-2 d-flex align-items-center"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone|format_phone_az }}" class="text-light text-decoration-none">{{ contact.phone|format_phone_az }}</a></p>
                         {% endif %}
                         {% if contact.whatsapp_number %}
                             {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
-                            <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number }}</a></p>
+                                <p class="mb-2 d-flex align-items-center"><i class="fa-brands fa-whatsapp me-3"></i><a href="https://wa.me/{{ pure_number }}" target="_blank" class="text-light text-decoration-none">{{ contact.whatsapp_number }}</a></p>
                             {% endwith %}
                         {% endif %}
                         {% if contact.whatsapp_number_2 %}
                             {% with contact.whatsapp_number_2|cut:"+"|cut:" " as pure_number %}
-                            <p class="mb-2"><a href="https://wa.me/{{ pure_number }}" target="_blank" class="whatsapp-link"><i class="fa-brands fa-whatsapp me-3"></i>{{ contact.whatsapp_number_2 }}</a></p>
+                                <p class="mb-2 d-flex align-items-center"><i class="fa-brands fa-whatsapp me-3"></i><a href="https://wa.me/{{ pure_number }}" target="_blank" class="text-light text-decoration-none">{{ contact.whatsapp_number_2 }}</a></p>
                             {% endwith %}
                         {% endif %}
                         {% if contact.email %}
-                            <p class="mb-2"><i class="fa fa-envelope me-3"></i><a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a></p>
+                            <p class="mb-2 d-flex align-items-center"><i class="fa fa-envelope me-3"></i><a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a></p>
                         {% endif %}
                         <div class="d-flex pt-2">
                             {% if contact.facebook %}
@@ -414,7 +388,7 @@
                             {% endif %}
                         </div>
                         <!-- Mobile App Links -->
-                        <div class="social-btns pt-3" style="justify-content: flex-start;">
+                        <div class="social-btns pt-3" style="justify-content: flex-start; margin-left: 1px;">
                             <a class="app-btn blu flex vert" href="https://apps.apple.com/vn/app/temiz-xali/id6443763819?platform=iphone" target="_blank">
                                 <i class="fab fa-apple"></i>
                                 <p><span class="big-txt">App Store</span></p>
@@ -469,10 +443,6 @@
     </div>
     <!-- Copyright End -->
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
-            class="bi bi-arrow-up"></i></a>
-
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -502,18 +472,18 @@
                         </button>
                         <div class="whatsapp-dropdown" id="whatsappDropdown">
                             {% if contact.whatsapp_number %}
-                                {% with contact.whatsapp_number|clean_phone_number as pure_whatsapp_1 %}
+                                {% with contact.whatsapp_number|format_phone_az|clean_phone_number as pure_whatsapp_1 %}
                                 <a href="https://wa.me/{{ pure_whatsapp_1 }}" target="_blank" class="whatsapp-option">
                                     <i class="fab fa-whatsapp me-2"></i>
-                                    <span>{{ contact.whatsapp_number }}</span>
+                                    <span>{{ contact.whatsapp_number|format_phone_az }}</span>
                                 </a>
                                 {% endwith %}
                             {% endif %}
                             {% if contact.whatsapp_number_2 %}
-                                {% with contact.whatsapp_number_2|clean_phone_number as pure_whatsapp_2 %}
+                                {% with contact.whatsapp_number_2|format_phone_az|clean_phone_number as pure_whatsapp_2 %}
                                 <a href="https://wa.me/{{ pure_whatsapp_2 }}" target="_blank" class="whatsapp-option">
                                     <i class="fab fa-whatsapp me-2"></i>
-                                    <span>{{ contact.whatsapp_number_2 }}</span>
+                                    <span>{{ contact.whatsapp_number_2|format_phone_az }}</span>
                                 </a>
                                 {% endwith %}
                             {% endif %}
@@ -521,13 +491,13 @@
                     </div>
                 {% else %}
                     {% if contact.whatsapp_number %}
-                        {% with contact.whatsapp_number|clean_phone_number as pure_whatsapp %}
+                        {% with contact.whatsapp_number|format_phone_az|clean_phone_number as pure_whatsapp %}
                         <a href="https://wa.me/{{ pure_whatsapp }}" target="_blank" class="floating-btn floating-btn-whatsapp" title="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                         {% endwith %}
                     {% elif contact.whatsapp_number_2 %}
-                        {% with contact.whatsapp_number_2|clean_phone_number as pure_whatsapp %}
+                        {% with contact.whatsapp_number_2|format_phone_az|clean_phone_number as pure_whatsapp %}
                         <a href="https://wa.me/{{ pure_whatsapp }}" target="_blank" class="floating-btn floating-btn-whatsapp" title="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
@@ -542,6 +512,11 @@
                 </a>
             {% endif %}
         {% endif %}
+        
+        <!-- Back to Top Button -->
+        <a href="#" class="floating-btn floating-btn-back-top back-to-top" title="Yuxarı">
+            <i class="bi bi-arrow-up"></i>
+        </a>
     </div>
 
 </body>
