@@ -280,22 +280,24 @@
                                 {% for recent_bloq in recent_bloqs %}
                                     {% with recent_translation=recent_bloq.translations.first %}
                                         {% if recent_translation %}
-                                            <div class="recent-blog-card">
+                                            {% if recent_translation.slug %}
+                                                <div class="blog-card" onclick="window.location.href='{% url 'blog-detail-page' recent_translation.slug %}';" style="cursor: pointer;">
+                                            {% else %}
+                                                <div class="blog-card">
+                                            {% endif %}
                                                 {% if recent_bloq.images.first %}
-                                                    <img src="{{ recent_bloq.images.first.webp_url }}" alt="{{ recent_translation.name }}" class="recent-blog-card-image" loading="lazy">
+                                                    <img src="{{ recent_bloq.images.first.webp_url }}" alt="{{ recent_translation.name }}" class="blog-card-image" loading="lazy">
                                                 {% else %}
-                                                    <img src="{% static 'img/carousel-1.webp' %}" alt="{% trans 'Şəkil yoxdur' %}" class="recent-blog-card-image" loading="lazy">
+                                                    <img src="{% static 'img/carousel-1.webp' %}" alt="{% trans 'Şəkil yoxdur' %}" class="blog-card-image" loading="lazy">
                                                 {% endif %}
-                                                <div class="recent-blog-card-body">
-                                                    <div class="recent-blog-card-meta">
+                                                <div class="blog-card-body">
+                                                    <div class="blog-card-meta" onclick="event.stopPropagation();">
                                                         <span class="category">{{ recent_translation.name }}</span>
                                                         <span>·</span>
-                                                        <span>{{ recent_bloq.created_at|date:"d.m" }}</span>
+                                                        <span>{{ recent_bloq.created_at|date:"d.m.Y" }}</span>
                                                     </div>
-                                                    <div class="recent-blog-card-description">
-                                                        <a href="{% url 'blog-detail-page' recent_translation.slug %}">
-                                                            {{ recent_translation.description|safe }}
-                                                        </a>
+                                                    <div class="blog-card-description">
+                                                        {{ recent_translation.description|safe }}
                                                     </div>
                                                 </div>
                                             </div>

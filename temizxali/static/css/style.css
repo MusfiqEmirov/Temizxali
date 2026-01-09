@@ -3235,8 +3235,9 @@ a.lb-next:hover {
 }
 
 .blog-card-meta .category {
-    color: #6c757d;
-    font-weight: 500;
+    color: #000;
+    font-weight: 700;
+    font-size: 18px;
 }
 
 .blog-card-title {
@@ -3252,8 +3253,8 @@ a.lb-next:hover {
 }
 
 .blog-card-description {
-    font-size: 15px;
-    color: #007bff;
+    font-size: 13px;
+    color: #555;
     line-height: 1.6;
     flex-grow: 1;
 }
