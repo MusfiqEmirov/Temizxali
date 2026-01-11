@@ -23,19 +23,19 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 CSRF_TRUSTED_ORIGINS = [
     'http://3.236.6.6:8080',
     'http://3.236.6.6',
-    'http://temizxali.az',
+    "https://www.temizxali.az",
     'https://temizxali.az',
     'http://localhost:8080',
     'http://127.0.0.1:8080',
 ]
 
 # CSRF Cookie Settings
-CSRF_COOKIE_SECURE = False  
+CSRF_COOKIE_SECURE = True  
 CSRF_COOKIE_HTTPONLY = False
 CSRF_USE_SESSIONS = False
 
 # Session Cookie Settings
-SESSION_COOKIE_SECURE = False  
+SESSION_COOKIE_SECURE = True  
 SESSION_COOKIE_HTTPONLY = True
 
 # Admin URL - secret path (required)
@@ -44,7 +44,9 @@ if not ADMIN_URL:
     raise ValueError("ADMIN_URL environment variable is required!")
 if not ADMIN_URL.endswith('/'):
     ADMIN_URL += '/'
-
+    
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
 # Application definition
 
 INSTALLED_APPS = [
