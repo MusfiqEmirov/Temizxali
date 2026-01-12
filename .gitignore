@@ -1,7 +1,7 @@
 .vscode/
 .pytest_cache/
 # Python
-__pycache__/
+pycache/
 *.py[cod]
 *.pyo
 *.pyd
@@ -49,5 +49,8 @@ temizxali/temizxali/settings_local.py
 temizxali/temizxali/wsgi_local.py
 
 # Local database volumes (if created)
+
 postgres_data_local/
+
+
 
