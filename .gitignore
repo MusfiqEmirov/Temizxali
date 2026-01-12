@@ -49,4 +49,8 @@ temizxali/temizxali/settings_local.py
 temizxali/temizxali/wsgi_local.py
 
 # Local database volumes (if created)
+
 postgres_data_local/
+
+
+

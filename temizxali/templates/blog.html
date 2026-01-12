@@ -162,7 +162,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="{% url 'home-page' %}" class="nav-item nav-link">{% trans "Ana səhifə" %}</a>
+                <a href="{% url 'home-page' %}" class="nav-item nav-link">{% trans "əhifə" %}</a>
 
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">{% trans "Xidmətlər" %}</a>
@@ -247,8 +247,13 @@
             <!-- <h1 class="display-3 text-white mb-4 animated slideInDown">{% trans "Bloq" %}</h1> -->
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{% trans "Bloq" %}</li>
+                    <li class="breadcrumb-item">
+                        
+                        <a href="{% url 'home-page' %}">{% trans "Ana səhifə" %}</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {% trans "Bloq" %}
+                    </li>
                 </ol>
             </nav>
         </div>
