@@ -36,3 +36,18 @@ static_root/
 .DS_Store
 Thumbs.db
 
+# Local development files (sensitive data)
+.env.local
+
+# Local development configuration files
+docker-compose-local.yaml
+docker-compose-local.bat
+docker-compose-local.sh
+Dockerfile-local
+entrypoint-local.sh
+temizxali/temizxali/settings_local.py
+temizxali/temizxali/wsgi_local.py
+
+# Local database volumes (if created)
+postgres_data_local/
+
