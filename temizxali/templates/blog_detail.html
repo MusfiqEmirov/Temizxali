@@ -299,6 +299,13 @@
                                                     <div class="blog-card-description">
                                                         {{ recent_translation.description|safe }}
                                                     </div>
+                                                    <div class="mt-auto pt-3 d-flex justify-content-end" onclick="event.stopPropagation();">
+                                                        {% if recent_translation.slug %}
+                                                            <a class="btn btn-sm blog-detail-link" href="{% url 'blog-detail-page' recent_translation.slug %}"><i class="fa fa-plus text-primary me-3"></i>{% trans "Ətraflı" %}</a>
+                                                        {% else %}
+                                                            <a class="btn btn-sm blog-detail-link" href="#"><i class="fa fa-plus text-primary me-3"></i>{% trans "Ətraflı" %}</a>
+                                                        {% endif %}
+                                                    </div>
                                                 </div>
                                             </div>
                                         {% endif %}
