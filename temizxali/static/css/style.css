@@ -8,10 +8,15 @@
 
 html {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 body {
     font-family: inherit !important;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 /* * {
@@ -2318,6 +2323,16 @@ a.lb-next:hover {
   flex-wrap: wrap;
 }
 
+/* Mobil versiyada app linkləri yan yana qalsın */
+@media (max-width: 991.98px) {
+  .social-btns {
+    flex-wrap: nowrap;
+    gap: 5px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+}
+
 .app-btn {
   width: 45%;
   max-width: 160px;
@@ -2341,6 +2356,16 @@ a.lb-next:hover {
 .bg-dark .social-btns {
   gap: 5px;
   margin-left: 10px;
+}
+
+/* Mobil versiyada topbar app linkləri yan yana qalsın */
+@media (max-width: 991.98px) {
+  .bg-dark .social-btns {
+    flex-wrap: nowrap;
+    gap: 4px;
+    max-width: 100%;
+    overflow: hidden;
+  }
 }
 
 .bg-dark .social-btns .app-btn {
@@ -2417,11 +2442,139 @@ a.lb-next:hover {
   margin: 0;
 }
 
+/* Mobil versiyada app linkləri üçün ölçü tənzimləmələri - yan yana qalsın və ekrandan çıxmasın */
+@media (max-width: 991.98px) {
+  .social-btns {
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .social-btns .app-btn {
+    width: auto;
+    max-width: 120px;
+    min-width: 90px;
+    margin: 2px;
+    padding: 5px 6px;
+    font-size: 6px;
+    flex-shrink: 1;
+  }
+  
+  .social-btns .app-btn i {
+    font-size: 14px;
+    height: 14px;
+  }
+  
+  .social-btns .app-btn .big-txt {
+    font-size: 10px;
+  }
+  
+  .social-btns .app-btn p {
+    font-size: 6px;
+  }
+}
+
+@media (max-width: 768px) {
+  .social-btns {
+    gap: 3px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .social-btns .app-btn {
+    max-width: 100px;
+    min-width: 75px;
+    padding: 4px 5px;
+    font-size: 5px;
+    margin: 2px;
+  }
+  
+  .social-btns .app-btn i {
+    font-size: 12px;
+    height: 12px;
+  }
+  
+  .social-btns .app-btn .big-txt {
+    font-size: 9px;
+  }
+  
+  .social-btns .app-btn p {
+    font-size: 5px;
+  }
+}
+
+@media (max-width: 576px) {
+  .social-btns {
+    gap: 2px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .social-btns .app-btn {
+    max-width: 85px;
+    min-width: 65px;
+    padding: 3px 4px;
+    font-size: 4px;
+    margin: 1px;
+  }
+  
+  .social-btns .app-btn i {
+    font-size: 11px;
+    height: 11px;
+  }
+  
+  .social-btns .app-btn .big-txt {
+    font-size: 8px;
+  }
+  
+  .social-btns .app-btn p {
+    font-size: 4px;
+  }
+}
+
+@media (max-width: 425px) {
+  .social-btns {
+    gap: 2px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .social-btns .app-btn {
+    max-width: 75px;
+    min-width: 60px;
+    padding: 3px 4px;
+    font-size: 3px;
+    margin: 1px;
+  }
+  
+  .social-btns .app-btn i {
+    font-size: 10px;
+    height: 10px;
+  }
+  
+  .social-btns .app-btn .big-txt {
+    font-size: 7px;
+  }
+  
+  .social-btns .app-btn p {
+    font-size: 3px;
+  }
+}
+
 /* Footer üçün xüsusi stillər - footer qara arxa fonda olduğu üçün */
 .footer .social-btns {
   justify-content: flex-start !important;
   padding-left: 0;
   gap: 5px;
+}
+
+/* Mobil versiyada footer app linkləri yan yana qalsın */
+@media (max-width: 991.98px) {
+  .footer .social-btns {
+    flex-wrap: nowrap;
+    gap: 4px;
+    max-width: 100%;
+    overflow: hidden;
+  }
 }
 
 .footer .social-btns .app-btn.blu {
@@ -2460,6 +2613,32 @@ a.lb-next:hover {
 .navbar .social-btns {
   justify-content: flex-start;
   gap: 10px;
+}
+
+/* Mobil versiyada navbar app linkləri yan yana qalsın */
+@media (max-width: 991.98px) {
+  .navbar .social-btns {
+    flex-wrap: nowrap;
+    gap: 4px;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  /* Mobil versiyada sosial şəbəkə və app linkləri sola çəkilir */
+  .navbar-collapse .d-lg-none.px-4 {
+    padding-left: 0.5rem !important;
+    padding-right: 1rem !important;
+  }
+  
+  .navbar-collapse .d-lg-none .d-flex.align-items-center.gap-3 {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
+  
+  .navbar-collapse .d-lg-none .social-btns {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+  }
 }
 
 .navbar .social-btns .app-btn.blu {
