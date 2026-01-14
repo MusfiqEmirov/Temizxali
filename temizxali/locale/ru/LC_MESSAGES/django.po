@@ -425,9 +425,9 @@ msgstr "Позвонить"
 msgid "Servis Kalkulyatoru"
 msgstr "Калькулятор услуг"
 
-#: temizxali/templates/calculator.html:271
-msgid "Xidmətləri seçin və qiyməti hesablayın"
-msgstr "Выберите услуги и рассчитайте цену"
+#: temizxali/templates/calculator.html:245
+msgid "Xidmətləri seçin və qiyməti hesablayın. Bir neçə xidmət seçmək mümkündür."
+msgstr "Выберите услуги и рассчитайте цену. Можно выбрать несколько услуг."
 
 #: temizxali/templates/calculator.html:278
 msgid "Xidmət əlavə edin:"

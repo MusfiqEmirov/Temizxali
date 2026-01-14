@@ -43,8 +43,12 @@ body {
 
 .header-title {
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin: 0.5rem 0;
+}
+
+.header-card p.text-muted {
+  font-size: 0.9rem;
 }
 
 .service-selector-card {
@@ -200,6 +204,43 @@ body {
   .calculator-container {
     max-width: 90%;
     margin: 0 auto;
+  }
+  
+  /* Mobil versiyada "Servis Kalkulyatoru" yan-yana görünsün */
+  .header-card .d-flex.align-items-center {
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+  }
+  
+  .header-title {
+    white-space: nowrap;
+    font-size: 1.4rem;
+    margin: 0;
+  }
+  
+  .header-card .fa-calculator {
+    font-size: 1.8rem !important;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-title {
+    font-size: 1.3rem;
+  }
+  
+  .header-card .fa-calculator {
+    font-size: 1.6rem !important;
+  }
+}
+
+@media (max-width: 425px) {
+  .header-title {
+    font-size: 1.1rem;
+  }
+  
+  .header-card .fa-calculator {
+    font-size: 1.4rem !important;
   }
 }
 

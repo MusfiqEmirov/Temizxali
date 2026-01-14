@@ -3449,6 +3449,42 @@ a.lb-next:hover {
     color: #007bff;
 }
 
+/* Blog detail link - sağa çəkilmiş və hover effekti */
+.blog-detail-link {
+    transition: all 0.3s ease;
+    text-align: right;
+    background: transparent;
+    border: 1px solid #ddd;
+    color: #6c757d;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.blog-detail-link i {
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.blog-detail-link:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+    text-decoration: none;
+}
+
+.blog-detail-link:hover i {
+    transform: scale(1.1);
+    color: #fff;
+}
+
 .blog-section {
     padding: 80px 0;
     background: #f8f9fa;
