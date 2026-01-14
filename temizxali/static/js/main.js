@@ -350,10 +350,23 @@ $(document).ready(function() {
     }
     
     // Video optimization - pause videos when not visible
+    // Mobil üçün video həmişə oynasın
+    var isMobile = window.innerWidth <= 768;
+    
     if ('IntersectionObserver' in window) {
         var videoObserver = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 var video = entry.target;
+                // Mobil üçün video həmişə oynasın
+                if (isMobile && video.classList.contains('video-bg')) {
+                    if (video.paused && video.hasAttribute('autoplay')) {
+                        video.play().catch(function() {
+                            // Autoplay blocked, ignore
+                        });
+                    }
+                    return; // Mobil üçün pause etmə
+                }
+                
                 if (entry.isIntersecting) {
                     if (video.paused && video.hasAttribute('autoplay')) {
                         video.play().catch(function() {
@@ -371,9 +384,33 @@ $(document).ready(function() {
         });
         
         $('.service-video, .video-bg').each(function() {
-            videoObserver.observe(this);
+            var video = this;
+            // Mobil üçün video həmişə oynasın
+            if (isMobile && $(video).hasClass('video-bg')) {
+                if (video.paused && video.hasAttribute('autoplay')) {
+                    video.play().catch(function() {
+                        // Autoplay blocked, ignore
+                    });
+                }
+            }
+            videoObserver.observe(video);
         });
     }
+    
+    // Mobil üçün window resize zamanı yenidən yoxla
+    $(window).on('resize', function() {
+        isMobile = window.innerWidth <= 768;
+        if (isMobile) {
+            $('.service-item .video-bg').each(function() {
+                var video = this;
+                if (video.paused && video.hasAttribute('autoplay')) {
+                    video.play().catch(function() {
+                        // Autoplay blocked, ignore
+                    });
+                }
+            });
+        }
+    });
     
     // Gallery thumbnail click optimization
     $('.service-gallery-thumb').on('click', function(e) {

@@ -563,9 +563,9 @@
                                             <p class="mb-4 service-description-text">{{ translation.description|truncatewords:10 }}</p>
                                             <div class="mt-auto">
                                                 {% if translation.slug %}
-                                                    <a class="btn btn-sm" href="{% url 'service-page' translation.slug %}"><i class="fa fa-plus text-primary me-3"></i>{% trans "Ətraflı" %}</a>
+                                                    <a class="btn btn-sm" href="{% url 'service-page' translation.slug %}">{% trans "Ətraflı Məlumat" %}</a>
                                                 {% else %}
-                                                    <a class="btn btn-sm" href="#"><i class="fa fa-plus text-primary me-3"></i>{% trans "Ətraflı" %}</a>
+                                                    <a class="btn btn-sm" href="#">{% trans "Ətraflı Məlumat" %}</a>
                                                 {% endif %}
                                             </div>
                                         </div>

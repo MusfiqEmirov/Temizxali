@@ -413,6 +413,15 @@ h6,
     transform: scale(1);
 }
 
+/* Service Detail: Şəkillər həmişə görünsün (hover olmadan) */
+.service-detail-page .service-item .service-img img {
+    transform: scale(1) !important;
+}
+
+.service-detail-page .service-item:hover .service-img img {
+    transform: scale(1) !important;
+}
+
 .service-item .service-text {
     background: #FFFFFF;
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
@@ -423,6 +432,7 @@ h6,
     flex-direction: column;
     position: relative;
     z-index: 1;
+    padding-bottom: 60px;
 }
 
 .service-item:hover .service-text {
@@ -464,20 +474,33 @@ h6,
     background: var(--light);
 }
 
+.service-item .service-text .mt-auto {
+    position: relative;
+}
+
 .service-item .service-text .btn {
-    width: 31px;
-    height: 31px;
+    width: auto;
+    min-width: auto;
+    height: auto;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     color: var(--dark);
     background: var(--light);
     white-space: nowrap;
-    overflow: hidden;
+    overflow: visible;
     transition: .3s;
+    padding: 6px 12px;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
 }
 
 .service-item:hover .service-text .btn {
-    width: 85px;
+    width: auto;
+    min-width: auto;
 }
 
 
@@ -1020,6 +1043,48 @@ h6,
   .service-text p {
     font-size: 0.9rem;
     line-height: 1.4;
+  }
+  
+  /* Mobil: Videolar həmişə görünsün (hover olmadan) */
+  .service-item .service-img video,
+  .service-item .service-img img {
+    transform: scale(1) !important;
+  }
+  
+  /* Mobil: Service text background yarı-şəffaf ki, video görünsün */
+  .service-item .service-text {
+    background: rgba(15, 66, 41, .6) !important;
+  }
+  
+  /* Mobil: Mətn rəngləri ağ/light ki, video üzərində oxunaqlı olsun */
+  .service-item .service-text h4 {
+    color: #FFFFFF !important;
+  }
+  
+  .service-item .service-text p {
+    color: var(--light) !important;
+  }
+  
+  .service-item .service-text div,
+  .service-item .service-text span {
+    color: var(--light) !important;
+  }
+  
+  .service-item .service-text strong {
+    color: #FFFFFF !important;
+  }
+  
+  /* Mobil: "Ətraflı Məlumat" düyməsi həmişə genişlənmiş və sabit yerdə */
+  .service-item .service-text .btn {
+    width: auto !important;
+    min-width: auto !important;
+    overflow: visible !important;
+    position: absolute !important;
+    bottom: 0px !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    justify-content: center !important;
   }
 }
 
@@ -1792,6 +1857,57 @@ a.lb-next:hover {
 
 .service-detail-page .service-item .service-text {
   min-height: 280px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.5) 100%) !important;
+  backdrop-filter: blur(1px);
+}
+
+.service-detail-page .service-item .service-text h4 {
+  color: #FFFFFF !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 
+               0 0 8px rgba(0, 0, 0, 0.6),
+               -1px -1px 2px rgba(0, 0, 0, 0.8);
+  font-weight: 600;
+}
+
+.service-detail-page .service-item .service-text p {
+  color: #FFFFFF !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), 
+               0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+.service-detail-page .service-item .service-text div,
+.service-detail-page .service-item .service-text span,
+.service-detail-page .service-item .service-text strong {
+  color: #FFFFFF !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), 
+               0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Service Detail: Hover effektini sil - şəkil həmişə görünsün */
+.service-detail-page .service-item:hover .service-text {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.5) 100%) !important;
+  backdrop-filter: blur(1px);
+}
+
+.service-detail-page .service-item:hover .service-text h4 {
+  color: #FFFFFF !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 
+               0 0 8px rgba(0, 0, 0, 0.6),
+               -1px -1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.service-detail-page .service-item:hover .service-text p {
+  color: #FFFFFF !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), 
+               0 0 6px rgba(0, 0, 0, 0.6);
+}
+
+.service-detail-page .service-item:hover .service-text div,
+.service-detail-page .service-item:hover .service-text span,
+.service-detail-page .service-item:hover .service-text strong {
+  color: #FFFFFF !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), 
+               0 0 6px rgba(0, 0, 0, 0.6);
 }
 
 @media (min-width: 992px) {
@@ -3482,7 +3598,7 @@ a.lb-next:hover {
 
 .blog-detail-link:hover i {
     transform: scale(1.1);
-    color: #fff;
+    color: #fff !important;
 }
 
 .blog-section {

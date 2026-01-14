@@ -51,6 +51,12 @@ body {
   font-size: 0.9rem;
 }
 
+@media (max-width: 768px) {
+  .header-card p.text-muted {
+    font-size: 0.6rem;
+  }
+}
+
 .service-selector-card {
   background: #f0f2f5;
   border-radius: 1rem;
