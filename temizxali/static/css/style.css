@@ -436,7 +436,7 @@ h6,
 }
 
 .service-item:hover .service-text {
-    background: rgba(15, 66, 41, .6);
+    background: rgba(200, 110, 110, 0.6);
     
 }
 
@@ -575,6 +575,19 @@ h6,
 .portfolio-inner .portfolio-text .btn:hover {
     background: var(--primary);
     color: var(--light);
+}
+
+/* Tərəfdaşlar kartında description mətninin mərkəzləşdirilməsi və formatlanması */
+.portfolio-text .partner-description {
+    text-align: center;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    padding: 0 15px;
+    line-height: 1.6;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
 }
 
 
@@ -1857,57 +1870,41 @@ a.lb-next:hover {
 
 .service-detail-page .service-item .service-text {
   min-height: 280px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.5) 100%) !important;
-  backdrop-filter: blur(1px);
+  background: rgba(200, 110, 110, 0.6) !important;
 }
 
 .service-detail-page .service-item .service-text h4 {
   color: #FFFFFF !important;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 
-               0 0 8px rgba(0, 0, 0, 0.6),
-               -1px -1px 2px rgba(0, 0, 0, 0.8);
   font-weight: 600;
 }
 
 .service-detail-page .service-item .service-text p {
   color: #FFFFFF !important;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), 
-               0 0 6px rgba(0, 0, 0, 0.6);
 }
 
 .service-detail-page .service-item .service-text div,
 .service-detail-page .service-item .service-text span,
 .service-detail-page .service-item .service-text strong {
   color: #FFFFFF !important;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), 
-               0 0 6px rgba(0, 0, 0, 0.6);
 }
 
 /* Service Detail: Hover effektini sil - şəkil həmişə görünsün */
 .service-detail-page .service-item:hover .service-text {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.5) 100%) !important;
-  backdrop-filter: blur(1px);
+  background: rgba(200, 110, 110, 0.6) !important;
 }
 
 .service-detail-page .service-item:hover .service-text h4 {
   color: #FFFFFF !important;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 
-               0 0 8px rgba(0, 0, 0, 0.6),
-               -1px -1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .service-detail-page .service-item:hover .service-text p {
   color: #FFFFFF !important;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), 
-               0 0 6px rgba(0, 0, 0, 0.6);
 }
 
 .service-detail-page .service-item:hover .service-text div,
 .service-detail-page .service-item:hover .service-text span,
 .service-detail-page .service-item:hover .service-text strong {
   color: #FFFFFF !important;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), 
-               0 0 6px rgba(0, 0, 0, 0.6);
 }
 
 @media (min-width: 992px) {
@@ -3569,10 +3566,10 @@ a.lb-next:hover {
 .blog-detail-link {
     transition: all 0.3s ease;
     text-align: right;
-    background: transparent;
-    border: 1px solid #ddd;
-    color: #6c757d;
-    padding: 0.5rem 1rem;
+    background: var(--primary);
+    border: 1px solid var(--primary);
+    color: white;
+    padding: 0.4rem 0.8rem;
     border-radius: 6px;
     text-decoration: none;
     display: inline-flex;
@@ -3581,24 +3578,13 @@ a.lb-next:hover {
     font-weight: 500;
 }
 
-.blog-detail-link i {
-    font-size: 0.75rem;
-    margin-right: 0.5rem;
-    transition: all 0.3s ease;
-}
-
 .blog-detail-link:hover {
-    transform: translateX(-5px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transform: translateX(-2px);
+    box-shadow: 0 2px 6px rgba(109, 2, 28, 0.3);
     background-color: var(--primary);
     border-color: var(--primary);
     color: #fff;
     text-decoration: none;
-}
-
-.blog-detail-link:hover i {
-    transform: scale(1.1);
-    color: #fff !important;
 }
 
 .blog-section {
@@ -3891,5 +3877,20 @@ a.lb-next:hover {
 .view-count-number {
     font-weight: 600;
     color: #007bff;
+}
+
+/* Statistics Section - Text Shadow for Readability */
+.facts .display-4.text-white {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8),
+                 0 0 12px rgba(0, 0, 0, 0.6),
+                 0 0 20px rgba(0, 0, 0, 0.4),
+                 -1px -1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.facts .text-light,
+.facts .fs-5.fw-semi-bold.text-light {
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8),
+                 0 0 10px rgba(0, 0, 0, 0.6),
+                 0 0 15px rgba(0, 0, 0, 0.4);
 }
 

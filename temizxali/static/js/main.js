@@ -44,8 +44,13 @@
             $('.back-to-top').removeClass('show');
         }
     });
-    $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+    $('.back-to-top').click(function (e) {
+        e.preventDefault();
+        // Native scrollTo istifadə et - daha sürətli və performanslı
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
         return false;
     });
 
