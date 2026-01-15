@@ -140,6 +140,7 @@ class ImageAdmin(admin.ModelAdmin):
         'is_projects_page_background_image',
         'is_order_page_background_image',
         'is_bloq_background_image',
+        'is_center_background_image',
         'created_at'
     )
     
@@ -158,6 +159,7 @@ class ImageAdmin(admin.ModelAdmin):
                 'is_projects_page_background_image',
                 'is_order_page_background_image',
                 'is_bloq_background_image',
+                'is_center_background_image',
             ),
             'description': 'Hansı səhifələr üçün background image istifadə olunacaq'
         }),
@@ -174,7 +176,8 @@ class ImageAdmin(admin.ModelAdmin):
             Q(is_testimonial_page_background_image=True) |
             Q(is_projects_page_background_image=True) |
             Q(is_order_page_background_image=True) |
-            Q(is_bloq_background_image=True)
+            Q(is_bloq_background_image=True) |
+            Q(is_center_background_image=True)
         )
 
     def delete_queryset(self, request, queryset):

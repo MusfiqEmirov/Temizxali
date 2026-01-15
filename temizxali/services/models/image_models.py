@@ -86,6 +86,11 @@ class Image(models.Model):
         default=False,
         verbose_name='Bloq səhifəsi üçün arxa plan şəkli'
     )
+    is_center_background_image = models.BooleanField(
+        default=False,
+        verbose_name='Ana səhifədəki ikinci arxa plan şəkli'
+    )
+
 
     created_at = models.DateTimeField(
         auto_now_add=True,

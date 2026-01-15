@@ -100,6 +100,11 @@ class HomePageQueries:
         
         statistics = Statistic.objects.all()
         
+        # Statistika bölməsi üçün ayrı background şəkli
+        center_background_image = Image.objects.filter(
+            is_center_background_image=True
+        ).order_by('-created_at').first()
+        
         from services.models import AboutTranslation
         about = About.objects.all().prefetch_related(
             Prefetch('translations', queryset=AboutTranslation.objects.filter(languages=lang)),
@@ -123,6 +128,7 @@ class HomePageQueries:
             'background_images': bg_images_wrapper,
             'unused_background_images': unused_bg_images_wrapper,
             'background_image': background_image,
+            'center_background_image': center_background_image,
             'mottos_with_bg': mottos_with_bg,
             'services': services,
             'special_projects': special_projects,
