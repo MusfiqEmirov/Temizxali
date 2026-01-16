@@ -54,7 +54,7 @@
                     {% if contact.email %}
                         <div class="h-100 d-inline-flex align-items-center">
                             <span class="far fa-envelope me-2"></span>
-                            <a href="mailto:{{ contact.email }}" class="text-light text-decoration-none me-4">{{ contact.email }}</a>
+                            <a href="https://mail.google.com/mail/?view=cm&to={{ contact.email }}" target="_blank" class="text-light text-decoration-none me-4">{{ contact.email }}</a>
                             <div class="flex social-btns">
                                 <a class="app-btn blu flex vert" href="https://apps.apple.com/vn/app/temiz-xali/id6443763819?platform=iphone" target="_blank">
                                     <i class="fab fa-apple"></i>
@@ -349,7 +349,7 @@
                             {% endwith %}
                         {% endif %}
                         {% if contact.email %}
-                            <p class="mb-2 d-flex align-items-center"><i class="fa fa-envelope me-3"></i><a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a></p>
+                            <p class="mb-2 d-flex align-items-center"><i class="fa fa-envelope me-3"></i><a href="https://mail.google.com/mail/?view=cm&to={{ contact.email }}" target="_blank" class="text-light text-decoration-none">{{ contact.email }}</a></p>
                         {% endif %}
                         <div class="d-flex pt-2">
                             {% if contact.facebook %}

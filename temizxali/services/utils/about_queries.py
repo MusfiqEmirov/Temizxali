@@ -17,7 +17,11 @@ class AboutPageQueries:
         
         cache_key = f'about_data_{lang}_page_{page}'
         cached_data = cache.get(cache_key)
+        
+        contact = Contact.objects.first()
+        
         if cached_data:
+            cached_data['contact'] = contact
             return cached_data
         
         about = About.objects.all().distinct().prefetch_related(
@@ -27,8 +31,6 @@ class AboutPageQueries:
         about_item = about.first() if about.exists() else None
         
         statistics = Statistic.objects.prefetch_related('translations').all()
-        
-        contact = Contact.objects.first()
         
         services = Service.objects.filter(
             is_active=True,
@@ -41,7 +43,6 @@ class AboutPageQueries:
             is_about_page_background_image=True
         ).first()
         
-        # Special Projects with pagination
         special_projects = SpecialProject.objects.filter(
             is_active=True,
             translations__languages=lang
@@ -69,7 +70,9 @@ class AboutPageQueries:
             'special_projects': projects_page,
         }
         
-        cache.set(cache_key, result, 3600)
+        cache_result = result.copy()
+        cache_result['contact'] = None  
+        cache.set(cache_key, cache_result, 3600)
         
         return result
 
