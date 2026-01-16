@@ -11,14 +11,18 @@ class ServiceDetailQueries:
         
         cache_key = f'service_detail_data_{lang}_{service_slug}'
         cached_data = cache.get(cache_key)
-        if cached_data:
-            return cached_data
         
         from services.models import (
             Service, ServiceTranslation, ServiceVariant,
             ServiceVariantTranslation, SaleEvent, SaleEventTranslation,
             Contact, Image
         )
+        
+        contact = Contact.objects.first()
+        
+        if cached_data:
+            cached_data['contact'] = contact
+            return cached_data
         
         translation_obj = get_object_or_404(
             ServiceTranslation,
@@ -49,8 +53,6 @@ class ServiceDetailQueries:
         
         active_sale_events = service.sales.filter(active=True) if service else []
         
-        contact = Contact.objects.first()
-        
         services = Service.objects.filter(
             is_active=True,
             translations__languages=lang
@@ -68,7 +70,9 @@ class ServiceDetailQueries:
             'services': services,
         }
         
-        cache.set(cache_key, result, 3600)
+        cache_result = result.copy()
+        cache_result['contact'] = None  
+        cache.set(cache_key, cache_result, 3600)
         
         return result
 

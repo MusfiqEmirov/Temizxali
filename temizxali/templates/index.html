@@ -83,7 +83,7 @@
                     {% if contact.email %}
                         <div class="h-100 d-inline-flex align-items-center">
                             <span class="far fa-envelope me-2"></span>
-                            <a href="mailto:{{ contact.email }}" class="text-light text-decoration-none me-4">{{ contact.email }}</a>
+                            <a href="https://mail.google.com/mail/?view=cm&to={{ contact.email }}" target="_blank" class="text-light text-decoration-none me-4">{{ contact.email }}</a>
                             <div class="flex social-btns">
                                 <a class="app-btn blu flex vert" href="https://apps.apple.com/vn/app/temiz-xali/id6443763819?platform=iphone" target="_blank">
                                     <i class="fab fa-apple"></i>
@@ -103,7 +103,9 @@
                     </div>
                     <div class="h-100 d-inline-flex align-items-center">
                         <span class="far fa-envelope me-2"></span>
-                        <span class="me-4">info@example.com</span>
+                        {% if contact and contact.email %}
+                            <a href="https://mail.google.com/mail/?view=cm&to={{ contact.email }}" target="_blank" class="text-light text-decoration-none me-4">{{ contact.email }}</a>
+                        {% endif %}
                         <div class="flex social-btns">
                             <a class="app-btn blu flex vert" href="https://apps.apple.com/vn/app/temiz-xali/id6443763819?platform=iphone" target="_blank">
                                 <i class="fab fa-apple"></i>
@@ -185,13 +187,17 @@
                                 </a>
                             {% endif %}
                             {% if contact.email %}
-                                <a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">
+                                <a href="https://mail.google.com/mail/?view=cm&to={{ contact.email }}" target="_blank" class="text-light text-decoration-none">
                                     <span class="far fa-envelope me-1"></span><span style="font-size: 0.8rem;">{{ contact.email }}</span>
                                 </a>
                             {% endif %}
                         {% else %}
                             <span><span class="fa fa-phone-alt me-1"></span>+012 345 6789</span>
-                            <span><span class="far fa-envelope me-1"></span>info@example.com</span>
+                            {% if contact and contact.email %}
+                                <a href="https://mail.google.com/mail/?view=cm&to={{ contact.email }}" target="_blank" class="text-light text-decoration-none">
+                                    <span class="far fa-envelope me-1"></span><span style="font-size: 0.8rem;">{{ contact.email }}</span>
+                                </a>
+                            {% endif %}
                         {% endif %}
                     </div>
                     <div class="d-flex align-items-center gap-2">
@@ -723,7 +729,7 @@
                             {% endwith %}
                         {% endif %}
                         {% if contact.email %}
-                            <p class="mb-2 d-flex align-items-center"><i class="fa fa-envelope me-3"></i><a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a></p>
+                            <p class="mb-2 d-flex align-items-center"><i class="fa fa-envelope me-3"></i><a href="https://mail.google.com/mail/?view=cm&to={{ contact.email }}" target="_blank" class="text-light text-decoration-none">{{ contact.email }}</a></p>
                         {% endif %}
                         <div class="d-flex pt-2">
                             {% if contact.facebook %}
