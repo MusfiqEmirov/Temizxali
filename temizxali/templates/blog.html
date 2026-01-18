@@ -54,7 +54,7 @@
                     {% if contact.email %}
                         <div class="h-100 d-inline-flex align-items-center">
                             <span class="far fa-envelope me-2"></span>
-                            <a href="https://mail.google.com/mail/?view=cm&to={{ contact.email }}" target="_blank" class="text-light text-decoration-none me-4">{{ contact.email }}</a>
+                            <a href="mailto:{{ contact.email }}" class="text-light text-decoration-none me-4">{{ contact.email }}</a>
                             <div class="flex social-btns">
                                 <a class="app-btn blu flex vert" href="https://apps.apple.com/vn/app/temiz-xali/id6443763819?platform=iphone" target="_blank">
                                     <i class="fab fa-apple"></i>
@@ -367,23 +367,23 @@
                     <h4 class="text-white mb-4">{% trans "Ünvan və Əlaqə:" %}</h4>
                     {% if contact %}
                         {% if contact.address %}
-                            <p class="mb-2 d-flex align-items-start"><i class="fa fa-map-marker-alt me-3"></i><a href="https://www.google.com/maps/place/xalcalarin+yuyulmasi,/@40.3847779,49.9136553,16.36z/data=!4m6!3m5!1s0x40306332c6cbff81:0x3a32e96f1096012d!8m2!3d40.3850641!4d49.916934!16s%2Fg%2F11c6t7k5bb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="text-light text-decoration-none">{{ contact.address }}</a></p>
+                            <p class="mb-2 d-flex align-items-start"><i class="fa fa-map-marker-alt me-3"></i><a href="https://www.google.com/maps/place/xalcalarin+yuyulmasi,/@40.3847779,49.9136553,16.36z/data=!4m6!3m5!1s0x40306332c6cbff81:0x3a32e96f1096012d!8m2!3d40.3850641!4d49.916934!16s%2Fg%2F11c6t7k5bb?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D" class="text-light text-decoration-none">{{ contact.address }}</a></p>
                         {% endif %}
                         {% if contact.phone %}
                             <p class="mb-2 d-flex align-items-center"><i class="fa fa-phone-alt me-3"></i><a href="tel:{{ contact.phone|format_phone_az }}" class="text-light text-decoration-none">{{ contact.phone|format_phone_az }}</a></p>
                         {% endif %}
                         {% if contact.whatsapp_number %}
                             {% with contact.whatsapp_number|cut:"+"|cut:" " as pure_number %}
-                                <p class="mb-2 d-flex align-items-center"><i class="fa-brands fa-whatsapp me-3"></i><a href="https://wa.me/{{ pure_number }}" target="_blank" class="text-light text-decoration-none">{{ contact.whatsapp_number }}</a></p>
+                                <p class="mb-2 d-flex align-items-center"><i class="fa-brands fa-whatsapp me-3"></i><a href="https://wa.me/{{ pure_number }}" class="text-light text-decoration-none">{{ contact.whatsapp_number }}</a></p>
                             {% endwith %}
                         {% endif %}
                         {% if contact.whatsapp_number_2 %}
                             {% with contact.whatsapp_number_2|cut:"+"|cut:" " as pure_number %}
-                                <p class="mb-2 d-flex align-items-center"><i class="fa-brands fa-whatsapp me-3"></i><a href="https://wa.me/{{ pure_number }}" target="_blank" class="text-light text-decoration-none">{{ contact.whatsapp_number_2 }}</a></p>
+                                <p class="mb-2 d-flex align-items-center"><i class="fa-brands fa-whatsapp me-3"></i><a href="https://wa.me/{{ pure_number }}" class="text-light text-decoration-none">{{ contact.whatsapp_number_2 }}</a></p>
                             {% endwith %}
                         {% endif %}
                         {% if contact.email %}
-                            <p class="mb-2 d-flex align-items-center"><i class="fa fa-envelope me-3"></i><a href="https://mail.google.com/mail/?view=cm&to={{ contact.email }}" target="_blank" class="text-light text-decoration-none">{{ contact.email }}</a></p>
+                            <p class="mb-2 d-flex align-items-center"><i class="fa fa-envelope me-3"></i><a href="mailto:{{ contact.email }}" class="text-light text-decoration-none">{{ contact.email }}</a></p>
                         {% endif %}
                         <div class="d-flex pt-2">
                             {% if contact.facebook %}
@@ -476,7 +476,7 @@
                         <div class="whatsapp-dropdown" id="whatsappDropdown">
                             {% if contact.whatsapp_number %}
                                 {% with contact.whatsapp_number|format_phone_az|clean_phone_number as pure_whatsapp_1 %}
-                                <a href="https://wa.me/{{ pure_whatsapp_1 }}" target="_blank" class="whatsapp-option">
+                                <a href="https://wa.me/{{ pure_whatsapp_1 }}" class="whatsapp-option">
                                     <i class="fab fa-whatsapp me-2"></i>
                                     <span>{{ contact.whatsapp_number|format_phone_az }}</span>
                                 </a>
@@ -484,7 +484,7 @@
                             {% endif %}
                             {% if contact.whatsapp_number_2 %}
                                 {% with contact.whatsapp_number_2|format_phone_az|clean_phone_number as pure_whatsapp_2 %}
-                                <a href="https://wa.me/{{ pure_whatsapp_2 }}" target="_blank" class="whatsapp-option">
+                                <a href="https://wa.me/{{ pure_whatsapp_2 }}" class="whatsapp-option">
                                     <i class="fab fa-whatsapp me-2"></i>
                                     <span>{{ contact.whatsapp_number_2|format_phone_az }}</span>
                                 </a>
@@ -495,13 +495,13 @@
                 {% else %}
                     {% if contact.whatsapp_number %}
                         {% with contact.whatsapp_number|format_phone_az|clean_phone_number as pure_whatsapp %}
-                        <a href="https://wa.me/{{ pure_whatsapp }}" target="_blank" class="floating-btn floating-btn-whatsapp" title="WhatsApp">
+                        <a href="https://wa.me/{{ pure_whatsapp }}" class="floating-btn floating-btn-whatsapp" title="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                         {% endwith %}
                     {% elif contact.whatsapp_number_2 %}
                         {% with contact.whatsapp_number_2|format_phone_az|clean_phone_number as pure_whatsapp %}
-                        <a href="https://wa.me/{{ pure_whatsapp }}" target="_blank" class="floating-btn floating-btn-whatsapp" title="WhatsApp">
+                        <a href="https://wa.me/{{ pure_whatsapp }}" class="floating-btn floating-btn-whatsapp" title="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
                         {% endwith %}
