@@ -374,8 +374,8 @@ msgstr "Все услуги"
 #: temizxali/templates/projects.html:538
 #: temizxali/templates/service_detail_page.html:712
 #: temizxali/templates/testimonial.html:480
-msgid "tərəfindən hazırlanıb. Bütün hüquqlar qorunur."
-msgstr "разработано. Все права защищены."
+msgid "tərəfindən hazırlanıb."
+msgstr "разработано."
 
 #: temizxali/templates/blog.html:9 temizxali/templates/blog.html:298
 #: temizxali/templates/blog.html:359 temizxali/templates/blog.html:363
