@@ -374,7 +374,7 @@ msgstr "Все услуги"
 #: temizxali/templates/projects.html:538
 #: temizxali/templates/service_detail_page.html:712
 #: temizxali/templates/testimonial.html:480
-msgid "tərəfindən hazırlanıb."
+msgid "tərəfindən hazırlanmışdır."
 msgstr "разработано."
 
 #: temizxali/templates/blog.html:9 temizxali/templates/blog.html:298
