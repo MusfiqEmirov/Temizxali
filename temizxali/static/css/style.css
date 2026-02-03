@@ -353,6 +353,7 @@ h6,
 .page-header {
     background: linear-gradient(rgba(15, 66, 41, .6), rgba(15, 66, 41, .6)), url(../img/carousel-1.webp) center center no-repeat;
     background-size: cover;
+    min-height: 300px;
 }
 
 .page-header .breadcrumb-item+.breadcrumb-item::before {
@@ -436,7 +437,7 @@ h6,
 }
 
 .service-item:hover .service-text {
-    background: rgba(200, 110, 110, 0.6);
+    background: rgba(15, 66, 41, 0.6);
     
 }
 
@@ -1831,6 +1832,7 @@ a.lb-next:hover {
   background-repeat: no-repeat;
   background-size: cover;
   will-change: background-position;
+  min-height: 300px;
 }
 
 /* Mobile optimization - disable fixed background */
@@ -1870,7 +1872,7 @@ a.lb-next:hover {
 
 .service-detail-page .service-item .service-text {
   min-height: 280px;
-  background: rgba(200, 110, 110, 0.6) !important;
+  background: rgba(15, 66, 41, 0.6) !important;
 }
 
 .service-detail-page .service-item .service-text h4 {
@@ -1890,7 +1892,7 @@ a.lb-next:hover {
 
 /* Service Detail: Hover effektini sil - şəkil həmişə görünsün */
 .service-detail-page .service-item:hover .service-text {
-  background: rgba(200, 110, 110, 0.6) !important;
+  background: rgba(15, 66, 41, 0.6) !important;
 }
 
 .service-detail-page .service-item:hover .service-text h4 {
