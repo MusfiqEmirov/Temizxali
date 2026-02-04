@@ -20,7 +20,7 @@ def normalize_az_phone(phone: str) -> str:
         return None
 
     prefix = digits[:2]
-    if prefix in {'50', '51', '55', '70', '77', '99'}:
+    if prefix in {'50', '51', '55', '70', '77', '99', '10'}:
         return digits
 
     return None
