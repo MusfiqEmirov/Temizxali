@@ -500,6 +500,18 @@ msgstr "Эта услуга уже добавлена!"
 msgid "endirim tətbiq edildi"
 msgstr "скидка применена"
 
+#: temizxali/services/views/views_v1.py:138
+msgid "%(sale)s% kampaniya endirimi və %(website_sale)s% saytdan sifarişə görə endirim tətbiq edildi"
+msgstr "%(sale)s% скидка по акции и %(website_sale)s% скидка за заказ с сайта применена"
+
+#: temizxali/templates/calculator.html:313
+msgid "kampaniya endirimi"
+msgstr "скидка по акции"
+
+#: temizxali/templates/calculator.html:314
+msgid "saytdan sifarişə görə endirim tətbiq edildi"
+msgstr "скидка за заказ с сайта применена"
+
 #: temizxali/templates/calculator.html:361
 msgid "Ümumi məbləğ:"
 msgstr "Общая сумма:"

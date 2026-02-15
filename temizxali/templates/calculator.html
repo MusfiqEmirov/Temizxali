@@ -259,6 +259,7 @@
                                             {% for sale_event in service.sales.all %}
                                                 {
                                                     &quot;sale&quot;: {% if sale_event.sale %}{{ sale_event.sale }}{% else %}0{% endif %},
+                                                    &quot;website_sale&quot;: {% if sale_event.website_sale %}{{ sale_event.website_sale }}{% else %}0{% endif %},
                                                     &quot;min_quantity&quot;: {% if sale_event.min_quantity %}{{ sale_event.min_quantity }}{% else %}0{% endif %},
                                                     &quot;active&quot;: {% if sale_event.active %}true{% else %}false{% endif %}
                                                 }{% if not forloop.last %},{% endif %}
@@ -309,6 +310,9 @@
                             <span id="trans-price-estimate">{% trans 'Bu qiymət təxminidir' %}</span>
                             <span id="trans-service-already-added">{% trans 'Bu xidmət artıq əlavə edilib!' %}</span>
                             <span id="trans-discount-applied">{% trans 'endirim tətbiq edildi' %}</span>
+                            <span id="trans-discount-campaign">{% trans 'kampaniya endirimi' %}</span>
+                            <span id="trans-discount-website">{% trans 'saytdan sifarişə görə endirim tətbiq edildi' %}</span>
+                            <span id="trans-discount-full" data-format="{{ discount_message_format|default:''|escapejs }}"></span>
                         </div>
 
                         <!-- Calculate Button -->

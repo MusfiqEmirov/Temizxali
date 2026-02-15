@@ -134,11 +134,15 @@ class CalculatorPageView(View):
         calculator_background_image = Image.objects.filter(
             is_calculator_page_background_image=True
         ).first()
+        discount_message_format = _(
+            '%(sale)s% kampaniya endirimi və %(website_sale)s% saytdan sifarişə görə endirim tətbiq edildi'
+        )
         return render(request, self.template_name, {
             'services': services,
             'current_language': current_language,
             'contact': contact,
             'calculator_background_image': calculator_background_image,
+            'discount_message_format': discount_message_format,
         })
 
 

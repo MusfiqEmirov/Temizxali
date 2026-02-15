@@ -700,7 +700,7 @@ class SaleEventTranslationInline(admin.TabularInline):
 
 @admin.register(SaleEvent)
 class SaleEventAdmin(admin.ModelAdmin):
-    list_display = ('get_service_name', 'get_sale_display', 'min_quantity', 'get_active_badge')
+    list_display = ('get_service_name', 'get_sale_display', 'website_sale', 'min_quantity', 'get_active_badge')
     list_display_links = ('get_service_name',)
     list_filter = ('active', 'service')
     search_fields = ('service__translations__name',)
@@ -711,8 +711,8 @@ class SaleEventAdmin(admin.ModelAdmin):
             'fields': ('service', 'active')
         }),
         ('💰 Endirim Məlumatları', {
-            'fields': ('sale', 'min_quantity'),
-            'description': 'Endirim faizi və minimum miqdar'
+            'fields': ('website_sale', 'sale', 'min_quantity'),
+            'description': 'Sayt endirimi, endirim faizi və minimum miqdar'
         }),
     )
 

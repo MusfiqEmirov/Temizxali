@@ -259,19 +259,25 @@ function calculateServicePrice(serviceId) {
         sales = [];
     }
     
-    // Helper function to get applicable discount based on min_quantity
-    function getApplicableDiscount(value) {
-        // Find applicable sale event - SaleEvent service-ə bağlıdır, ona görə də service-in measure_type-ı ilə uyğun olur
+    // Kampaniya endirimi (sale) + sayt endirimi (website_sale) = ümumi endirim faizi (məs. 50% + 5% = 55%)
+    function getApplicableSale(value) {
         let applicableSale = null;
         for (let sale of sales) {
             if (sale.active && parseFloat(value) >= parseFloat(sale.min_quantity || 0)) {
-                if (!applicableSale || parseFloat(sale.sale || 0) > parseFloat(applicableSale.sale || 0)) {
+                const total = parseFloat(sale.sale || 0) + parseFloat(sale.website_sale || 0);
+                const prevTotal = applicableSale ? parseFloat(applicableSale.sale || 0) + parseFloat(applicableSale.website_sale || 0) : 0;
+                if (!applicableSale || total > prevTotal) {
                     applicableSale = sale;
                 }
             }
         }
-        
-        return applicableSale ? parseFloat(applicableSale.sale || 0) : 0;
+        return applicableSale;
+    }
+    function getApplicableDiscount(value) {
+        const sale = getApplicableSale(value);
+        if (!sale) return 0;
+        // Ümumi endirim = sale% + website_sale% (həmişə hər ikisi cəmlənir)
+        return parseFloat(sale.sale || 0) + parseFloat(sale.website_sale || 0);
     }
     
     let serviceTotal = 0;
@@ -378,18 +384,38 @@ function calculateServicePrice(serviceId) {
         if (serviceTotal > 0) {
             // Endirim faizini hesabla və göstər - yalnız dəyər daxil edildikdə
             let discountInfo = '';
+            const transDiscountApplied = document.getElementById('trans-discount-applied')?.textContent?.trim() || 'endirim tətbiq edildi';
+            const discountFormat = document.getElementById('trans-discount-full')?.getAttribute('data-format');
+            const formatDiscountText = (salePct, websitePct) => {
+                if (websitePct > 0) {
+                    let text;
+                    if (discountFormat) {
+                        text = discountFormat
+                            .replace('%(sale)s', salePct.toFixed(0))
+                            .replace('%(website_sale)s', websitePct.toFixed(0))
+                            .replace(/%%/g, '%');
+                    } else {
+                        const transCampaign = document.getElementById('trans-discount-campaign')?.textContent?.trim() || 'kampaniya endirimi';
+                        const transWebsite = document.getElementById('trans-discount-website')?.textContent?.trim() || 'saytdan sifarişə görə endirim tətbiq edildi';
+                        text = `${salePct.toFixed(0)}% ${transCampaign} və ${websitePct.toFixed(0)}% ${transWebsite}`;
+                    }
+                    return text;
+                }
+                return `-${salePct.toFixed(0)}% ${transDiscountApplied}`;
+            };
             if (!hasVariants) {
-                // Əsas xidmət üçün
                 const value = parseFloat(document.getElementById(`${serviceId}_value`)?.value) || 0;
                 if (value > 0) {
-                    const discountPercent = getApplicableDiscount(value);
-                    if (discountPercent > 0) {
-                        const discountAppliedText = document.getElementById('trans-discount-applied')?.textContent || 'endirim tətbiq edildi';
-                        discountInfo = ` <span class="text-success small">(-${discountPercent.toFixed(0)}% ${discountAppliedText})</span>`;
+                    const saleObj = getApplicableSale(value);
+                    if (saleObj) {
+                        const salePct = parseFloat(saleObj.sale || 0);
+                        const websitePct = parseFloat(saleObj.website_sale || 0);
+                        if (salePct > 0 || websitePct > 0) {
+                            discountInfo = ` <span class="text-success small">(${formatDiscountText(salePct, websitePct)})</span>`;
+                        }
                     }
                 }
             } else {
-                // Variantlar üçün - variantların cəminə əsasən endirim faizini tap
                 let totalVariantValue = 0;
                 variants.forEach((variant) => {
                     const variantId = variant.id;
@@ -400,10 +426,13 @@ function calculateServicePrice(serviceId) {
                     }
                 });
                 if (totalVariantValue > 0) {
-                    const discountPercent = getApplicableDiscount(totalVariantValue);
-                    if (discountPercent > 0) {
-                        const discountAppliedText = document.getElementById('trans-discount-applied')?.textContent || 'endirim tətbiq edildi';
-                        discountInfo = ` <span class="text-success small">(-${discountPercent.toFixed(0)}% ${discountAppliedText})</span>`;
+                    const saleObj = getApplicableSale(totalVariantValue);
+                    if (saleObj) {
+                        const salePct = parseFloat(saleObj.sale || 0);
+                        const websitePct = parseFloat(saleObj.website_sale || 0);
+                        if (salePct > 0 || websitePct > 0) {
+                            discountInfo = ` <span class="text-success small">(${formatDiscountText(salePct, websitePct)})</span>`;
+                        }
                     }
                 }
             }
@@ -443,19 +472,24 @@ function calculateTotal() {
             sales = [];
         }
         
-        // Helper function to get applicable discount based on min_quantity
-        function getApplicableDiscount(value) {
-            // Find applicable sale event - SaleEvent service-ə bağlıdır, ona görə də service-in measure_type-ı ilə uyğun olur
+        // Kampaniya (sale) + sayt (website_sale) = ümumi faiz (məs. 50% + 5% = 55%)
+        function getApplicableSale(value) {
             let applicableSale = null;
             for (let sale of sales) {
                 if (sale.active && parseFloat(value) >= parseFloat(sale.min_quantity || 0)) {
-                    if (!applicableSale || parseFloat(sale.sale || 0) > parseFloat(applicableSale.sale || 0)) {
+                    const total = parseFloat(sale.sale || 0) + parseFloat(sale.website_sale || 0);
+                    const prevTotal = applicableSale ? parseFloat(applicableSale.sale || 0) + parseFloat(applicableSale.website_sale || 0) : 0;
+                    if (!applicableSale || total > prevTotal) {
                         applicableSale = sale;
                     }
                 }
             }
-            
-            return applicableSale ? parseFloat(applicableSale.sale || 0) : 0;
+            return applicableSale;
+        }
+        function getApplicableDiscount(value) {
+            const sale = getApplicableSale(value);
+            if (!sale) return 0;
+            return parseFloat(sale.sale || 0) + parseFloat(sale.website_sale || 0);
         }
         
         // Variantlar hesablaması (dinamik)
