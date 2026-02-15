@@ -13,6 +13,13 @@ class SaleEvent(models.Model):
         related_name='sales', 
         verbose_name='Servis'
     )
+    website_sale = models.FloatField(
+        validators=[MaxValueValidator(100), MinValueValidator(0)],
+        null=True,
+        blank=True,
+        default=5.0,
+        verbose_name='Saytdan gelen endirim faizi'
+    )
     sale = models.FloatField(
         validators=[MaxValueValidator(100), MinValueValidator(1)],
         null=True,
