@@ -545,9 +545,18 @@
                                             {% endif %}
                                             <div class="mb-4">
                                                 {% if variant.price %}
+                                                    {% get_current_language as LANGUAGE_CODE %}
                                                     <div class="mb-2">
                                                         <strong>{% trans "Standart:" %}</strong> 
-                                                        <span class="text-primary">{{ variant.price }} AZN</span>
+                                                        {% if variant_translation.name == "Divan" or variant_translation.name == "Divanlar" or variant_translation.name == "Диван" or variant_translation.name == "Диваны" %}
+                                                            <span class="text-primary">
+                                                                {{ variant.price }} AZN {% if LANGUAGE_CODE|slice:":2" == 'ru' %}(1 сиденье){% else %}(1 oturacaq){% endif %}
+                                                            </span>
+                                                        {% else %}
+                                                            <span class="text-primary">
+                                                                {{ variant.price }} AZN
+                                                            </span>
+                                                        {% endif %}
                                                     </div>
                                                 {% endif %}
                                                 {% if variant.vip_price %}
